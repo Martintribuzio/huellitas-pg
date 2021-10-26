@@ -1,9 +1,10 @@
-import 'App.css'
+import PostAPet from "./components/PostAPet"
+
 
 function App() {
   return (
     <div className='App'>
-      <header className='App-header'></header>
+      <PostAPet/>
     </div>
   )
 }

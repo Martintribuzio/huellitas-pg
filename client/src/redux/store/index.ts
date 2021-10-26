@@ -1,11 +1,13 @@
-import {createStore, combineReducers, applyMiddleware} from "redux";
+import {createStore, compose, applyMiddleware} from "redux";
 import thunk from "redux-thunk";
-import reducer from "../reducers/index"
+import rootReducer from "../reducers/index"
+ 
+const store = createStore(
+    rootReducer,
+    compose(
+        applyMiddleware(thunk),
+        // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
+);
 
-export const rootReducer = combineReducers({
-    reducer: reducer
-});
-
-export type FiltersActionTypes =  ReturnType<typeof rootReducer>
-
-export const store =  createStore(rootReducer, applyMiddleware(thunk));
+export default store;
