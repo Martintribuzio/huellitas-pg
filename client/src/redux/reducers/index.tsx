@@ -1,24 +1,55 @@
-import { FOUND_PETS, ADOPTION_PETS, LOST_PETS, NEWER_POSTS, OLDER_POSTS, GET_TYPES, GET_GENRES} from '../types/actionTypes';
+import { FOUND_POSTS, ADOPTION_POSTS, LOST_POSTS, NEWER_POSTS, OLDER_POSTS, GET_TYPES, GET_GENRES} from '../types/actionTypes';
 import { FiltersActionTypes } from '../types/actionTypes'
-import {Pet} from '../types/types'
+import {Post} from '../types/types'
 
 interface typeState{
-  allPets: Array<Pet>,
-  filteredPets: Array<Pet>,
-  typesOfAnimals: Array<string>,
-  genres: Array<string>,
+  allPosts: Array<Post>,
+  filteredPosts: Array<Post>,
 }
 
 const initialState: typeState = {
-  allPets:[{img: '', description: '', date: '', state: 'lost', type: 'cat'}],
-  filteredPets: [{img: '', description: '', date: '', state: 'lost', type: 'cat'}],
-  typesOfAnimals: ['dog, cat'],
-  genres: ['male, female']
+  allPosts:[{img: '', description: '', date: '', state: 'lost', type: 'cat'}],
+  filteredPosts: [{img: '', description: '', date: '', state: 'lost', type: 'cat'}],
 }
 
 
 export default function rootReducer (state = initialState, action:FiltersActionTypes) {
   switch(action.type){
+    case FOUND_POSTS:
+        return{
+            ...state,
+            filteredPosts: state.allPosts.filter(p => p.state === action.payload)
+        }
+    case ADOPTION_POSTS:
+        return{
+            ...state,
+            filteredPosts: state.allPosts.filter(p => p.state === action.payload)
+        }
+    case LOST_POSTS:
+        return{
+            ...state,
+            filteredPosts: state.allPosts.filter(p => p.state === action.payload)
+        }
+    case NEWER_POSTS:
+        return{
+            ...state,
+            filteredPosts: state.allPosts.filter(p => p.date)//hay que arreglar
+        }
+    case OLDER_POSTS:
+        return{
+            ...state,
+            filteredPosts: state.allPosts.filter(p => p.date)//hay que arreglar
+        }
+    case GET_TYPES:
+        return{
+            ...state,
+            filteredPosts: state.allPosts.filter(p => p.type === action.payload)
+        }
+    case GET_GENRES:
+        return{
+            ...state,
+            filteredPosts: state.allPosts.filter(p => p.type === action.payload)//hay que arreglar
+        }
     default:
       return state;
   }

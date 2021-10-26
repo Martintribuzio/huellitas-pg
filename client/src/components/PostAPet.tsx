@@ -2,28 +2,37 @@ import React from "react";
 import {ChangeEvent, useState} from "react";
 import styles from "./PostAPet.module.css"
 import { useDispatch} from "react-redux";
+import {Input} from '../redux/types/types'
 
 export default function PostAPet() { 
     //const dispatch =  useDispatch();
 
-    interface Input{
-        state:string,
-        img: string,
-        description: string
-    }
+    // interface Input{
+    //     state:string,
+    //     img: string,
+    //     description: string,
+    //     type: string
+    // }
 
     const [input, setInput] = useState<Input>({
         state: '',
         img: '',
-        description: ''
+        description: '',
+        type: ''
     })
 
-    function handleChange(e: ChangeEvent<HTMLFormElement>){
+
+
+    function handleChange(e: htmlTypes){
         setInput({
             ...input,
             [e.target.name]: e.target.value
         })
     }
+
+    // console.log(input)
+
+    type htmlTypes = ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>;
 
     function handleSubmit(e:any){
         e.preventDefault();
@@ -36,21 +45,28 @@ export default function PostAPet() {
             <form className = {styles.form} onSubmit = {handleSubmit}>
                 
                 <label>Estado: </label>
-                <select defaultValue = "Tipo" onChange = {()=>handleChange}>
-                    <option>Perdido</option>
-                    <option>En adopcion</option>
-                    <option>Encontrado</option>
+                <select name='state' defaultValue = "Tipo" onChange = {(e)=>handleChange(e)}>
+                    <option value="lost">Perdido</option>
+                    <option value="adoption">En adopcion</option>
+                    <option value="found">Encontrado</option>
+                </select>
+                 
+                <label>Tipo de animal: </label>
+                <select defaultValue = "Tipo" onChange = {(e)=>handleChange(e)}>
+                    <option>Perro</option>
+                    <option>Gato</option>
+                    <option>Otros</option>
                 </select>
 
                 <label>Imagen: </label>
-                <input onChange = {()=>handleChange}></input>
+                <input onChange = {(e)=>handleChange(e)}></input>
 
                 <label>Fecha: </label>
-                <input type = "date" onChange = {()=>handleChange}></input>
+                <input type = "date" onChange = {(e)=>handleChange(e)}></input>
 
                 <label>Descripcion: </label>
-                <textarea onChange = {()=>handleChange}></textarea>
-
+                <textarea onChange = {(e)=>handleChange(e)}></textarea>
+                
                 <button>Publicar</button>
             </form>
         </div>
