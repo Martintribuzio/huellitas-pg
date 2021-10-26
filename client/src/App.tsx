@@ -1,7 +1,13 @@
+import {Route} from 'react-router-dom'
+import Navbar from './components/navBar/NavBar'
+import Title from './components/Title/Title'
 function App() {
   return (
     <div className='App'>
-      <header className='App-header'>HOLA</header>
+      <Route path='/'>
+        <Navbar />
+        <Title />
+        </Route>
     </div>
   )
 }
