@@ -2,6 +2,8 @@ const express = require('express')
 const morgan = require('morgan')
 const app = express()
 const cors = require('cors')
+const route = require('./Routes/index')
+
 
 app.use(express.json())
 app.use(morgan('dev'))
@@ -15,5 +17,8 @@ app.use((req, res, next) => {
   )
   next()
 })
+
+app.use('/',route);
+
 
 module.exports = app
