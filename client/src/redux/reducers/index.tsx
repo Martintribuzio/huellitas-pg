@@ -1,5 +1,5 @@
-import { FOUND_PETS, ADOPTION_PETS, LOST_PETS, NEWER_POSTS, OLDER_POSTS, GET_TYPES, GET_GENRES} from '../types';
-import { Filters } from '../types/index'
+import { FOUND_PETS, ADOPTION_PETS, LOST_PETS, NEWER_POSTS, OLDER_POSTS, GET_TYPES, GET_GENRES} from '../types/actionTypes';
+import { FiltersActionTypes } from '../types/actionTypes'
 
 interface typeState{
   allPets: Array<Object>,
@@ -16,7 +16,7 @@ const initialState: typeState = {
 }
 
 
-export default function reducer (state = initialState, action:Filters) {
+export default function reducer (state = initialState, action:FiltersActionTypes) {
   switch(action.type){
     case LOST_PETS:
       return{

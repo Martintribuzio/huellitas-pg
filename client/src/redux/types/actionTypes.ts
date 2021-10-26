@@ -1,3 +1,5 @@
+import {Pet} from './types'
+
 export const FOUND_PETS = "FOUND_PETS";
 export const ADOPTION_PETS = "ADOPTION_PETS";
 export const LOST_PETS = "LOST_PETS";
@@ -8,27 +10,27 @@ export const GET_GENRES = "GET_GENRES"
 
 export interface foundPets{
     type: typeof FOUND_PETS,
-    payload:Array<Object>
+    payload:Array<Pet>
 }
 
 export interface adoptionPets{
     type: typeof ADOPTION_PETS,
-    payload:Array<Object>
+    payload:Array<Pet>
 }
 
 export interface lostPets{
     type: typeof LOST_PETS,
-    payload:Array<Object>
+    payload:Array<Pet>
 }
 
 export interface newerPosts{
     type: typeof NEWER_POSTS,
-    payload: Array<Object>
+    payload: Array<Pet>
 }
 
 export interface olderPosts{
     type: typeof OLDER_POSTS,
-    payload: Array<Object>
+    payload: Array<Pet>
 }
 
 export interface getTypes{
@@ -41,4 +43,4 @@ export interface getGenres{
     payload: Array<string>
 }
 
-export type Filters = foundPets | adoptionPets | lostPets | newerPosts | olderPosts | getTypes | getGenres
+export type FiltersActionTypes = foundPets | adoptionPets | lostPets | newerPosts | olderPosts | getTypes | getGenres
