@@ -9,10 +9,11 @@ export interface Post{
 
 export interface Input{
     state:string,
-    img: string,
+    img: any,
     description: string,
     type: string,
     genre: string,
+    date: string
 }
 
 

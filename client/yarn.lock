@@ -1767,10 +1767,10 @@
   "resolved" "https://registry.npmjs.org/@types/minimatch/-/minimatch-3.0.3.tgz"
   "version" "3.0.3"
 
-"@types/node@*", "@types/node@^12.0.0":
-  "integrity" "sha512-fsSWQa0FpolfK709jVqkmtMBtrfdRPM1ZSRlayrnVOqfiABLZJJDw1OA++VuQdpOKSgJgt/7buf/B4GPSH3EWQ=="
-  "resolved" "https://registry.npmjs.org/@types/node/-/node-12.20.35.tgz"
-  "version" "12.20.35"
+"@types/node@*", "@types/node@^16.11.6":
+  "integrity" "sha512-ua7PgUoeQFjmWPcoo9khiPum3Pd60k4/2ZGXt18sm2Slk0W0xZTqt5Y0Ny1NyBiN1EVQ/+FaF9NcY4Qe6rwk5w=="
+  "resolved" "https://registry.npmjs.org/@types/node/-/node-16.11.6.tgz"
+  "version" "16.11.6"
 
 "@types/normalize-package-data@^2.4.0":
   "integrity" "sha512-f5j5b/Gf71L+dbqxIpQ4Z2WlmI/mPJ0fOkGGmFgtb6sAu97EPczzbS3/tJKxmcYDj55OX6ssqwDAWOHIYDRDGA=="
@@ -1796,6 +1796,11 @@
   "integrity" "sha512-1HcDas8SEj4z1Wc696tH56G8OlRaH/sqZOynNNB+HF0WOeXPaxTtbYzJY2oEfiUxjSKjhCKr+MvR7dCHcEelug=="
   "resolved" "https://registry.npmjs.org/@types/q/-/q-1.5.4.tgz"
   "version" "1.5.4"
+
+"@types/react-css-modules@^4.6.4":
+  "integrity" "sha512-+ceSNlaDcuNR44xyceOrKybdRMDc3kogJw2Hgal3sKPYv3jZPs7NsTThCJd+6ti5cjBNl/UPPYPkf8MevuxCqQ=="
+  "resolved" "https://registry.npmjs.org/@types/react-css-modules/-/react-css-modules-4.6.4.tgz"
+  "version" "4.6.4"
 
 "@types/react-dom@^17.0.0":
   "integrity" "sha512-8oz3NAUId2z/zQdFI09IMhQPNgIbiP8Lslhv39DIDamr846/0spjZK0vnrMak0iB8EKb9QFTTIdg2Wj2zH5a3g=="

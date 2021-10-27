@@ -11,6 +11,7 @@ export const getPosts = function(){
 
 export function postPet(input: Input){
     return async function(dispatch: any){ 
+        console.log(input)
         let info = await axios.post('/post', input)
         return dispatch({type:POST_PET, payload:info.data})
     }
