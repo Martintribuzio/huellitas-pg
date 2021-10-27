@@ -1,7 +1,10 @@
 const { Schema, model } = require('mongoose');
 
 const postSchema = new Schema({
-  animal: String,
+  animal: {
+    type: String,
+    required: true,
+  },
   genre: {
     type: String,
     enum: ['male', 'female'],
@@ -11,7 +14,11 @@ const postSchema = new Schema({
     enum: ['lost', 'found', 'adoption'],
     default: 'lost',
   },
-  description: String,
+  description: {
+    type: String,
+    required: true,
+  },
+  date: String,
   user: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 

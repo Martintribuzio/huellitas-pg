@@ -1,7 +1,14 @@
 const { Post } = require('../../models/Post');
 const { User } = require('../../models/User');
 
-const createPostDB = async (animal, postType, description, userId, genre) => {
+const createPostDB = async (
+  animal,
+  postType,
+  description,
+  userId,
+  genre,
+  date
+) => {
   try {
     const post = new Post({
       animal,
@@ -9,6 +16,7 @@ const createPostDB = async (animal, postType, description, userId, genre) => {
       description,
       user: userId,
       genre,
+      date,
     });
     await post.save();
 
@@ -23,6 +31,18 @@ const createPostDB = async (animal, postType, description, userId, genre) => {
   }
 };
 
+const findPostDB = async id => {
+  try {
+    console.log('id', id);
+    const post = id ? await Post.findById(id) : await Post.find();
+    return post;
+  } catch {
+    console.log('Error al buscar post');
+    throw new Error('Mensaje');
+  }
+};
+
 module.exports = {
   createPostDB,
+  findPostDB,
 };
