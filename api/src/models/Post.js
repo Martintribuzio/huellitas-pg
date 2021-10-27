@@ -20,6 +20,9 @@ const postSchema = new Schema({
   },
   date: String,
   user: { type: Schema.Types.ObjectId, ref: 'User' },
+  postImg: {
+    type: String,
+  }
 });
 
 const Post = new model('Post', postSchema);
