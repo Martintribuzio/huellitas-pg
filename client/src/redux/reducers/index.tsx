@@ -30,6 +30,20 @@ export default function rootReducer (state = initialState, action:FiltersActionT
             ...state,
             filteredPosts: state.allPosts.filter(p => p.state === action.payload)
         }
+    case NEWER_POSTS:
+        return{
+            ...state,
+            filteredPosts:[...state.allPosts].sort((a:Post,b:Post) => {
+                return a.date.toLowerCase() > b.date.toLowerCase() ? 1 : -1
+            })
+        }
+    case OLDER_POSTS:
+        return{
+            ...state,
+            filteredPosts:[...state.allPosts].sort((a:Post,b:Post) => {
+                return a.date.toLowerCase() < b.date.toLowerCase() ? 1 : -1
+            })
+        }
     case GET_TYPES:
         return{
             ...state,
