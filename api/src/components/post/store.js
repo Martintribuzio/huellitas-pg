@@ -10,7 +10,6 @@ const createPostDB = async (
   date,
   postImg
 ) => {
-  console.log("TYPE", type, "STATE", state, "DESCRIPTION", description, "USERID", userId, "GENRE", genre, "DATE", date);
   try {
     const post = new Post({
       animal: type,
@@ -22,7 +21,6 @@ const createPostDB = async (
       postImg
     });
     await post.save();
-    console.log(post)
     // const userById = await User.findById(userId);
     // userById.posts.push(post);
     // await userById.save();
@@ -36,12 +34,10 @@ const createPostDB = async (
 
 const findPostDB = async id => {
   try {
-    console.log('id', id);
     const post = id ? await Post.findById(id) : await Post.find();
     return post;
-  } catch {
-    console.log('Error al buscar post');
-    throw new Error('Mensaje');
+  } catch (error){
+    throw new Error(error);
   }
 };
 
