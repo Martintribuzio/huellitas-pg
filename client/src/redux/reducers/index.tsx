@@ -1,4 +1,4 @@
-import { FOUND_POSTS, ADOPTION_POSTS, LOST_POSTS, NEWER_POSTS, OLDER_POSTS, GET_TYPES, GET_GENRES} from '../types/actionTypes';
+import { FILTER_STATE, FILTER_LATEST, GET_TYPES, GET_GENRES} from '../types/actionTypes';
 import { FiltersActionTypes } from '../types/actionTypes'
 import {Post} from '../types/types'
 
@@ -8,40 +8,23 @@ interface typeState{
 }
 
 const initialState: typeState = {
-  allPosts:[{img: '', description: '', date: '', state: 'lost', type: 'cat', genre:'male'}],
-  filteredPosts: [{img: '', description: '', date: '', state: 'lost', type: 'cat', genre:'male'}],
+  allPosts:[{img: '', description: '', date: '2019/05/21', state: 'lost', type: 'cat', genre:'male'},{img: '', description: '', date: '2015/04/12', state: 'lost', type: 'dog', genre:'female'}],
+  filteredPosts: [{img: '', description: '', date: '2019/05/21', state: 'lost', type: 'cat', genre:'male'}],
 }
 
 
 export default function rootReducer (state = initialState, action:FiltersActionTypes) {
   switch(action.type){
-    case FOUND_POSTS:
+    case FILTER_STATE:
         return{
             ...state,
             filteredPosts: state.allPosts.filter(p => p.state === action.payload)
         }
-    case ADOPTION_POSTS:
-        return{
-            ...state,
-            filteredPosts: state.allPosts.filter(p => p.state === action.payload)
-        }
-    case LOST_POSTS:
-        return{
-            ...state,
-            filteredPosts: state.allPosts.filter(p => p.state === action.payload)
-        }
-    case NEWER_POSTS:
+    case FILTER_LATEST:
         return{
             ...state,
             filteredPosts:[...state.allPosts].sort((a:Post,b:Post) => {
-                return a.date.toLowerCase() > b.date.toLowerCase() ? 1 : -1
-            })
-        }
-    case OLDER_POSTS:
-        return{
-            ...state,
-            filteredPosts:[...state.allPosts].sort((a:Post,b:Post) => {
-                return a.date.toLowerCase() < b.date.toLowerCase() ? 1 : -1
+                return a.date > b.date ? 1 : -1
             })
         }
     case GET_TYPES:

@@ -15,6 +15,7 @@ export interface Input{
     genre: string,
 }
 
+
 // export interface Dispatch<A extends Action = AnyAction> {HAY QUE HACER UNA INTERFAZ PARA DISPATCH
 //     <T extends A>(action: T): T
 //   }

@@ -1,4 +1,4 @@
-import { POST_PET, FOUND_POSTS, ADOPTION_POSTS, LOST_POSTS, NEWER_POSTS, OLDER_POSTS, GET_TYPES, GET_GENRES, GET_POSTS} from '../types/actionTypes';
+import { POST_PET, FILTER_STATE, FILTER_LATEST, GET_TYPES, GET_GENRES, GET_POSTS} from '../types/actionTypes';
 import axios from 'axios'
 import { Input } from '../types/types'
 
@@ -9,44 +9,23 @@ export const getPosts = function(){
     }
 }
 
-// export function postPet(input: Input){
-//     return async function(dispatch){ HAY QUE ARREGLAR EL DISPATCH
-//         let info = await axios.post('/post', input)
-//         return dispatch({type:POST_PET, payload:info.data})
-//     }
-// }
+export function postPet(input: Input){
+    return async function(dispatch: any){ 
+        let info = await axios.post('/post', input)
+        return dispatch({type:POST_PET, payload:info.data})
+    }
+}
 
-export const foundPets = function(filter: string){
+export const filterByState = function(filter: string){
     return{
-      type:FOUND_POSTS,
+      type:FILTER_STATE,
       payload: filter
     }
 }
 
-export const adoptionPets = function(filter: string){
+export const filterByLatest = function(filter: string){
     return{
-      type:ADOPTION_POSTS,
-      payload:filter
-    }
-}
-
-export const lostPets = function(filter: string){
-    return {
-      type:LOST_POSTS,
-      payload:filter
-    }
-}
-
-export const newerPosts = function(filter: string){
-    return{
-      type:NEWER_POSTS,
-      payload:filter
-    }
-}
-
-export const olderPosts = function(filter: string){
-    return{
-      type:OLDER_POSTS,
+      type:FILTER_LATEST,
       payload:filter
     }
 }

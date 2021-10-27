@@ -1,18 +1,12 @@
 import React from "react";
 import {ChangeEvent, useState} from "react";
 import styles from "./PostAPet.module.css"
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import {Input} from '../redux/types/types'
+import { postPet } from "../redux/actions";
 
 export default function PostAPet() { 
-    //const dispatch =  useDispatch();
-
-    // interface Input{
-    //     state:string,
-    //     img: string,
-    //     description: string,
-    //     type: string
-    // }
+    const dispatch =  useDispatch();
 
     const [input, setInput] = useState<Input>({
         state: '',
@@ -21,8 +15,6 @@ export default function PostAPet() {
         type: '',
         genre:''
     })
-
-
 
     function handleChange(e: htmlTypes){
         setInput({
@@ -37,7 +29,7 @@ export default function PostAPet() {
 
     function handleSubmit(e:any){
         e.preventDefault();
-        // dispatch()
+        dispatch(postPet(input))
         alert('Publicado!')
     }
 
