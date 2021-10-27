@@ -72,8 +72,8 @@ export default function PostAPet() {
                 <label>Genero </label>
                 <select name="genre" defaultValue = "Genero de mascota" onChange = {(e)=>handleChange(e)}>
                     <option disabled>Genero de mascota</option>
-                    <option>Male</option>
-                    <option>Female</option>
+                    <option value='male'>Macho</option>
+                    <option value='female'> Hembra</option>
                 </select>
 
                 <label>Imagen: </label>
