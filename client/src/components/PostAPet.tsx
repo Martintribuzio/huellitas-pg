@@ -10,35 +10,42 @@ export default function PostAPet() {
 
     const [input, setInput] = useState<Input>({
         state: '',
-        img: '',
         description: '',
         type: '',
         genre:'',
-        date:""
+        date:"",
+        petImage: null
     })
 
     function handleChange(e: htmlTypes){
-        // if(e.target.name === "img"){
-        //     let file = (e.target as HTMLInputElement).files[0] || ""
-        //     setInput({
-        //         ...input,
-        //         ['img']: file
-        //     }) 
-        // }else{
             setInput({
                 ...input,
                 [e.target.name]: e.target.value
             })
-        // }
     }
 
-    console.log(input);
+    function handleChangeImg(e: ChangeEvent<HTMLInputElement>) {
+        setInput({
+            ...input,
+            petImage: e.target.files?.item(0)
+        })
+    }
+
+    //console.log(input);
 
     type htmlTypes = ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>;
 
     function handleSubmit(e:any){
         e.preventDefault();
-        dispatch(postPet(input))
+        const fd = new FormData();
+        if(input.petImage){
+            fd.append('petImage', input.petImage)
+        }
+        fd.append('state', input.state)
+        fd.append('description', input.description)
+        fd.append('type', input.type)
+        fd.append('genre', input.genre)
+        dispatch(postPet(fd)) //mando form a trvaes del axios lol
         alert('Publicado!')
     }
 
@@ -70,13 +77,13 @@ export default function PostAPet() {
                 </select>
 
                 <label>Imagen: </label>
-                <input name ="img" type = "file" onChange = {(e)=>handleChange(e)}></input>
+                <input name ="img" type = "file" onChange = {handleChangeImg}></input>
 
                 <label>Fecha: </label>
                 <input  name = "date" type = "date" onChange = {(e)=>handleChange(e)}></input>
 
                 <label>Descripcion: </label>
-                <textarea name="description" onChange = {(e)=>handleChange(e)}></textarea>
+                <textarea placeholder="Ingrese descripcion de su publicacion" name="description" onChange = {(e)=>handleChange(e)}></textarea>
                 
                 <button>Publicar</button>
             </form>
