@@ -1,7 +1,7 @@
-const userNetwork = require('express').Router();
-const funcion = require('./controller');
+const userNetwork = require('express').Router()
+const { createUser, postsByUser } = require('./controller')
 
+userNetwork.get('/posts', postsByUser)
+userNetwork.post('/', createUser)
 
-userNetwork.post('/',funcion)
-
-module.exports = userNetwork;
+module.exports = userNetwork

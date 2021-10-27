@@ -1,14 +1,17 @@
-const mongoose = require('mongoose');
-const {Nota} = require('./models/User')
+const mongoose = require('mongoose')
 
-mongoose.connect('mongodb+srv://Juan:test1234@testing.am01d.mongodb.net/MongoDb?retryWrites=true&w=majority',{
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => {
+mongoose
+  .connect(
+    'mongodb+srv://MozztDB:12345@huellitasserver.9yoac.mongodb.net/HuellitasDB?retryWrites=true&w=majority',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => {
     console.log('conectados')
-}).catch(err => console.log(err))
-
+  })
+  .catch(err => console.log(err))
 
 // const tuki = new Nota({
 //     content:"fiesta",
