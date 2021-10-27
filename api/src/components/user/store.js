@@ -12,8 +12,13 @@ const createUserDB = async (name, email, password, postalCode) => {
 };
 
 const postsByUserDB = async userId => {
-  const user = await User.findById(userId).populate('posts');
-  return user.posts;
+  try {
+    const user = await User.findById(userId).populate('posts');
+    return user.posts;
+  } catch {
+    console.log('Error al buscar');
+    throw new Error('Mensaje');
+  }
 };
 
 module.exports = {

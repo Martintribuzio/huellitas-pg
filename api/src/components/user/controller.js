@@ -1,18 +1,24 @@
-const { createUserDB, postsByUserDB } = require('./store')
+const { createUserDB, postsByUserDB } = require('./store');
 
-const createUser = async (req, res) => {
-  const { name, email, password, postalCode } = req.body
-  const user = await createUserDB(name, email, password, postalCode)
-  return res.json(user)
-}
+const createUser = async ({ name, email, password, postalCode }) => {
+  try {
+    const user = await createUserDB(name, email, password, postalCode);
+    return user;
+  } catch (e) {
+    return { e: e.message };
+  }
+};
 
-const postsByUser = async (req, res) => {
-  const { id } = req.body
-  const posts = await postsByUserDB(id)
-  return res.json(posts)
-}
+const postsByUser = async id => {
+  try {
+    const posts = await postsByUserDB(id);
+    return posts;
+  } catch (e) {
+    return { e: e.message };
+  }
+};
 
 module.exports = {
   createUser,
   postsByUser,
-}
+};
