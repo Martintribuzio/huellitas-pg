@@ -1,6 +1,6 @@
-import React from "react";
+
 import {ChangeEvent, useState} from "react";
-import styles from "./PostAPet.module.css"
+import "../CSS/PostAPet.module.css"
 import { useDispatch } from "react-redux";
 import {Input} from '../redux/types/types'
 import { postPet } from "../redux/actions";
@@ -10,61 +10,80 @@ export default function PostAPet() {
 
     const [input, setInput] = useState<Input>({
         state: '',
-        img: '',
         description: '',
         type: '',
-        genre:''
+        genre:'',
+        date:"",
+        petImage: null
     })
 
     function handleChange(e: htmlTypes){
+            setInput({
+                ...input,
+                [e.target.name]: e.target.value
+            })
+    }
+
+    function handleChangeImg(e: ChangeEvent<HTMLInputElement>) {
         setInput({
             ...input,
-            [e.target.name]: e.target.value
+            petImage: e.target.files?.item(0)
         })
     }
 
-    // console.log(input)
+    //console.log(input);
 
     type htmlTypes = ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>;
 
     function handleSubmit(e:any){
         e.preventDefault();
-        dispatch(postPet(input))
+        const fd = new FormData();
+        if(input.petImage){
+            fd.append('petImage', input.petImage)
+        }
+        fd.append('state', input.state)
+        fd.append('description', input.description)
+        fd.append('type', input.type)
+        fd.append('genre', input.genre)
+        dispatch(postPet(fd)) //mando form a trvaes del axios lol
         alert('Publicado!')
     }
 
     return(
-        <div className = {styles.conteiner}>
-            <form className = {styles.form} onSubmit = {handleSubmit}>
+        <div className="conteiner">
+            <form onSubmit = {handleSubmit}>
                 
                 <label>Estado: </label>
-                <select name='state' defaultValue = "Tipo" onChange = {(e)=>handleChange(e)}>
+                <select name='state' defaultValue = "Estado de mascota" onChange = {(e)=>handleChange(e)}>
+                    <option disabled>Estado de mascota</option>
                     <option value="lost">Perdido</option>
                     <option value="adoption">En adopcion</option>
                     <option value="found">Encontrado</option>
                 </select>
                  
                 <label>Tipo de animal: </label>
-                <select defaultValue = "Tipo" onChange = {(e)=>handleChange(e)}>
+                <select name="type" defaultValue = "Tipo de mascota" onChange = {(e)=>handleChange(e)}>
+                    <option disabled>Tipo de mascota</option>
                     <option>Perro</option>
                     <option>Gato</option>
                     <option>Otros</option>
                 </select>
                 
                 <label>Genero </label>
-                <select defaultValue = "Genero" onChange = {(e)=>handleChange(e)}>
-                    <option>Masculino</option>
-                    <option>Femenino</option>
+                <select name="genre" defaultValue = "Genero de mascota" onChange = {(e)=>handleChange(e)}>
+                    <option disabled>Genero de mascota</option>
+                    <option>Male</option>
+                    <option>Female</option>
                 </select>
 
                 <label>Imagen: </label>
-                <input onChange = {(e)=>handleChange(e)}></input>
+                <input name ="img" type = "file" onChange = {handleChangeImg}></input>
 
                 <label>Fecha: </label>
-                <input type = "date" onChange = {(e)=>handleChange(e)}></input>
+                <input  name = "date" type = "date" onChange = {(e)=>handleChange(e)}></input>
 
                 <label>Descripcion: </label>
-                <textarea onChange = {(e)=>handleChange(e)}></textarea>
+                <textarea placeholder="Ingrese descripcion de su publicacion" name="description" onChange = {(e)=>handleChange(e)}></textarea>
                 
                 <button>Publicar</button>
             </form>

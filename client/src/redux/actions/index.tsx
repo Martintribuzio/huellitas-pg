@@ -1,6 +1,5 @@
 import { POST_PET, FILTER_STATE, FILTER_LATEST, GET_TYPES, GET_GENRES, GET_POSTS} from '../types/actionTypes';
 import axios from 'axios'
-import { Input } from '../types/types'
 
 export const getPosts = function(){
     return{
@@ -9,9 +8,15 @@ export const getPosts = function(){
     }
 }
 
-export function postPet(input: Input){
+export function postPet(input: FormData){
     return async function(dispatch: any){ 
-        let info = await axios.post('/post', input)
+        console.log(input)
+        let info = await axios.post('http://localhost:3001/post', input,{
+          method: 'post',
+          url: 'http://localhost:3001/post',
+          data: input,
+          headers: {'Content-Type': 'multipart/form-data' }
+        })
         return dispatch({type:POST_PET, payload:info.data})
     }
 }
