@@ -1,7 +1,12 @@
+import Filters from "./components/Filters"
+import PostAPet from "./components/PostAPet"
+
+
 function App() {
   return (
     <div className='App'>
-      <header className='App-header'>HOLA</header>
+      <PostAPet/>
+      <Filters/>
     </div>
   )
 }

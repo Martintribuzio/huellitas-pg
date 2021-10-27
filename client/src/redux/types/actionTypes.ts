@@ -1,0 +1,40 @@
+import {Post} from './types'
+
+export const FILTER_STATE = "FILTER_STATE";
+export const FILTER_LATEST = "FILTER_LATEST";
+export const GET_TYPES = "GET_TYPES";
+export const GET_GENRES = "GET_GENRES"
+export const GET_POSTS = "GET_POSTS";
+export const POST_PET = "POST_PET"
+
+export interface getPosts{
+    type: typeof GET_POSTS,
+    payload:Array<Post>
+}
+
+export interface PostPet{
+    type: typeof POST_PET,
+    payload:Array<Post>
+}
+
+export interface filterByState{
+    type: typeof FILTER_STATE,
+    payload:string
+}
+
+export interface filterByLatest{
+    type: typeof FILTER_LATEST,
+    payload:string
+}
+
+export interface getTypes{
+    type: typeof GET_TYPES,
+    payload:string
+}
+
+export interface getGenres{
+    type: typeof GET_GENRES,
+    payload: string
+}
+
+export type FiltersActionTypes = filterByState | filterByLatest | getTypes | getGenres
