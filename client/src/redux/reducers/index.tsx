@@ -8,8 +8,8 @@ interface typeState{
 }
 
 const initialState: typeState = {
-  allPosts:[{img: '', description: '', date: '', state: 'lost', type: 'cat'}],
-  filteredPosts: [{img: '', description: '', date: '', state: 'lost', type: 'cat'}],
+  allPosts:[{img: '', description: '', date: '', state: 'lost', type: 'cat', genre:'male'}],
+  filteredPosts: [{img: '', description: '', date: '', state: 'lost', type: 'cat', genre:'male'}],
 }
 
 
@@ -30,16 +30,6 @@ export default function rootReducer (state = initialState, action:FiltersActionT
             ...state,
             filteredPosts: state.allPosts.filter(p => p.state === action.payload)
         }
-    case NEWER_POSTS:
-        return{
-            ...state,
-            filteredPosts: state.allPosts.filter(p => p.date)//hay que arreglar
-        }
-    case OLDER_POSTS:
-        return{
-            ...state,
-            filteredPosts: state.allPosts.filter(p => p.date)//hay que arreglar
-        }
     case GET_TYPES:
         return{
             ...state,
@@ -48,7 +38,7 @@ export default function rootReducer (state = initialState, action:FiltersActionT
     case GET_GENRES:
         return{
             ...state,
-            filteredPosts: state.allPosts.filter(p => p.type === action.payload)//hay que arreglar
+            filteredPosts: state.allPosts.filter(p => p.genre === action.payload)
         }
     default:
       return state;

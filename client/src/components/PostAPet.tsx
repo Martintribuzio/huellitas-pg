@@ -18,7 +18,8 @@ export default function PostAPet() {
         state: '',
         img: '',
         description: '',
-        type: ''
+        type: '',
+        genre:''
     })
 
 
@@ -56,6 +57,12 @@ export default function PostAPet() {
                     <option>Perro</option>
                     <option>Gato</option>
                     <option>Otros</option>
+                </select>
+                
+                <label>Genero </label>
+                <select defaultValue = "Genero" onChange = {(e)=>handleChange(e)}>
+                    <option>Masculino</option>
+                    <option>Femenino</option>
                 </select>
 
                 <label>Imagen: </label>

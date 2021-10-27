@@ -3,14 +3,16 @@ export interface Post{
     description: string;
     state: string;
     date: string;
-    type: string
+    type: string;
+    genre: string;
 }
 
 export interface Input{
     state:string,
     img: string,
     description: string,
-    type: string
+    type: string,
+    genre: string,
 }
 
 // export interface Dispatch<A extends Action = AnyAction> {HAY QUE HACER UNA INTERFAZ PARA DISPATCH
