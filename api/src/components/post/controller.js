@@ -1,18 +1,19 @@
 const { createPostDB, findPostDB } = require('./store');
 const moment = require('moment-timezone');
 
-const createPost = async ({ animal, postType, genre, description, userId }) => {
+const createPost = async ({ type, state, genre, description, userId },postImg) => {
   const dateARG = moment
     .tz('America/Argentina/Buenos_Aires')
     .format('YYYY-MM-DD HH:mm:ss');
   try {
     const post = await createPostDB(
-      animal,
-      postType,
+      type,
+      state,
       description,
       userId,
       genre,
-      dateARG
+      dateARG,
+      postImg,
     );
     return post;
   } catch (error) {
