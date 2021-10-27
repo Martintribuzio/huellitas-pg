@@ -1,17 +1,17 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 mongoose
-  .connect(
-    'mongodb+srv://MozztDB:12345@huellitasserver.9yoac.mongodb.net/HuellitasDB?retryWrites=true&w=majority',
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
-  .then(() => {
-    console.log('conectados')
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
   })
-  .catch(err => console.log(err))
+  .then(() => {
+    console.log('DB connected');
+  })
+  .catch(err => console.log(err));
 
 // const tuki = new Nota({
 //     content:"fiesta",
