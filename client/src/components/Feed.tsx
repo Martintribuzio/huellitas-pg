@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { getPosts } from "../redux/actions";
 import {typeState} from '../redux/reducers/index'
 import Post from "./Post";
+import styles from "../CSS/Feed.module.css"
+import Filters from './Filters';
 
 export default function Feed(){
 
@@ -17,7 +19,8 @@ export default function Feed(){
 
     if(allPosts.length){
         return(
-            <div>
+            <div className = {styles.contenedor}>
+                <Filters/>
                 <div>
                     {
                         allPosts.map(p => {
