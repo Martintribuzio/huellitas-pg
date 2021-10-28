@@ -122,7 +122,12 @@ export default function PrimarySearchAppBar(): JSX.Element {
               }}>
               <Link className={s.link} to='/home/createPost'>
                 <Button
-                  style={{ margin: '5px', width: '100%', minWidth: '135px' }}
+                  style={{
+                    margin: '5px',
+                    width: '100%',
+                    minWidth: '135px',
+                    maxWidth: '150px',
+                  }}
                   size='small'
                   color='secondary'
                   variant='contained'>
@@ -149,10 +154,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
           </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
-              size='large'
-              aria-label='show 4 new mails'
-              color='inherit'>
+            <IconButton size='large' color='inherit'>
               <Badge badgeContent={0} color='error'>
                 <Link to='/home/menssage' style={{ color: 'white' }}>
                   <MailIcon />
