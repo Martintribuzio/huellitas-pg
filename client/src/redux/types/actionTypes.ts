@@ -1,4 +1,4 @@
-import {Post} from './types'
+import {PostType} from "./types"
 
 export const FILTER_STATE = "FILTER_STATE";
 export const FILTER_LATEST = "FILTER_LATEST";
@@ -9,12 +9,12 @@ export const POST_PET = "POST_PET"
 
 export interface getPosts{
     type: typeof GET_POSTS,
-    payload:Array<Post>
+    payload:Array<PostType>
 }
 
 export interface PostPet{
     type: typeof POST_PET,
-    payload:Array<Post>
+    payload:Array<PostType>
 }
 
 export interface filterByState{
@@ -37,4 +37,4 @@ export interface getGenres{
     payload: string
 }
 
-export type FiltersActionTypes = filterByState | filterByLatest | getTypes | getGenres
+export type FiltersActionTypes = filterByState | filterByLatest | getTypes | getGenres | PostPet | getPosts

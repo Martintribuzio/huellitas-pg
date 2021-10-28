@@ -1,16 +1,9 @@
 import { POST_PET, FILTER_STATE, FILTER_LATEST, GET_TYPES, GET_GENRES, GET_POSTS} from '../types/actionTypes';
 import axios from 'axios'
 
-export const getPosts = function(){
-    return{
-      type:GET_POSTS,
-      
-    }
-}
-
 export function postPet(input: FormData){
     return async function(dispatch: any){ 
-        console.log(input)
+        //console.log(input)
         let info = await axios.post('http://localhost:3001/post', input,{
           method: 'post',
           url: 'http://localhost:3001/post',
@@ -19,6 +12,14 @@ export function postPet(input: FormData){
         })
         return dispatch({type:POST_PET, payload:info.data})
     }
+}
+
+export function getPosts(){
+  return async function(dispatch: any){ 
+    let data = (await axios.get('http://localhost:3001/post')).data;
+    // console.log(data)
+    return dispatch({type: GET_POSTS, payload: data})
+  }
 }
 
 export const filterByState = function(filter: string){

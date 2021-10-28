@@ -94,7 +94,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
             color='inherit'
             aria-label='open drawer'
             sx={{ mr: 2 }}>
-            <Link className={s.link} to='/' style={{ color: 'white' }}>
+            <Link className={s.link} to='/home' style={{ color: 'white' }}>
               <PetsIcon />
             </Link>
           </IconButton>
@@ -119,32 +119,14 @@ export default function PrimarySearchAppBar(): JSX.Element {
                 display: 'flex',
                 justifyContent: 'center',
               }}>
-                  <Link className={s.link} to='/lost'>
-              <Button
-                style={{ margin: '5px', width: '20%' }}
-                size='small'
-                color='secondary'
-                variant='contained'>
-                perdidos
-              </Button>
-            </Link>
-              <Link className={s.link} to='/found'>
-              <Button
-                style={{ margin: '5px', width: '20%' }}
-                size='small'
-                color='secondary'
-                variant='contained'>
-                encontrados
-              </Button>
-            </Link>
-              <Link className={s.link} to='/adoption'>
-              <Button
-                style={{ margin: '5px', width: '20%' }}
-                size='small'
-                color='secondary'
-                variant='contained'>
-                en adopcion
-              </Button>
+              <Link className={s.link} to='/home/createPost'>
+                <Button
+                  style={{ margin: '5px', width: '20%' }}
+                  size='small'
+                  color='secondary'
+                  variant='contained'>
+                  Crear Post +
+                </Button>
             </Link>
             </div>
           </Box>
@@ -158,7 +140,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               aria-label='show 4 new mails'
               color='inherit'>
               <Badge badgeContent={0} color='error'>
-              <Link to='/menssage' style={{ color: 'white' }}>
+              <Link to='/home/menssage' style={{ color: 'white' }}>
                 <MailIcon />
               </Link>
               </Badge>
@@ -180,7 +162,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               aria-controls={menuId}
               aria-haspopup='true'
               color='inherit'>
-              <Link to='/profile' style={{ color: 'white' }}>
+              <Link to='/home/profile' style={{ color: 'white' }}>
                 <AccountCircle />
               </Link>
             </IconButton>

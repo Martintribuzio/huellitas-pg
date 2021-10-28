@@ -1,10 +1,11 @@
-export interface Post{
-    img: string;
-    description: string;
-    state: string;
-    date: string;
-    type: string;
-    genre: string;
+export interface PostType{
+    description: string,
+    genre: string,
+    date: string,
+    petImage: File | null | undefined | string,
+    animal: string,
+    postType: string,
+    _id?: string
 }
 
 export interface Input{
@@ -13,10 +14,9 @@ export interface Input{
     type: string,
     genre: string,
     date: string,
-    petImage: File | null | undefined
+    petImage: File | null | undefined | string,
+    animal: string, 
+    postType: string,
+    _id?: string
 }
 
-
-// export interface Dispatch<A extends Action = AnyAction> {HAY QUE HACER UNA INTERFAZ PARA DISPATCH
-//     <T extends A>(action: T): T
-//   }

@@ -2,19 +2,19 @@
 import {ChangeEvent, useState} from "react";
 import "../CSS/PostAPet.module.css"
 import { useDispatch } from "react-redux";
-import {Input} from '../redux/types/types'
+import {PostType} from '../redux/types/types'
 import { postPet } from "../redux/actions";
 
 export default function PostAPet() { 
     const dispatch =  useDispatch();
 
-    const [input, setInput] = useState<Input>({
-        state: '',
+    const [input, setInput] = useState<PostType>({
         description: '',
-        type: '',
         genre:'',
         date:"",
-        petImage: null
+        petImage: null,
+        animal: "", 
+        postType: "" 
     })
 
     function handleChange(e: htmlTypes){
@@ -41,9 +41,9 @@ export default function PostAPet() {
         if(input.petImage){
             fd.append('petImage', input.petImage)
         }
-        fd.append('state', input.state)
+        fd.append('state', input.postType)
         fd.append('description', input.description)
-        fd.append('type', input.type)
+        fd.append('type', input.animal)
         fd.append('genre', input.genre)
         dispatch(postPet(fd)) //mando form a trvaes del axios lol
         alert('Publicado!')
