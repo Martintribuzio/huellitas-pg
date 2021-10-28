@@ -16,9 +16,12 @@ import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
+import Inbox from '../Messages/Messages'
 
 export default function PrimarySearchAppBar(): JSX.Element {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const isMenuOpen = Boolean(anchorEl);
 
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -28,9 +31,39 @@ export default function PrimarySearchAppBar(): JSX.Element {
 
   const handleMobileMenuOpen = (event: any) => {
     setMobileMoreAnchorEl(event.currentTarget);
+
+  };
+
+  const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    handleMobileMenuClose();
   };
 
   const menuId = 'primary-search-account-menu';
+  const renderMenssage = (
+    <Menu
+      // sx={{width:9/10}}
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right"
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right"
+      }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <Inbox />
+    </Menu>
+  );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
@@ -152,11 +185,10 @@ export default function PrimarySearchAppBar(): JSX.Element {
             <IconButton
               size='large'
               aria-label='show 4 new mails'
+              onClick={handleProfileMenuOpen}
               color='inherit'>
               <Badge badgeContent={0} color='error'>
-                <Link to='/home/menssage' style={{ color: 'white' }}>
                   <MailIcon />
-                </Link>
               </Badge>
             </IconButton>
             <IconButton
@@ -164,7 +196,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               aria-label='show 17 new notifications'
               color='inherit'>
               <Badge badgeContent={0} color='error'>
-                <Link to='/notification' style={{ color: 'white' }}>
+                <Link to='/home/notification' style={{ color: 'white' }}>
                   <NotificationsIcon />
                 </Link>
               </Badge>
@@ -195,6 +227,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
+      {renderMenssage}
     </Box>
   );
 }
