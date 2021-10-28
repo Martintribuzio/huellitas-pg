@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Route } from 'react-router-dom';
 import Navbar from './components/navBar/NavBar';
 import Title from './components/Title/Title';
@@ -41,6 +42,19 @@ function App() {
       </div>
     </ThemeProvider>
   );
+=======
+import Filters from "./components/Filters"
+import PostAPet from "./components/PostAPet"
+
+
+function App() {
+  return (
+    <div className='App'>
+      <PostAPet/>
+      <Filters/>
+    </div>
+  )
+>>>>>>> 94085b05c49e1f128b3e426d8ce991e4ff40c023
 }
 
 export default App;
