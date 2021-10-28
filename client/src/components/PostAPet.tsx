@@ -4,8 +4,9 @@ import "../CSS/PostAPet.module.css"
 import { useDispatch } from "react-redux";
 import {PostType} from '../redux/types/types'
 import { postPet } from "../redux/actions";
+import styles from "../CSS/PostAPet.module.css"
 
-export default function PostAPet() { 
+export default function PostAPet() {  
     const dispatch =  useDispatch();
 
     const [input, setInput] = useState<PostType>({
@@ -50,11 +51,11 @@ export default function PostAPet() {
     }
 
     return(
-        <div className="conteiner">
-            <form onSubmit = {handleSubmit}>
+        <div className={styles.conteiner}>
+            <form onSubmit = {handleSubmit} className = {styles.form}>
                 
                 <label>Estado: </label>
-                <select name='state' defaultValue = "Estado de mascota" onChange = {(e)=>handleChange(e)}>
+                <select name='state' defaultValue = "Estado de mascota" onChange = {(e)=>handleChange(e)} required>
                     <option disabled>Estado de mascota</option>
                     <option value="lost">Perdido</option>
                     <option value="adoption">En adopcion</option>
@@ -62,7 +63,7 @@ export default function PostAPet() {
                 </select>
                  
                 <label>Tipo de animal: </label>
-                <select name="type" defaultValue = "Tipo de mascota" onChange = {(e)=>handleChange(e)}>
+                <select name="type" defaultValue = "Tipo de mascota" onChange = {(e)=>handleChange(e)} required>
                     <option disabled>Tipo de mascota</option>
                     <option>Perro</option>
                     <option>Gato</option>
@@ -70,20 +71,20 @@ export default function PostAPet() {
                 </select>
                 
                 <label>Genero </label>
-                <select name="genre" defaultValue = "Genero de mascota" onChange = {(e)=>handleChange(e)}>
+                <select name="genre" defaultValue = "Genero de mascota" onChange = {(e)=>handleChange(e)} required>
                     <option disabled>Genero de mascota</option>
                     <option value='male'>Macho</option>
                     <option value='female'> Hembra</option>
                 </select>
 
                 <label>Imagen: </label>
-                <input name ="img" type = "file" onChange = {handleChangeImg}></input>
+                <input name ="img" type = "file" onChange = {handleChangeImg} required></input >
 
                 <label>Fecha: </label>
-                <input  name = "date" type = "date" onChange = {(e)=>handleChange(e)}></input>
+                <input  name = "date" type = "date" onChange = {(e)=>handleChange(e)} required></input>
 
                 <label>Descripcion: </label>
-                <textarea placeholder="Ingrese descripcion de su publicacion" name="description" onChange = {(e)=>handleChange(e)}></textarea>
+                <textarea placeholder="Ingrese descripcion de su publicacion" name="description" onChange = {(e)=>handleChange(e)} required></textarea>
                 
                 <button>Publicar</button>
             </form>

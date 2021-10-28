@@ -1,16 +1,17 @@
 import { PostType } from "../redux/types/types"
+import styles from '../CSS/Post.module.css'
 
 export default function Post(props: PostType){
     console.log("PROPS", props)
     return(
-        <div>
+        <div className = {styles.divCard}>
             {/* {typeof props.petImage === "string" && props.petImage?<img src = {`http://localhost:3001/${props.petImage}`}></img> : ""} */}
-            <img src = {`http://localhost:3001/${props.petImage}`}/>
-            <p>{props.description}</p>
-            <p>{props.date}</p>
-            <p>{props.genre}</p>
-            <p>{props.animal}</p>
-            <p>{props.postType}</p>
+            <img className={styles.img} src = {`http://localhost:3001/${props.petImage}`}/>
+            <p>{`Descripcion: ${props.description}`}</p>
+            <p>{`Fecha: ${props.date}`}</p>
+            <p>{`Genero: ${props.genre}`}</p>
+            <p>{`Animal: ${props.animal}`}</p>
+            <p>{`Estado: ${props.postType}`}</p>
         </div>
     )
 } 

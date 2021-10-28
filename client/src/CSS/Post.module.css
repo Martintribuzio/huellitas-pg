@@ -1,0 +1,14 @@
+.divCard{
+    display: flex;
+    justify-content:center ;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid;
+    width: 100%;
+}
+
+.img{
+    width: 98%;
+    height: 98%;
+    margin: 5px;
+}
