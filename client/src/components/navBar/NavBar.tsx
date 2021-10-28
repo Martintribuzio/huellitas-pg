@@ -15,6 +15,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import Button from '@mui/material/Button';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 export default function PrimarySearchAppBar(): JSX.Element {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -121,17 +122,30 @@ export default function PrimarySearchAppBar(): JSX.Element {
               }}>
               <Link className={s.link} to='/home/createPost'>
                 <Button
-                  style={{ margin: '5px', width: '20%' }}
+                  style={{ margin: '5px', width: '100%', minWidth: '135px' }}
                   size='small'
                   color='secondary'
                   variant='contained'>
-                  Crear Post +
+                  <AddCircleIcon />
+                  Crear Post
                 </Button>
-            </Link>
+              </Link>
             </div>
           </Box>
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            //faltan botones para el menu de celular
+          <Box
+            sx={{
+              display: {
+                xs: 'flex',
+                md: 'none',
+                justifyContent: 'center',
+                width: '-webkit-fill-available',
+              },
+            }}>
+            <IconButton>
+              <Link to='/home/createPost'>
+                <AddCircleIcon fontSize='large' color='secondary' />
+              </Link>
+            </IconButton>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
@@ -140,9 +154,9 @@ export default function PrimarySearchAppBar(): JSX.Element {
               aria-label='show 4 new mails'
               color='inherit'>
               <Badge badgeContent={0} color='error'>
-              <Link to='/home/menssage' style={{ color: 'white' }}>
-                <MailIcon />
-              </Link>
+                <Link to='/home/menssage' style={{ color: 'white' }}>
+                  <MailIcon />
+                </Link>
               </Badge>
             </IconButton>
             <IconButton
@@ -150,9 +164,9 @@ export default function PrimarySearchAppBar(): JSX.Element {
               aria-label='show 17 new notifications'
               color='inherit'>
               <Badge badgeContent={0} color='error'>
-              <Link to='/notification' style={{ color: 'white' }}>
-                <NotificationsIcon  />
-              </Link>
+                <Link to='/notification' style={{ color: 'white' }}>
+                  <NotificationsIcon />
+                </Link>
               </Badge>
             </IconButton>
             <IconButton
