@@ -20,7 +20,7 @@ const postSchema = new Schema({
   },
   date: String,
   user: { type: Schema.Types.ObjectId, ref: 'User' },
-  postImg: {
+  petImage: {
     type: String,
   }
 });
