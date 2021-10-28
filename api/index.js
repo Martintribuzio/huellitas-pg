@@ -1,7 +1,7 @@
 const dotenv = require('dotenv')
 const app = require('./src/app')
 //Initialization
-require("./src/db");
+require("./src/mongo");
 require("./src/passport/local-auth");
 
 dotenv.config()
