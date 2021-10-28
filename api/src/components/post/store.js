@@ -8,7 +8,7 @@ const createPostDB = async (
   userId,
   genre,
   date,
-  postImg
+  petImage
 ) => {
   try {
     const post = new Post({
@@ -18,7 +18,7 @@ const createPostDB = async (
       user: userId,
       genre,
       date,
-      postImg
+      petImage
     });
     await post.save();
     // const userById = await User.findById(userId);
