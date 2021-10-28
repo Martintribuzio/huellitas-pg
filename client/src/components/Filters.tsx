@@ -29,9 +29,9 @@ export default function Filters(){
      <div>
          <select defaultValue='seleccione estado' onChange={(e) => handleSelectEstado(e)}>
             <option value='seleccione estado' disabled>seleccione estado</option>
-            <option value='lost'>lost</option>
-            <option value='Encontrado'>Encontrado</option>
-            <option value='adoption'>adoption</option>
+            <option value='lost'>Perdido</option>
+            <option value='found'>Encontrado</option>
+            <option value='adoption'>En adopcion</option>
          </select>
          <select defaultValue='seleccione especie' onChange={(e) => handleSelectType(e)}>
             <option value='seleccione especie' disabled>seleccione tipo</option>
@@ -41,8 +41,8 @@ export default function Filters(){
          </select>
          <select defaultValue='seleccione genero' onChange={(e) => handleSelectGenres(e)}>
             <option value='seleccione genero' disabled>seleccione genero</option>
-            <option value='male'>male</option>
-            <option value='female'>female</option>
+            <option value='male'>Macho</option>
+            <option value='female'>Hembra</option>
          </select>
          <button value='mas recientes' onClick={() => handleClick('mas recientes')}>mas recientes</button>
          <button value='mas antiguos' onClick={() => handleClick('mas antiguos')}>mas antiguos</button>
