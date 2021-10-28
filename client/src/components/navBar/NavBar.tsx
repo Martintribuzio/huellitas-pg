@@ -13,7 +13,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from 'react-router-dom';
-import './NavBar.module.css';
+import s from './NavBar.module.css';
 import Button from '@mui/material/Button';
 
 export default function PrimarySearchAppBar(): JSX.Element {
@@ -94,7 +94,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
             color='inherit'
             aria-label='open drawer'
             sx={{ mr: 2 }}>
-            <Link to='/home' style={{ color: 'white' }}>
+            <Link className={s.link} to='/' style={{ color: 'white' }}>
               <PetsIcon />
             </Link>
           </IconButton>
@@ -119,6 +119,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
                 display: 'flex',
                 justifyContent: 'center',
               }}>
+                  <Link className={s.link} to='/lost'>
               <Button
                 style={{ margin: '5px', width: '20%' }}
                 size='small'
@@ -126,6 +127,8 @@ export default function PrimarySearchAppBar(): JSX.Element {
                 variant='contained'>
                 perdidos
               </Button>
+            </Link>
+              <Link className={s.link} to='/found'>
               <Button
                 style={{ margin: '5px', width: '20%' }}
                 size='small'
@@ -133,6 +136,8 @@ export default function PrimarySearchAppBar(): JSX.Element {
                 variant='contained'>
                 encontrados
               </Button>
+            </Link>
+              <Link className={s.link} to='/adoption'>
               <Button
                 style={{ margin: '5px', width: '20%' }}
                 size='small'
@@ -140,6 +145,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
                 variant='contained'>
                 en adopcion
               </Button>
+            </Link>
             </div>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
@@ -152,7 +158,9 @@ export default function PrimarySearchAppBar(): JSX.Element {
               aria-label='show 4 new mails'
               color='inherit'>
               <Badge badgeContent={0} color='error'>
+              <Link to='/menssage' style={{ color: 'white' }}>
                 <MailIcon />
+              </Link>
               </Badge>
             </IconButton>
             <IconButton
@@ -160,7 +168,9 @@ export default function PrimarySearchAppBar(): JSX.Element {
               aria-label='show 17 new notifications'
               color='inherit'>
               <Badge badgeContent={0} color='error'>
-                <NotificationsIcon />
+              <Link to='/notification' style={{ color: 'white' }}>
+                <NotificationsIcon  />
+              </Link>
               </Badge>
             </IconButton>
             <IconButton
