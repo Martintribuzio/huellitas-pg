@@ -6,22 +6,22 @@ export default function Filters(){
     const dispatch = useDispatch()
 
     function handleSelectEstado(e: ChangeEvent<HTMLSelectElement>){
-      console.log(e.target.value)
+      //console.log(e.target.value)
       dispatch(filterByState(e.target.value))
     }
 
     function handleSelectType(e: ChangeEvent<HTMLSelectElement>){
-        console.log(e.target.value)
+        //console.log(e.target.value)
         dispatch(getTypes(e.target.value))
     }
 
     function handleSelectGenres(e: ChangeEvent<HTMLSelectElement>){
-        console.log(e.target.value)
+        // console.log(e.target.value)
         dispatch(getGenres(e.target.value))
     }
     
    function handleClick(value: string){
-     console.log(value)
+    //  console.log(value)
      dispatch(filterByLatest(value))
    }
 
@@ -29,20 +29,20 @@ export default function Filters(){
      <div>
          <select defaultValue='seleccione estado' onChange={(e) => handleSelectEstado(e)}>
             <option value='seleccione estado' disabled>seleccione estado</option>
-            <option value='Perdido'>Perdido</option>
+            <option value='lost'>lost</option>
             <option value='Encontrado'>Encontrado</option>
-            <option value='En adopcion'>En adopcion</option>
+            <option value='adoption'>adoption</option>
          </select>
          <select defaultValue='seleccione especie' onChange={(e) => handleSelectType(e)}>
-            <option value='seleccione especie' disabled>seleccione especie</option>
+            <option value='seleccione especie' disabled>seleccione tipo</option>
             <option value='Perro'>Perro</option>
             <option value='Gato'>Gato</option>
             <option value='otros'>otros</option>
          </select>
          <select defaultValue='seleccione genero' onChange={(e) => handleSelectGenres(e)}>
             <option value='seleccione genero' disabled>seleccione genero</option>
-            <option value='masculino'>masculino</option>
-            <option value='femenino'>femenino</option>
+            <option value='male'>male</option>
+            <option value='female'>female</option>
          </select>
          <button value='mas recientes' onClick={() => handleClick('mas recientes')}>mas recientes</button>
          <button value='mas antiguos' onClick={() => handleClick('mas antiguos')}>mas antiguos</button>
