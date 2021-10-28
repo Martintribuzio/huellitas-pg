@@ -1,15 +1,20 @@
-import {Route} from 'react-router-dom'
-import Navbar from './components/navBar/NavBar'
-import Title from './components/Title/Title'
+import { Route } from 'react-router-dom';
+import Navbar from './components/navBar/NavBar';
+import Title from './components/Title/Title';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './themeConfig';
+
 function App() {
   return (
-    <div className='App'>
-      <Route path='/'>
-        <Navbar />
-        <Title />
+    <ThemeProvider theme={theme}>
+      <div className='App'>
+        <Route path='/'>
+          <Navbar />
+          <Title />
         </Route>
-    </div>
-  )
+      </div>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;

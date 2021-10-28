@@ -12,25 +12,17 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import MailIcon from '@mui/icons-material/Mail';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MoreIcon from '@mui/icons-material/MoreVert';
+import { Link } from 'react-router-dom';
+import './NavBar.module.css';
+import Button from '@mui/material/Button';
 
 export default function PrimarySearchAppBar(): JSX.Element {
-  const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
-  const handleProfileMenuOpen = (event: any) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
   const handleMobileMenuOpen = (event: any) => {
@@ -38,25 +30,6 @@ export default function PrimarySearchAppBar(): JSX.Element {
   };
 
   const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}>
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
 
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
@@ -93,16 +66,20 @@ export default function PrimarySearchAppBar(): JSX.Element {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size='large'
-          aria-label='account of current user'
-          aria-controls='primary-search-account-menu'
-          aria-haspopup='true'
-          color='inherit'>
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
+      <MenuItem>
+        <Link
+          style={{ display: 'flex', color: 'black', textDecoration: 'none' }}
+          to='/profile'>
+          <IconButton
+            size='large'
+            aria-label='account of current user'
+            aria-controls='primary-search-account-menu'
+            aria-haspopup='true'
+            color='inherit'>
+            <AccountCircle />
+          </IconButton>
+          <p>Profile</p>
+        </Link>
       </MenuItem>
     </Menu>
   );
@@ -117,23 +94,64 @@ export default function PrimarySearchAppBar(): JSX.Element {
             color='inherit'
             aria-label='open drawer'
             sx={{ mr: 2 }}>
-            <PetsIcon />
+            <Link to='/home' style={{ color: 'white' }}>
+              <PetsIcon />
+            </Link>
           </IconButton>
           <Typography
             variant='h6'
             noWrap
             component='div'
-            sx={{ display: { xs: 'none', sm: 'block' } }}>
+            sx={{
+              display: { overflow: 'inherit', xs: 'none', sm: 'block' },
+            }}>
             Huellitas
           </Typography>
-
+          <Box
+            sx={{
+              display: { xs: 'none', md: 'flex' },
+              width: '-webkit-fill-available',
+              justifyContent: 'center',
+            }}>
+            <div
+              style={{
+                width: '-webkit-fill-available',
+                display: 'flex',
+                justifyContent: 'center',
+              }}>
+              <Button
+                style={{ margin: '5px', width: '20%' }}
+                size='small'
+                color='secondary'
+                variant='contained'>
+                perdidos
+              </Button>
+              <Button
+                style={{ margin: '5px', width: '20%' }}
+                size='small'
+                color='secondary'
+                variant='contained'>
+                encontrados
+              </Button>
+              <Button
+                style={{ margin: '5px', width: '20%' }}
+                size='small'
+                color='secondary'
+                variant='contained'>
+                en adopcion
+              </Button>
+            </div>
+          </Box>
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            //faltan botones para el menu de celular
+          </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton
               size='large'
               aria-label='show 4 new mails'
               color='inherit'>
-              <Badge badgeContent={4} color='error'>
+              <Badge badgeContent={0} color='error'>
                 <MailIcon />
               </Badge>
             </IconButton>
@@ -141,7 +159,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               size='large'
               aria-label='show 17 new notifications'
               color='inherit'>
-              <Badge badgeContent={17} color='error'>
+              <Badge badgeContent={0} color='error'>
                 <NotificationsIcon />
               </Badge>
             </IconButton>
@@ -151,9 +169,10 @@ export default function PrimarySearchAppBar(): JSX.Element {
               aria-label='account of current user'
               aria-controls={menuId}
               aria-haspopup='true'
-              onClick={handleProfileMenuOpen}
               color='inherit'>
-              <AccountCircle />
+              <Link to='/profile' style={{ color: 'white' }}>
+                <AccountCircle />
+              </Link>
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
@@ -162,7 +181,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               aria-label='show more'
               aria-controls={mobileMenuId}
               aria-haspopup='true'
-              onClick={e => handleMobileMenuOpen(e.currentTarget)}
+              onClick={handleMobileMenuOpen}
               color='inherit'>
               <MoreIcon />
             </IconButton>
@@ -170,7 +189,6 @@ export default function PrimarySearchAppBar(): JSX.Element {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
     </Box>
   );
 }
