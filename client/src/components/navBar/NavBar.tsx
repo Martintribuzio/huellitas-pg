@@ -17,6 +17,7 @@ import s from './NavBar.module.css';
 import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Inbox from '../Messages/Messages'
+import Stack from '@mui/material/Stack';
 
 export default function PrimarySearchAppBar(): JSX.Element {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -62,6 +63,11 @@ export default function PrimarySearchAppBar(): JSX.Element {
       onClose={handleMenuClose}
     >
       <Inbox />
+      <Stack direction="row" justifyContent="center">
+        <Link to='/home/menssage' style={{textDecoration:'none'}}>
+        <Button>Ver todos los mensajes</Button>
+        </Link>
+      </Stack>
     </Menu>
   );
 
@@ -81,14 +87,16 @@ export default function PrimarySearchAppBar(): JSX.Element {
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}>
+        <Link to='/home/menssage' className={s.link} style={{color: 'black'}}>
       <MenuItem>
         <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
-          <Badge badgeContent={4} color='error'>
+          <Badge badgeContent={0} color='error'>
             <MailIcon />
           </Badge>
         </IconButton>
         <p>Messages</p>
       </MenuItem>
+      </Link>
       <MenuItem>
         <IconButton
           size='large'

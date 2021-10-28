@@ -8,8 +8,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
+
 
 const messages = [
   {
@@ -21,7 +20,7 @@ const messages = [
   {
     id: 2,
     primary: 'No re loco el perro',
-    secondary: `el perro estaba volando re loco cuando lo vi! parecia superman`,
+    secondary: 'el perro estaba volando re loco cuando lo vi! parecia superman',
     person: '/static/images/avatar/1.jpg',
   },
   {
@@ -41,7 +40,7 @@ export default function BottomAppBar() {
           Mensajes
         </Typography>
         <List sx={{ mb: 2 }}>
-          {messages.map(({ id, primary, secondary, person }) => (
+          {messages.slice(0,5).map(({ id, primary, secondary, person }) => (
               <React.Fragment key={id}>
               {id === 1 && (
                   <ListSubheader sx={{ bgcolor: 'background.paper' }}>
@@ -63,9 +62,6 @@ export default function BottomAppBar() {
           ))}
         </List>
       </Paper>
-      <Stack direction="row" justifyContent="center">
-        <Button href="./home/menssaje">Ver todos los mensajes</Button>
-    </Stack>
     </React.Fragment>
   );
 }
