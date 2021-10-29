@@ -11,7 +11,16 @@ const createUserDB = async (email) => {
   }
 }; //Sospecho que este createUser no debe ir ya que el passport se encarga de esto
 
-
+const searchUserDB = async (email) => {
+  try{
+    const user = await User.findOne({email: email}) //Hacemos la comprobación para ver si ya existe un correo electrónico igual en la DB
+    return user;
+  }
+  catch (error){
+    console.log(error);
+    throw new Error('Error al buscar');
+  }
+}
 
 const postsByUserDB = async userId => {
   try {
@@ -25,5 +34,6 @@ const postsByUserDB = async userId => {
 
 module.exports = {
   createUserDB,
-  postsByUserDB,
+  searchUserDB,
+  postsByUserDB
 };

@@ -49,16 +49,17 @@ passport.use("local-signin", new LocalStrategy({
     passReqToCallback: true
 }, async (req, email, password, done) =>{
     try {
-    const user = await User.findOne({email: email}) //Hacemos la comprobación para ver si ya existe un correo electrónico igual en la DB
-    if (!user){
-        return done(null, false, req.flash("signinMessage","El usuario no existe") )//Null: No ha ocurrido un error; False: No te voy a crear un usuario debido a que ya hay uno registrado con ese mail. Vamos a tirar un mensaje con connect-flash
-    }
-    if (!user.comparePassword(password)){
-        return done(null, false, req.flash("signinMessage","Contraseña incorrecta"))
-    }
-    done(null, user);
-    }
+        const user = await store.searchUserDB(email);
+        if (!user){
+            return done(null, false, req.flash("signinMessage","El usuario no existe") )//Null: No ha ocurrido un error; False: No te voy a crear un usuario debido a que ya hay uno registrado con ese mail. Vamos a tirar un mensaje con connect-flash
+        }
+        if (!user.comparePassword(password)){
+            return done(null, false, req.flash("signinMessage","Contraseña incorrecta"))
+        }
+        done(null, user);
+        }
     catch(error){
-        console.log(error)
+        console.log(error);
+        throw new Error(error);
     }
 }));

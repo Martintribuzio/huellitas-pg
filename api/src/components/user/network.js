@@ -31,14 +31,14 @@ userNetwork.get("/home", (req,res) => {
   res.send("Welcome to home")
 })
 
-// Login Page
+// // Login Page
 userNetwork.get("/login", (req,res) => {  
   res.send("login")
  
 })
 userNetwork.post("/login", passport.authenticate("local-signin", {
-  successRedirect: "/home",
-  failureRedirect: "/login",
+  successRedirect: "/user/home",
+  failureRedirect: "/user/login",
   passReqToCallback: true
 }))
 
@@ -48,8 +48,8 @@ userNetwork.get("/signup", (req,res) => {
   res.send("signup")
 })
 userNetwork.post("/signup", passport.authenticate("local-signup", {
-  successRedirect: "/login",
-  failureRedirect: "/signup",
+  successRedirect: "/user/login",
+  failureRedirect: "/user/signup",
   passReqToCallback: true
 }));
 
@@ -58,10 +58,11 @@ userNetwork.get('/logout', (req, res, next) => {
   res.redirect('/');
 });
 
+//Autenticacion para navegar entre páginas
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated())
       return next();
-  res.redirect('/login');
+  res.redirect('/user/login');
 };
 
 userNetwork.get('/profile', isLoggedIn, (req, res, next) => {
