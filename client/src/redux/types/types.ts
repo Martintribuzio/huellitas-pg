@@ -1,4 +1,5 @@
 export interface PostType{
+    name?:string,
     description: string,
     genre: string,
     date: string,
