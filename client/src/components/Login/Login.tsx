@@ -26,8 +26,8 @@ function Ingresar() {
   const onSubmit = handleSubmit((data) => {
     /* alert(JSON.stringify(data)) */
     /* alert(register) */
-    axios.post('http://localhost:3001/login',data)
-    .then(res=>window.location.href='/')
+    axios.post('http://localhost:3001/user/login',data)
+    .then(res=>window.location.href='/home')
     .catch(error=>console.log(error.message))
   })
 

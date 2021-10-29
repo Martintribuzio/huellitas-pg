@@ -37,7 +37,7 @@ function Register() {
     /* alert(register) */
     console.log(document.getElementById('password'))  
     axios
-      .post("http://localhost:3001/signup", data)
+      .post("http://localhost:3001/user/signup", data)
       .then((res) => {
         Swal.fire({
           title: "Success!",
