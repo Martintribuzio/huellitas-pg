@@ -9,6 +9,7 @@ import PostAPet from './components/PostAPet';
 import Profile from './components/Profile/Profile';
 import Messages from './components/Messages/Messages';
 import Login from './components/Login/Login';
+import Register from './components/Register/Register';
 
 function App() {
   return (
@@ -49,7 +50,7 @@ function App() {
           {/* <Notification /> */}
         </Route>
         <Route path='/register'>
-          {/* <Register /> */}
+          <Register/>
         </Route>
         <Route path='/found'>
           {/* <Found/> */}
