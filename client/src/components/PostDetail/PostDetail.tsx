@@ -3,17 +3,14 @@ import { PostType } from "../../redux/types/types"
 import { useDispatch, useSelector } from "react-redux";
 import { typeState } from '../../redux/reducers/index'
 import { getPosts } from "../../redux/actions";
-import { RouteProps, useParams } from "react-router";
+import { useParams } from "react-router";
 import { detailProps } from "../../redux/types/types";
 
+export default function PostDetail(): JSX.Element{
+  const { id } = useParams<{ id?: string }>();
 
-export default function PostDetail(){
-  const { id } = useParams<{ id?: string}>();
-  
   const dispatch = useDispatch();
   let allPosts = useSelector((state: typeState) => (state.filteredPosts))
-  
-  
   
   useEffect(()=>{
     dispatch(getPosts());
@@ -22,7 +19,7 @@ export default function PostDetail(){
   let detailpost = allPosts.find(elem => elem._id === id)
   // let detailpost = allPosts.find(elem => elem.genre === 'gato')
   if(detailpost !== undefined){
-  return(
+  return <>{
       <div>
           <img src = {`http://localhost:3001/${detailpost.petImage}`}/>
           <p>{detailpost.description}</p>
@@ -31,5 +28,8 @@ export default function PostDetail(){
           <p>{detailpost.type}</p>
           <p>{detailpost.state}</p>
       </div>
-  )}
+   }</>
+  }else{
+    return <>{undefined}</>
+  }
 }
