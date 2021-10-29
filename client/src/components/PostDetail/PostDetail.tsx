@@ -8,8 +8,8 @@ export default function PostDetail(props:PostType){
           <p>{props.description}</p>
           <p>{props.date}</p>
           <p>{props.genre}</p>
-          <p>{props.animal}</p>
-          <p>{props.postType}</p>
+          <p>{props.type}</p>
+          <p>{props.state}</p>
       </div>
   )
 }

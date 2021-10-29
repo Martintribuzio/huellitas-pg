@@ -13,8 +13,8 @@ export default function PostAPet() {
         genre:'',
         date:"",
         petImage: null,
-        animal: "", 
-        postType: "" 
+        type: "", 
+        state: "" 
     })
 
     function handleChange(e: htmlTypes){
@@ -41,9 +41,9 @@ export default function PostAPet() {
         if(input.petImage){
             fd.append('petImage', input.petImage)
         }
-        fd.append('state', input.postType)
+        fd.append('state', input.state)
         fd.append('description', input.description)
-        fd.append('type', input.animal)
+        fd.append('type', input.type)
         fd.append('genre', input.genre)
         dispatch(postPet(fd)) //mando form a trvaes del axios lol
         alert('Publicado!')
