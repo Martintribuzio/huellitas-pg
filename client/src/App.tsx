@@ -8,6 +8,7 @@ import Filters from './components/Filters';
 import PostAPet from './components/PostAPet';
 import Profile from './components/Profile/Profile';
 import Messages from './components/Messages/Messages';
+import PostDetail from './components/PostDetail/PostDetail';
 
 function App() {
   return (
@@ -25,6 +26,12 @@ function App() {
         <Route exact path='/home'>
           <Filters/>
           <Feed/>
+        </Route>
+        
+        <Route 
+          exact path='/home/detail/:id'
+          component={PostDetail}
+        >
         </Route>
 
         <Route path='/home/createPost'>

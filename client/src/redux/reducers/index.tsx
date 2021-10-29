@@ -1,15 +1,24 @@
- import { FILTER_STATE, FILTER_LATEST, GET_TYPES, GET_GENRES, POST_PET, GET_POSTS} from '../types/actionTypes';
+ import { FILTER_STATE, FILTER_LATEST, GET_TYPES, GET_GENRES, POST_PET, GET_POSTS, GET_DETAIL} from '../types/actionTypes';
 import { FiltersActionTypes } from '../types/actionTypes'
 import {PostType} from '../types/types'
 
 export interface typeState{
   allPosts: Array<PostType>,
   filteredPosts: Array<PostType>,
+  PostDetail:PostType
 }
 
 const initialState: typeState = {
   allPosts: [],
   filteredPosts: [],
+  PostDetail:{
+    description:'',
+    genre:'',
+    date:'',
+    petImage:'',
+    animal:'',
+    postType:''
+  }
 }
 
 
@@ -19,6 +28,11 @@ export default function rootReducer (state = initialState, action:FiltersActionT
         return{
             filteredPosts: action.payload,
             allPosts: action.payload
+        }
+    case GET_DETAIL:
+        return{
+            ...state,
+            PostDetail: action.payload
         }
     case POST_PET:
         return{
