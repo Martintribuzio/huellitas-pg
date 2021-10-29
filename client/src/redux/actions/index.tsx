@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export function postPet(input: FormData){
     return async function(dispatch: any){ 
-        //console.log(input)
+        console.log(input)
         let info = await axios.post('http://localhost:3001/post', input,{
           method: 'post',
           url: 'http://localhost:3001/post',

@@ -17,7 +17,7 @@ export default function Feed(){
             dispatch(getPosts());
         }, [dispatch]);
 
-    if(allPosts.length){
+    // if(allPosts.length){
         return(
             <div className = {styles.contenedor}>
                 <Filters/>
@@ -41,7 +41,7 @@ export default function Feed(){
                 </div>
             </div>
         )
-    }else{
-        return <h1>Cargando...</h1>
-    }
+    // }else{
+    //     return <h1>Cargando...</h1>
+    // }
 }

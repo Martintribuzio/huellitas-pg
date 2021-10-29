@@ -7,10 +7,6 @@ export default function Post(props: PostType){
         <div className = {styles.divCard}>
             {/* {typeof props.petImage === "string" && props.petImage?<img src = {`http://localhost:3001/${props.petImage}`}></img> : ""} */}
             <img className={styles.img} src = {`http://localhost:3001/${props.petImage}`}/>
-            <p>{`Descripcion: ${props.description}`}</p>
-            <p>{`Fecha: ${props.date}`}</p>
-            <p>{`Genero: ${props.genre}`}</p>
-            <p>{`Animal: ${props.animal}`}</p>
             <p>{`Estado: ${props.postType}`}</p>
         </div>
     )
