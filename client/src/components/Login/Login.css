@@ -1,0 +1,12 @@
+input {
+  margin: 10px;
+}
+button {
+  background-color: #4e330a;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+.title {
+  margin-top: 80px;
+}
