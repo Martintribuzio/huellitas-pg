@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { getPosts } from "../redux/actions";
 import {typeState} from '../redux/reducers/index'
 import Post from "./Post";
+import styles from "../CSS/Feed.module.css"
+import Filters from './Filters';
 
 export default function Feed(){
 
@@ -16,11 +18,14 @@ export default function Feed(){
         }, [dispatch]);
 
     if(allPosts.length){
+        console.log(allPosts)
         return(
-            <div>
+            <div className = {styles.contenedor}>
+                <Filters/>
                 <div>
-                    {
+                    {   
                         allPosts.map(p => {
+                            
                             return(
                                 <Link to = {'/home/detail/'} key = {p._id}>
                                     <Post
@@ -28,8 +33,8 @@ export default function Feed(){
                                         description = {p.description}
                                         date = {p.date}
                                         genre = {p.genre}
-                                        animal = {p.animal}
-                                        postType = {p.postType}
+                                        type = {p.type}
+                                        state = {p.state}
                                     />
                                 </Link>
                             )

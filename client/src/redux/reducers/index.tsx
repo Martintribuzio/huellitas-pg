@@ -5,20 +5,20 @@ import {PostType} from '../types/types'
 export interface typeState{
   allPosts: Array<PostType>,
   filteredPosts: Array<PostType>,
-  PostDetail:PostType
+//   PostDetail:Array<PostType>
 }
 
 const initialState: typeState = {
   allPosts: [],
   filteredPosts: [],
-  PostDetail:{
-    description:'',
-    genre:'',
-    date:'',
-    petImage:'',
-    type:'',
-    state:''
-  }
+//   PostDetail:[{
+//     description:'',
+//     genre:'',
+//     date:'',
+//     petImage:'',
+//     type:'',
+//     state:''
+//   }]
 }
 
 
@@ -29,11 +29,11 @@ export default function rootReducer (state = initialState, action:FiltersActionT
             filteredPosts: action.payload,
             allPosts: action.payload
         }
-    case GET_DETAIL:
-        return{
-            ...state,
-            PostDetail: action.payload
-        }
+    // case GET_DETAIL:
+    //     return{
+    //         ...state,
+    //         PostDetail: action.payload
+    //     }
     case POST_PET:
         return{
             filteredPosts: action.payload,
@@ -48,7 +48,9 @@ export default function rootReducer (state = initialState, action:FiltersActionT
         return{
             ...state,
             filteredPosts:[...state.allPosts].sort((a:PostType,b:PostType) => {
-                return a.date > b.date ? 1 : -1
+                return action.payload === "mas recientes"
+                ? + new Date(b.date) - + new Date(a.date)
+                : + new Date(a.date) - + new Date(b.date)
             })
         }
     case GET_TYPES: 

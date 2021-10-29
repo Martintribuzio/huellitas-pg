@@ -1,15 +1,26 @@
-const { User } = require('../../models/User');
+const User = require('../../models/User')
 
-const createUserDB = async (name, email, password, postalCode) => {
+
+const createUserDB = async (email) => {
   try {
-    const user = new User({ name, email, password, postalCode });
-    await user.save();
-    return user;
-  } catch {
-    console.log('Error al crear');
-    throw new Error('Mensaje');
+    const user = User.findOne({email: email})
+    return user; //Hacemos la comprobación para ver si ya existe un correo electrónico igual en la DB
+  } catch (error){
+    console.log(error);
+    throw new Error('Error al crear');
   }
-};
+}; //Sospecho que este createUser no debe ir ya que el passport se encarga de esto
+
+const searchUserDB = async (email) => {
+  try{
+    const user = await User.findOne({email: email}) //Hacemos la comprobación para ver si ya existe un correo electrónico igual en la DB
+    return user;
+  }
+  catch (error){
+    console.log(error);
+    throw new Error('Error al buscar');
+  }
+}
 
 const postsByUserDB = async userId => {
   try {
@@ -23,5 +34,6 @@ const postsByUserDB = async userId => {
 
 module.exports = {
   createUserDB,
-  postsByUserDB,
+  searchUserDB,
+  postsByUserDB
 };

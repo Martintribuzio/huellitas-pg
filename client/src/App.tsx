@@ -4,7 +4,6 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './themeConfig';
 import LandingPage from './components/LandingPage';
 import Feed from './components/Feed';
-import Filters from './components/Filters';
 import PostAPet from './components/PostAPet';
 import Profile from './components/Profile/Profile';
 import Messages from './components/Messages/Messages';
@@ -24,7 +23,6 @@ function App() {
         </Route>
         
         <Route exact path='/home'>
-          <Filters/>
           <Feed/>
         </Route>
         

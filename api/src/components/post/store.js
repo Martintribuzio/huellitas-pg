@@ -12,8 +12,8 @@ const createPostDB = async (
 ) => {
   try {
     const post = new Post({
-      animal: type,
-      postType: state,
+      type,
+      state,
       description,
       user: userId,
       genre,
