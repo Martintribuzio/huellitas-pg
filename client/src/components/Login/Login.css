@@ -1,22 +1,12 @@
-.container{
-    background-color: orange;
-    width: 300px;
-    height: 300px;
-    margin-top: 80px;
-    margin-left: 600px;
-    color:#fff;
-    text-align: center;
-}
-
-input{
+input {
   margin: 10px;
 }
-button{
+button {
   background-color: #4e330a;
   color: #fff;
   border: none;
   border-radius: 5px;
 }
-.title{
+.title {
   margin-top: 80px;
 }

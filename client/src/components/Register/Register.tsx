@@ -1,27 +1,31 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Controller, useForm } from "react-hook-form";
-import {yupResolver}from '@hookform/resolvers/yup';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { TextField } from "@material-ui/core";
-import axios from "axios";
-import Swal from "sweetalert2";
-import "./Register.css";
+import { TextField } from '@material-ui/core';
+import axios from 'axios';
+import Swal from 'sweetalert2';
+import './Register.css';
+import Box from '@mui/material/Box';
 
 type Data = {
-   name:string;
-  lastname:string;
+  name: string;
+  lastname: string;
   email: string;
   /* username: string; */
   password: string;
   confirmPassword: string;
 };
-const schema=yup.object().shape({
-  name:yup.string().required('Ingresa tu nombre'),
-  lastname:yup.string().required('Ingresa tu apellido'),
-  email:yup.string().email().required(),
-  password:yup.string().min(8).max(20).required(),
-  confirmPassword:yup.string().oneOf([yup.ref('password'),null],'Las contraseñas no coinciden').required()
+const schema = yup.object().shape({
+  name: yup.string().required('Ingresa tu nombre'),
+  lastname: yup.string().required('Ingresa tu apellido'),
+  email: yup.string().email().required(),
+  password: yup.string().min(8).max(20).required(),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden')
+    .required(),
 });
 
 function Register() {
@@ -30,82 +34,81 @@ function Register() {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<Data>(({resolver:yupResolver(schema)}));
+  } = useForm<Data>({ resolver: yupResolver(schema) });
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(data => {
     /* alert(JSON.stringify(data))  */
     /* alert(register) */
-    console.log(document.getElementById('password'))  
+    console.log(document.getElementById('password'));
     axios
-      .post("http://localhost:3001/user/signup", data)
-      .then((res) => {
+      .post('http://localhost:3001/user/signup', data)
+      .then(res => {
         Swal.fire({
-          title: "Success!",
-          text: "Fuiste registrado con exito",
-          icon: "success",
-          confirmButtonText: "Ingresa",
+          title: 'Success!',
+          text: 'Fuiste registrado con exito',
+          icon: 'success',
+          confirmButtonText: 'Ingresa',
         });
         console.log(res);
       })
-      .catch((error) => console.log(error.message));
+      .catch(error => console.log(error.message));
   });
 
-
   return (
-    <div className="container">
+    <Box sx={{ backgroundColor: 'secondary.main' }} className='container'>
       <h1>Registrate</h1>
       <form onSubmit={onSubmit}>
         <div>
-        <Controller
-        name="name"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="Nombre"
-            variant="outlined"
-            error={!!errors.name}
-            helperText={errors.name ? errors.name.message : ''}
-            fullWidth
-            margin="dense"
-          />
-        )}
-      />
-        </div>
-        <div>
-        <Controller
-        name="lastname"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="Apellido"
-            variant="outlined"
-            error={!!errors.lastname}
-            helperText={errors.lastname ? errors.lastname.message : ''}
-            fullWidth
-            margin="dense"
-          />
-        )}
-      />
-        </div>
-      
-        <div>
-        <Controller
-            name="email"
+          <Controller
+            name='name'
             control={control}
-            defaultValue="example@dev.com"
+            defaultValue=''
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Email"
-                variant="outlined"
+                label='Nombre'
+                variant='outlined'
+                error={!!errors.name}
+                helperText={errors.name ? errors.name.message : ''}
+                fullWidth
+                margin='dense'
+              />
+            )}
+          />
+        </div>
+        <div>
+          <Controller
+            name='lastname'
+            control={control}
+            defaultValue=''
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label='Apellido'
+                variant='outlined'
+                error={!!errors.lastname}
+                helperText={errors.lastname ? errors.lastname.message : ''}
+                fullWidth
+                margin='dense'
+              />
+            )}
+          />
+        </div>
+
+        <div>
+          <Controller
+            name='email'
+            control={control}
+            defaultValue='example@dev.com'
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label='Email'
+                variant='outlined'
                 error={!!errors.email}
                 helperText={errors.email ? errors.email.message : ''}
                 fullWidth
-                margin="dense"
+                margin='dense'
               />
             )}
           />
@@ -114,48 +117,50 @@ function Register() {
         <input {...register('username',{ required: true })} id="username" name="username" type="text" placeholder='Usuario'/>
       </div> */}
         <div>
-        <Controller
-            name="password"
+          <Controller
+            name='password'
             control={control}
-            defaultValue=""
+            defaultValue=''
             render={({ field }) => (
               <TextField
                 {...field}
-                type="password"
-                label="Password"
-                variant="outlined"
+                type='password'
+                label='Password'
+                variant='outlined'
                 error={!!errors.password}
                 helperText={errors.password ? errors.password?.message : ''}
                 fullWidth
-                margin="dense"
+                margin='dense'
               />
             )}
           />
         </div>
         <div>
-        <Controller
-            name="confirmPassword"
+          <Controller
+            name='confirmPassword'
             control={control}
-            defaultValue=""
+            defaultValue=''
             render={({ field }) => (
               <TextField
                 {...field}
-                type="password"
-                label="Confirma tu contraseña"
-                variant="outlined"
+                type='password'
+                label='Confirma tu contraseña'
+                variant='outlined'
                 error={!!errors.confirmPassword}
-                helperText={errors.confirmPassword ? errors.confirmPassword.message : ''}
+                helperText={
+                  errors.confirmPassword ? errors.confirmPassword.message : ''
+                }
                 fullWidth
-                margin="dense"
+                margin='dense'
               />
             )}
           />
         </div>
         <p>¿Ya tienes cuenta?</p>
-        <Link to="/">Ingresa</Link>
-        <button type="submit">Registrar</button>
+        <Link to='/'>Ingresa</Link>
+        <button type='submit'>Registrar</button>
       </form>
-    </div>
+    </Box>
   );
 }
 
