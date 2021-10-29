@@ -7,6 +7,7 @@ import Feed from './components/Feed';
 import PostAPet from './components/PostAPet';
 import Profile from './components/Profile/Profile';
 import Messages from './components/Messages/Messages';
+import Footer from './components/Footer/Footer'
 
 function App() {
   return (
@@ -56,6 +57,9 @@ function App() {
         </Route>
         <Route path='/adoption'>
           {/* <Adoption /> */}
+        </Route>
+        <Route path='/home'>
+          <Footer />
         </Route>
       </div>
     </ThemeProvider>
