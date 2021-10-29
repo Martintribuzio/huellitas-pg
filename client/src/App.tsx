@@ -26,6 +26,11 @@ function App() {
         <Route exact path='/home'>
           <Feed/>
         </Route>
+        
+        {/* <Route 
+          exact path='/home/detail/:id'
+          component={PostDetail}
+        />    */}
 
         <Route path='/home/createPost'>
           <PostAPet/>

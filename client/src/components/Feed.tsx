@@ -11,21 +11,23 @@ export default function Feed(){
 
     const dispatch = useDispatch();
     let allPosts = useSelector((state: typeState) => (state.filteredPosts))
-    console.log(allPosts)
+    // console.log(allPosts)
 
     useEffect(()=>{
             dispatch(getPosts());
         }, [dispatch]);
 
     if(allPosts.length){
+        // console.log(allPosts)
         return(
             <div className = {styles.contenedor}>
                 <Filters/>
                 <div>
-                    {
+                    {   
                         allPosts.map(p => {
+                            
                             return(
-                                <Link to = {'/home/detail/'} key = {p._id}>
+                                <Link to = {'/home/detail/' + p._id} key = {p._id}>
                                     <Post
                                         petImage = {p.petImage}
                                         description = {p.description}
