@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import Inbox from '../Messages/Messages'
+import Inbox from '../Messages/MenssagesNoti'
 import Stack from '@mui/material/Stack';
 
 export default function PrimarySearchAppBar(): JSX.Element {
@@ -47,7 +47,6 @@ export default function PrimarySearchAppBar(): JSX.Element {
   const menuId = 'primary-search-account-menu';
   const renderMenssage = (
     <Menu
-      // sx={{width:9/10}}
       anchorEl={anchorEl}
       anchorOrigin={{
         vertical: "top",

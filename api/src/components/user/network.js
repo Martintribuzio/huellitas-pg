@@ -2,14 +2,14 @@ const userNetwork = require('express').Router();
 const { createUser, postsByUser } = require('./controller');
 const passport = require("passport");
 
-userNetwork.post('/', async (req, res) => {
-  try {
-    const user = await createUser(req.body);
-    return res.json(user);
-  } catch (err) {
-    return res.json(err);
-  }
-});
+// userNetwork.post('/', async (req, res) => {
+//   try {
+//     const user = await createUser(req.body);
+//     return res.json(user);
+//   } catch (err) {
+//     return res.json(err); //Esta ruta se usa??
+//   }
+// });
 
 userNetwork.get('/posts', async (req, res) => {
   try {

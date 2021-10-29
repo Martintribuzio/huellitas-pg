@@ -8,7 +8,6 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import Avatar from '@mui/material/Avatar';
-import style from './Menssages.module.css'
 
 
 const messages = [
@@ -34,9 +33,9 @@ const messages = [
 
 export default function BottomAppBar() {
   return (
-    <div className={style.dviMens}>
+    <div>
       <CssBaseline />
-      <Paper elevation={0} sx={{ pb: '50px'}}>
+      <Paper square sx={{ pb: '50px'}}>
         <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
           Mensajes
         </Typography>

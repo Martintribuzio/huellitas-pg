@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { getPosts } from "../redux/actions";
 import {typeState} from '../redux/reducers/index'
 // import Post from "./Post";
@@ -9,6 +9,9 @@ import Filters from './Filters';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
+import Box from '@mui/material/Box';
+import { Button, Stack } from "@mui/material";
+import { PostType } from "../redux/types/types";
 
 export default function Feed(){
 
@@ -19,16 +22,18 @@ export default function Feed(){
     useEffect(()=>{
             dispatch(getPosts());
         }, [dispatch]);
-        console.log(allPosts)
+
+
     if(allPosts.length){
         return(
             <div className = {styles.contenedor}>
                 <Filters/>
                 <div>
-                <ImageList className={styles.taka}>
-                {allPosts.map((item) => {console.log(item)
-                return(
-                    <ImageListItem key={item.state}>
+                <Box className={styles.box} sx={{display:{xs:'none',sm:'none',md:'flex'}}}>
+                <ImageList cols={3} className={styles.taka}>
+                {allPosts.map((item) => 
+                (
+                    <ImageListItem key={item._id}>
                     <img
                         src={`http://localhost:3001/${item.petImage}`}
                         srcSet={`http://localhost:3001/${item.petImage}`}
@@ -36,13 +41,57 @@ export default function Feed(){
                         loading="lazy"
                     />
                     <ImageListItemBar
-                        title={item.date}
-                        subtitle={<span>genre: {item.genre}</span>}
-                        position="below"
+                        title={item.type}
+                        subtitle={item.date}
+                    />
+                        <Stack direction="row" justifyContent="flex-end" textAlign='center'>
+                            <Button href={`http://localhost:3000/home/detail/+${item._id}`}>Detalles</Button>
+                        </Stack>
+                    </ImageListItem>
+                )
+                )}
+                </ImageList>
+                </Box>
+                <Box sx={{display:{xs:'none',sm:'flex',md:'none'}}}>
+                <ImageList cols={2} className={styles.taka}>
+                {allPosts.map((item) => 
+                (
+                    <ImageListItem key={item._id}>
+                    <img
+                        src={`http://localhost:3001/${item.petImage}?w=248&fit=crop&auto=format`}
+                        srcSet={`http://localhost:3001/${item.petImage}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                        alt={item.description}
+                        loading="lazy"
+                    />
+                    <ImageListItemBar
+                        title={item.type}
+                        subtitle={item.date}
                     />
                     </ImageListItem>
-                )})}
+                )
+                )}
                 </ImageList>
+                </Box>
+                <Box sx={{display:{xs:'flex',sm:'none',md:'none'}}}>
+                <ImageList cols={1} className={styles.taka}>
+                {allPosts.map((item) => 
+                (
+                    <ImageListItem key={item._id}>
+                    <img
+                        src={`http://localhost:3001/${item.petImage}`}
+                        srcSet={`http://localhost:3001/${item.petImage}`}
+                        alt={item.description}
+                        loading="lazy"
+                    />
+                    <ImageListItemBar
+                        title={item.type}
+                        subtitle={item.date}
+                    />
+                    </ImageListItem>
+                )
+                )}
+                </ImageList>
+                </Box>
                     {/* {
                         allPosts.map(p => {
                             return(

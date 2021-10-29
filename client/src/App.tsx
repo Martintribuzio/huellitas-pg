@@ -8,6 +8,8 @@ import PostAPet from './components/PostAPet';
 import Profile from './components/Profile/Profile';
 import Messages from './components/Messages/Messages';
 import Footer from './components/Footer/Footer'
+import Login from './components/Login/Login';
+import Register from './components/Register/Register';
 
 function App() {
   return (
@@ -35,7 +37,7 @@ function App() {
         </Route>
         
         <Route path='/login'>
-          {/* <login /> */}
+          <Login/>
         </Route>
         <Route path='/alldogs'>
           {/* <Alldogs /> */}
@@ -47,7 +49,7 @@ function App() {
           {/* <Notification /> */}
         </Route>
         <Route path='/register'>
-          {/* <Register /> */}
+          <Register/>
         </Route>
         <Route path='/found'>
           {/* <Found/> */}
@@ -58,9 +60,11 @@ function App() {
         <Route path='/adoption'>
           {/* <Adoption /> */}
         </Route>
+        <div style={{position:'relative',height:30}}>
         <Route path='/home'>
           <Footer />
         </Route>
+        </div>
       </div>
     </ThemeProvider>
   );
