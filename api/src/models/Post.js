@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 
 const postSchema = new Schema({
-  animal: {
+  type: {
     type: String,
     required: true,
   },
@@ -9,7 +9,7 @@ const postSchema = new Schema({
     type: String,
     enum: ['male', 'female'],
   },
-  postType: {
+  state: {
     type: String,
     enum: ['lost', 'found', 'adoption'],
     default: 'lost',
