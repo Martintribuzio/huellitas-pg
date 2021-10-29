@@ -16,8 +16,9 @@ export interface Input{
     genre: string,
     date: string,
     petImage: File | null | undefined | string,
-    animal: string, 
-    postType: string,
     _id?: string
 }
 
+export interface detailProps{
+    id:string,
+}
