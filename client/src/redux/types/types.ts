@@ -3,8 +3,8 @@ export interface PostType{
     genre: string,
     date: string,
     petImage: File | null | undefined | string,
-    animal: string,
-    postType: string,
+    type: string,
+    state: string,
     _id?: string
 }
 

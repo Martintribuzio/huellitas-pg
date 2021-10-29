@@ -31,8 +31,8 @@ export default function Feed(){
                                         description = {p.description}
                                         date = {p.date}
                                         genre = {p.genre}
-                                        animal = {p.animal}
-                                        postType = {p.postType}
+                                        type = {p.type}
+                                        state = {p.state}
                                     />
                                 </Link>
                             )

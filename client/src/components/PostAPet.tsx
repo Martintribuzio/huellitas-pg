@@ -18,13 +18,14 @@ export default function PostAPet() {
   const [type, setType] = React.useState('');
   const [genre, setGenre] = React.useState('');
   const history = useHistory();
+
   const [input, setInput] = useState<PostType>({
     description: '',
     genre: '',
     date: '',
     petImage: null,
-    animal: '',
-    postType: '',
+    type: '',
+    state: '',
   });
 
   const handlegenrechange = (event: SelectChangeEvent) => {
@@ -34,7 +35,7 @@ export default function PostAPet() {
 
   const handletypechange = (event: SelectChangeEvent) => {
     setType(event.target.value);
-    setInput({ ...input, animal: event.target.value }); //set the animal type
+    setInput({ ...input, type: event.target.value }); //set the animal type
   };
 
   const handleSelectEstado = (event: SelectChangeEvent) => {
@@ -73,9 +74,9 @@ export default function PostAPet() {
     if (input.petImage) {
       fd.append('petImage', input.petImage);
     }
-    fd.append('state', input.postType);
+    fd.append('state', input.state);
     fd.append('description', input.description);
-    fd.append('type', input.animal);
+    fd.append('type', input.type);
     fd.append('genre', input.genre);
     dispatch(postPet(fd)); //mando form a trvaes del axios lol
     alert('Publicado!');
@@ -90,7 +91,7 @@ export default function PostAPet() {
           <InputLabel id='demo-simple-select-helper-label'>estado</InputLabel>
           <Select
             required
-            name='postType'
+            name='state'
             labelId='demo-simple-select-helper-label'
             id='demo-simple-select-helper'
             value={state}
@@ -110,7 +111,7 @@ export default function PostAPet() {
           <InputLabel id='demo-simple-select-helper-label'>tipo</InputLabel>
           <Select
             required
-            name='animal'
+            name='type'
             labelId='demo-simple-select-helper-label'
             id='demo-simple-select-helper'
             value={type}

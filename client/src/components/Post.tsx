@@ -14,8 +14,8 @@ export default function Post(props: PostType) {
       <p>{`Descripcion: ${props.description}`}</p>
       <p>{`Fecha: ${props.date}`}</p>
       <p>{`Genero: ${props.genre}`}</p>
-      <p>{`Animal: ${props.animal}`}</p>
-      <p>{`Estado: ${props.postType}`}</p>
+      <p>{`Animal: ${props.type}`}</p>
+      <p>{`Estado: ${props.state}`}</p>
     </div>
   );
 }
