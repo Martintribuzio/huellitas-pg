@@ -26,11 +26,10 @@ function App() {
           <Feed/>
         </Route>
         
-        <Route 
+        {/* <Route 
           exact path='/home/detail/:id'
           component={PostDetail}
-        >
-        </Route>
+        />    */}
 
         <Route path='/home/createPost'>
           <PostAPet/>

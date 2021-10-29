@@ -27,7 +27,7 @@ export default function PostAPet() {
     type: '',
     state: '',
   });
-
+  
   const handlegenrechange = (event: SelectChangeEvent) => {
     setGenre(event.target.value);
     setInput({ ...input, genre: event.target.value });
@@ -35,7 +35,7 @@ export default function PostAPet() {
 
   const handletypechange = (event: SelectChangeEvent) => {
     setType(event.target.value);
-    setInput({ ...input, type: event.target.value }); //set the animal type
+    setInput({ ...input, type: event.target.value }); 
   };
 
   const handleSelectEstado = (event: SelectChangeEvent) => {

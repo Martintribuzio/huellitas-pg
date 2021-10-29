@@ -18,3 +18,6 @@ export interface Input{
     _id?: string
 }
 
+export interface detailProps{
+    id:string,
+}
