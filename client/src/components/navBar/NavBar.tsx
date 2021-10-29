@@ -64,7 +64,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
     >
       <Inbox />
       <Stack direction="row" justifyContent="center">
-        <Link to='/home/menssage' style={{textDecoration:'none'}}>
+        <Link to='/home/menssage' style={{textDecoration:'none'}} onClick={handleMenuClose}>
         <Button>Ver todos los mensajes</Button>
         </Link>
       </Stack>
@@ -87,7 +87,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}>
-        <Link to='/home/menssage' className={s.link} style={{color: 'black'}}>
+        <Link to='/home/menssage' className={s.link} style={{color: 'black'}} onClick={handleMobileMenuClose}>
       <MenuItem>
         <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
           <Badge badgeContent={0} color='error'>
