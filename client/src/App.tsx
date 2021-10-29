@@ -8,6 +8,7 @@ import Filters from './components/Filters';
 import PostAPet from './components/PostAPet';
 import Profile from './components/Profile/Profile';
 import Messages from './components/Messages/Messages';
+import Login from './components/Login/Login';
 
 function App() {
   return (
@@ -36,7 +37,7 @@ function App() {
         </Route>
         
         <Route path='/login'>
-          {/* <login /> */}
+          <Login/>
         </Route>
         <Route path='/alldogs'>
           {/* <Alldogs /> */}
