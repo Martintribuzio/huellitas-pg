@@ -10,6 +10,7 @@ import { postPet } from '../redux/actions';
 import styles from '../CSS/PostAPet.module.css';
 import React from 'react';
 import Button from '@mui/material/Button';
+import {TextField} from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 
 export default function PostAPet() {
@@ -20,6 +21,7 @@ export default function PostAPet() {
   const history = useHistory();
 
   const [input, setInput] = useState<PostType>({
+    name:'',
     description: '',
     genre: '',
     date: '',
@@ -27,7 +29,7 @@ export default function PostAPet() {
     type: '',
     state: '',
   });
-
+  
   const handlegenrechange = (event: SelectChangeEvent) => {
     setGenre(event.target.value);
     setInput({ ...input, genre: event.target.value });
@@ -35,7 +37,7 @@ export default function PostAPet() {
 
   const handletypechange = (event: SelectChangeEvent) => {
     setType(event.target.value);
-    setInput({ ...input, type: event.target.value }); //set the animal type
+    setInput({ ...input, type: event.target.value }); 
   };
 
   const handleSelectEstado = (event: SelectChangeEvent) => {
@@ -86,7 +88,11 @@ export default function PostAPet() {
   return (
     <div className={styles.conteiner}>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <label>estado de la mascota:</label>
+        <label>Nombre:</label>
+        <FormControl sx={{ m: 1, minWidth: 120 }}/> 
+        <InputLabel id='demo-simple-select-helper-label'>Nombre</InputLabel>
+        <TextField />
+        <label>Estado de la mascota:</label>
         <FormControl sx={{ m: 1, minWidth: 120 }}>
           <InputLabel id='demo-simple-select-helper-label'>estado</InputLabel>
           <Select
