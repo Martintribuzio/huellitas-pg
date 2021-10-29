@@ -20,7 +20,6 @@ function Ingresar() {
     register,
      handleSubmit,
      control,
-     /* watch,  */
      formState: { errors }
     } = useForm<LogIn>({resolver:yupResolver(schema)})
 
@@ -42,7 +41,7 @@ function Ingresar() {
       <Controller
             name="email"
             control={control}
-            defaultValue="example@dev.com"
+            defaultValue="ejemplo@email.com"
             render={({ field }) => (
               <TextField
                 {...field}
