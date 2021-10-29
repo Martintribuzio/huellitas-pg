@@ -163,7 +163,12 @@ export default function PrimarySearchAppBar(): JSX.Element {
               }}>
               <Link className={s.link} to='/home/createPost'>
                 <Button
-                  style={{ margin: '5px', width: '100%', minWidth: '135px' }}
+                  style={{
+                    margin: '5px',
+                    width: '100%',
+                    minWidth: '135px',
+                    maxWidth: '150px',
+                  }}
                   size='small'
                   color='secondary'
                   variant='contained'>
