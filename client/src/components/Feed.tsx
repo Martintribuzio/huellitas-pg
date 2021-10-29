@@ -1,15 +1,14 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { getPosts } from "../redux/actions";
 import {typeState} from '../redux/reducers/index'
-import Post from "./Post";
+// import Post from "./Post";
 import styles from "../CSS/Feed.module.css"
 import Filters from './Filters';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
-import s from './Feed.module.css'
 
 export default function Feed(){
 
@@ -20,30 +19,30 @@ export default function Feed(){
     useEffect(()=>{
             dispatch(getPosts());
         }, [dispatch]);
-
+        console.log(allPosts)
     if(allPosts.length){
         return(
             <div className = {styles.contenedor}>
                 <Filters/>
                 <div>
-
-                <ImageList className={s.taka}>
-      {allPosts.map((item) => (
-        <ImageListItem key={item.description}>
-          <img
-            src={`http://localhost:3001/${item.petImage}?w=248&fit=crop&auto=format&dpr=2`}
-            srcSet={`http://localhost:3001/${item.petImage}?w=248&fit=crop&auto=format&dpr=2 2x`}
-            alt={item.animal}
-            loading="lazy"
-          />
-          <ImageListItemBar
-            title={item.animal}
-            subtitle={<span>by: {item.genre}</span>}
-            position="below"
-          />
-        </ImageListItem>
-      ))}
-    </ImageList>
+                <ImageList className={styles.taka}>
+                {allPosts.map((item) => {console.log(item)
+                return(
+                    <ImageListItem key={item.state}>
+                    <img
+                        src={`http://localhost:3001/${item.petImage}`}
+                        srcSet={`http://localhost:3001/${item.petImage}`}
+                        alt={item.description}
+                        loading="lazy"
+                    />
+                    <ImageListItemBar
+                        title={item.date}
+                        subtitle={<span>genre: {item.genre}</span>}
+                        position="below"
+                    />
+                    </ImageListItem>
+                )})}
+                </ImageList>
                     {/* {
                         allPosts.map(p => {
                             return(
@@ -54,8 +53,8 @@ export default function Feed(){
                                         description = {p.description}
                                         date = {p.date}
                                         genre = {p.genre}
-                                        animal = {p.animal}
-                                        postType = {p.postType}
+                                        type = {p.type}
+                                        state = {p.state}
                                     />
                                 </Link>
                             )

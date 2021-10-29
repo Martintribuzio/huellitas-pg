@@ -3,5 +3,9 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+}
+.taka{
+    height: 80vh;
+    width: 65vw;
+    overflow: auto;
 }

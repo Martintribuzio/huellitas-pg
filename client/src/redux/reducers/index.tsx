@@ -28,7 +28,7 @@ export default function rootReducer (state = initialState, action:FiltersActionT
     case FILTER_STATE:
         return{
             ...state,
-            filteredPosts: state.allPosts.filter(p => p.postType === action.payload)
+            filteredPosts: state.allPosts.filter(p => p.state === action.payload)
         }
     case FILTER_LATEST:
         return{
@@ -40,7 +40,7 @@ export default function rootReducer (state = initialState, action:FiltersActionT
     case GET_TYPES: 
         return{
             ...state,
-            filteredPosts: state.allPosts.filter(p => p.animal === action.payload)
+            filteredPosts: state.allPosts.filter(p => p.type === action.payload)
         }
     case GET_GENRES: 
         return{
