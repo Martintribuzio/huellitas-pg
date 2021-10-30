@@ -9,6 +9,8 @@ import Profile from './components/Profile/Profile';
 import Messages from './components/Messages/Messages';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
+import PostDetail from './components/PostDetail/PostDetail';
+import Home from './components/Home';
 
 function App() {
   return (
@@ -24,13 +26,12 @@ function App() {
         </Route>
         
         <Route exact path='/home'>
-          <Feed/>
+          <Home/>
         </Route>
         
-        {/* <Route 
-          exact path='/home/detail/:id'
-          component={PostDetail}
-        />    */}
+        <Route exact path='/home/detail/:id'>
+          <PostDetail/>   
+        </Route>
 
         <Route path='/home/createPost'>
           <PostAPet/>

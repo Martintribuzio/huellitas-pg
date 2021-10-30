@@ -5,20 +5,11 @@ import {PostType} from '../types/types'
 export interface typeState{
   allPosts: Array<PostType>,
   filteredPosts: Array<PostType>,
-//   PostDetail:Array<PostType>
 }
 
 const initialState: typeState = {
   allPosts: [],
   filteredPosts: [],
-//   PostDetail:[{
-//     description:'',
-//     genre:'',
-//     date:'',
-//     petImage:'',
-//     type:'',
-//     state:''
-//   }]
 }
 
 
@@ -29,11 +20,6 @@ export default function rootReducer (state = initialState, action:FiltersActionT
             filteredPosts: action.payload,
             allPosts: action.payload
         }
-    // case GET_DETAIL:
-    //     return{
-    //         ...state,
-    //         PostDetail: action.payload
-    //     }
     case POST_PET:
         return{
             filteredPosts: action.payload,
