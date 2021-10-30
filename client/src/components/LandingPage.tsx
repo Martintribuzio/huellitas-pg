@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getPosts } from '../redux/actions';
-import Title from './Title/Title';
 import Login from './Login/Login';
 import Register from './Register/Register';
 import Box from '@mui/material/Box';
@@ -12,10 +11,19 @@ import img2 from '../assets/landingPageImg/img2.png';
 import img3 from '../assets/landingPageImg/img3.png';
 import img4 from '../assets/landingPageImg/img4.png';
 import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { IconButton } from '@mui/material';
+import PetsIcon from '@mui/icons-material/Pets';
+import Switch from '@mui/material/Switch';
+import React from 'react';
 
 export default function LandingPage() {
+  const [auth, setAuth] = React.useState(false);
   const dispatch = useDispatch();
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAuth(event.target.checked);
+  };
 
   useEffect(() => {
     dispatch(getPosts());
@@ -33,44 +41,59 @@ export default function LandingPage() {
         sx={{
           width: '40%',
           display: 'flex',
-          flexDirection: 'row',
+          flexDirection: 'column',
           flexWrap: 'wrap',
           alignContent: 'end',
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}>
         <Box
           sx={{
             width: '100%',
-            height: '40%',
+            height: '10%',
             display: 'flex',
-            flexDirection: 'column',
+            flexDirection: 'row',
             alignItems: 'center',
+            justifyContent: 'center',
           }}>
-          <Title />
-          <Link style={{ textDecoration: 'none', color: 'white' }} to={'/home'}>
-            <Button size='medium' color='secondary' variant='contained'>
-              HOME
-            </Button>
-          </Link>
+          <IconButton size='large' color='inherit' sx={{ ml: 2 }}>
+            <Link to='/home' style={{ color: 'white' }}>
+              <PetsIcon />
+            </Link>
+          </IconButton>
+          <Typography
+            variant='h5'
+            noWrap
+            component='div'
+            color='white'
+            sx={{
+              display: { overflow: 'inherit', xs: 'none', sm: 'block' },
+            }}>
+            Huellitas
+          </Typography>
         </Box>
         <Box
           sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-evenly',
             width: '100%',
-            height: '40%',
-            marginBottom: '5%',
+            height: '70%',
+            marginBottom: '10%',
             marginLeft: '5%',
           }}>
           <Grid container spacing={0} columns={2}>
             <Grid item xs={1}>
               <img
-                style={{ width: '200px', height: '200px' }}
-                src={img1}
+                style={{ width: '20vw', height: '20vw' }}
+                src={img3}
                 alt=''
               />
             </Grid>
             <Grid item xs={1}>
               <img
-                style={{ width: '200px', height: '200px' }}
-                src={img2}
+                style={{ width: '20vw', height: '20vw' }}
+                src={img1}
                 alt=''
               />
             </Grid>
@@ -78,14 +101,14 @@ export default function LandingPage() {
           <Grid container spacing={0} columns={2}>
             <Grid item xs={1}>
               <img
-                style={{ width: '200px', height: '200px' }}
-                src={img3}
+                style={{ width: '20vw', height: '20vw' }}
+                src={img2}
                 alt=''
               />
             </Grid>
             <Grid item xs={1}>
               <img
-                style={{ width: '200px', height: '200px' }}
+                style={{ width: '20vw', height: '20vw' }}
                 src={img4}
                 alt=''
               />
@@ -95,20 +118,21 @@ export default function LandingPage() {
       </Box>
 
       <Container
-        sx={{
+        style={{
           borderTopLeftRadius: '5%',
           borderBottomLeftRadius: '5%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          justifyContent: 'space-around',
+          justifyContent: 'center',
           marginLeft: '0px',
           marginRight: '0px',
           backgroundColor: 'white',
           width: '60%',
         }}>
-        <Login />
-        <Register />
+        <Switch checked={auth} onChange={handleChange} />{' '}
+        <label>{auth ? 'ya tengo cuenta' : 'necesitas una cuenta?'}</label>
+        {auth ? <Register /> : <Login />}
       </Container>
     </Box>
   );
