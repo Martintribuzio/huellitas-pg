@@ -18,14 +18,14 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
   "&:hover, &.Mui-focusVisible": {
     zIndex: 1,
     "& .MuiImageBackdrop-root": {
-      opacity: 0.15
-    },
-    "& .MuiImageMarked-root": {
       opacity: 0
     },
-    "& .MuiTypography-root": {
-      border: "4px solid currentColor"
-    }
+    // "& .MuiImageMarked-root": {
+    //   opacity: 1
+    // },
+    // "& .MuiTypography-root": {
+    //   border: "4px solid currentColor"
+    // }
   }
 }));
 
@@ -58,20 +58,18 @@ const ImageBackdrop = styled("span")(({ theme }) => ({
   top: 0,
   bottom: 0,
   backgroundColor: theme.palette.common.black,
-  opacity: 0.4,
+  opacity: 0.5,
   transition: theme.transitions.create("opacity")
 }));
 
-const ImageMarked = styled("span")(({ theme }) => ({
-  height: 3,
-  width: 18,
-  backgroundColor: theme.palette.common.white,
-  position: "absolute",
-  bottom: -2,
-  left: "calc(50% - 9px)",
-  transition: theme.transitions.create("opacity")
-}));
 
+const TraslateState = (petState: String) => {
+  switch(petState){
+    case 'found':return 'Encontrado';
+    case 'lost':return 'Perdido';
+    default:return 'En adopcion'
+  }
+}
 
 
 export default function Feed(){
@@ -117,8 +115,7 @@ export default function Feed(){
                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`
               }}
             >
-              {item.type}
-              <ImageMarked className="MuiImageMarked-root" />
+              {item.name? `${TraslateState(item.state)}, Nombre: ${item.name}`:`${TraslateState(item.state)}`}
             </Typography>
           </Image>
         </ImageButton>
