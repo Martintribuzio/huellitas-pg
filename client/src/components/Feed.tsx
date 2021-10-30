@@ -63,14 +63,6 @@ const ImageBackdrop = styled("span")(({ theme }) => ({
 }));
 
 
-const TraslateState = (petState: String) => {
-  switch(petState){
-    case 'found':return 'Encontrado';
-    case 'lost':return 'Perdido';
-    default:return 'En adopcion'
-  }
-}
-
 
 export default function Feed(){
 
@@ -99,7 +91,7 @@ export default function Feed(){
             width: "30vw",
             margin: '10px'
           }}
-          sx={{minHeight:200,minWidth:200 }}
+          sx={{minHeight:250,minWidth:200 }}
         >
           <ImageSrc style={{ backgroundImage: `url(http://localhost:3001/${item.petImage}` }} />
           <ImageBackdrop className="MuiImageBackdrop-root" />
@@ -115,7 +107,7 @@ export default function Feed(){
                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`
               }}
             >
-              {item.name? `${TraslateState(item.state)}, Nombre: ${item.name}`:`${TraslateState(item.state)}`}
+              {item.name? `${item.state}, Nombre: ${item.name}`:`${item.state}`}
             </Typography>
           </Image>
         </ImageButton>
