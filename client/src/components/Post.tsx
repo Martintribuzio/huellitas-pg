@@ -11,6 +11,7 @@ export default function Post(props: PostType) {
         alt={''}
         src={`http://localhost:3001/${props.petImage}`}
       />
+      <p>{props.name !== undefined ? `Nombre: ${props.name}` : 'nombre desconocido'}</p>
       <p>{`Descripcion: ${props.description}`}</p>
       <p>{`Fecha: ${props.date}`}</p>
       <p>{`Genero: ${props.genre}`}</p>

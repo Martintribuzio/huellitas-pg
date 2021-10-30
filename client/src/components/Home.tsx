@@ -8,7 +8,6 @@ export default function Home(){
             {/* navBar */}
             <Filters/>
             <Feed/>
-            <Link to ={"/home/createPost"}><button>createADog</button></Link>
         </div>
     )
 }
