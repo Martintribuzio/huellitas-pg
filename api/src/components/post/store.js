@@ -2,6 +2,7 @@ const { Post } = require('../../models/Post');
 const { User } = require('../../models/User');
 
 const createPostDB = async (
+  name,
   type,
   state,
   description,
@@ -12,21 +13,23 @@ const createPostDB = async (
 ) => {
   try {
     const post = new Post({
+      name,
       type,
       state,
       description,
       user: userId,
       genre,
       date,
-      petImage
+      petImage,
     });
     await post.save();
+
     // const userById = await User.findById(userId);
     // userById.posts.push(post);
     // await userById.save();
 
     return post;
-  } catch (e){
+  } catch (e) {
     console.log(e.message);
     throw new Error(e.message);
   }
@@ -36,7 +39,7 @@ const findPostDB = async id => {
   try {
     const post = id ? await Post.findById(id) : await Post.find();
     return post;
-  } catch (error){
+  } catch (error) {
     throw new Error(error);
   }
 };
