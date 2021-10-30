@@ -1,18 +1,21 @@
 const { Schema, model } = require('mongoose');
 
 const postSchema = new Schema({
+  name: {
+    type: String,
+  },
   type: {
     type: String,
     required: true,
   },
   genre: {
     type: String,
-    enum: ['male', 'female'],
+    enum: ['macho', 'hembra'],
   },
   state: {
     type: String,
-    enum: ['lost', 'found', 'adoption'],
-    default: 'lost',
+    enum: ['perdido', 'encontrado', 'adopción'],
+    default: 'perdido',
   },
   description: {
     type: String,
@@ -22,7 +25,7 @@ const postSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   petImage: {
     type: String,
-  }
+  },
 });
 
 const Post = new model('Post', postSchema);
