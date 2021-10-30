@@ -30,6 +30,7 @@ export default function Feed(){
                                 <Link to = {'/home/detail/' + p._id} key = {p._id}>
                                     <Post
                                         petImage = {p.petImage}
+                                        name = {p.name}
                                         description = {p.description}
                                         date = {p.date}
                                         genre = {p.genre}
