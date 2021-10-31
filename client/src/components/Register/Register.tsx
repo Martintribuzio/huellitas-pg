@@ -4,10 +4,11 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { TextField } from '@material-ui/core';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 import './Register.css';
 import Box from '@mui/material/Box';
+import GoogleLogin from 'react-google-login';
+import axios from 'axios';
 
 type Data = {
   name: string;
@@ -36,9 +37,37 @@ function Register() {
     formState: { errors },
   } = useForm<Data>({ resolver: yupResolver(schema) });
 
-  const onSubmit = handleSubmit(data => {
-    /* alert(JSON.stringify(data))  */
-    /* alert(register) */
+  const responseGoogle = (response: any) => {
+    console.log(response);
+    axios
+      .post('http://localhost:3001/user/signup', {
+        name: response.profileObj.givenName,
+        lastname: response.profileObj.familyName,
+        email: response.profileObj.email,
+        password: response.profileObj.googleId,
+        confirmPassword: response.profileObj.googleId,
+      })
+      .then(res => {
+        console.log(res);
+        Swal.fire({
+          title: 'Registro exitoso',
+          text: 'Ahora puedes iniciar sesión',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo registrar',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+      });
+  };
+
+  const onSubmit  = handleSubmit((data) => {
     console.log(document.getElementById('password'));
     axios
       .post('http://localhost:3001/user/signup', data)
@@ -52,12 +81,12 @@ function Register() {
         console.log(res);
       })
       .catch(error => console.log(error.message));
-  });
+  };
 
   return (
     <Box sx={{ backgroundColor: 'secondary.main' }} className='container'>
       <h1>Registrate</h1>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit}>
         <div>
           <Controller
             name='name'
@@ -160,6 +189,13 @@ function Register() {
         <Link to='/'>Ingresa</Link>
         <button type='submit'>Registrar</button>
       </form>
+      <GoogleLogin
+        clientId='73850795306-qqjla4o7l7d8mha6209tu8h87asqu073.apps.googleusercontent.com'
+        buttonText='Login'
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+        cookiePolicy={'single_host_origin'}
+      />
     </Box>
   );
 }
