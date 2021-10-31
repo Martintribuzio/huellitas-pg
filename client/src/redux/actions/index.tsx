@@ -9,7 +9,6 @@ import {
   GET_POST_QUERY,
 } from '../types/actionTypes';
 import axios from 'axios';
-import { PostType } from '../types/types';
 
 export function postPet(input: FormData) {
   return async function (dispatch: any) {

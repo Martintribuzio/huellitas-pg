@@ -80,7 +80,7 @@ export default function Feed() {
   console.log('QUERY POSTS', queryPost);
 
   let postsToShow = queryPost
-    ? allPosts.filter(elem => elem.name?.includes(queryPost))
+    ? allPosts.filter(elem => elem.name?.toLowerCase().includes(queryPost.toLowerCase()))
     : allPosts;
   console.log('POSTS', postsToShow);
   useEffect(() => {

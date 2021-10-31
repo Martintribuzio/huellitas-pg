@@ -1,7 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getPosts } from '../../redux/actions';
-import { typeState } from '../../redux/reducers';
 import { getPostByQuery } from '../../redux/actions';
 
 export default function SearchBar() {
@@ -26,8 +24,7 @@ export default function SearchBar() {
       <div>
         <input
           type='text'
-          className='barrita'
-          placeholder='Search game'
+          placeholder='Buscar post'
           value={search}
           onChange={handleChange}
         />
