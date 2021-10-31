@@ -8,7 +8,6 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import './Register.css';
 import Box from '@mui/material/Box';
-import {UserContext} from '../Context/UserContext'
 
 type Data = {
   name: string;
@@ -18,6 +17,7 @@ type Data = {
   password: string;
   confirmPassword: string;
 };
+
 const schema = yup.object().shape({
   name: yup.string().required('Ingresa tu nombre'),
   lastname: yup.string().required('Ingresa tu apellido'),
@@ -30,8 +30,6 @@ const schema = yup.object().shape({
 });
 
 function Register() {
-  const [userContext, setUserContext]=React.useContext(UserContext)
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const {
     handleSubmit,
     control,
@@ -41,7 +39,6 @@ function Register() {
   const onSubmit = handleSubmit(data => {
     /* alert(JSON.stringify(data))  */
     /* alert(register) */
-    console.log(document.getElementById('password'));
     axios
       .post('http://localhost:3001/user/signup', data)
       .then(async res => {

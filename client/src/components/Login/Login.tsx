@@ -1,15 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { TextField } from '@material-ui/core';
 import './Login.css';
-import { UserContext} from '../Context/UserContext';
 import Box from '@mui/material/Box';
-import { error } from 'console';
-
+import { setUser } from '../../redux/actions';
+import { typeState } from '../../redux/reducers/index';
 type LogIn = {
   email: string;
   password: string;
@@ -19,15 +19,16 @@ const schema = yup.object().shape({
   password: yup.string().min(8).max(20).required(),
 });
 
-interface Context{
-  user:string,
-  token:string
-};
+interface Context {
+  user: string;
+  token: string;
+}
 
 function Ingresar() {
-  const [userContext,setUserContext]=React.useContext(UserContext);
-  const [email, setEmail] = React.useState("")
-  const [password, setPassword] = React.useState("")
+  const dispatch = useDispatch();
+  const user = useSelector((state: typeState) => state.user);
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const {
     handleSubmit,
@@ -35,40 +36,23 @@ function Ingresar() {
     control,
     setError,
     formState: { errors },
-  } = useForm<LogIn>({ resolver: yupResolver(schema)});
-  const genericErrorMessage:string = "Algo salió mal.Pruebaa nuevamente"
+  } = useForm<LogIn>({ resolver: yupResolver(schema) });
+  const genericErrorMessage: string = 'Algo salió mal.Pruebaa nuevamente';
 
   const onSubmit = handleSubmit(data => {
-    /* alert(JSON.stringify(data)) */
-    /* alert(register) */
-  
-  setIsSubmitting(true);
+    const { email, password } = data;
     axios
-      .post('http://localhost:3001/user/login', data)
-      .then( res=>res.data)
-      .then(res=>      {
-        setIsSubmitting(false);
-        if(!res.status){
-          if(res.status===400){
-            setError('email',{type:'manual',message:'El usuario no existe'})
-          }else if(res.status===401){
-            setError('password',{type:'manual',message:'Contraseña incorrecta'})
-          }else{
-            setError('email',{type:'manual', message:'Error de conexión'})
-          }
-        }else{
-        
-    setUserContext({
-            user:data.user as string,
-            token:data.token as string
-          })
+      .post('http://localhost:3001/user/login', {
+        username: email,
+        password: password,
       })
-      .catch(error => 
-        setError('email'
-        ,{type:'manual',message:genericErrorMessage})
-        setIsSubmitting(false)
+      .then(res => {
+        console.log(res);
+        console.log(res.data.token);
+        dispatch(setUser(res.data.token));
+      })
+      .catch(err => console.log(err));
   });
-
 
   return (
     <Box sx={{ backgroundColor: 'secondary.main' }} className='container'>
@@ -93,7 +77,7 @@ function Ingresar() {
               />
             )}
           />
-        
+
           <br />
           <Controller
             name='password'
@@ -115,7 +99,9 @@ function Ingresar() {
         </div>
         <p>¿No tienes cuenta?</p>
         <Link to='/register'>Registrate</Link>
-        <button type='submit' disabled={isSubmitting}>Ingresar</button>
+        <button type='submit' disabled={isSubmitting}>
+          Ingresar
+        </button>
       </form>
     </Box>
   );
