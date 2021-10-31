@@ -49,7 +49,7 @@ export default function Filters() {
           id='demo-simple-select-helper'
           value={state}
           label='estado'
-          onChange={e => handleSelectEstado(e)}>
+          onChange={handleSelectEstado}>
           <MenuItem value=''>
             <em></em>
           </MenuItem>

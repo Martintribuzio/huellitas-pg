@@ -10,8 +10,9 @@ import { postPet } from '../redux/actions';
 import styles from '../CSS/PostAPet.module.css';
 import React from 'react';
 import Button from '@mui/material/Button';
+import {TextField} from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { TextField } from '@mui/material';
+//import { TextField } from '@mui/material';
 
 export default function PostAPet() {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ export default function PostAPet() {
   const history = useHistory();
 
   const [input, setInput] = useState<PostType>({
-    name: "",
+    name:'',
     description: '',
     genre: '',
     date: '',
@@ -29,7 +30,7 @@ export default function PostAPet() {
     type: '',
     state: '',
   });
-
+  
   const handlegenrechange = (event: SelectChangeEvent) => {
     setGenre(event.target.value);
     setInput({ ...input, genre: event.target.value });
@@ -37,7 +38,7 @@ export default function PostAPet() {
 
   const handletypechange = (event: SelectChangeEvent) => {
     setType(event.target.value);
-    setInput({ ...input, type: event.target.value }); //set the animal type
+    setInput({ ...input, type: event.target.value }); 
   };
 
   const handleSelectEstado = (event: SelectChangeEvent) => {
@@ -76,6 +77,9 @@ export default function PostAPet() {
     if (input.petImage) {
       fd.append('petImage', input.petImage);
     }
+    if(input.name && input.name !== ''){
+      fd.append('name', input.name)
+    }
     fd.append('state', input.state);
     fd.append('description', input.description);
     fd.append('type', input.type);
@@ -88,6 +92,11 @@ export default function PostAPet() {
   return (
     <div className={styles.conteiner}>
       <form onSubmit={handleSubmit} className={styles.form}>
+
+        <label>Nombre:</label>
+        <FormControl sx={{ m: 1, minWidth: 120 }}/> 
+        <InputLabel id='demo-simple-select-helper-label'>Nombre</InputLabel>
+        <TextField />
 
         <label>Estado de la mascota:</label>
         <FormControl sx={{ m: 1, minWidth: 120 }}>

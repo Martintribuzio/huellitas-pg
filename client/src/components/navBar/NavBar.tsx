@@ -127,7 +127,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
   );
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box className={s.box} sx={{ flexGrow: 1 }}>
       <AppBar position='static'>
         <Toolbar>
           <IconButton
@@ -136,7 +136,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
             color='inherit'
             aria-label='open drawer'
             sx={{ mr: 2 }}>
-            <Link className={s.link} to='/home' style={{ color: 'white' }}>
+            <Link className={s.link} to='/home' style={{  color: 'white' }}>
               <PetsIcon />
             </Link>
           </IconButton>

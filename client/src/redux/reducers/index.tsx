@@ -1,20 +1,14 @@
- import { FILTER_STATE, FILTER_LATEST, GET_TYPES, GET_GENRES, POST_PET, GET_POSTS} from '../types/actionTypes';
+ import { FILTER_STATE, FILTER_LATEST, GET_TYPES, GET_GENRES, POST_PET, GET_POSTS, } from '../types/actionTypes';
 import { FiltersActionTypes } from '../types/actionTypes'
 import {PostType} from '../types/types'
 
 export interface typeState{
   allPosts: Array<PostType>,
-  filteredStatePosts: Array<PostType>,
-  filteredTypePosts: Array<PostType>,
-  filteredGenrePosts: Array<PostType>,
   showPosts: Array<PostType>
 }
 
 const initialState: typeState = {
   allPosts: [],
-  filteredStatePosts: [],
-  filteredTypePosts: [],
-  filteredGenrePosts: [],
   showPosts: []
 }
 
@@ -29,6 +23,7 @@ export default function rootReducer (state = initialState, action:FiltersActionT
         }
     case POST_PET:
         return{
+            ...state,
             showPosts: action.payload,
             allPosts: action.payload
         }
@@ -42,16 +37,17 @@ export default function rootReducer (state = initialState, action:FiltersActionT
         else{
             return{
                 ...state,
-                filteredStatePosts: state.allPosts.filter(p => p.state === action.payload),
-                showPosts: state.showPosts.concat(state.filteredStatePosts)
+                showPosts: state.allPosts.filter(p => p.state === action.payload),
             }
         }
     case FILTER_LATEST:
-        if(action.payload === "mas recientes"){
+        if(action.payload === "mas antiguos"){
         return{
             ...state,
             showPosts:[...state.showPosts].sort((a:PostType,b:PostType) => {
-                return a.date < b.date ? 1 : -1
+                return action.payload === "mas antiguos"
+                ? + new Date(b.date) - + new Date(a.date)
+                : + new Date(a.date) - + new Date(b.date)
             })
         }
         }else{
@@ -72,8 +68,7 @@ export default function rootReducer (state = initialState, action:FiltersActionT
     else{
     return{
         ...state,
-        filteredTypePosts: state.allPosts.filter((p => p.type === action.payload)),
-        showPosts: state.showPosts.concat(state.filteredStatePosts)
+        showPosts: state.showPosts.filter((p => p.type === action.payload)),
     }
 }
     case GET_GENRES: 
@@ -86,8 +81,7 @@ export default function rootReducer (state = initialState, action:FiltersActionT
     else{
         return{
             ...state,
-            filteredGenrePosts: state.allPosts.filter((p => p.genre === action.payload)),
-            showPosts: state.showPosts.concat(state.filteredGenrePosts)
+            showPosts: state.showPosts.filter((p => p.genre === action.payload)),
         }
     }
     default:

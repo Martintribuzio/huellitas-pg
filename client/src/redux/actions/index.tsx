@@ -1,5 +1,5 @@
-import { POST_PET, FILTER_STATE, FILTER_LATEST, GET_TYPES, GET_GENRES, GET_POSTS} from '../types/actionTypes';
-import axios from 'axios' 
+import { POST_PET, FILTER_STATE, FILTER_LATEST, GET_TYPES, GET_GENRES, GET_POSTS, GET_DETAIL} from '../types/actionTypes';
+import axios from 'axios'
 
 export function postPet(input: FormData){
     return async function(dispatch: any){ 
@@ -19,6 +19,13 @@ export function getPosts(){
     let data = (await axios.get('http://localhost:3001/post')).data;
     // console.log(data)
     return dispatch({type: GET_POSTS, payload: data})
+  }
+}
+
+export function getPostDetail(id:String){
+  return async function(dispatch: any){
+    let data = (await axios.get('http://localhost:3001/post?id=' + id)).data;
+    return dispatch({type: GET_DETAIL,payload: data})
   }
 }
 
