@@ -8,11 +8,12 @@ import { styled } from "@mui/material/styles";
 import ButtonBase from "@mui/material/ButtonBase";
 import Typography from "@mui/material/Typography";
 
+
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: "relative",
   height: 200,
   [theme.breakpoints.down("sm")]: {
-    width: "100% !important", // Overrides inline-style
+    width: "100% !important", 
     height: 100
   },
   "&:hover, &.Mui-focusVisible": {
@@ -20,12 +21,12 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
     "& .MuiImageBackdrop-root": {
       opacity: 0
     },
-    // "& .MuiImageMarked-root": {
-    //   opacity: 1
-    // },
-    // "& .MuiTypography-root": {
-    //   border: "4px solid currentColor"
-    // }
+    "& .tuki": {
+      display: 'none'
+    },
+    "& .tuki2": {
+      display:'block'
+    }
   }
 }));
 
@@ -75,18 +76,20 @@ const TraslateState = (petState: String) => {
 export default function Feed(){
 
     const dispatch = useDispatch();
-    let allPosts = useSelector((state: typeState) => (state.filteredPosts))
+    let filteredPosts = useSelector((state: typeState) => (state.filteredPosts))
+    let allPosts = useSelector((state: typeState) => (state.allPosts))
 
     useEffect(()=>{
             dispatch(getPosts());
         }, [dispatch]);
 
     if(allPosts.length){
+      if(filteredPosts.length){
         return(
             <Box
       sx={{ display: "flex", flexWrap: "wrap", justifyContent:'center' ,minWidth: 300, width: "100%"}}
     >
-      {allPosts.map((item) => {
+      {filteredPosts.map((item) => {
           if(typeof item.petImage === 'string'){
               if(item.petImage.search(/\\/))
               {item.petImage = item.petImage.replace(/\\/g, "/");}
@@ -108,14 +111,32 @@ export default function Feed(){
               component="span"
               variant="subtitle1"
               color="inherit"
+              className='tuki'
               sx={{
                 position: "relative",
                 p: 5,
                 pt: 2,
+                textShadow:'0px 0px 4px black',
                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`
               }}
             >
-              {item.name? `${TraslateState(item.state)}, Nombre: ${item.name}`:`${TraslateState(item.state)}`}
+              {`${TraslateState(item.state)}`}
+            </Typography>
+            <Typography
+              component="span"
+              variant="subtitle1"
+              color="inherit"
+              className='tuki2'
+              sx={{
+                position: "relative",
+                p: 5,
+                display:'none',
+                textShadow:'0px 0px 4px black',
+                pt: 2,
+                pb: (theme) => `calc(${theme.spacing(1)} + 6px)`
+              }}
+            >
+              {!item.name? `${TraslateState(item.state)}`:`Nombre: ${item.name}`}
             </Typography>
           </Image>
         </ImageButton>
@@ -123,6 +144,11 @@ export default function Feed(){
       )})}
     </Box>
   );}else{
-        return <h1>Cargando...</h1>
+    return <h1>No encontrado</h1>
+  }}else{
+        return (<>
+        <img src='https://themebeyond.com/html/petco/img/preloader.gif' alt='cargando'/>
+        <h1>Cargando...</h1>
+        </>)
     }
 }

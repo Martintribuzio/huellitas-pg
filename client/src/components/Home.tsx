@@ -1,11 +1,10 @@
 import Feed from "./Feed"
 import Filters from "./Filters"
-import { Link } from "react-router-dom"
+import style from '../CSS/Home.module.css'
 
 export default function Home(){
     return(
-        <div>
-            {/* navBar */}
+        <div className={style.div}>
             <Filters/>
             <Feed/>
         </div>
