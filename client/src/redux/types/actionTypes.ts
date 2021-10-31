@@ -5,12 +5,18 @@ export const FILTER_LATEST = "FILTER_LATEST";
 export const GET_TYPES = "GET_TYPES";
 export const GET_GENRES = "GET_GENRES"
 export const GET_POSTS = "GET_POSTS";
-export const POST_PET = "POST_PET"
-export const GET_DETAIL = "GET_DETAIL"
+export const POST_PET = "POST_PET";
+export const GET_DETAIL = "GET_DETAIL";
+export const GET_POST_QUERY = "GET_POST_QUERY";
 
 export interface getDetail{
     type: typeof GET_DETAIL,
     payload:PostType
+}
+
+export interface getPostQuery{
+    type: typeof GET_POST_QUERY,
+    payload: string
 }
 
 export interface getPosts{
@@ -43,4 +49,4 @@ export interface getGenres{
     payload: string
 }
 
-export type FiltersActionTypes = filterByState | filterByLatest | getTypes | getGenres | PostPet | getPosts | getDetail
+export type FiltersActionTypes = filterByState | filterByLatest | getTypes | getGenres | PostPet | getPosts | getDetail | getPostQuery
