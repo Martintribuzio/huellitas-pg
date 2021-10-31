@@ -32,7 +32,7 @@ export default function Filters() {
   }
 
   function handleSelectGenres(e: SelectChangeEvent) {
-    // console.log(e.target.value)
+    //console.log(e.target.value)
     dispatch(getGenres(e.target.value));
     setGenre(e.target.value);
   }
@@ -51,10 +51,11 @@ export default function Filters() {
           id='demo-simple-select-helper'
           value={state}
           label='estado'
-          onChange={e => handleSelectEstado(e)}>
+          onChange={handleSelectEstado}>
           <MenuItem value=''>
             <em></em>
           </MenuItem>
+          <MenuItem value='Todos'>Todos</MenuItem>
           <MenuItem value='lost'>perdido</MenuItem>
           <MenuItem value='found'>Encontrado</MenuItem>
           <MenuItem value='adoption'>en adopcion</MenuItem>
@@ -72,6 +73,7 @@ export default function Filters() {
           <MenuItem value=''>
             <em></em>
           </MenuItem>
+          <MenuItem value='Todos'>Todos</MenuItem>
           <MenuItem value='perro'>perro</MenuItem>
           <MenuItem value='gato'>gato</MenuItem>
           <MenuItem value='otros'>otros</MenuItem>
@@ -88,8 +90,9 @@ export default function Filters() {
           <MenuItem value=''>
             <em></em>
           </MenuItem>
+          <MenuItem value='Todos'>Todos</MenuItem>
           <MenuItem value='male'>macho</MenuItem>
-          <MenuItem value='famale'>hembra</MenuItem>
+          <MenuItem value='female'>hembra</MenuItem>
         </Select>
       </FormControl>
 
