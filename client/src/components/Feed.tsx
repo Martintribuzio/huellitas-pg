@@ -6,18 +6,20 @@ import {typeState} from '../redux/reducers/index'
 import Post from "./Post";
 import styles from "../CSS/Feed.module.css"
 import Filters from './Filters';
+import { Filter } from "@mui/icons-material";
+// import { PostType } from "../redux/types/types";
 
 export default function Feed(){
 
     const dispatch = useDispatch();
-    let allPosts = useSelector((state: typeState) => (state.filteredPosts))
-    console.log(allPosts)
+    let allPosts = useSelector((state: typeState) => (state.showPosts)) 
+    //console.log(allPosts)
 
     useEffect(()=>{
             dispatch(getPosts());
         }, [dispatch]);
 
-    // if(allPosts.length){
+    if(allPosts.length){
         return(
             <div className = {styles.contenedor}>
                 <Filters/>
@@ -25,7 +27,7 @@ export default function Feed(){
                     {
                         allPosts.map(p => {
                             return(
-                                <Link to = {'/home/detail/'} key = {p._id}>
+                                <Link to = {'/home/detail/' + p._id} key = {p._id}>
                                     <Post
                                         petImage = {p.petImage}
                                         description = {p.description}
@@ -35,13 +37,18 @@ export default function Feed(){
                                         state = {p.state}
                                     />
                                 </Link>
-                            )
+                            ) 
                         })
                     }
                 </div>
             </div>
         )
-    // }else{
-    //     return <h1>Cargando...</h1>
-    // }
+    }else{
+        return (
+            <div>
+                <Filters/>
+                <h1>Cargando...</h1>
+            </div>
+        )
+    }
 }

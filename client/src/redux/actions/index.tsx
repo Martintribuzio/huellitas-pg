@@ -1,5 +1,5 @@
 import { POST_PET, FILTER_STATE, FILTER_LATEST, GET_TYPES, GET_GENRES, GET_POSTS} from '../types/actionTypes';
-import axios from 'axios'
+import axios from 'axios' 
 
 export function postPet(input: FormData){
     return async function(dispatch: any){ 
@@ -49,3 +49,4 @@ export const getGenres = function(filter: string){
       payload:filter
     }
 }
+

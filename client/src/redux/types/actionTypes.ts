@@ -6,6 +6,7 @@ export const GET_TYPES = "GET_TYPES";
 export const GET_GENRES = "GET_GENRES"
 export const GET_POSTS = "GET_POSTS";
 export const POST_PET = "POST_PET"
+export const ERROR = "ERROR"
 
 export interface getPosts{
     type: typeof GET_POSTS,
@@ -36,5 +37,6 @@ export interface getGenres{
     type: typeof GET_GENRES,
     payload: string
 }
+
 
 export type FiltersActionTypes = filterByState | filterByLatest | getTypes | getGenres | PostPet | getPosts
