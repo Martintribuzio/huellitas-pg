@@ -53,7 +53,7 @@ export default function rootReducer(
       return {
         ...state,
         filteredPosts: [...state.allPosts].sort((a: PostType, b: PostType) => {
-          return action.payload === 'mas recientes'
+          return action.payload === 'mas antiguos'
             ? +new Date(b.date) - +new Date(a.date)
             : +new Date(a.date) - +new Date(b.date);
         }),

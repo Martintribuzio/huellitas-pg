@@ -97,7 +97,7 @@ export default function Feed() {
           minWidth: 300,
           width: '100%',
         }}>
-        {postsToShow.map(item => {
+        {postsToShow.reverse().map(item => {
           if (typeof item.petImage === 'string') {
             if (item.petImage.search(/\\/)) {
               item.petImage = item.petImage.replace(/\\/g, '/');
