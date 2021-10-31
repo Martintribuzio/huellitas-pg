@@ -1,41 +1,40 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { getPosts } from "../../redux/actions"
-import { typeState } from "../../redux/reducers";
-import { getPostByQuery } from "../../redux/actions";
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { getPosts } from '../../redux/actions';
+import { typeState } from '../../redux/reducers';
+import { getPostByQuery } from '../../redux/actions';
 
-export default function SearchBar(){
-    const dispatch = useDispatch();
-    const [search, setSearch] = useState('');
-    let allPosts = useSelector((state: typeState) => (state.filteredPosts))
+export default function SearchBar() {
+  const dispatch = useDispatch();
+  const [search, setSearch] = useState<string>('');
 
-    // useEffect(()=>{
-    //     dispatch(getPosts());
-    // }, []);
-    
-    function handleChange(e: any){
-        e.preventDefault();
-        if(search){
-          dispatch(getPostByQuery(e.target.value))
-        }
-    }
+  useEffect(() => {
+    dispatch(getPostByQuery(search));
+  }, [search]);
 
-    function handleSubmit(){
-      setSearch('')
-    }
-    
-    return(
-      <>
-        <div>
-           <input
-            type='text' 
-            className='barrita'
-            placeholder='Search game'
-            value={search}
-            onChange={handleChange}
-          />
-          <button onSubmit={handleSubmit} type="submit">Search</button>
-        </div>
-      </>
-    )
+  function handleChange(e: any) {
+    e.preventDefault();
+    setSearch(e.target.value);
+  }
+
+  function handleSubmit() {
+    setSearch('');
+  }
+
+  return (
+    <>
+      <div>
+        <input
+          type='text'
+          className='barrita'
+          placeholder='Search game'
+          value={search}
+          onChange={handleChange}
+        />
+        <button onSubmit={handleSubmit} type='submit'>
+          Search
+        </button>
+      </div>
+    </>
+  );
 }
