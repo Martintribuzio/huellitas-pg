@@ -1,5 +1,6 @@
-import { POST_PET, FILTER_STATE, FILTER_LATEST, GET_TYPES, GET_GENRES, GET_POSTS, GET_DETAIL} from '../types/actionTypes';
+import { POST_PET, FILTER_STATE, FILTER_LATEST, GET_TYPES, GET_GENRES, GET_POSTS, GET_DETAIL, GET_POST_QUERY} from '../types/actionTypes';
 import axios from 'axios'
+import { PostType } from '../types/types';
 
 export function postPet(input: FormData){
     return async function(dispatch: any){ 
@@ -34,6 +35,13 @@ export const filterByState = function(filter: string){
       type:FILTER_STATE,
       payload: filter
     }
+}
+
+export const getPostByQuery = function(query: string){
+  return{
+    type: GET_POST_QUERY,
+    payload: query
+  }
 }
 
 export const filterByLatest = function(filter: string){

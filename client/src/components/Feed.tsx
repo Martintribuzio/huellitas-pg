@@ -76,17 +76,21 @@ export default function Feed(){
 
     const dispatch = useDispatch();
     let allPosts = useSelector((state: typeState) => (state.filteredPosts))
+    let queryPost = useSelector((state: typeState ) => (state.queryPosts))
 
+    
+    let postsToShow = queryPost ? allPosts.filter(elem => elem.name?.includes(queryPost)) : allPosts
+    
     useEffect(()=>{
             dispatch(getPosts());
         }, [dispatch]);
 
-    if(allPosts.length){
+    if(postsToShow.length){
         return(
             <Box
       sx={{ display: "flex", flexWrap: "wrap", justifyContent:'center' ,minWidth: 300, width: "100%"}}
     >
-      {allPosts.map((item) => {
+      {postsToShow.map((item) => {
           if(typeof item.petImage === 'string'){
               if(item.petImage.search(/\\/))
               {item.petImage = item.petImage.replace(/\\/g, "/");}
