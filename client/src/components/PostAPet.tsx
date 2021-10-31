@@ -12,6 +12,7 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import {TextField} from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+//import { TextField } from '@mui/material';
 
 export default function PostAPet() {
   const dispatch = useDispatch();
@@ -127,6 +128,9 @@ export default function PostAPet() {
           </Select>
         </FormControl>
 
+        <label>Nombre del animal (en el caso de haber perdido a su mascota): </label>
+        <InputLabel id='demo-simple-select-helper-label'><TextField/></InputLabel>
+
         <label>Tipo de animal: </label>
         <FormControl sx={{ m: 1, minWidth: 120 }}>
           <InputLabel id='demo-simple-select-helper-label'>tipo</InputLabel>
@@ -141,8 +145,8 @@ export default function PostAPet() {
             <MenuItem value=''>
               <em></em>
             </MenuItem>
-            <MenuItem value='perro'>perro</MenuItem>
-            <MenuItem value='gato'>gato</MenuItem>
+            <MenuItem value='perro'>Perro</MenuItem>
+            <MenuItem value='gato'>Gato</MenuItem>
             <MenuItem value='otro'>otro</MenuItem>
           </Select>
         </FormControl>

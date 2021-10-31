@@ -10,7 +10,7 @@ export default function PostDetail(): JSX.Element{
   const { id } = useParams<{ id?: string }>();
 
   const dispatch = useDispatch();
-  let allPosts = useSelector((state: typeState) => (state.filteredPosts))
+  let allPosts = useSelector((state: typeState) => (state.showPosts))
   
   useEffect(()=>{
     dispatch(getPosts());
