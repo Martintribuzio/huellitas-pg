@@ -52,7 +52,7 @@ export default function rootReducer(
     case FILTER_LATEST:
       return {
         ...state,
-        filteredPosts: [...state.allPosts].sort((a: PostType, b: PostType) => {
+        filteredPosts: [...state.filteredPosts].sort((a: PostType, b: PostType) => {
           return action.payload === 'mas antiguos'
             ? +new Date(b.date) - +new Date(a.date)
             : +new Date(a.date) - +new Date(b.date);
@@ -61,12 +61,12 @@ export default function rootReducer(
     case GET_TYPES:
       return {
         ...state,
-        filteredPosts: state.allPosts.filter(p => p.type === action.payload),
+        filteredPosts: state.filteredPosts.filter(p => p.type === action.payload),
       };
     case GET_GENRES:
       return {
         ...state,
-        filteredPosts: state.allPosts.filter(p => p.genre === action.payload),
+        filteredPosts: state.filteredPosts.filter(p => p.genre === action.payload),
       };
     default:
       return state;
