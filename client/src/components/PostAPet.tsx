@@ -16,6 +16,7 @@ import { useHistory } from 'react-router-dom';
 
 export default function PostAPet() {
   const dispatch = useDispatch();
+  const [name, setName] = React.useState('');
   const [state, setState] = React.useState('');
   const [type, setType] = React.useState('');
   const [genre, setGenre] = React.useState('');
@@ -55,6 +56,11 @@ export default function PostAPet() {
       ...input,
       [e.target.name]: e.target.value,
     });
+  }
+  
+  function handleInputChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
+    setName(e.target.value);
+    setInput({ ...input, name: e.target.value }); 
   }
 
   function handleChangeImg(e: ChangeEvent<HTMLInputElement>) {
@@ -96,7 +102,11 @@ export default function PostAPet() {
         <label>Nombre:</label>
         <FormControl sx={{ m: 1, minWidth: 120 }}/> 
         <InputLabel id='demo-simple-select-helper-label'>Nombre</InputLabel>
-        <TextField />
+        <TextField 
+          name='name'
+          value={name}
+          onChange={e => handleInputChange(e)}
+        />
 
         <label>Estado de la mascota:</label>
         <FormControl sx={{ m: 1, minWidth: 120 }}>
@@ -112,9 +122,9 @@ export default function PostAPet() {
             <MenuItem value=''>
               <em></em>
             </MenuItem>
-            <MenuItem value='lost'>Perdido</MenuItem>
-            <MenuItem value='found'>Encontrado</MenuItem>
-            <MenuItem value='adoption'>En adopcion</MenuItem>
+            <MenuItem value='perdido'>perdido</MenuItem>
+            <MenuItem value='encontrado'>Encontrado</MenuItem>
+            <MenuItem value='adopcion'>en adopcion</MenuItem>
           </Select>
         </FormControl>
 
@@ -155,8 +165,8 @@ export default function PostAPet() {
             <MenuItem value=''>
               <em></em>
             </MenuItem>
-            <MenuItem value='male'>Macho</MenuItem>
-            <MenuItem value='female'>Hembra</MenuItem>
+            <MenuItem value='macho'>macho</MenuItem>
+            <MenuItem value='hembra'>hembra</MenuItem>
           </Select>
         </FormControl>
 

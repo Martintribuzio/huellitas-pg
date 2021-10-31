@@ -8,7 +8,7 @@ const storage = multer.diskStorage({
     cb(null, './uploads');
   },
   filename: function (req, file, cb) {
-    cb(null, uniqid('', file.originalname));
+    cb(null, uniqid('', file.originalname.split(' ').join('')));
   },
 });
 
@@ -29,6 +29,7 @@ postNetwork.post('/', upload.single('petImage'), async (req, res) => {
     const post = await createPost(req.body, req.file.path);
     return res.json(post);
   } catch (error) {
+    console.log(error, error.message);
     return res.send(error);
   }
 });
