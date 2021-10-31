@@ -8,6 +8,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import './Register.css';
 import Box from '@mui/material/Box';
+import {UserContext} from '../Context/UserContext'
 
 type Data = {
   name: string;
@@ -29,8 +30,9 @@ const schema = yup.object().shape({
 });
 
 function Register() {
+  const [userContext, setUserContext]=React.useContext(UserContext)
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors },
@@ -42,7 +44,7 @@ function Register() {
     console.log(document.getElementById('password'));
     axios
       .post('http://localhost:3001/user/signup', data)
-      .then(res => {
+      .then(async res => {
         Swal.fire({
           title: 'Success!',
           text: 'Fuiste registrado con exito',
