@@ -9,6 +9,7 @@ import './Register.css';
 import Box from '@mui/material/Box';
 import GoogleLogin from 'react-google-login';
 import axios from 'axios';
+import Button from '@mui/material/Button';
 
 type Data = {
   name: string;
@@ -84,7 +85,7 @@ function Register() {
   });
 
   return (
-    <Box sx={{ backgroundColor: 'secondary.main' }} className='container'>
+    <Box sx={{ backgroundColor: 'white' }} className='container'>
       <h1>Registrate</h1>
       <form onSubmit={onSubmit}>
         <div>
@@ -185,9 +186,9 @@ function Register() {
             )}
           />
         </div>
-        <p>¿Ya tienes cuenta?</p>
-        <Link to='/'>Ingresa</Link>
-        <button type='submit'>Registrar</button>
+        <Button variant='contained' type='submit'>
+          Registrar
+        </Button>
       </form>
       <GoogleLogin
         clientId='73850795306-qqjla4o7l7d8mha6209tu8h87asqu073.apps.googleusercontent.com'
