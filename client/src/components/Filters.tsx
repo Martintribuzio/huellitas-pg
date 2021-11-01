@@ -43,18 +43,24 @@ export default function Filters() {
     //console.log(e.target.value)
     dispatch(getTypes(e.target.value));
     setType(e.target.value);
+    setState('')
+    setGenre('')
   }
 
   function handleSelectGenres(e: SelectChangeEvent) {
     //console.log(e.target.value)
     dispatch(getGenres(e.target.value));
     setGenre(e.target.value);
+    setType('')
+    setState('')
   }
 
   function handleSelectState(e: SelectChangeEvent) {
     //console.log(e.target.value)
     dispatch(filterByState(e.target.value));
     setState(e.target.value);
+    setGenre('')
+    setType('')
   }
 
   console.log(state)
@@ -62,6 +68,9 @@ export default function Filters() {
   function handleClick(value: string) {
     //  console.log(value)
     dispatch(filterByLatest(value));
+    setGenre('')
+    setType('')
+    setState('')
   }
 
   return (

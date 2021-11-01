@@ -10,12 +10,12 @@ const postSchema = new Schema({
   },
   genre: {
     type: String,
-    enum: ['macho', 'hembra'],
+    enum: ['Macho', 'Hembra'],
   },
   state: {
     type: String,
-    enum: ['perdido', 'encontrado', 'adopción'],
-    default: 'perdido',
+    enum: ['Perdido', 'Encontrado', 'Adopción'],
+    default: 'Perdido',
   },
   description: {
     type: String,

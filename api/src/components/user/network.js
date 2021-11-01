@@ -45,10 +45,12 @@ const upload = multer({
 
 userNetwork.get('/posts', async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.query;
+    console.log('USER ID', id);
     const posts = await postsByUser(id);
     return res.json(posts);
   } catch (err) {
+    console.log(err, err.message);
     return res.json(err);
   }
 });
@@ -101,9 +103,6 @@ userNetwork.get('/posts', async (req, res) => {
 //   res.render('profile')
 // });
 
-// userNetwork.get('/profile', isLoggedIn, (req, res, next) => {
-//   res.render('profile');
-// });
 //Registro
 userNetwork.post('/signup', (req, res) => {
   User.register(
