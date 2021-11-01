@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
+import { Login } from '@mui/icons-material';
 
 type LogIn = {
   email: string;
@@ -29,7 +30,6 @@ const schema = yup.object().shape({
 });
 
 function Ingresar() {
-  const [error, setError] = useState('');
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state: typeState) => state.user);
@@ -62,19 +62,19 @@ function Ingresar() {
       history.push('/home');
     }
   });
-  //Login Facebook
+
+  //Login Facebook--------------------------------------------------------------
   const responseFacebook = async (response: any) => {
     let respLogin;
     try {
-      console.log(response)
-      respLogin = await axios.post('http://localhost:3001/user/login', {
-        username: response.email,
+      respLogin = await loginService({
+        email: response.email,
         password: response.id,
       });
-      console.log('ok', respLogin);
+      if (respLogin.success) {
+        history.push('/home')
+    };
     } catch (err: any) {
-      console.log('errror', err.message);
-      setError(err.message);
       registerWithFacebook(response); //Invoco a la funcion para registrar
     }
   }
@@ -88,15 +88,14 @@ function Ingresar() {
         email: response.email,
         password: response.id,
       });
-      console.log('ok', respSignup.status);
-      if (respSignup.status === 200) {
-        Swal.fire({
-          title: 'Registro exitoso',
-          text: 'Ahora puedes iniciar sesión',
-          icon: 'success',
-          confirmButtonText: 'Ok',
-        });
-        // history.push('/home') Ver como podríamos avisarle al cliente cual es su contraseña
+      if (respSignup.status === 200){
+        let respLogin = await loginService({
+          email: response.email,
+          password: response.id
+        })
+        if (respLogin.success) {
+          history.push('/home')
+      };
       }
     }
     catch(err){
@@ -108,18 +107,20 @@ function Ingresar() {
       });
     }
   };
-  //Login Google
+  //-----------------------------------------------------------------------
+
+  //Login Google--------------------------------------------------
   const responseGoogle = async (response: any) => {
     let respLogin;
     try {
-      respLogin = await axios.post('http://localhost:3001/user/login', {
-        username: response.profileObj.email,
-        password: response.profileObj.googleId,
-      });
-      console.log('ok', respLogin);
+      respLogin = await loginService({
+        email: response.profileObj.email,
+        password: response.profileObj.googleId
+      })
+      if (respLogin.success) {
+          history.push('/home')
+      };
     } catch (err: any) {
-      console.log('errror', err.message);
-      setError(err.message);
       registerWithGoogle(response) //Invoco a la funcion para registrar
     }
   }
@@ -133,15 +134,15 @@ function Ingresar() {
         email: response.profileObj.email,
         password: response.profileObj.googleId,
       });
-      console.log('ok', respSignup.status);
+      // console.log('ok', respSignup.status);
       if (respSignup.status === 200) {
-        Swal.fire({
-          title: 'Registro exitoso',
-          text: 'Ahora puedes iniciar sesión',
-          icon: 'success',
-          confirmButtonText: 'Ok',
-        });
-        // history.push('/home') Ver como podríamos avisarle al cliente cual es su contraseña
+        let respLogin = await loginService({
+          email: response.profileObj.email,
+          password: response.profileObj.googleId
+        })
+        if (respLogin.success) {
+            history.push('/home')
+        };
       }
     }
     catch(err){
@@ -153,7 +154,7 @@ function Ingresar() {
       });
     }
   };
-
+//-----------------------------------------------------------------------
   return (
     <Box sx={{ backgroundColor: 'wihte' }} className='container'>
       <div className='title'>
