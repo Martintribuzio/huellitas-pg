@@ -30,6 +30,7 @@ export default function LandingPage() {
     setAuth(event.target.checked);
   };
 
+  console.log(auth);
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
@@ -140,7 +141,7 @@ export default function LandingPage() {
           }}>
           <Switch checked={auth} onChange={handleChange} />{' '}
           <label>{auth ? 'Ya tengo cuenta' : '¿Necesitas una cuenta?'}</label>
-          {auth ? <Register /> : <Login />}
+          {auth ? <Register inicio={setAuth}/> : <Login />}
         </Container>
       </Box>
     );
