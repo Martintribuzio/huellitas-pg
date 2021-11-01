@@ -7,13 +7,18 @@ import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import '../CSS/PostAPet.module.css';
 import { useDispatch } from 'react-redux';
 import { PostType } from '../redux/types/types';
-import { postPet } from '../redux/actions';
+import { getPosts} from '../redux/actions';
 import styles from '../CSS/PostAPet.module.css';
 import React from 'react';
 import Button from '@mui/material/Button';
 import { TextField } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import useUser from '../hooks/useUser';
+
+import Swal from 'sweetalert2';
+import { postPet } from '../services/createPost';
+
+
 const Input = styled('input')({
   display: 'none',
 });
@@ -29,10 +34,10 @@ export default function PostAPet() {
   // HOOK PARA VERIFICACION DE USUARIO LOGEADO
   // RETORNA Unauthorized si no esta logueado
 
-  const [loading, result, user] = useUser();
-  if (result === 'Unauthorized') {
-    history.push('/');
-  }
+  // const [loading, result, user] = useUser();
+  // if (result === 'Unauthorized') {
+  //   history.push('/');
+  // }
 
   const [input, setInput] = useState<PostType>({
     name: '',
@@ -97,8 +102,28 @@ export default function PostAPet() {
     | ChangeEvent<HTMLSelectElement>
     | ChangeEvent<HTMLInputElement>;
 
+  async function postApet(fd: FormData){
+    let result: any = await postPet(fd)
+    if(result.ERROR){
+      return (Swal.fire({
+        title: 'ERROR!',
+        // text: '!',
+        icon: 'error',
+        confirmButtonText: 'Intentar de nuevo',
+      }));
+    }
+    history.push('/home')
+    return ( Swal.fire({
+      title: 'Publicado!',
+      text: 'Publicacion realizada con exito!',
+      icon: 'success',
+      confirmButtonText: 'Ok',
+    }))
+  }
+
   function handleSubmit(e: any) {
     e.preventDefault();
+    const id = window.localStorage.getItem('userId');
     const fd = new FormData();
     if (input.petImage) {
       fd.append('petImage', input.petImage);
@@ -110,14 +135,16 @@ export default function PostAPet() {
     fd.append('description', input.description);
     fd.append('type', input.type);
     fd.append('genre', input.genre);
-    dispatch(postPet(fd)); //mando form a trvaes del axios lol
-    alert('Publicado!');
-    history.push('/home');
+    if (id) {
+      fd.append('id', id);
+    }
+    postApet(fd);
   }
 
   return (
     <div className={styles.conteiner}>
       <form onSubmit={handleSubmit} className={styles.form}>
+
         <FormControl sx={{ m: 1, minWidth: 120 }} />
         <InputLabel>Nombre</InputLabel>
         <TextField
@@ -127,62 +154,74 @@ export default function PostAPet() {
           required
         />
 
+
         <label>Estado de la mascota:</label>
         <FormControl style={{ margin: '1px', minWidth: '120px' }}>
-          <InputLabel id='demo-simple-select-helper-label'>estado</InputLabel>
+          <InputLabel id='demo-simple-select-helper-label'>Estado</InputLabel>
           <Select
             required
             name='state'
             labelId='demo-simple-select-helper-label'
             id='demo-simple-select-helper'
             value={state}
-            label='estado'
+            label='Estado'
             onChange={e => handleSelectEstado(e)}>
             <MenuItem value=''>
               <em></em>
             </MenuItem>
-            <MenuItem value='perdido'>perdido</MenuItem>
-            <MenuItem value='encontrado'>Encontrado</MenuItem>
-            <MenuItem value='adopcion'>en adopcion</MenuItem>
+            <MenuItem value='Perdido'>Perdido</MenuItem>
+            <MenuItem value='Encontrado'>Encontrado</MenuItem>
+            <MenuItem value='Adopción'>En adopcion</MenuItem>
           </Select>
         </FormControl>
 
+        {/* <label>Nombre:</label> */}
+        <FormControl sx={{ m: 1, minWidth: 120 }} />
+        <InputLabel id='demo-simple-select-helper-label'>
+          Nombre de la mascota
+        </InputLabel>
+        <TextField
+          name='name'
+          value={name}
+          onChange={e => handleInputChange(e)}
+        />
+
         <label>Tipo de animal: </label>
         <FormControl style={{ margin: '1px', minWidth: '120px' }}>
-          <InputLabel id='demo-simple-select-helper-label'>tipo</InputLabel>
+          <InputLabel id='demo-simple-select-helper-label'>Tipo</InputLabel>
           <Select
             required
             name='type'
             labelId='demo-simple-select-helper-label'
             id='demo-simple-select-helper'
             value={type}
-            label='tipo'
+            label='Tipo'
             onChange={e => handletypechange(e)}>
             <MenuItem value=''>
               <em></em>
             </MenuItem>
             <MenuItem value='perro'>Perro</MenuItem>
             <MenuItem value='gato'>Gato</MenuItem>
-            <MenuItem value='otro'>otro</MenuItem>
+            <MenuItem value='otro'>Otro</MenuItem>
           </Select>
         </FormControl>
 
-        <label>Genero </label>
+        <label>Género </label>
         <FormControl style={{ margin: '1px', minWidth: '120px' }}>
-          <InputLabel id='demo-simple-select-helper-label'>genero</InputLabel>
+          <InputLabel id='demo-simple-select-helper-label'>Género</InputLabel>
           <Select
             required
             name='genero'
             labelId='demo-simple-select-helper-label'
             id='demo-simple-select-helper'
             value={genre}
-            label='genero'
+            label='Género'
             onChange={e => handlegenrechange(e)}>
             <MenuItem value=''>
               <em></em>
             </MenuItem>
-            <MenuItem value='macho'>macho</MenuItem>
-            <MenuItem value='hembra'>hembra</MenuItem>
+            <MenuItem value='Macho'>Macho</MenuItem>
+            <MenuItem value='Hembra'>Hembra</MenuItem>
           </Select>
         </FormControl>
 
@@ -214,13 +253,13 @@ export default function PostAPet() {
 
         <label>Descripcion: </label>
         <TextField
-          placeholder='Ingrese descripcion de su publicacion'
+          placeholder='Ingrese descripcion de su publicación'
           multiline
           rows={4}
           name='description'
           onChange={e => handlerdescritionchange(e.target.value)}
           required
-          label='Descripcion'
+          label='Descripción'
         />
 
         <Button

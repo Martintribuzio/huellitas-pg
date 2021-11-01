@@ -44,9 +44,9 @@ function Register() {
       .then(async res => {
         Swal.fire({
           title: 'Success!',
-          text: 'Fuiste registrado con exito',
+          text: 'Fuiste registrado con éxito',
           icon: 'success',
-          confirmButtonText: 'Ingresa',
+          confirmButtonText: 'Ingresá',
         });
         console.log(res);
       })
@@ -55,7 +55,7 @@ function Register() {
 
   return (
     <Box sx={{ backgroundColor: 'white' }} className='container'>
-      <h1>Registrate</h1>
+      <h1>Regístrate</h1>
       <form onSubmit={onSubmit}>
         <div>
           <Controller
@@ -98,7 +98,7 @@ function Register() {
           <Controller
             name='email'
             control={control}
-            defaultValue='example@dev.com'
+            defaultValue='ejemplo@email.com'
             render={({ field }) => (
               <TextField
                 {...field}
@@ -124,7 +124,7 @@ function Register() {
               <TextField
                 {...field}
                 type='password'
-                label='Password'
+                label='Contraseña'
                 variant='outlined'
                 error={!!errors.password}
                 helperText={errors.password ? errors.password?.message : ''}

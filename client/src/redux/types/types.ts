@@ -12,3 +12,9 @@ export interface PostType{
 export interface detailProps{
     id:string,
 }
+
+export interface Filters{
+    state: string,
+    type: string,
+    genre: string
+}

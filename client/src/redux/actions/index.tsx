@@ -7,21 +7,11 @@ import {
   GET_POSTS,
   GET_DETAIL,
   GET_POST_QUERY,
+  APPLY_FILTERS,
+  ERROR
 } from '../types/actionTypes';
 import axios from 'axios';
-
-export function postPet(input: FormData) {
-  return async function (dispatch: any) {
-    //console.log(input)
-    let info = await axios.post('http://localhost:3001/post', input, {
-      method: 'post',
-      url: 'http://localhost:3001/post',
-      data: input,
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    return dispatch({ type: POST_PET, payload: info.data });
-  };
-}
+import { Filters } from '../types/types';
 
 export function getPosts() {
   return async function (dispatch: any) {
@@ -72,6 +62,13 @@ export const getTypes = function (filter: string) {
     payload: filter,
   };
 };
+
+export const sendFilters = function (filters: Filters){
+  return{
+    type: APPLY_FILTERS,
+    payload: filters
+  }
+}
 
 export const setUser = function (user: string) {
   return {

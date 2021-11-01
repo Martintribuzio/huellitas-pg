@@ -8,7 +8,9 @@ export const GET_POSTS = 'GET_POSTS';
 export const POST_PET = 'POST_PET';
 export const GET_DETAIL = 'GET_DETAIL';
 export const GET_POST_QUERY = 'GET_POST_QUERY';
+export const APPLY_FILTERS = "APPLY_FILTERS";
 export const SET_USER = 'SET_USER';
+export const ERROR = 'ERROR';
 
 export interface getPosts {
   type: typeof GET_POSTS;
@@ -50,6 +52,11 @@ export interface getGenres {
   payload: string;
 }
 
+export interface catchErrors{
+    type: typeof ERROR,
+    payload: any
+}
+
 export interface setUser {
   type: typeof SET_USER;
   payload: string;
@@ -64,4 +71,5 @@ export type FiltersActionTypes =
   | getPosts
   | getDetail
   | setUser
-  | getPostQuery;
+  | getPostQuery
+  | catchErrors;

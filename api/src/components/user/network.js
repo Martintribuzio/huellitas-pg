@@ -45,10 +45,12 @@ const upload = multer({
 
 userNetwork.get('/posts', async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.query;
+    console.log('USER ID', id);
     const posts = await postsByUser(id);
     return res.json(posts);
   } catch (err) {
+    console.log(err, err.message);
     return res.json(err);
   }
 });
@@ -97,6 +99,7 @@ userNetwork.get('/posts', async (req, res) => {
 //   res.redirect('/user/login');
 // };
 
+
 // userNetwork.get('/profile', isLoggedIn, (req, res, next) => {
 //   res.render('profile')
 // });
@@ -104,6 +107,7 @@ userNetwork.get('/posts', async (req, res) => {
 /* userNetwork.get('/profile', isLoggedIn, (req, res, next) => {
   res.render('profile');
 }); */
+
 //Registro
 userNetwork.post('/signup', (req, res) => {
   User.register(
@@ -176,6 +180,7 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
 
 //LogOut
 userNetwork.get('/logout', verifyUser, (req, res, next) => {
+  console.log(req)
   const { signedCookies = {} } = req;
   const { refreshToken } = signedCookies;
   User.findById(req.user._id).then(

@@ -1,6 +1,6 @@
 .button{
     align-self: center;
-    margin:2px;
+    margin:2px !important;
 }
 .button:hover{
 color: black;
@@ -14,11 +14,11 @@ border:1px solid black !important;
 
 @media (max-width: 500px) {
     .button{
-       font-size: 10px;
+       font-size: 10px !important;
     }
 }
 @media (max-width: 400px) {
     .button{
-       font-size: 7px;
+       font-size: 7px !important;
     }
 }
