@@ -4,12 +4,13 @@ import {
   filterByLatest,
   getTypes,
   getGenres,
+  sendFilters
 } from '../redux/actions';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button } from '@mui/material';
 import style from '../CSS/Filter.module.css'
 
@@ -18,12 +19,25 @@ export default function Filters() {
   const [state, setState] = React.useState('');
   const [type, setType] = React.useState('');
   const [genre, setGenre] = React.useState('');
+  // const [filters, setFilters] = React.useState({
+  //   state: '',
+  //   type: '',
+  //   genre: ''
+  // })
 
-  function handleSelectEstado(e: SelectChangeEvent) {
-    //console.log(e.target.value)
-    dispatch(filterByState(e.target.value));
-    setState(e.target.value);
-  }
+  //   useEffect(() => {
+  //     dispatch(sendFilters(filters));
+  //  }, [dispatch, filters])
+
+  // function handleSelect(e: SelectChangeEvent) {
+  //   console.log(e.target.value)
+  //   setFilters({
+  //     ...filters,
+  //     [e.target.name] : e.target.value
+  //   });
+  // }
+
+  // console.log(filters)
 
   function handleSelectType(e: SelectChangeEvent) {
     //console.log(e.target.value)
@@ -36,6 +50,14 @@ export default function Filters() {
     dispatch(getGenres(e.target.value));
     setGenre(e.target.value);
   }
+
+  function handleSelectState(e: SelectChangeEvent) {
+    //console.log(e.target.value)
+    dispatch(filterByState(e.target.value));
+    setState(e.target.value);
+  }
+
+  console.log(state)
 
   function handleClick(value: string) {
     //  console.log(value)
@@ -50,15 +72,16 @@ export default function Filters() {
           labelId='demo-simple-select-helper-label'
           id='demo-simple-select-helper'
           value={state}
+          // name = 'state'
           label='estado'
-          onChange={handleSelectEstado}>
+          onChange={e => handleSelectState(e)}>
           <MenuItem value=''>
             <em></em>
           </MenuItem>
           <MenuItem value='Todos'>Todos</MenuItem>
-          <MenuItem value='lost'>Perdido</MenuItem>
-          <MenuItem value='found'>Encontrado</MenuItem>
-          <MenuItem value='adoption'>En adopción</MenuItem>
+          <MenuItem value='perdido'>perdido</MenuItem>
+          <MenuItem value='encontrado'>encontrado</MenuItem>
+          <MenuItem value='en adopcion'>en adopcion</MenuItem>
         </Select>
       </FormControl>
 
@@ -68,6 +91,7 @@ export default function Filters() {
           labelId='demo-simple-select-helper-label'
           id='demo-simple-select-helper'
           value={type}
+          // name = 'type'
           label='estado'
           onChange={e => handleSelectType(e)}>
           <MenuItem value=''>
@@ -85,14 +109,15 @@ export default function Filters() {
           labelId='demo-simple-select-helper-label'
           id='demo-simple-select-helper'
           value={genre}
+          // name = 'genre'
           label='estado'
           onChange={e => handleSelectGenres(e)}>
           <MenuItem value=''>
             <em></em>
           </MenuItem>
           <MenuItem value='Todos'>Todos</MenuItem>
-          <MenuItem value='male'>Macho</MenuItem>
-          <MenuItem value='female'>Hembra</MenuItem>
+          <MenuItem value='macho'>macho</MenuItem>
+          <MenuItem value='hembra'>hembra</MenuItem>
         </Select>
       </FormControl>
 

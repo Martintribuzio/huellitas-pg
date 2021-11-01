@@ -7,8 +7,10 @@ import {
   GET_POSTS,
   GET_DETAIL,
   GET_POST_QUERY,
+  APPLY_FILTERS,
 } from '../types/actionTypes';
 import axios from 'axios';
+import { Filters } from '../types/types';
 
 export function postPet(input: FormData) {
   return async function (dispatch: any) {
@@ -72,6 +74,13 @@ export const getTypes = function (filter: string) {
     payload: filter,
   };
 };
+
+export const sendFilters = function (filters: Filters){
+  return{
+    type: APPLY_FILTERS,
+    payload: filters
+  }
+}
 
 export const setUser = function (user: string) {
   return {
