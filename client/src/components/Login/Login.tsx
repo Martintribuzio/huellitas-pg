@@ -1,23 +1,18 @@
-import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { TextField } from '@material-ui/core';
 import './Login.css';
 import Box from '@mui/material/Box';
-import { setUser } from '../../redux/actions';
 import { useHistory } from 'react-router-dom';
 import loginService from '../../services/loginService';
 import { typeState } from '../../redux/reducers/index';
 import Swal from 'sweetalert2';
-import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
-import { Login } from '@mui/icons-material';
 
 type LogIn = {
   email: string;
