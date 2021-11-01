@@ -89,7 +89,7 @@ export default function Feed() {
 
   useEffect(() => {
     dispatch(getPosts());
-  }, [dispatch]);
+  }, [dispatch]); 
 
   //     const dispatch = useDispatch();
   //     let filteredPosts = useSelector((state: typeState) => (state.filteredPosts))
@@ -171,7 +171,7 @@ export default function Feed() {
   //     }
   // }
 
-  if (postsToShow.length) {
+  if (postsToShow.length > 0) {
     return (
       <Box
         sx={{
