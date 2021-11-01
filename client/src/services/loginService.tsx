@@ -21,9 +21,9 @@ const loginService = async (data: data) => {
     console.log(response.data)
     return response.data;
   } catch (error: any) {
-    // return { error: error.message };
+    return { error: error.message };
 
-    throw new Error(error)
+    // throw new Error(error)
 
   }
 };
