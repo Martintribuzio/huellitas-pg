@@ -3,11 +3,9 @@ import { styled } from '@mui/material/styles';
 import { InputLabel } from '@mui/material';
 import { Select } from '@mui/material';
 import { MenuItem } from '@mui/material';
-import { ChangeEvent, SyntheticEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import '../CSS/PostAPet.module.css';
-import { useDispatch } from 'react-redux';
 import { PostType } from '../redux/types/types';
-import { getPosts} from '../redux/actions';
 import styles from '../CSS/PostAPet.module.css';
 import React from 'react';
 import Button from '@mui/material/Button';
@@ -24,7 +22,6 @@ const Input = styled('input')({
 });
 
 export default function PostAPet() {
-  const dispatch = useDispatch();
   const [name, setName] = React.useState('');
   const [state, setState] = React.useState('');
   const [type, setType] = React.useState('');
@@ -57,6 +54,7 @@ export default function PostAPet() {
   const handlerdescritionchange = (event: string) => {
     console.log(event);
     setDescription(event);
+    console.log(description);
     setInput({ ...input, description: event });
   };
 

@@ -23,7 +23,7 @@ export default function LandingPage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [loading, result, user] = useUser();
+  const [loading, result] = useUser();
   if (result === 'Success') history.push('/home');
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

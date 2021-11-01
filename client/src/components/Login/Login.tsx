@@ -1,6 +1,5 @@
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { TextField } from '@material-ui/core';
@@ -8,13 +7,11 @@ import './Login.css';
 import Box from '@mui/material/Box';
 import { useHistory } from 'react-router-dom';
 import loginService from '../../services/loginService';
-import { typeState } from '../../redux/reducers/index';
 import Swal from 'sweetalert2';
 import Button from '@mui/material/Button';
 
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
-import logoutService from '../../services/logout';
 
 
 type LogIn = {
@@ -29,8 +26,7 @@ const schema = yup.object().shape({
 
 function Ingresar() {
   const history = useHistory();
-  const dispatch = useDispatch();
-  const user = useSelector((state: typeState) => state.user);
+  // const user = useSelector((state: typeState) => state.user);
 
   const {
     handleSubmit,
@@ -65,33 +61,32 @@ function Ingresar() {
         password: response.id,
       });
       if (respLogin.success) {
-        history.push('/home')
-    };
+        history.push('/home');
+      }
     } catch (err: any) {
       registerWithFacebook(response); //Invoco a la funcion para registrar
     }
-  }
+  };
 
-    const registerWithFacebook = async (response: any) => {
-      let respSignup: any;
-      try {
-        respSignup = await axios.post('http://localhost:3001/user/signup', {
+  const registerWithFacebook = async (response: any) => {
+    let respSignup: any;
+    try {
+      respSignup = await axios.post('http://localhost:3001/user/signup', {
         name: response.first_name,
         lastname: response.last_name,
         email: response.email,
         password: response.id,
       });
-      if (respSignup.status === 200){
+      if (respSignup.status === 200) {
         let respLogin = await loginService({
           email: response.email,
-          password: response.id
-        })
+          password: response.id,
+        });
         if (respLogin.success) {
-          history.push('/home')
-      };
+          history.push('/home');
+        }
       }
-    }
-    catch(err){
+    } catch (err) {
       Swal.fire({
         title: 'Error',
         text: 'No se pudo registrar',
@@ -108,20 +103,20 @@ function Ingresar() {
     try {
       respLogin = await loginService({
         email: response.profileObj.email,
-        password: response.profileObj.googleId
-      })
+        password: response.profileObj.googleId,
+      });
       if (respLogin.success) {
-          history.push('/home')
-      };
+        history.push('/home');
+      }
     } catch (err: any) {
-      registerWithGoogle(response) //Invoco a la funcion para registrar
+      registerWithGoogle(response); //Invoco a la funcion para registrar
     }
-  }
+  };
 
-    const registerWithGoogle = async (response: any) => {
-      let respSignup: any;
-      try {
-        respSignup = await axios.post('http://localhost:3001/user/signup', {
+  const registerWithGoogle = async (response: any) => {
+    let respSignup: any;
+    try {
+      respSignup = await axios.post('http://localhost:3001/user/signup', {
         name: response.profileObj.givenName,
         lastname: response.profileObj.familyName,
         email: response.profileObj.email,
@@ -131,14 +126,13 @@ function Ingresar() {
       if (respSignup.status === 200) {
         let respLogin = await loginService({
           email: response.profileObj.email,
-          password: response.profileObj.googleId
-        })
+          password: response.profileObj.googleId,
+        });
         if (respLogin.success) {
-            history.push('/home')
-        };
+          history.push('/home');
+        }
       }
-    }
-    catch(err){
+    } catch (err) {
       Swal.fire({
         title: 'Error',
         text: 'No se pudo registrar',
@@ -147,7 +141,7 @@ function Ingresar() {
       });
     }
   };
-//-----------------------------------------------------------------------
+  //-----------------------------------------------------------------------
   return (
     <Box sx={{ backgroundColor: 'wihte' }} className='container'>
       <GoogleLogin
@@ -202,20 +196,20 @@ function Ingresar() {
           Ingresar
         </Button>
         <FacebookLogin
-          appId="275207664365572"
+          appId='275207664365572'
           autoLoad={false}
-          fields="first_name,email,picture,last_name"
+          fields='first_name,email,picture,last_name'
           // onClick={componentClicked}
-          callback={responseFacebook} />
+          callback={responseFacebook}
+        />
         <GoogleLogin
           clientId='73850795306-qqjla4o7l7d8mha6209tu8h87asqu073.apps.googleusercontent.com'
           buttonText='Login'
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
           cookiePolicy={'single_host_origin'}
-      />
+        />
       </form>
-      
     </Box>
   );
 }

@@ -1,5 +1,4 @@
 import {
-  POST_PET,
   FILTER_STATE,
   FILTER_LATEST,
   GET_TYPES,
@@ -7,8 +6,7 @@ import {
   GET_POSTS,
   GET_DETAIL,
   GET_POST_QUERY,
-  APPLY_FILTERS,
-  ERROR
+  APPLY_FILTERS
 } from '../types/actionTypes';
 import axios from 'axios';
 import { Filters } from '../types/types';

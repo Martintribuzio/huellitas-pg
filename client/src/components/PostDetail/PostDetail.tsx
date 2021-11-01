@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { typeState } from '../../redux/reducers/index';
 import { getPosts } from '../../redux/actions';
 import { useParams } from 'react-router';
-import { detailProps } from '../../redux/types/types';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';

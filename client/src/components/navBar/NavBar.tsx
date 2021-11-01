@@ -182,7 +182,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
   );
   useEffect(() => {
     dispatch(getPostByQuery(search));
-  }, [search]);
+  }, [dispatch, search]);
 
   function handleChange(e: any) {
     e.preventDefault();

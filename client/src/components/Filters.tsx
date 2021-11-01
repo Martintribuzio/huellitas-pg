@@ -3,14 +3,13 @@ import {
   filterByState,
   filterByLatest,
   getTypes,
-  getGenres,
-  sendFilters
+  getGenres
 } from '../redux/actions';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Button } from '@mui/material';
 import style from '../CSS/Filter.module.css'
 
