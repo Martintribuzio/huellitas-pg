@@ -9,7 +9,31 @@ const {
   getRefreshToken,
   verifyUser,
 } = require('../../../authenticate');
-console.log('ROUTE', getToken, COOKIE_OPTIONS, getRefreshToken);
+
+const multer = require('multer');
+const uniqid = require('uniqid');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads');
+  },
+  filename: function (req, file, cb) {
+    cb(null, uniqid('', file.originalname.split(' ').join('')));
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png')
+    cb(null, true);
+  else cb(new Error('File must be a image (jpg,png)'), false);
+};
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 1024 * 1024 * 3 },
+  fileFilter,
+});
+
 // userNetwork.post('/', async (req, res) => {
 //   try {
 //     const user = await createUser(req.body);
@@ -66,13 +90,16 @@ userNetwork.get('/posts', async (req, res) => {
 //   res.redirect('/');
 // });
 
-//Autenticacion para navegar entre páginas
-function isLoggedIn(req, res, next) {
-  console.log('REQ', req.isAuthenticated.toString());
-  console.log(req.isAuthenticated());
-  if (req.isAuthenticated()) return next();
-  res.send('ok');
-}
+// //Autenticacion para navegar entre páginas
+// function isLoggedIn(req, res, next) {
+//   if (req.isAuthenticated())
+//       return next();
+//   res.redirect('/user/login');
+// };
+
+// userNetwork.get('/profile', isLoggedIn, (req, res, next) => {
+//   res.render('profile')
+// });
 
 userNetwork.get('/profile', isLoggedIn, (req, res, next) => {
   res.render('profile');

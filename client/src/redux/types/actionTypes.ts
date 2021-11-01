@@ -7,12 +7,8 @@ export const GET_GENRES = 'GET_GENRES';
 export const GET_POSTS = 'GET_POSTS';
 export const POST_PET = 'POST_PET';
 export const GET_DETAIL = 'GET_DETAIL';
+export const GET_POST_QUERY = 'GET_POST_QUERY';
 export const SET_USER = 'SET_USER';
-
-export interface getDetail {
-  type: typeof GET_DETAIL;
-  payload: PostType;
-}
 
 export interface getPosts {
   type: typeof GET_POSTS;
@@ -22,6 +18,16 @@ export interface getPosts {
 export interface PostPet {
   type: typeof POST_PET;
   payload: Array<PostType>;
+}
+
+export interface getPostQuery {
+  type: typeof GET_POST_QUERY;
+  payload: string;
+}
+
+export interface getDetail {
+  type: typeof GET_DETAIL;
+  payload: PostType;
 }
 
 export interface filterByState {
@@ -57,4 +63,5 @@ export type FiltersActionTypes =
   | PostPet
   | getPosts
   | getDetail
-  | setUser;
+  | setUser
+  | getPostQuery;

@@ -16,6 +16,7 @@ import useUser from '../hooks/useUser';
 
 export default function PostAPet() {
   const dispatch = useDispatch();
+  const [name, setName] = React.useState('');
   const [state, setState] = React.useState('');
   const [type, setType] = React.useState('');
   const [genre, setGenre] = React.useState('');
@@ -65,6 +66,13 @@ export default function PostAPet() {
     });
   }
 
+  function handleInputChange(
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    setName(e.target.value);
+    setInput({ ...input, name: e.target.value });
+  }
+
   function handleChangeImg(e: ChangeEvent<HTMLInputElement>) {
     setInput({
       ...input,
@@ -96,106 +104,114 @@ export default function PostAPet() {
     alert('Publicado!');
     history.push('/home');
   }
-  if (loading) {
-    return <div>Cargando...</div>;
-  } else {
-    return (
-      <div className={styles.conteiner}>
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <label>Nombre:</label>
-          <FormControl sx={{ m: 1, minWidth: 120 }} />
-          <InputLabel id='demo-simple-select-helper-label'>Nombre</InputLabel>
+
+  return (
+    <div className={styles.conteiner}>
+      <form onSubmit={handleSubmit} className={styles.form}>
+        <label>Nombre:</label>
+        <FormControl sx={{ m: 1, minWidth: 120 }} />
+        <InputLabel id='demo-simple-select-helper-label'>Nombre</InputLabel>
+        <TextField
+          name='name'
+          value={name}
+          onChange={e => handleInputChange(e)}
+        />
+
+        <label>Estado de la mascota:</label>
+        <FormControl style={{ margin: '1px', minWidth: '120px' }}>
+          <InputLabel id='demo-simple-select-helper-label'>estado</InputLabel>
+          <Select
+            required
+            name='state'
+            labelId='demo-simple-select-helper-label'
+            id='demo-simple-select-helper'
+            value={state}
+            label='estado'
+            onChange={e => handleSelectEstado(e)}>
+            <MenuItem value=''>
+              <em></em>
+            </MenuItem>
+            <MenuItem value='perdido'>perdido</MenuItem>
+            <MenuItem value='encontrado'>Encontrado</MenuItem>
+            <MenuItem value='adopcion'>en adopcion</MenuItem>
+          </Select>
+        </FormControl>
+
+        <label>
+          Nombre del animal (en el caso de haber perdido a su mascota):{' '}
+        </label>
+        <InputLabel id='demo-simple-select-helper-label'>
           <TextField />
+        </InputLabel>
 
-          <label>Estado de la mascota:</label>
-          <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id='demo-simple-select-helper-label'>estado</InputLabel>
-            <Select
-              required
-              name='state'
-              labelId='demo-simple-select-helper-label'
-              id='demo-simple-select-helper'
-              value={state}
-              label='estado'
-              onChange={e => handleSelectEstado(e)}>
-              <MenuItem value=''>
-                <em></em>
-              </MenuItem>
-              <MenuItem value='lost'>perdido</MenuItem>
-              <MenuItem value='found'>Encontrado</MenuItem>
-              <MenuItem value='adoption'>en adopcion</MenuItem>
-            </Select>
-          </FormControl>
+        <label>Tipo de animal: </label>
+        <FormControl style={{ margin: '1px', minWidth: '120px' }}>
+          <InputLabel id='demo-simple-select-helper-label'>tipo</InputLabel>
+          <Select
+            required
+            name='type'
+            labelId='demo-simple-select-helper-label'
+            id='demo-simple-select-helper'
+            value={type}
+            label='tipo'
+            onChange={e => handletypechange(e)}>
+            <MenuItem value=''>
+              <em></em>
+            </MenuItem>
+            <MenuItem value='perro'>Perro</MenuItem>
+            <MenuItem value='gato'>Gato</MenuItem>
+            <MenuItem value='otro'>otro</MenuItem>
+          </Select>
+        </FormControl>
 
-          <label>Tipo de animal: </label>
-          <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id='demo-simple-select-helper-label'>tipo</InputLabel>
-            <Select
-              required
-              name='type'
-              labelId='demo-simple-select-helper-label'
-              id='demo-simple-select-helper'
-              value={type}
-              label='tipo'
-              onChange={e => handletypechange(e)}>
-              <MenuItem value=''>
-                <em></em>
-              </MenuItem>
-              <MenuItem value='perro'>perro</MenuItem>
-              <MenuItem value='gato'>gato</MenuItem>
-              <MenuItem value='otro'>otro</MenuItem>
-            </Select>
-          </FormControl>
+        <label>Genero </label>
+        <FormControl style={{ margin: '1px', minWidth: '120px' }}>
+          <InputLabel id='demo-simple-select-helper-label'>genero</InputLabel>
+          <Select
+            required
+            name='genero'
+            labelId='demo-simple-select-helper-label'
+            id='demo-simple-select-helper'
+            value={genre}
+            label='genero'
+            onChange={e => handlegenrechange(e)}>
+            <MenuItem value=''>
+              <em></em>
+            </MenuItem>
+            <MenuItem value='macho'>macho</MenuItem>
+            <MenuItem value='hembra'>hembra</MenuItem>
+          </Select>
+        </FormControl>
 
-          <label>Genero </label>
-          <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id='demo-simple-select-helper-label'>genero</InputLabel>
-            <Select
-              required
-              name='genero'
-              labelId='demo-simple-select-helper-label'
-              id='demo-simple-select-helper'
-              value={genre}
-              label='genero'
-              onChange={e => handlegenrechange(e)}>
-              <MenuItem value=''>
-                <em></em>
-              </MenuItem>
-              <MenuItem value='male'>macho</MenuItem>
-              <MenuItem value='female'>hembra</MenuItem>
-            </Select>
-          </FormControl>
+        <label>Imagen: </label>
+        <input
+          name='img'
+          type='file'
+          onChange={handleChangeImg}
+          required></input>
 
-          <label>Imagen: </label>
-          <input
-            name='img'
-            type='file'
-            onChange={handleChangeImg}
-            required></input>
+        <label>Fecha: </label>
+        <input
+          name='date'
+          type='date'
+          onChange={e => handleChange(e)}
+          required></input>
 
-          <label>Fecha: </label>
-          <input
-            name='date'
-            type='date'
-            onChange={e => handleChange(e)}
-            required></input>
+        <label>Descripcion: </label>
+        <textarea
+          placeholder='Ingrese descripcion de su publicacion'
+          name='description'
+          onChange={e => handleChange(e)}
+          required></textarea>
 
-          <label>Descripcion: </label>
-          <textarea
-            placeholder='Ingrese descripcion de su publicacion'
-            name='description'
-            onChange={e => handleChange(e)}
-            required></textarea>
-
-          <Button
-            type='submit'
-            style={{ marginBottom: '10px' }}
-            variant='contained'
-            color='secondary'>
-            Publicar
-          </Button>
-        </form>
-      </div>
-    );
-  }
+        <Button
+          type='submit'
+          style={{ marginBottom: '10px' }}
+          variant='contained'
+          color='secondary'>
+          Publicar
+        </Button>
+      </form>
+    </div>
+  );
 }

@@ -10,6 +10,10 @@ const Session = new Schema({
 });
 
 const userSchema = new Schema({
+  picture: {
+    type: String,
+    default: '',
+  },
   name: {
     type: String,
     required: true,
