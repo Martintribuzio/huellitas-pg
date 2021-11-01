@@ -17,11 +17,11 @@ export default function Post(props: PostType) {
       <p>
         {props.name !== undefined
           ? `Nombre: ${props.name}`
-          : 'nombre desconocido'}
+          : 'Nombre desconocido'}
       </p>
-      <p>{`Descripcion: ${props.description}`}</p>
+      <p>{`Descripción: ${props.description}`}</p>
       <p>{`Fecha: ${props.date}`}</p>
-      <p>{`Genero: ${props.genre}`}</p>
+      <p>{`Género: ${props.genre}`}</p>
       <p>{`Animal: ${props.type}`}</p>
       <p>{`Estado: ${props.state}`}</p>
     </>
