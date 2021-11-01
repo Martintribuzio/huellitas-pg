@@ -1,0 +1,23 @@
+.footer{
+    position:absolute;
+    bottom: 1;
+    width: 100%;
+    margin-top: 5px;
+}
+.hue{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+.text{
+    user-select: none;
+}
+.name{
+    user-select: none;
+}
+@media (max-width: 540px){
+    .text{
+        font-size: 10px !important;
+    }
+}

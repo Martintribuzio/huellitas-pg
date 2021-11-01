@@ -3,6 +3,16 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
+<<<<<<< HEAD
+    margin-bottom: 50px;
+}
+.taka{
+    height: 90vh;
+    width: 70vw;
+}
+.box{
+    overflow: hidden;
+=======
     width: 100%;
 }
 .loading{
@@ -14,4 +24,5 @@
     background-color: rgba(0,0,0,0.5);
     position: fixed;
     z-index: 9999;
+>>>>>>> 5b905d2ee1f491d45c43363071853c001365fbd6
 }

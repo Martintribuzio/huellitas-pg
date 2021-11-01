@@ -93,7 +93,6 @@ export default function PrimarySearchAppBar(): JSX.Element {
   const menuId = 'primary-search-account-menu';
   const renderMenssage = (
     <Menu
-      // sx={{width:9/10}}
       anchorEl={anchorEl}
       anchorOrigin={{
         vertical: 'top',
