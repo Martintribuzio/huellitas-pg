@@ -1,9 +1,8 @@
 import axios from "axios";
-import { ERROR, POST_PET } from "../redux/types/actionTypes";
 
 export async function postPet(input: FormData){
       try{
-        let info = await axios.post('http://localhost:3001/post', input, {
+        await axios.post('http://localhost:3001/post', input, {
         method: 'post',
         url: 'http://localhost:3001/post',
         data: input,

@@ -3,12 +3,8 @@ import {
   FILTER_LATEST,
   GET_TYPES,
   GET_GENRES,
-  POST_PET,
   GET_POSTS,
   GET_POST_QUERY,
-  APPLY_FILTERS,
-  SET_USER,
-  ERROR
 } from '../types/actionTypes';
 import { FiltersActionTypes } from '../types/actionTypes';
 import { PostType } from '../types/types';
@@ -41,7 +37,7 @@ export default function rootReducer(
       return {
         ...state,
         filteredPosts: action.payload,
-        allPosts: action.payload
+        allPosts: action.payload,
       };
     // case POST_PET:
     //   return {
@@ -73,26 +69,26 @@ export default function rootReducer(
         ),
       };
     case GET_TYPES:
-      if(action.payload === 'Todos'){
-        return{
-            ...state,
-            filteredPosts: state.allPosts
-        }
-    }
+      if (action.payload === 'Todos') {
+        return {
+          ...state,
+          filteredPosts: state.allPosts,
+        };
+      }
       return {
         ...state,
-        filteredPosts: state.allPosts.filter(p => p.type === action.payload)
+        filteredPosts: state.allPosts.filter(p => p.type === action.payload),
       };
     case GET_GENRES:
-      if(action.payload === 'Todos'){
-        return{
-            ...state,
-            filteredPosts: state.allPosts
-        }
-    }
+      if (action.payload === 'Todos') {
+        return {
+          ...state,
+          filteredPosts: state.allPosts,
+        };
+      }
       return {
         ...state,
-        filteredPosts: state.allPosts.filter(p => p.genre === action.payload)
+        filteredPosts: state.allPosts.filter(p => p.genre === action.payload),
       };
     // case APPLY_FILTERS:
     //   if(action.payload.state === 'Todos' || action.payload.type === 'Todos' || action.payload.genre === 'Todos'){

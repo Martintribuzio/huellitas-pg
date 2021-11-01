@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import getPostsUser from '../../services/getPostsUser';
 import Post from '../Post';
 import { PostType } from '../../redux/types/types';
@@ -24,6 +24,7 @@ export default function Profile() {
 
   if (result === 'Unauthorized') {
     history.push('/');
+    console.log(loading);
   }
 
   const id = localStorage.getItem('userId');
@@ -44,7 +45,7 @@ export default function Profile() {
       };
       setUser(user);
     }
-  }, []);
+  }, [id]);
 
   return (
     <Box
