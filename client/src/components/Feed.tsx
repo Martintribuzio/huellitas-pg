@@ -8,18 +8,30 @@ import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 
+
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',
   height: 200,
+
   [theme.breakpoints.down('sm')]: {
     width: '100% !important', // Overrides inline-style
     height: 100,
+
   },
   '&:hover, &.Mui-focusVisible': {
     zIndex: 1,
     '& .MuiImageBackdrop-root': {
       opacity: 0,
     },
+
+    // "& .tuki": {
+    //   display: 'none'
+    // },
+    // "& .tuki2": {
+    //   display:'block'
+    // }
+  // }
+
     // "& .MuiImageMarked-root": {
     //   opacity: 1
     // },
@@ -27,6 +39,7 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
     //   border: "4px solid currentColor"
     // }
   },
+
 }));
 
 const ImageSrc = styled('span')({
@@ -62,6 +75,7 @@ const ImageBackdrop = styled('span')(({ theme }) => ({
   transition: theme.transitions.create('opacity'),
 }));
 
+
 const TraslateState = (petState: String) => {
   switch (petState) {
     case 'found':
@@ -77,15 +91,99 @@ export default function Feed() {
   const dispatch = useDispatch();
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
   let queryPost = useSelector((state: typeState) => state.queryPosts);
-  console.log('QUERY POSTS', queryPost);
+  //console.log('QUERY POSTS', queryPost);
+  console.log(allPosts)
 
   let postsToShow = queryPost
     ? allPosts.filter(elem => elem.name?.toLowerCase().includes(queryPost.toLowerCase()))
     : allPosts;
   console.log('POSTS', postsToShow);
+  
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
+
+
+
+//     const dispatch = useDispatch();
+//     let filteredPosts = useSelector((state: typeState) => (state.filteredPosts))
+//     let allPosts = useSelector((state: typeState) => (state.allPosts))
+
+    // useEffect(()=>{
+    //         dispatch(getPosts());
+    //     }, [dispatch]);
+
+//     if(allPosts.length){
+//       if(filteredPosts.length){
+//         return(
+//             <Box
+//       sx={{ display: "flex", flexWrap: "wrap", justifyContent:'center' ,minWidth: 300, width: "100%"}}
+//     >
+//       {filteredPosts.map((item) => {
+//           if(typeof item.petImage === 'string'){
+//               if(item.petImage.search(/\\/))
+//               {item.petImage = item.petImage.replace(/\\/g, "/");}
+//             }
+//           return(<Link to={`/home/detail/${item._id}`}>
+//         <ImageButton
+//           focusRipple
+//           key={item.description}
+//           style={{
+//             width: "30vw",
+//             margin: '10px'
+//           }}
+//           sx={{minHeight:250,minWidth:200 }}
+//         >
+//           <ImageSrc style={{ backgroundImage: `url(http://localhost:3001/${item.petImage}` }} />
+//           <ImageBackdrop className="MuiImageBackdrop-root" />
+//           <Image>
+//             <Typography
+//               component="span"
+//               variant="subtitle1"
+//               color="inherit"
+//               className='tuki'
+//               sx={{
+//                 position: "relative",
+//                 p: 5,
+//                 pt: 2,
+//                 textShadow:'0px 0px 4px black',
+//                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`
+//               }}
+//             >
+
+//               {`${TraslateState(item.state)}`}
+//             </Typography>
+//             <Typography
+//               component="span"
+//               variant="subtitle1"
+//               color="inherit"
+//               className='tuki2'
+//               sx={{
+//                 position: "relative",
+//                 p: 5,
+//                 display:'none',
+//                 textShadow:'0px 0px 4px black',
+//                 pt: 2,
+//                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`
+//               }}
+//             >
+//               {!item.name? `${TraslateState(item.state)}`:`Nombre: ${item.name}`}
+
+//             </Typography>
+//           </Image>
+//         </ImageButton>
+//         </Link>
+//       )})}
+//     </Box>
+//   );}else{
+//     return <h1>No encontrado</h1>
+//   }}else{
+//         return (<>
+//         <img src='https://themebeyond.com/html/petco/img/preloader.gif' alt='cargando'/>
+//         <h1>Cargando...</h1>
+//         </>)
+//     }
+// }
 
   if (postsToShow.length) {
     return (
@@ -145,3 +243,4 @@ export default function Feed() {
     return <h1>Cargando...</h1>;
   }
 }
+

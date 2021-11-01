@@ -50,3 +50,4 @@ export interface getGenres{
 }
 
 export type FiltersActionTypes = filterByState | filterByLatest | getTypes | getGenres | PostPet | getPosts | getDetail | getPostQuery
+

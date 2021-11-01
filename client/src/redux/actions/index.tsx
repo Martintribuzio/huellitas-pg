@@ -1,3 +1,4 @@
+
 import {
   POST_PET,
   FILTER_STATE,
@@ -72,3 +73,4 @@ export const getGenres = function (filter: string) {
     payload: filter,
   };
 };
+

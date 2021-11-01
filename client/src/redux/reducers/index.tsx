@@ -1,3 +1,4 @@
+
 import {
   FILTER_STATE,
   FILTER_LATEST,
@@ -22,33 +23,42 @@ const initialState: typeState = {
   queryPosts: '',
 };
 
+
 export default function rootReducer(
   state = initialState,
   action: FiltersActionTypes
 ) {
   switch (action.type) {
-    case GET_POSTS:
-      return {
-        ...state,
-        filteredPosts: action.payload,
-        allPosts: action.payload,
-      };
-    case POST_PET:
-      return {
-        ...state,
-        filteredPosts: action.payload,
-        allPosts: action.payload,
-      };
     case GET_POST_QUERY:
-      return {
+      return{
         ...state,
-        queryPosts: action.payload,
-      };
+        queryPosts: action.payload
+      }
+    case GET_POSTS:
+        return{
+            ...state,
+            filteredPosts: action.payload,
+            allPosts: action.payload 
+        }
+    case POST_PET:
+        return{
+            ...state,
+            filteredPosts: action.payload,
+            allPosts: action.payload
+        }
     case FILTER_STATE:
-      return {
-        ...state,
-        filteredPosts: state.allPosts.filter(p => p.state === action.payload),
-      };
+        if(action.payload === 'Todos'){
+            return{
+                ...state,
+                filteredPosts: state.allPosts
+            }
+        }
+        else{
+            return{
+                ...state,
+                filteredPosts: state.allPosts.filter(p => p.state === action.payload),
+            }
+        }
     case FILTER_LATEST:
       return {
         ...state,
