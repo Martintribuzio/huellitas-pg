@@ -27,33 +27,41 @@ export default function rootReducer(
   action: FiltersActionTypes
 ) {
   switch (action.type) {
-    case GET_POSTS:
-      return {
-        ...state,
-        filteredPosts: action.payload,
-        allPosts: action.payload,
-      };
-    case POST_PET:
-      return {
-        ...state,
-        filteredPosts: action.payload,
-        allPosts: action.payload,
-      };
     case GET_POST_QUERY:
-      return {
+      return{
         ...state,
-        queryPosts: action.payload,
-      };
+        queryPosts: action.payload
+      }
+    case GET_POSTS:
+        return{
+            ...state,
+            filteredPosts: action.payload,
+            allPosts: action.payload 
+        }
+    case POST_PET:
+        return{
+            ...state,
+            filteredPosts: action.payload,
+            allPosts: action.payload
+        }
     case FILTER_STATE:
-      return {
-        ...state,
-        filteredPosts: state.allPosts.filter(p => p.state === action.payload),
-      };
+        if(action.payload === 'Todos'){
+            return{
+                ...state,
+                filteredPosts: state.allPosts
+            }
+        }
+        else{
+            return{
+                ...state,
+                filteredPosts: state.allPosts.filter(p => p.state === action.payload),
+            }
+        }
     case FILTER_LATEST:
       return {
         ...state,
-        filteredPosts: [...state.allPosts].sort((a: PostType, b: PostType) => {
-          return action.payload === 'mas recientes'
+        filteredPosts: [...state.filteredPosts].sort((a: PostType, b: PostType) => {
+          return action.payload === 'mas antiguos'
             ? +new Date(b.date) - +new Date(a.date)
             : +new Date(a.date) - +new Date(b.date);
         }),
@@ -61,12 +69,12 @@ export default function rootReducer(
     case GET_TYPES:
       return {
         ...state,
-        filteredPosts: state.allPosts.filter(p => p.type === action.payload),
+        filteredPosts: state.filteredPosts.filter(p => p.type === action.payload),
       };
     case GET_GENRES:
       return {
         ...state,
-        filteredPosts: state.allPosts.filter(p => p.genre === action.payload),
+        filteredPosts: state.filteredPosts.filter(p => p.genre === action.payload),
       };
     default:
       return state;
