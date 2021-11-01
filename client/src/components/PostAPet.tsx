@@ -143,14 +143,14 @@ export default function PostAPet() {
     <div className={styles.conteiner}>
       <form onSubmit={handleSubmit} className={styles.form}>
 
-        <FormControl sx={{ m: 1, minWidth: 120 }} />
+        {/* <FormControl sx={{ m: 1, minWidth: 120 }} />
         <InputLabel>Nombre</InputLabel>
         <TextField
           name='name'
           value={name}
           onChange={e => handleInputChange(e)}
           required
-        />
+        /> */}
 
 
         <label>Estado de la mascota:</label>
