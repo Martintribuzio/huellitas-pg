@@ -28,7 +28,7 @@ const schema = yup.object().shape({
     .required(),
 });
 
-function Register() {
+function Register({ inicio }: any) {
   const {
     handleSubmit,
     control,
@@ -46,7 +46,9 @@ function Register() {
           icon: 'success',
           confirmButtonText: 'Ingresá',
         });
-        console.log(res);
+      })
+      .then(() => {
+        inicio(false);
       })
       .catch(error => console.log(error.message));
   });
