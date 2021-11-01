@@ -8,6 +8,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import './Register.css';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 type Data = {
   name: string;
@@ -55,7 +56,7 @@ function Register() {
   });
 
   return (
-    <Box sx={{ backgroundColor: 'secondary.main' }} className='container'>
+    <Box sx={{ backgroundColor: 'white' }} className='container'>
       <h1>Registrate</h1>
       <form onSubmit={onSubmit}>
         <div>
@@ -156,9 +157,9 @@ function Register() {
             )}
           />
         </div>
-        <p>¿Ya tienes cuenta?</p>
-        <Link to='/'>Ingresa</Link>
-        <button type='submit'>Registrar</button>
+        <Button variant='contained' type='submit'>
+          Registrar
+        </Button>
       </form>
     </Box>
   );
