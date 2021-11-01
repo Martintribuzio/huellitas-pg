@@ -11,6 +11,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import capitalize from "@mui/utils/capitalize";
 
 
 
@@ -38,16 +39,16 @@ export default function ImgMediaCard() {
       />
       <CardContent>
 
-      {detailpost.name? <Typography gutterBottom variant="h2" component="div">
+      {detailpost.name? <Typography gutterBottom variant="h4" component="div">
           {detailpost.name}
         </Typography>:null}
-        <Typography gutterBottom variant="h4" component="div">
-          {detailpost.type}
+        <Typography gutterBottom variant="h5" component="div">
+          Tipo: {capitalize(detailpost.type)}
         </Typography>
         <Typography gutterBottom variant="h6" component="div">
-          Estado: {detailpost.state}
+          Estado: {capitalize(detailpost.state)}
         </Typography>
-        <Typography variant="body1" color="text.secondary">
+        <Typography variant="subtitle1" color="text.secondary">
           {detailpost.description}
         </Typography>
       </CardContent>
