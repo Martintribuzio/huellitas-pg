@@ -45,10 +45,12 @@ const upload = multer({
 
 userNetwork.get('/posts', async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.query;
+    console.log('USER ID', id);
     const posts = await postsByUser(id);
     return res.json(posts);
   } catch (err) {
+    console.log(err, err.message);
     return res.json(err);
   }
 });

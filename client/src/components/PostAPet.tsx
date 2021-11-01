@@ -101,6 +101,7 @@ export default function PostAPet() {
 
   function handleSubmit(e: any) {
     e.preventDefault();
+    const id = window.localStorage.getItem('userId');
     const fd = new FormData();
     if (input.petImage) {
       fd.append('petImage', input.petImage);
@@ -112,6 +113,9 @@ export default function PostAPet() {
     fd.append('description', input.description);
     fd.append('type', input.type);
     fd.append('genre', input.genre);
+    if (id) {
+      fd.append('id', id);
+    }
     dispatch(postPet(fd)); //mando form a trvaes del axios lol
     alert('Publicado!');
     history.push('/home');
@@ -142,9 +146,9 @@ export default function PostAPet() {
             <MenuItem value=''>
               <em></em>
             </MenuItem>
-            <MenuItem value='perdido'>perdido</MenuItem>
-            <MenuItem value='encontrado'>Encontrado</MenuItem>
-            <MenuItem value='adopcion'>en adopcion</MenuItem>
+            <MenuItem value='Perdido'>Perdido</MenuItem>
+            <MenuItem value='Encontrado'>Encontrado</MenuItem>
+            <MenuItem value='Adopción'>En adopcion</MenuItem>
           </Select>
         </FormControl>
 
@@ -164,7 +168,7 @@ export default function PostAPet() {
             </MenuItem>
             <MenuItem value='perro'>Perro</MenuItem>
             <MenuItem value='gato'>Gato</MenuItem>
-            <MenuItem value='otro'>otro</MenuItem>
+            <MenuItem value='otro'>Otro</MenuItem>
           </Select>
         </FormControl>
 
@@ -182,8 +186,8 @@ export default function PostAPet() {
             <MenuItem value=''>
               <em></em>
             </MenuItem>
-            <MenuItem value='macho'>macho</MenuItem>
-            <MenuItem value='hembra'>hembra</MenuItem>
+            <MenuItem value='Macho'>Macho</MenuItem>
+            <MenuItem value='Hembra'>Hembra</MenuItem>
           </Select>
         </FormControl>
 
