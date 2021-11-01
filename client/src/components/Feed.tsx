@@ -76,14 +76,6 @@ const ImageBackdrop = styled("span")(({ theme }) => ({
 }));
 
 
-const TraslateState = (petState: String) => {
-  switch(petState){
-    case 'found':return 'Encontrado';
-    case 'lost':return 'Perdido';
-    default:return 'En adopcion'
-  }
-};
-
 export default function Feed() {
   const dispatch = useDispatch();
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
@@ -226,8 +218,8 @@ export default function Feed() {
                       pb: theme => `calc(${theme.spacing(1)} + 6px)`,
                     }}>
                     {item.name
-                      ? `${TraslateState(item.state)}, Nombre: ${item.name}`
-                      : `${TraslateState(item.state)}`}
+                      ? item.state + `, Nombre: ${item.name}`
+                      : item.state}
                   </Typography>
                 </Image>
               </ImageButton>
@@ -236,8 +228,11 @@ export default function Feed() {
         })}
       </Box>
     );
-  } else {
-    return <h1>Cargando...</h1>;
-  }
+  }else{
+      return (<>
+        <img src='https://themebeyond.com/html/petco/img/preloader.gif' alt='cargando'/>
+        <h1>no hay posts con dicho nombre...</h1>
+      </>)
+    }
 }
 
