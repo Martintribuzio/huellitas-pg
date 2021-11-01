@@ -75,7 +75,7 @@ function Ingresar() {
     } catch (err: any) {
       console.log('errror', err.message);
       setError(err.message);
-      registerWithFacebook(response);
+      registerWithFacebook(response); //Invoco a la funcion para registrar
     }
   }
 
@@ -96,7 +96,7 @@ function Ingresar() {
           icon: 'success',
           confirmButtonText: 'Ok',
         });
-        history.push('/home')
+        // history.push('/home') Ver como podríamos avisarle al cliente cual es su contraseña
       }
     }
     catch(err){
@@ -120,7 +120,7 @@ function Ingresar() {
     } catch (err: any) {
       console.log('errror', err.message);
       setError(err.message);
-      registerWithGoogle(response)
+      registerWithGoogle(response) //Invoco a la funcion para registrar
     }
   }
 
@@ -141,7 +141,7 @@ function Ingresar() {
           icon: 'success',
           confirmButtonText: 'Ok',
         });
-        history.push('/home')
+        // history.push('/home') Ver como podríamos avisarle al cliente cual es su contraseña
       }
     }
     catch(err){
