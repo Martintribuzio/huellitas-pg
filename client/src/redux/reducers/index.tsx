@@ -5,8 +5,12 @@ import {
   GET_GENRES,
   POST_PET,
   GET_POSTS,
+<<<<<<< HEAD
   GET_DETAIL,
   SET_USER,
+=======
+  GET_POST_QUERY,
+>>>>>>> fd16b53a2347ef62b801f29f8f1194bf1cd428a0
 } from '../types/actionTypes';
 import { FiltersActionTypes } from '../types/actionTypes';
 import { PostType } from '../types/types';
@@ -14,13 +18,21 @@ import { PostType } from '../types/types';
 export interface typeState {
   allPosts: Array<PostType>;
   filteredPosts: Array<PostType>;
+<<<<<<< HEAD
   user: Object;
+=======
+  queryPosts: string;
+>>>>>>> fd16b53a2347ef62b801f29f8f1194bf1cd428a0
 }
 
 const initialState: typeState = {
   allPosts: [],
   filteredPosts: [],
+<<<<<<< HEAD
   user: {},
+=======
+  queryPosts: '',
+>>>>>>> fd16b53a2347ef62b801f29f8f1194bf1cd428a0
 };
 
 export default function rootReducer(
@@ -40,6 +52,14 @@ export default function rootReducer(
         filteredPosts: action.payload,
         allPosts: action.payload,
       };
+<<<<<<< HEAD
+=======
+    case GET_POST_QUERY:
+      return {
+        ...state,
+        queryPosts: action.payload,
+      };
+>>>>>>> fd16b53a2347ef62b801f29f8f1194bf1cd428a0
     case FILTER_STATE:
       return {
         ...state,
@@ -64,12 +84,15 @@ export default function rootReducer(
         ...state,
         filteredPosts: state.allPosts.filter(p => p.genre === action.payload),
       };
+<<<<<<< HEAD
     case SET_USER: {
       return {
         ...state,
         user: action.payload,
       };
     }
+=======
+>>>>>>> fd16b53a2347ef62b801f29f8f1194bf1cd428a0
     default:
       return state;
   }

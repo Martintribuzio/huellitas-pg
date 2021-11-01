@@ -9,7 +9,35 @@ const {
   getRefreshToken,
   verifyUser,
 } = require('../../../authenticate');
+<<<<<<< HEAD
 console.log('ROUTE', getToken, COOKIE_OPTIONS, getRefreshToken);
+=======
+
+const multer = require('multer');
+const uniqid = require('uniqid');
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads');
+  },
+  filename: function (req, file, cb) {
+    cb(null, uniqid('', file.originalname.split(' ').join('')));
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png')
+    cb(null, true);
+  else cb(new Error('File must be a image (jpg,png)'), false);
+};
+
+const upload = multer({
+  storage,
+  limits: { fileSize: 1024 * 1024 * 3 },
+  fileFilter,
+});
+
+>>>>>>> fd16b53a2347ef62b801f29f8f1194bf1cd428a0
 // userNetwork.post('/', async (req, res) => {
 //   try {
 //     const user = await createUser(req.body);
@@ -66,6 +94,7 @@ userNetwork.get('/posts', async (req, res) => {
 //   res.redirect('/');
 // });
 
+<<<<<<< HEAD
 //Autenticacion para navegar entre páginas
 function isLoggedIn(req, res, next) {
   console.log('REQ', req.isAuthenticated.toString());
@@ -73,6 +102,18 @@ function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) return next();
   res.send('ok');
 }
+=======
+// //Autenticacion para navegar entre páginas
+// function isLoggedIn(req, res, next) {
+//   if (req.isAuthenticated())
+//       return next();
+//   res.redirect('/user/login');
+// };
+
+// userNetwork.get('/profile', isLoggedIn, (req, res, next) => {
+//   res.render('profile')
+// });
+>>>>>>> fd16b53a2347ef62b801f29f8f1194bf1cd428a0
 
 userNetwork.get('/profile', isLoggedIn, (req, res, next) => {
   res.render('profile');
@@ -114,6 +155,7 @@ userNetwork.post('/signup', (req, res) => {
 });
 
 //Login
+<<<<<<< HEAD
 
 userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
   try {
@@ -147,6 +189,28 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
   }
 });
 
+=======
+userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
+  const token = getToken({ _id: req.user._id });
+  const refreshToken = getRefreshToken({ _id: req.user._id });
+  User.findById(req.user._id).then(
+    user => {
+      user.refreshToken.push({ refreshToken });
+      user.save((err, user) => {
+        if (err) {
+          res.statusCode = 500;
+          res.send(err);
+        } else {
+          res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
+          res.send({ success: true, token });
+        }
+      });
+    },
+    err => next(err)
+  );
+});
+
+>>>>>>> fd16b53a2347ef62b801f29f8f1194bf1cd428a0
 //LogOut
 userNetwork.get('/logout', verifyUser, (req, res, next) => {
   const { signedCookies = {} } = req;

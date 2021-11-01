@@ -6,6 +6,10 @@ import {
   GET_GENRES,
   GET_POSTS,
   GET_DETAIL,
+<<<<<<< HEAD
+=======
+  GET_POST_QUERY,
+>>>>>>> fd16b53a2347ef62b801f29f8f1194bf1cd428a0
 } from '../types/actionTypes';
 import axios from 'axios';
 
@@ -44,6 +48,7 @@ export const filterByState = function (filter: string) {
   };
 };
 
+<<<<<<< HEAD
 export const filterByLatest = function (filter: string) {
   return {
     type: FILTER_LATEST,
@@ -54,20 +59,45 @@ export const filterByLatest = function (filter: string) {
 export const getTypes = function (filter: string) {
   return {
     type: GET_TYPES,
+=======
+export const getPostByQuery = function (query: string) {
+  return {
+    type: GET_POST_QUERY,
+    payload: query,
+  };
+};
+
+export const filterByLatest = function (filter: string) {
+  return {
+    type: FILTER_LATEST,
+>>>>>>> fd16b53a2347ef62b801f29f8f1194bf1cd428a0
     payload: filter,
   };
 };
 
+<<<<<<< HEAD
 export const getGenres = function (filter: string) {
   return {
     type: GET_GENRES,
+=======
+export const getTypes = function (filter: string) {
+  return {
+    type: GET_TYPES,
+>>>>>>> fd16b53a2347ef62b801f29f8f1194bf1cd428a0
     payload: filter,
   };
 };
 
+<<<<<<< HEAD
 export const setUser = function (user: string) {
   return {
     type: 'SET_USER',
     payload: user,
+=======
+export const getGenres = function (filter: string) {
+  return {
+    type: GET_GENRES,
+    payload: filter,
+>>>>>>> fd16b53a2347ef62b801f29f8f1194bf1cd428a0
   };
 };

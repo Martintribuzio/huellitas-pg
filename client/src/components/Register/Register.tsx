@@ -67,7 +67,11 @@ function Register() {
       });
   };
 
+<<<<<<< HEAD
   const onSubmit = handleSubmit(data => {
+=======
+  const onSubmit  = handleSubmit((data) => {
+>>>>>>> fd16b53a2347ef62b801f29f8f1194bf1cd428a0
     console.log(document.getElementById('password'));
     axios
       .post('http://localhost:3001/user/signup', data)
@@ -81,12 +85,12 @@ function Register() {
         console.log(res);
       })
       .catch(error => console.log(error.message));
-  });
+  };
 
   return (
     <Box sx={{ backgroundColor: 'secondary.main' }} className='container'>
       <h1>Registrate</h1>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit}>
         <div>
           <Controller
             name='name'
