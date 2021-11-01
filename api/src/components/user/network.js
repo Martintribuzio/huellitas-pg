@@ -232,6 +232,7 @@ userNetwork.post('/refreshToken', (req, res, next) => {
 
 //obtener los detalles del usuario que inició sesión
 userNetwork.get('/me', verifyUser, (req, res, next) => {
+  console.log(verifyUser);
   res.send(req.user);
 });
 
