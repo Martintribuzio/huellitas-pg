@@ -171,6 +171,7 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
 
 //LogOut
 userNetwork.get('/logout', verifyUser, (req, res, next) => {
+  console.log(req)
   const { signedCookies = {} } = req;
   const { refreshToken } = signedCookies;
   User.findById(req.user._id).then(

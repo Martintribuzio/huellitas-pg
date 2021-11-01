@@ -24,6 +24,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getPostByQuery } from '../../redux/actions';
+import logoutService from '../../services/logout';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -248,7 +249,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               </Button>
             </Link>
           </Box>
-
+          
           <Box
             sx={{
               display: {
@@ -310,6 +311,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
       </AppBar>
       {renderMobileMenu}
       {renderMenssage}
+      <button onClick={logoutService}>logout</button>
     </Box>
   );
 }
