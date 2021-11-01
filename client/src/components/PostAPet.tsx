@@ -101,6 +101,7 @@ export default function PostAPet() {
 
   function handleSubmit(e: any) {
     e.preventDefault();
+    const id = window.localStorage.getItem('userId');
     const fd = new FormData();
     if (input.petImage) {
       fd.append('petImage', input.petImage);
@@ -112,6 +113,9 @@ export default function PostAPet() {
     fd.append('description', input.description);
     fd.append('type', input.type);
     fd.append('genre', input.genre);
+    if (id) {
+      fd.append('id', id);
+    }
     dispatch(postPet(fd)); //mando form a trvaes del axios lol
     alert('Publicado!');
     history.push('/home');
@@ -120,70 +124,73 @@ export default function PostAPet() {
   return (
     <div className={styles.conteiner}>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <FormControl sx={{ m: 1, minWidth: 120 }} />
-        <InputLabel>Nombre</InputLabel>
-        <TextField
-          name='name'
-          value={name}
-          onChange={e => handleInputChange(e)}
-        />
-
         <label>Estado de la mascota:</label>
         <FormControl style={{ margin: '1px', minWidth: '120px' }}>
-          <InputLabel id='demo-simple-select-helper-label'>estado</InputLabel>
+          <InputLabel id='demo-simple-select-helper-label'>Estado</InputLabel>
           <Select
             required
             name='state'
             labelId='demo-simple-select-helper-label'
             id='demo-simple-select-helper'
             value={state}
-            label='estado'
+            label='Estado'
             onChange={e => handleSelectEstado(e)}>
             <MenuItem value=''>
               <em></em>
             </MenuItem>
-            <MenuItem value='perdido'>perdido</MenuItem>
-            <MenuItem value='encontrado'>Encontrado</MenuItem>
-            <MenuItem value='adopcion'>en adopcion</MenuItem>
+            <MenuItem value='Perdido'>Perdido</MenuItem>
+            <MenuItem value='Encontrado'>Encontrado</MenuItem>
+            <MenuItem value='Adopción'>En adopcion</MenuItem>
           </Select>
         </FormControl>
 
+        {/* <label>Nombre:</label> */}
+        <FormControl sx={{ m: 1, minWidth: 120 }} />
+        <InputLabel id='demo-simple-select-helper-label'>
+          Nombre de la mascota
+        </InputLabel>
+        <TextField
+          name='name'
+          value={name}
+          onChange={e => handleInputChange(e)}
+        />
+
         <label>Tipo de animal: </label>
         <FormControl style={{ margin: '1px', minWidth: '120px' }}>
-          <InputLabel id='demo-simple-select-helper-label'>tipo</InputLabel>
+          <InputLabel id='demo-simple-select-helper-label'>Tipo</InputLabel>
           <Select
             required
             name='type'
             labelId='demo-simple-select-helper-label'
             id='demo-simple-select-helper'
             value={type}
-            label='tipo'
+            label='Tipo'
             onChange={e => handletypechange(e)}>
             <MenuItem value=''>
               <em></em>
             </MenuItem>
             <MenuItem value='perro'>Perro</MenuItem>
             <MenuItem value='gato'>Gato</MenuItem>
-            <MenuItem value='otro'>otro</MenuItem>
+            <MenuItem value='otro'>Otro</MenuItem>
           </Select>
         </FormControl>
 
-        <label>Genero </label>
+        <label>Género </label>
         <FormControl style={{ margin: '1px', minWidth: '120px' }}>
-          <InputLabel id='demo-simple-select-helper-label'>genero</InputLabel>
+          <InputLabel id='demo-simple-select-helper-label'>Género</InputLabel>
           <Select
             required
             name='genero'
             labelId='demo-simple-select-helper-label'
             id='demo-simple-select-helper'
             value={genre}
-            label='genero'
+            label='Género'
             onChange={e => handlegenrechange(e)}>
             <MenuItem value=''>
               <em></em>
             </MenuItem>
-            <MenuItem value='macho'>macho</MenuItem>
-            <MenuItem value='hembra'>hembra</MenuItem>
+            <MenuItem value='Macho'>Macho</MenuItem>
+            <MenuItem value='Hembra'>Hembra</MenuItem>
           </Select>
         </FormControl>
 
@@ -209,13 +216,13 @@ export default function PostAPet() {
 
         <label>Descripcion: </label>
         <TextField
-          placeholder='Ingrese descripcion de su publicacion'
+          placeholder='Ingrese descripcion de su publicación'
           multiline
           rows={4}
           name='description'
           onChange={e => handlerdescritionchange(e.target.value)}
           required
-          label='Descripcion'
+          label='Descripción'
         />
 
         <Button
