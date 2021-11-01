@@ -103,9 +103,6 @@ userNetwork.get('/posts', async (req, res) => {
 //   res.render('profile')
 // });
 
-// userNetwork.get('/profile', isLoggedIn, (req, res, next) => {
-//   res.render('profile');
-// });
 //Registro
 userNetwork.post('/signup', (req, res) => {
   User.register(
