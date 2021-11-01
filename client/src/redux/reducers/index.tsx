@@ -1,4 +1,3 @@
-
 import {
   FILTER_STATE,
   FILTER_LATEST,
@@ -23,81 +22,52 @@ const initialState: typeState = {
   queryPosts: '',
 };
 
-
 export default function rootReducer(
   state = initialState,
   action: FiltersActionTypes
 ) {
   switch (action.type) {
     case GET_POSTS:
-        return{
-            ...state,
-            showPosts: action.payload,
-            allPosts: action.payload 
-        }
-    case POST_PET:
-        return{
-            ...state,
-            showPosts: action.payload,
-            allPosts: action.payload
-        }
-    case FILTER_STATE:
-        if(action.payload === 'Todos'){
-            return{
-                ...state,
-                showPosts: state.allPosts
-            }
-        }
-        else{
-            return{
-                ...state,
-                showPosts: state.allPosts.filter(p => p.state === action.payload),
-            }
-        }
-    case FILTER_LATEST:
-        if(action.payload === "mas antiguos"){
-        return{
-            ...state,
-            showPosts:[...state.showPosts].sort((a:PostType,b:PostType) => {
-                return action.payload === "mas antiguos"
-                ? + new Date(b.date) - + new Date(a.date)
-                : + new Date(a.date) - + new Date(b.date)
-            })
-        }
-        }else{
-            return{
-                ...state,
-                showPosts:[...state.showPosts].sort((a:PostType,b:PostType) => {
-                    return a.date > b.date ? 1 : -1
-                })
-            }
-        }
-    case GET_TYPES: 
-    if(action.payload === 'Todos'){
-        return{
-            ...state,
-            showPosts: state.allPosts
-        }
-    }
-    else{
-    return{
+      return {
         ...state,
-        showPosts: state.showPosts.filter((p => p.type === action.payload)),
-    }
-}
-    case GET_GENRES: 
-    if(action.payload === 'Todos'){
-        return{
-            ...state,
-            showPosts: state.allPosts
-        }
-    }
-    else{
-        return{
-            ...state,
-            showPosts: state.showPosts.filter((p => p.genre === action.payload)),
-        }
-    }
+        filteredPosts: action.payload,
+        allPosts: action.payload,
+      };
+    case POST_PET:
+      return {
+        ...state,
+        filteredPosts: action.payload,
+        allPosts: action.payload,
+      };
+    case GET_POST_QUERY:
+      return {
+        ...state,
+        queryPosts: action.payload,
+      };
+    case FILTER_STATE:
+      return {
+        ...state,
+        filteredPosts: state.allPosts.filter(p => p.state === action.payload),
+      };
+    case FILTER_LATEST:
+      return {
+        ...state,
+        filteredPosts: [...state.allPosts].sort((a: PostType, b: PostType) => {
+          return action.payload === 'mas recientes'
+            ? +new Date(b.date) - +new Date(a.date)
+            : +new Date(a.date) - +new Date(b.date);
+        }),
+      };
+    case GET_TYPES:
+      return {
+        ...state,
+        filteredPosts: state.allPosts.filter(p => p.type === action.payload),
+      };
+    case GET_GENRES:
+      return {
+        ...state,
+        filteredPosts: state.allPosts.filter(p => p.genre === action.payload),
+      };
     default:
       return state;
   }
