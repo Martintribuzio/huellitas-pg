@@ -36,12 +36,6 @@ function Ingresar() {
     formState: { errors },
   } = useForm<LogIn>({ resolver: yupResolver(schema) });
 
-  // useEffect(() => {
-  //   if (window.localStorage.getItem('token')) {
-  //     history.push('/home');
-  //   }
-  // }, []);
-
   const onSubmit = handleSubmit(async data => {
     const response = await loginService(data);
     if (response.error) {
