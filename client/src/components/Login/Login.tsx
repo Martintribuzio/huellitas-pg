@@ -9,27 +9,27 @@ import { TextField } from '@material-ui/core';
 import './Login.css';
 import Box from '@mui/material/Box';
 import { setUser } from '../../redux/actions';
+import { useHistory } from 'react-router-dom';
+import loginService from '../../services/loginService';
 import { typeState } from '../../redux/reducers/index';
+import Swal from 'sweetalert2';
+import { useEffect } from 'react';
+
 type LogIn = {
   email: string;
   password: string;
 };
+
 const schema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().min(8).max(20).required(),
 });
 
-interface Context {
-  user: string;
-  token: string;
-}
-
 function Ingresar() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state: typeState) => state.user);
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
+
   const {
     handleSubmit,
     setValue,
@@ -37,21 +37,27 @@ function Ingresar() {
     setError,
     formState: { errors },
   } = useForm<LogIn>({ resolver: yupResolver(schema) });
-  const genericErrorMessage: string = 'Algo salió mal.Pruebaa nuevamente';
 
-  const onSubmit = handleSubmit(data => {
-    const { email, password } = data;
-    axios
-      .post('http://localhost:3001/user/login', {
-        username: email,
-        password: password,
-      })
-      .then(res => {
-        console.log(res);
-        console.log(res.data.token);
-        dispatch(setUser(res.data.token));
-      })
-      .catch(err => console.log(err));
+  // useEffect(() => {
+  //   if (window.localStorage.getItem('token')) {
+  //     history.push('/home');
+  //   }
+  // }, []);
+
+  const onSubmit = handleSubmit(async data => {
+    const response = await loginService(data);
+    if (response.error) {
+      setValue('email', '');
+      setValue('password', '');
+      Swal.fire({
+        title: 'Error',
+        text: 'El email o la contraseña no son válidos',
+        icon: 'error',
+        confirmButtonText: 'Intentar de nuevo',
+      });
+    } else {
+      history.push('/home');
+    }
   });
 
   return (
@@ -64,7 +70,7 @@ function Ingresar() {
           <Controller
             name='email'
             control={control}
-            defaultValue='ejemplo@email.com'
+            defaultValue=''
             render={({ field }) => (
               <TextField
                 {...field}
@@ -99,9 +105,7 @@ function Ingresar() {
         </div>
         <p>¿No tienes cuenta?</p>
         <Link to='/register'>Registrate</Link>
-        <button type='submit' disabled={isSubmitting}>
-          Ingresar
-        </button>
+        <button type='submit'>Ingresar</button>
       </form>
     </Box>
   );

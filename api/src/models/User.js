@@ -5,9 +5,9 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const Session = new Schema({
   refreshToken: {
     type: String,
-    default: "",
+    default: '',
   },
-})
+});
 
 const userSchema = new Schema({
   name: {
@@ -30,7 +30,7 @@ const userSchema = new Schema({
   posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
   authStrategy: {
     type: String,
-    default: "local",
+    default: 'local',
   },
   refreshToken: {
     type: [Session],
@@ -50,10 +50,10 @@ userSchema.set('toJSON', {
   transform: (doc, ret, options) => {
     delete ret.password;
     return ret;
-  }
+  },
 });
 
-userSchema.plugin(passportLocalMongoose)
+userSchema.plugin(passportLocalMongoose);
 
 const User = new model('User', userSchema);
 
