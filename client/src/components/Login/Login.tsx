@@ -1,90 +1,115 @@
-import React from "react";
-import { useForm,Controller } from 'react-hook-form';
+import React from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
-import { Link } from "react-router-dom";
-import {yupResolver}from '@hookform/resolvers/yup';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { TextField } from "@material-ui/core";
-import "./Login.css";
+import { TextField } from '@material-ui/core';
+import './Login.css';
+import Box from '@mui/material/Box';
+import { setUser } from '../../redux/actions';
+import { useHistory } from 'react-router-dom';
+import loginService from '../../services/loginService';
+import { typeState } from '../../redux/reducers/index';
+import Swal from 'sweetalert2';
+import { useEffect } from 'react';
+import Button from '@mui/material/Button';
 
 type LogIn = {
   email: string;
   password: string;
-}
-const schema=yup.object().shape({
-  email:yup.string().email().required(),
-  password:yup.string().min(8).max(20).required(),
-});
-function Ingresar() {
-  const {
-    register,
-     handleSubmit,
-     control,
-     formState: { errors }
-    } = useForm<LogIn>({resolver:yupResolver(schema)})
+};
 
-  const onSubmit = handleSubmit((data) => {
-    /* alert(JSON.stringify(data)) */
-    /* alert(register) */
-    axios.post('http://localhost:3001/login',data)
-    .then(res=>window.location.href='/')
-    .catch(error=>console.log(error.message))
-  })
+const schema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().min(8).max(20).required(),
+});
+
+function Ingresar() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const user = useSelector((state: typeState) => state.user);
+
+  const {
+    handleSubmit,
+    setValue,
+    control,
+    setError,
+    formState: { errors },
+  } = useForm<LogIn>({ resolver: yupResolver(schema) });
+
+  // useEffect(() => {
+  //   if (window.localStorage.getItem('token')) {
+  //     history.push('/home');
+  //   }
+  // }, []);
+
+  const onSubmit = handleSubmit(async data => {
+    const response = await loginService(data);
+    if (response.error) {
+      setValue('email', '');
+      setValue('password', '');
+      Swal.fire({
+        title: 'Error',
+        text: 'El email o la contraseña no son válidos',
+        icon: 'error',
+        confirmButtonText: 'Intentar de nuevo',
+      });
+    } else {
+      history.push('/home');
+    }
+  });
 
   return (
-  <div className='container'>
-    <div className='title'>
-    <h1>Ingresa</h1>
-    </div>
-    <form onSubmit={onSubmit}>
-      <div className='inputs'>
-      <Controller
-            name="email"
+    <Box sx={{ backgroundColor: 'wihte' }} className='container'>
+      <div className='title'>
+        <h1>Ingresa</h1>
+      </div>
+      <form onSubmit={onSubmit}>
+        <div className='inputs'>
+          <Controller
+            name='email'
             control={control}
-            defaultValue="ejemplo@email.com"
+            defaultValue=''
             render={({ field }) => (
               <TextField
                 {...field}
-                label="Email"
-                variant="outlined"
+                label='Email'
+                variant='outlined'
                 error={!!errors.email}
                 helperText={errors.email ? errors.email?.message : ''}
                 fullWidth
-                margin="dense"
+                margin='dense'
               />
             )}
           />
-       {/*  <input {...register('email')} id="email" name="email" type="text" placeholder='Email'/>
-        {
-          errors.email && errors.email?.message&&<span>{errors.email.message}</span>
-        }  */}
-      
-       
-        {/* <input {...register('password')} id="password" name="password" type="password" placeholder='Contraseña'/>
-     {errors.password && errors.password?.message&&<span>{errors.password.message}</span> }  */}
-      <br />
+
+          <br />
           <Controller
-            name="password"
+            name='password'
             control={control}
-            defaultValue=""
+            defaultValue=''
             render={({ field }) => (
               <TextField
                 {...field}
-                type="password"
-                label="Password"
-                variant="outlined"
+                type='password'
+                label='Contraseña'
+                variant='outlined'
                 error={!!errors.password}
                 helperText={errors.password ? errors.password?.message : ''}
                 fullWidth
-                margin="dense"
+                margin='dense'
               />
             )}
           />
-      </div>
-      <p>¿No tienes cuenta?</p><Link to='/register'>Registrate</Link>
-      <button type="submit">Ingresar</button>
-    </form>
-    </div>
+        </div>
+        <Button variant='contained' type='submit'>
+          Ingresar
+        </Button>
+        <div></div>
+      </form>
+    </Box>
   );
 }
 

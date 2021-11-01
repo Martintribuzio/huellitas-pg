@@ -1,118 +1,267 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux"
-import { Link } from "react-router-dom";
-import { getPosts } from "../redux/actions";
-import {typeState} from '../redux/reducers/index'
-// import Post from "./Post";
-import styles from "../CSS/Feed.module.css"
-import Filters from './Filters';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { getPosts } from '../redux/actions';
+import { typeState } from '../redux/reducers/index';
 import Box from '@mui/material/Box';
-import { Button, Stack } from "@mui/material";
-import { PostType } from "../redux/types/types";
+import { styled } from '@mui/material/styles';
+import ButtonBase from '@mui/material/ButtonBase';
+import Typography from '@mui/material/Typography';
+import dogloading from '../assets/loading/dog.gif';
 
-export default function Feed(){
+const ImageButton = styled(ButtonBase)(({ theme }) => ({
+  position: 'relative',
+  height: 200,
 
-    const dispatch = useDispatch();
-    let allPosts = useSelector((state: typeState) => (state.filteredPosts))
-    console.log(allPosts)
+  [theme.breakpoints.down('sm')]: {
+    width: '100% !important', // Overrides inline-style
+    height: 100,
+  },
+  '&:hover, &.Mui-focusVisible': {
+    zIndex: 1,
+    '& .MuiImageBackdrop-root': {
+      opacity: 0,
+    },
 
-    useEffect(()=>{
-            dispatch(getPosts());
-        }, [dispatch]);
+    // "& .tuki": {
+    //   display: 'none'
+    // },
+    // "& .tuki2": {
+    //   display:'block'
+    // }
+    // }
 
+    // "& .MuiImageMarked-root": {
+    //   opacity: 1
+    // },
+    // "& .MuiTypography-root": {
+    //   border: "4px solid currentColor"
+    // }
+  },
+}));
 
-    if(allPosts.length){
-        return(
-            <div className = {styles.contenedor}>
-                <Filters/>
-                <div>
-                <Box className={styles.box} sx={{display:{xs:'none',sm:'none',md:'flex'}}}>
-                <ImageList cols={3} className={styles.taka}>
-                {allPosts.map((item) => 
-                (
-                    <ImageListItem key={item._id}>
-                    <img
-                        src={`http://localhost:3001/${item.petImage}`}
-                        srcSet={`http://localhost:3001/${item.petImage}`}
-                        alt={item.description}
-                        loading="lazy"
-                    />
-                    <ImageListItemBar
-                        title={item.type}
-                        subtitle={item.date}
-                    />
-                        <Stack direction="row" justifyContent="flex-end" textAlign='center'>
-                            <Button href={`http://localhost:3000/home/detail/+${item._id}`}>Detalles</Button>
-                        </Stack>
-                    </ImageListItem>
-                )
-                )}
-                </ImageList>
-                </Box>
-                <Box sx={{display:{xs:'none',sm:'flex',md:'none'}}}>
-                <ImageList cols={2} className={styles.taka}>
-                {allPosts.map((item) => 
-                (
-                    <ImageListItem key={item._id}>
-                    <img
-                        src={`http://localhost:3001/${item.petImage}?w=248&fit=crop&auto=format`}
-                        srcSet={`http://localhost:3001/${item.petImage}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                        alt={item.description}
-                        loading="lazy"
-                    />
-                    <ImageListItemBar
-                        title={item.type}
-                        subtitle={item.date}
-                    />
-                    </ImageListItem>
-                )
-                )}
-                </ImageList>
-                </Box>
-                <Box sx={{display:{xs:'flex',sm:'none',md:'none'}}}>
-                <ImageList cols={1} className={styles.taka}>
-                {allPosts.map((item) => 
-                (
-                    <ImageListItem key={item._id}>
-                    <img
-                        src={`http://localhost:3001/${item.petImage}`}
-                        srcSet={`http://localhost:3001/${item.petImage}`}
-                        alt={item.description}
-                        loading="lazy"
-                    />
-                    <ImageListItemBar
-                        title={item.type}
-                        subtitle={item.date}
-                    />
-                    </ImageListItem>
-                )
-                )}
-                </ImageList>
-                </Box>
-                    {/* {
-                        allPosts.map(p => {
-                            return(
-                                <Link to = {'/home/detail/'} key = {p._id}>
-                                    
-                                    <Post
-                                        petImage = {p.petImage}
-                                        description = {p.description}
-                                        date = {p.date}
-                                        genre = {p.genre}
-                                        type = {p.type}
-                                        state = {p.state}
-                                    />
-                                </Link>
-                            )
-                        })
-                    } */}
-                </div>
-            </div>
-        )
-    }else{
-        return <h1>Cargando...</h1>
-    }
+const ImageSrc = styled('span')({
+  position: 'absolute',
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center 40%',
+});
+
+const Image = styled('span')(({ theme }) => ({
+  position: 'absolute',
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  color: theme.palette.common.white,
+}));
+
+const ImageBackdrop = styled('span')(({ theme }) => ({
+  position: 'absolute',
+  left: 0,
+  right: 0,
+  top: 0,
+  bottom: 0,
+  backgroundColor: theme.palette.common.black,
+  opacity: 0.5,
+  transition: theme.transitions.create('opacity'),
+}));
+
+export default function Feed() {
+  const dispatch = useDispatch();
+  let allPosts = useSelector((state: typeState) => state.filteredPosts);
+  let queryPost = useSelector((state: typeState) => state.queryPosts);
+  //console.log('QUERY POSTS', queryPost);
+  console.log(allPosts);
+
+  let postsToShow = queryPost
+    ? allPosts.filter(elem =>
+        elem.name?.toLowerCase().includes(queryPost.toLowerCase())
+      )
+    : allPosts;
+  console.log('POSTS', postsToShow);
+
+  useEffect(() => {
+    dispatch(getPosts());
+  }, [dispatch]);
+
+  //     const dispatch = useDispatch();
+  //     let filteredPosts = useSelector((state: typeState) => (state.filteredPosts))
+  //     let allPosts = useSelector((state: typeState) => (state.allPosts))
+
+  // useEffect(()=>{
+  //         dispatch(getPosts());
+  //     }, [dispatch]);
+
+  //     if(allPosts.length){
+  //       if(filteredPosts.length){
+  //         return(
+  //             <Box
+  //       sx={{ display: "flex", flexWrap: "wrap", justifyContent:'center' ,minWidth: 300, width: "100%"}}
+  //     >
+  //       {filteredPosts.map((item) => {
+  //           if(typeof item.petImage === 'string'){
+  //               if(item.petImage.search(/\\/))
+  //               {item.petImage = item.petImage.replace(/\\/g, "/");}
+  //             }
+  //           return(<Link to={`/home/detail/${item._id}`}>
+  //         <ImageButton
+  //           focusRipple
+  //           key={item.description}
+  //           style={{
+  //             width: "30vw",
+  //             margin: '10px'
+  //           }}
+  //           sx={{minHeight:250,minWidth:200 }}
+  //         >
+  //           <ImageSrc style={{ backgroundImage: `url(http://localhost:3001/${item.petImage}` }} />
+  //           <ImageBackdrop className="MuiImageBackdrop-root" />
+  //           <Image>
+  //             <Typography
+  //               component="span"
+  //               variant="subtitle1"
+  //               color="inherit"
+  //               className='tuki'
+  //               sx={{
+  //                 position: "relative",
+  //                 p: 5,
+  //                 pt: 2,
+  //                 textShadow:'0px 0px 4px black',
+  //                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`
+  //               }}
+  //             >
+
+  //               {`${TraslateState(item.state)}`}
+  //             </Typography>
+  //             <Typography
+  //               component="span"
+  //               variant="subtitle1"
+  //               color="inherit"
+  //               className='tuki2'
+  //               sx={{
+  //                 position: "relative",
+  //                 p: 5,
+  //                 display:'none',
+  //                 textShadow:'0px 0px 4px black',
+  //                 pt: 2,
+  //                 pb: (theme) => `calc(${theme.spacing(1)} + 6px)`
+  //               }}
+  //             >
+  //               {!item.name? `${TraslateState(item.state)}`:`Nombre: ${item.name}`}
+
+  //             </Typography>
+  //           </Image>
+  //         </ImageButton>
+  //         </Link>
+  //       )})}
+  //     </Box>
+  //   );}else{
+  //     return <h1>No encontrado</h1>
+  //   }}else{
+  //         return (<>
+  //         <img src='https://themebeyond.com/html/petco/img/preloader.gif' alt='cargando'/>
+  //         <h1>Cargando...</h1>
+  //         </>)
+  //     }
+  // }
+
+  if (postsToShow.length) {
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          justifyContent: 'center',
+          minWidth: 300,
+          width: '100%',
+        }}>
+        {postsToShow.reverse().map(item => {
+          if (typeof item.petImage === 'string') {
+            if (item.petImage.search(/\\/)) {
+              item.petImage = item.petImage.replace(/\\/g, '/');
+            }
+          }
+          return (
+            <Link to={`/home/detail/${item._id}`}>
+              <ImageButton
+                focusRipple
+                key={item.description}
+                style={{
+                  width: '30vw',
+                  margin: '10px',
+                }}
+                sx={{ minHeight: 200, minWidth: 200 }}>
+                <ImageSrc
+                  style={{
+                    backgroundImage: `url(http://localhost:3001/${item.petImage}`,
+                  }}
+                />
+                <ImageBackdrop className='MuiImageBackdrop-root' />
+                <Image>
+                  <Typography
+                    component='span'
+                    variant='subtitle1'
+                    color='inherit'
+                    sx={{
+                      position: 'relative',
+                      p: 5,
+                      pt: 2,
+                      pb: theme => `calc(${theme.spacing(1)} + 6px)`,
+                    }}>
+                    {item.name
+                      ? `${item.state}, Nombre: ${item.name}`
+                      : `${item.state}`}
+                  </Typography>
+                </Image>
+              </ImageButton>
+            </Link>
+          );
+        })}
+      </Box>
+    );
+  } else {
+    return (
+      <div
+        className='loading'
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <img
+          src='https://themebeyond.com/html/petco/img/preloader.gif'
+          alt='cargando'
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '15vh',
+            width: '15vw',
+          }}
+        />
+        <br />
+        <h2 style={{ color: '#8CCDFE' }}>Cargando...</h2>
+        <br />
+        <img
+          src='https://themebeyond.com/html/petco/img/preloader.gif'
+          alt='Cargando...'
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '15vh',
+            width: '15vw',
+          }}
+        />
+
+        {/* <img src={dogloading}/>; */}
+      </div>
+    );
+  }
 }

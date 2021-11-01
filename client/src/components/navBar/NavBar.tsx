@@ -16,15 +16,61 @@ import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import Button from '@mui/material/Button';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import Inbox from '../Messages/MenssagesNoti'
+import Inbox from '../Messages/Messages';
 import Stack from '@mui/material/Stack';
+import { styled, alpha } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
+import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { getPostByQuery } from '../../redux/actions';
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(3),
+    width: 'auto',
+  },
+}));
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}));
 
 export default function PrimarySearchAppBar(): JSX.Element {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
-
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const dispatch = useDispatch();
+  const [search, setSearch] = useState<string>('');
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -32,7 +78,6 @@ export default function PrimarySearchAppBar(): JSX.Element {
 
   const handleMobileMenuOpen = (event: any) => {
     setMobileMoreAnchorEl(event.currentTarget);
-
   };
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -49,22 +94,24 @@ export default function PrimarySearchAppBar(): JSX.Element {
     <Menu
       anchorEl={anchorEl}
       anchorOrigin={{
-        vertical: "top",
-        horizontal: "right"
+        vertical: 'top',
+        horizontal: 'right',
       }}
       id={menuId}
       keepMounted
       transformOrigin={{
-        vertical: "top",
-        horizontal: "right"
+        vertical: 'top',
+        horizontal: 'right',
       }}
       open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
+      onClose={handleMenuClose}>
       <Inbox />
-      <Stack direction="row" justifyContent="center">
-        <Link to='/home/menssage' style={{textDecoration:'none'}} onClick={handleMenuClose}>
-        <Button>Ver todos los mensajes</Button>
+      <Stack direction='row' justifyContent='center'>
+        <Link
+          to='/home/menssage'
+          style={{ textDecoration: 'none' }}
+          onClick={handleMenuClose}>
+          <Button>Ver todos los mensajes</Button>
         </Link>
       </Stack>
     </Menu>
@@ -86,15 +133,22 @@ export default function PrimarySearchAppBar(): JSX.Element {
       }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}>
-        <Link to='/home/menssage' className={s.link} style={{color: 'black'}} onClick={handleMobileMenuClose}>
-      <MenuItem>
-        <IconButton size='large' aria-label='show 4 new mails' color='inherit'>
-          <Badge badgeContent={0} color='error'>
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
+      <Link
+        to='/home/menssage'
+        className={s.link}
+        style={{ color: 'black' }}
+        onClick={handleMobileMenuClose}>
+        <MenuItem>
+          <IconButton
+            size='large'
+            aria-label='show 4 new mails'
+            color='inherit'>
+            <Badge badgeContent={0} color='error'>
+              <MailIcon />
+            </Badge>
+          </IconButton>
+          <p>Messages</p>
+        </MenuItem>
       </Link>
       <MenuItem>
         <IconButton
@@ -124,9 +178,21 @@ export default function PrimarySearchAppBar(): JSX.Element {
       </MenuItem>
     </Menu>
   );
+  useEffect(() => {
+    dispatch(getPostByQuery(search));
+  }, [search]);
+
+  function handleChange(e: any) {
+    e.preventDefault();
+    setSearch(e.target.value);
+  }
+
+  function handleSubmit() {
+    setSearch('');
+  }
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box className={s.box} sx={{ flexGrow: 1 }}>
       <AppBar position='static'>
         <Toolbar>
           <IconButton
@@ -148,42 +214,46 @@ export default function PrimarySearchAppBar(): JSX.Element {
             }}>
             Huellitas
           </Typography>
+          <Search>
+            <SearchIconWrapper>
+              <SearchIcon />
+            </SearchIconWrapper>
+            <StyledInputBase
+              onSubmit={handleSubmit}
+              onChange={handleChange}
+              placeholder='Search…'
+              inputProps={{ 'aria-label': 'search' }}
+            />
+          </Search>
           <Box
             sx={{
-              display: { xs: 'none', md: 'flex' },
-              width: '-webkit-fill-available',
-              justifyContent: 'center',
+              display: {
+                xs: 'none',
+                md: 'flex',
+              },
             }}>
-            <div
-              style={{
-                width: '-webkit-fill-available',
-                display: 'flex',
-                justifyContent: 'center',
-              }}>
-              <Link className={s.link} to='/home/createPost'>
-                <Button
-                  style={{
-                    margin: '5px',
-                    width: '100%',
-                    minWidth: '135px',
-                    maxWidth: '150px',
-                  }}
-                  size='small'
-                  color='secondary'
-                  variant='contained'>
-                  <AddCircleIcon />
-                  Crear Post
-                </Button>
-              </Link>
-            </div>
+            <Link className={s.link} to='/home/createPost'>
+              <Button
+                style={{
+                  margin: '5px',
+                  width: '100%',
+                  minWidth: '135px',
+                  maxWidth: '150px',
+                }}
+                size='small'
+                color='secondary'
+                variant='contained'>
+                <AddCircleIcon />
+                Crear Post
+              </Button>
+            </Link>
           </Box>
+
           <Box
             sx={{
               display: {
                 xs: 'flex',
                 md: 'none',
-                justifyContent: 'center',
-                width: '-webkit-fill-available',
               },
             }}>
             <IconButton>
@@ -200,7 +270,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               onClick={handleProfileMenuOpen}
               color='inherit'>
               <Badge badgeContent={0} color='error'>
-                  <MailIcon />
+                <MailIcon />
               </Badge>
             </IconButton>
             <IconButton
