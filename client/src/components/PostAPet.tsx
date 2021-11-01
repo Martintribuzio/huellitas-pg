@@ -11,8 +11,11 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import { TextField } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import useUser from '../hooks/useUser';
+
 import Swal from 'sweetalert2';
 import { postPet } from '../services/createPost';
+
 
 const Input = styled('input')({
   display: 'none',
@@ -25,7 +28,6 @@ export default function PostAPet() {
   const [genre, setGenre] = React.useState('');
   const [description, setDescription] = React.useState('');
   const history = useHistory();
-
   // HOOK PARA VERIFICACION DE USUARIO LOGEADO
   // RETORNA Unauthorized si no esta logueado
 
@@ -140,6 +142,17 @@ export default function PostAPet() {
   return (
     <div className={styles.conteiner}>
       <form onSubmit={handleSubmit} className={styles.form}>
+
+        <FormControl sx={{ m: 1, minWidth: 120 }} />
+        <InputLabel>Nombre</InputLabel>
+        <TextField
+          name='name'
+          value={name}
+          onChange={e => handleInputChange(e)}
+          required
+        />
+
+
         <label>Estado de la mascota:</label>
         <FormControl style={{ margin: '1px', minWidth: '120px' }}>
           <InputLabel id='demo-simple-select-helper-label'>Estado</InputLabel>
@@ -212,7 +225,13 @@ export default function PostAPet() {
 
         <label>Imagen: </label>
         <label>
-          <Input name='img' type='file' onChange={handleChangeImg} required />
+          <Input
+            accept='.jpg, .png'
+            name='img'
+            type='file'
+            onChange={handleChangeImg}
+            required
+          />
           <Button variant='contained' color='secondary' component='span'>
             Upload
           </Button>

@@ -99,6 +99,15 @@ userNetwork.get('/posts', async (req, res) => {
 //   res.redirect('/user/login');
 // };
 
+
+// userNetwork.get('/profile', isLoggedIn, (req, res, next) => {
+//   res.render('profile')
+// });
+
+/* userNetwork.get('/profile', isLoggedIn, (req, res, next) => {
+  res.render('profile');
+}); */
+
 //Registro
 userNetwork.post('/signup', (req, res) => {
   User.register(
