@@ -13,8 +13,10 @@ import { useHistory } from 'react-router-dom';
 import loginService from '../../services/loginService';
 import { typeState } from '../../redux/reducers/index';
 import Swal from 'sweetalert2';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
 
 type LogIn = {
   email: string;
@@ -27,6 +29,7 @@ const schema = yup.object().shape({
 });
 
 function Ingresar() {
+  const [error, setError] = useState('');
   const history = useHistory();
   const dispatch = useDispatch();
   const user = useSelector((state: typeState) => state.user);
@@ -35,7 +38,6 @@ function Ingresar() {
     handleSubmit,
     setValue,
     control,
-    setError,
     formState: { errors },
   } = useForm<LogIn>({ resolver: yupResolver(schema) });
 
@@ -60,6 +62,97 @@ function Ingresar() {
       history.push('/home');
     }
   });
+  //Login Facebook
+  const responseFacebook = async (response: any) => {
+    let respLogin;
+    try {
+      console.log(response)
+      respLogin = await axios.post('http://localhost:3001/user/login', {
+        username: response.email,
+        password: response.id,
+      });
+      console.log('ok', respLogin);
+    } catch (err: any) {
+      console.log('errror', err.message);
+      setError(err.message);
+      registerWithFacebook(response);
+    }
+  }
+
+    const registerWithFacebook = async (response: any) => {
+      let respSignup: any;
+      try {
+        respSignup = await axios.post('http://localhost:3001/user/signup', {
+        name: response.first_name,
+        lastname: response.last_name,
+        email: response.email,
+        password: response.id,
+      });
+      console.log('ok', respSignup.status);
+      if (respSignup.status === 200) {
+        Swal.fire({
+          title: 'Registro exitoso',
+          text: 'Ahora puedes iniciar sesión',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+        });
+        history.push('/home')
+      }
+    }
+    catch(err){
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudo registrar',
+        icon: 'error',
+        confirmButtonText: 'Ok',
+      });
+    }
+  };
+  //Login Google
+  const responseGoogle = async (response: any) => {
+    let respLogin;
+    try {
+      respLogin = await axios.post('http://localhost:3001/user/login', {
+        username: response.profileObj.email,
+        password: response.profileObj.googleId,
+      });
+      console.log('ok', respLogin);
+    } catch (err: any) {
+      console.log('errror', err.message);
+      setError(err.message);
+      registerWithGoogle(response)
+    }
+  }
+
+    const registerWithGoogle = async (response: any) => {
+      let respSignup: any;
+      try {
+        respSignup = await axios.post('http://localhost:3001/user/signup', {
+        name: response.profileObj.givenName,
+        lastname: response.profileObj.familyName,
+        email: response.profileObj.email,
+        password: response.profileObj.googleId,
+      });
+      console.log('ok', respSignup.status);
+      if (respSignup.status === 200) {
+        Swal.fire({
+          title: 'Registro exitoso',
+          text: 'Ahora puedes iniciar sesión',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+        });
+        history.push('/home')
+      }
+    }
+    catch(err){
+      Swal.fire({
+        title: 'Error',
+        text: 'No se pudo registrar',
+        icon: 'error',
+        confirmButtonText: 'Ok',
+      });
+    }
+  };
 
   return (
     <Box sx={{ backgroundColor: 'wihte' }} className='container'>
@@ -107,7 +200,19 @@ function Ingresar() {
         <Button variant='contained' type='submit'>
           Ingresar
         </Button>
-        <div></div>
+        <FacebookLogin
+          appId="275207664365572"
+          autoLoad={false}
+          fields="first_name,email,picture,last_name"
+          // onClick={componentClicked}
+          callback={responseFacebook} />
+        <GoogleLogin
+          clientId='73850795306-qqjla4o7l7d8mha6209tu8h87asqu073.apps.googleusercontent.com'
+          buttonText='Login'
+          onSuccess={responseGoogle}
+          onFailure={responseGoogle}
+          cookiePolicy={'single_host_origin'}
+      />
       </form>
     </Box>
   );
