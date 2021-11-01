@@ -9,7 +9,7 @@ export default function categories(){
             </Link>
             <Link to='/pets/adoption'>
                 <img src='' alt='Adopcion'/>
-                <p>En adopcion</p>
+                <p>En adopción</p>
             </Link>
             <Link to='/pets/found'>
                 <img src='' alt='Encontrados'/>

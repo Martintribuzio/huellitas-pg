@@ -124,24 +124,16 @@ export default function PostAPet() {
   return (
     <div className={styles.conteiner}>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <FormControl sx={{ m: 1, minWidth: 120 }} />
-        <InputLabel>Nombre</InputLabel>
-        <TextField
-          name='name'
-          value={name}
-          onChange={e => handleInputChange(e)}
-        />
-
         <label>Estado de la mascota:</label>
         <FormControl style={{ margin: '1px', minWidth: '120px' }}>
-          <InputLabel id='demo-simple-select-helper-label'>estado</InputLabel>
+          <InputLabel id='demo-simple-select-helper-label'>Estado</InputLabel>
           <Select
             required
             name='state'
             labelId='demo-simple-select-helper-label'
             id='demo-simple-select-helper'
             value={state}
-            label='estado'
+            label='Estado'
             onChange={e => handleSelectEstado(e)}>
             <MenuItem value=''>
               <em></em>
@@ -152,16 +144,27 @@ export default function PostAPet() {
           </Select>
         </FormControl>
 
+        {/* <label>Nombre:</label> */}
+        <FormControl sx={{ m: 1, minWidth: 120 }} />
+        <InputLabel id='demo-simple-select-helper-label'>
+          Nombre de la mascota
+        </InputLabel>
+        <TextField
+          name='name'
+          value={name}
+          onChange={e => handleInputChange(e)}
+        />
+
         <label>Tipo de animal: </label>
         <FormControl style={{ margin: '1px', minWidth: '120px' }}>
-          <InputLabel id='demo-simple-select-helper-label'>tipo</InputLabel>
+          <InputLabel id='demo-simple-select-helper-label'>Tipo</InputLabel>
           <Select
             required
             name='type'
             labelId='demo-simple-select-helper-label'
             id='demo-simple-select-helper'
             value={type}
-            label='tipo'
+            label='Tipo'
             onChange={e => handletypechange(e)}>
             <MenuItem value=''>
               <em></em>
@@ -172,16 +175,16 @@ export default function PostAPet() {
           </Select>
         </FormControl>
 
-        <label>Genero </label>
+        <label>Género </label>
         <FormControl style={{ margin: '1px', minWidth: '120px' }}>
-          <InputLabel id='demo-simple-select-helper-label'>genero</InputLabel>
+          <InputLabel id='demo-simple-select-helper-label'>Género</InputLabel>
           <Select
             required
             name='genero'
             labelId='demo-simple-select-helper-label'
             id='demo-simple-select-helper'
             value={genre}
-            label='genero'
+            label='Género'
             onChange={e => handlegenrechange(e)}>
             <MenuItem value=''>
               <em></em>
@@ -213,13 +216,13 @@ export default function PostAPet() {
 
         <label>Descripcion: </label>
         <TextField
-          placeholder='Ingrese descripcion de su publicacion'
+          placeholder='Ingrese descripcion de su publicación'
           multiline
           rows={4}
           name='description'
           onChange={e => handlerdescritionchange(e.target.value)}
           required
-          label='Descripcion'
+          label='Descripción'
         />
 
         <Button
