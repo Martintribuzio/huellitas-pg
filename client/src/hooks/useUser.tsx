@@ -41,7 +41,11 @@ const useUser = () => {
     let verify = async () => {
       try {
         if (token) {
-          const userData = await verifyUser(token);
+          const userData: any = await verifyUser(token);
+          if(userData.error){
+            throw new Error(userData.error);
+          }
+            
           setUser(userData);
           setResult('Success');
           setLoading(false);

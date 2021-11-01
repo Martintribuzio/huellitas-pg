@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import Button from '@mui/material/Button';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
+import logoutService from '../../services/logout';
 
 type LogIn = {
   email: string;
@@ -204,6 +205,7 @@ function Ingresar() {
           cookiePolicy={'single_host_origin'}
       />
       </form>
+      
     </Box>
   );
 }

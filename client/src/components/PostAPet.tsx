@@ -31,10 +31,10 @@ export default function PostAPet() {
   // HOOK PARA VERIFICACION DE USUARIO LOGEADO
   // RETORNA Unauthorized si no esta logueado
 
-  const [loading, result, user] = useUser();
-  if (result === 'Unauthorized') {
-    history.push('/');
-  }
+  // const [loading, result, user] = useUser();
+  // if (result === 'Unauthorized') {
+  //   history.push('/');
+  // }
 
   const [input, setInput] = useState<PostType>({
     name: '',
