@@ -1,16 +1,16 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { getPosts } from '../redux/actions';
-import { typeState } from '../redux/reducers/index';
-import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
-import ButtonBase from '@mui/material/ButtonBase';
-import Typography from '@mui/material/Typography';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux"
+import { Link } from "react-router-dom";
+import { getPosts } from "../redux/actions";
+import {typeState} from '../redux/reducers/index'
+import Box from "@mui/material/Box";
+import { styled } from "@mui/material/styles";
+import ButtonBase from "@mui/material/ButtonBase";
+import Typography from "@mui/material/Typography";
 
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
-  position: 'relative',
+  position: "relative",
   height: 200,
 
   [theme.breakpoints.down('sm')]: {
@@ -18,10 +18,10 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
     height: 100,
 
   },
-  '&:hover, &.Mui-focusVisible': {
+  "&:hover, &.Mui-focusVisible": {
     zIndex: 1,
-    '& .MuiImageBackdrop-root': {
-      opacity: 0,
+    "& .MuiImageBackdrop-root": {
+      opacity: 0
     },
 
     // "& .tuki": {
@@ -42,48 +42,45 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
 
 }));
 
-const ImageSrc = styled('span')({
-  position: 'absolute',
+const ImageSrc = styled("span")({
+  position: "absolute",
   left: 0,
   right: 0,
   top: 0,
   bottom: 0,
-  backgroundSize: 'cover',
-  backgroundPosition: 'center 40%',
+  backgroundSize: "cover",
+  backgroundPosition: "center 40%"
 });
 
-const Image = styled('span')(({ theme }) => ({
-  position: 'absolute',
+const Image = styled("span")(({ theme }) => ({
+  position: "absolute",
   left: 0,
   right: 0,
   top: 0,
   bottom: 0,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: theme.palette.common.white,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: theme.palette.common.white
 }));
 
-const ImageBackdrop = styled('span')(({ theme }) => ({
-  position: 'absolute',
+const ImageBackdrop = styled("span")(({ theme }) => ({
+  position: "absolute",
   left: 0,
   right: 0,
   top: 0,
   bottom: 0,
   backgroundColor: theme.palette.common.black,
   opacity: 0.5,
-  transition: theme.transitions.create('opacity'),
+  transition: theme.transitions.create("opacity")
 }));
 
 
 const TraslateState = (petState: String) => {
-  switch (petState) {
-    case 'found':
-      return 'Encontrado';
-    case 'lost':
-      return 'Perdido';
-    default:
-      return 'En adopcion';
+  switch(petState){
+    case 'found':return 'Encontrado';
+    case 'lost':return 'Perdido';
+    default:return 'En adopcion'
   }
 };
 

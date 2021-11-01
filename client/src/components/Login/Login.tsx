@@ -2,36 +2,63 @@ import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { TextField } from '@material-ui/core';
 import './Login.css';
 import Box from '@mui/material/Box';
+import { setUser } from '../../redux/actions';
+import { useHistory } from 'react-router-dom';
+import loginService from '../../services/loginService';
+import { typeState } from '../../redux/reducers/index';
+import Swal from 'sweetalert2';
+import { useEffect } from 'react';
 import Button from '@mui/material/Button';
 
 type LogIn = {
   email: string;
   password: string;
 };
+
 const schema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().min(8).max(20).required(),
 });
+
 function Ingresar() {
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const user = useSelector((state: typeState) => state.user);
+
   const {
-    register,
     handleSubmit,
+    setValue,
     control,
+    setError,
     formState: { errors },
   } = useForm<LogIn>({ resolver: yupResolver(schema) });
 
-  const onSubmit = handleSubmit(data => {
-    /* alert(JSON.stringify(data)) */
-    /* alert(register) */
-    axios
-      .post('http://localhost:3001/user/login', data)
-      .then(res => (window.location.href = '/home'))
-      .catch(error => console.log(error.message));
+  // useEffect(() => {
+  //   if (window.localStorage.getItem('token')) {
+  //     history.push('/home');
+  //   }
+  // }, []);
+
+  const onSubmit = handleSubmit(async data => {
+    const response = await loginService(data);
+    if (response.error) {
+      setValue('email', '');
+      setValue('password', '');
+      Swal.fire({
+        title: 'Error',
+        text: 'El email o la contraseña no son válidos',
+        icon: 'error',
+        confirmButtonText: 'Intentar de nuevo',
+      });
+    } else {
+      history.push('/home');
+    }
   });
 
   return (
@@ -44,7 +71,7 @@ function Ingresar() {
           <Controller
             name='email'
             control={control}
-            defaultValue='ejemplo@email.com'
+            defaultValue=''
             render={({ field }) => (
               <TextField
                 {...field}
@@ -57,13 +84,7 @@ function Ingresar() {
               />
             )}
           />
-          {/*  <input {...register('email')} id="email" name="email" type="text" placeholder='Email'/>
-        {
-          errors.email && errors.email?.message&&<span>{errors.email.message}</span>
-        }  */}
 
-          {/* <input {...register('password')} id="password" name="password" type="password" placeholder='Contraseña'/>
-     {errors.password && errors.password?.message&&<span>{errors.password.message}</span> }  */}
           <br />
           <Controller
             name='password'
@@ -73,7 +94,7 @@ function Ingresar() {
               <TextField
                 {...field}
                 type='password'
-                label='Password'
+                label='Contraseña'
                 variant='outlined'
                 error={!!errors.password}
                 helperText={errors.password ? errors.password?.message : ''}
@@ -86,6 +107,7 @@ function Ingresar() {
         <Button variant='contained' type='submit'>
           Ingresar
         </Button>
+        <div></div>
       </form>
     </Box>
   );

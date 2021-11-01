@@ -12,7 +12,7 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import { TextField } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-//import { TextField } from '@mui/material';
+import useUser from '../hooks/useUser';
 
 export default function PostAPet() {
   const dispatch = useDispatch();
@@ -21,6 +21,14 @@ export default function PostAPet() {
   const [type, setType] = React.useState('');
   const [genre, setGenre] = React.useState('');
   const history = useHistory();
+
+  // HOOK PARA VERIFICACION DE USUARIO LOGEADO
+  // RETORNA Unauthorized si no esta logueado
+
+  const [loading, result, user] = useUser();
+  if (result === 'Unauthorized') {
+    history.push('/');
+  }
 
   const [input, setInput] = useState<PostType>({
     name: '',
