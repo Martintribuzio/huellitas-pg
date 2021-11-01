@@ -41,7 +41,7 @@ export default function rootReducer(
       return {
         ...state,
         filteredPosts: action.payload,
-        allPosts: action.payload,
+        allPosts: action.payload
       };
     // case POST_PET:
     //   return {

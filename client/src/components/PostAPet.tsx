@@ -101,6 +101,25 @@ export default function PostAPet() {
     | ChangeEvent<HTMLSelectElement>
     | ChangeEvent<HTMLInputElement>;
 
+  async function postApet(fd: FormData){
+    let result: any = await postPet(fd)
+    if(result.ERROR){
+      return (Swal.fire({
+        title: 'ERROR!',
+        // text: '!',
+        icon: 'error',
+        confirmButtonText: 'Intentar de nuevo',
+      }));
+    }
+    history.push('/home')
+    return ( Swal.fire({
+      title: 'Publicado!',
+      text: 'Publicacion realizada con exito!',
+      icon: 'success',
+      confirmButtonText: 'Ok',
+    }))
+  }
+
   function handleSubmit(e: any) {
     e.preventDefault();
     const id = window.localStorage.getItem('userId');
@@ -118,13 +137,7 @@ export default function PostAPet() {
     if (id) {
       fd.append('id', id);
     }
-    postPet(fd);
-    Swal.fire({
-      title: 'Publicado!',
-      text: 'Publicacion realizada con exito!',
-      icon: 'success',
-      confirmButtonText: 'Ok',
-    });
+    postApet(fd);
   }
 
   return (
