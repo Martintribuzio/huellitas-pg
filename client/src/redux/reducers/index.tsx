@@ -6,7 +6,8 @@ import {
   POST_PET,
   GET_POSTS,
   GET_POST_QUERY,
-  SET_USER,
+  APPLY_FILTERS,
+  SET_USER
 } from '../types/actionTypes';
 import { FiltersActionTypes } from '../types/actionTypes';
 import { PostType } from '../types/types';
@@ -24,6 +25,11 @@ const initialState: typeState = {
   user: {},
   queryPosts: '',
 };
+
+function filtradosFunc(arr:Array<PostType> , state: string, type: string, genre: string){
+  let result:Array<PostType> =  arr.filter(p => p.state === state).concat(arr.filter(p => p.type === type).concat(arr.filter(p => p.genre === genre)))
+  return result
+}
 
 export default function rootReducer(
   state = initialState,
@@ -71,19 +77,38 @@ export default function rootReducer(
         ),
       };
     case GET_TYPES:
+      if(action.payload === 'Todos'){
+        return{
+            ...state,
+            filteredPosts: state.allPosts
+        }
+    }
       return {
         ...state,
-        filteredPosts: state.filteredPosts.filter(
-          p => p.type === action.payload
-        ),
+        filteredPosts: state.allPosts.filter(p => p.type === action.payload)
       };
     case GET_GENRES:
+      if(action.payload === 'Todos'){
+        return{
+            ...state,
+            filteredPosts: state.allPosts
+        }
+    }
       return {
         ...state,
-        filteredPosts: state.filteredPosts.filter(
-          p => p.genre === action.payload
-        ),
+        filteredPosts: state.allPosts.filter(p => p.genre === action.payload)
       };
+    // case APPLY_FILTERS:
+    //   if(action.payload.state === 'Todos' || action.payload.type === 'Todos' || action.payload.genre === 'Todos'){
+    //     return{
+    //         ...state,
+    //         filteredPosts: state.allPosts
+    //     }
+    // }
+    //   return{
+    //     ...state,
+    //     filteredPosts: filtradosFunc(state.allPosts, action.payload.state, action.payload.type, action.payload.genre)
+    //   }
     default:
       return state;
   }

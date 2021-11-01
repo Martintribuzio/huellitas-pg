@@ -13,7 +13,7 @@ import Avatar from '@mui/material/Avatar';
 const messages = [
   {
     id: 1,
-    primary: 'Se me perdio el perro',
+    primary: 'Se me perdió el perro',
     secondary: "Viste mi perro viejo?",
     person: '/static/images/avatar/5.jpg',
   },

@@ -8,6 +8,7 @@ export const GET_POSTS = 'GET_POSTS';
 export const POST_PET = 'POST_PET';
 export const GET_DETAIL = 'GET_DETAIL';
 export const GET_POST_QUERY = 'GET_POST_QUERY';
+export const APPLY_FILTERS = "APPLY_FILTERS";
 export const SET_USER = 'SET_USER';
 
 export interface getPosts {
@@ -49,6 +50,11 @@ export interface getGenres {
   type: typeof GET_GENRES;
   payload: string;
 }
+
+// export interface applyFilters{
+//     type: typeof APPLY_FILTERS,
+//     payload: Filters
+// }
 
 export interface setUser {
   type: typeof SET_USER;

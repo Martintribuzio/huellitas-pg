@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import ButtonBase from "@mui/material/ButtonBase";
 import Typography from "@mui/material/Typography";
+import dogloading from "../assets/loading/dog.gif";
 
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
@@ -88,8 +89,6 @@ export default function Feed() {
   const dispatch = useDispatch();
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
   let queryPost = useSelector((state: typeState) => state.queryPosts);
-  //console.log('QUERY POSTS', queryPost);
-  console.log(allPosts)
 
   let postsToShow = queryPost
     ? allPosts.filter(elem => elem.name?.toLowerCase().includes(queryPost.toLowerCase()))
@@ -237,7 +236,34 @@ export default function Feed() {
       </Box>
     );
   } else {
-    return <h1>Cargando...</h1>;
+    return <div className='loading'
+    style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+     
+    }}>
+      <img src='https://themebeyond.com/html/petco/img/preloader.gif' alt='cargando' style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '15vh',
+      width: '15vw',
+    }}/>
+    <br/>
+      <h2 style={{color:'#8CCDFE'}}>Cargando...</h2>
+      <br/>
+    <img src='https://themebeyond.com/html/petco/img/preloader.gif' alt='Cargando...' style={{
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '15vh',
+      width: '15vw',
+    }}/>
+    
+    
+    {/* <img src={dogloading}/>; */}
+    </div>
   }
 }
 
