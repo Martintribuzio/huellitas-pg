@@ -10,18 +10,28 @@ import { postPet } from '../redux/actions';
 import styles from '../CSS/PostAPet.module.css';
 import React from 'react';
 import Button from '@mui/material/Button';
-import {TextField} from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import useUser from '../hooks/useUser';
 
 export default function PostAPet() {
   const dispatch = useDispatch();
+  const [name, setName] = React.useState('');
   const [state, setState] = React.useState('');
   const [type, setType] = React.useState('');
   const [genre, setGenre] = React.useState('');
   const history = useHistory();
 
+  // HOOK PARA VERIFICACION DE USUARIO LOGEADO
+  // RETORNA Unauthorized si no esta logueado
+
+  const [loading, result, user] = useUser();
+  if (result === 'Unauthorized') {
+    history.push('/');
+  }
+
   const [input, setInput] = useState<PostType>({
-    name:'',
+    name: '',
     description: '',
     genre: '',
     date: '',
@@ -29,7 +39,7 @@ export default function PostAPet() {
     type: '',
     state: '',
   });
-  
+
   const handlegenrechange = (event: SelectChangeEvent) => {
     setGenre(event.target.value);
     setInput({ ...input, genre: event.target.value });
@@ -37,7 +47,7 @@ export default function PostAPet() {
 
   const handletypechange = (event: SelectChangeEvent) => {
     setType(event.target.value);
-    setInput({ ...input, type: event.target.value }); 
+    setInput({ ...input, type: event.target.value });
   };
 
   const handleSelectEstado = (event: SelectChangeEvent) => {
@@ -54,6 +64,13 @@ export default function PostAPet() {
       ...input,
       [e.target.name]: e.target.value,
     });
+  }
+
+  function handleInputChange(
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
+    setName(e.target.value);
+    setInput({ ...input, name: e.target.value });
   }
 
   function handleChangeImg(e: ChangeEvent<HTMLInputElement>) {
@@ -76,8 +93,8 @@ export default function PostAPet() {
     if (input.petImage) {
       fd.append('petImage', input.petImage);
     }
-    if(input.name && input.name !== ''){
-      fd.append('name', input.name)
+    if (input.name && input.name !== '') {
+      fd.append('name', input.name);
     }
     fd.append('state', input.state);
     fd.append('description', input.description);
@@ -91,14 +108,17 @@ export default function PostAPet() {
   return (
     <div className={styles.conteiner}>
       <form onSubmit={handleSubmit} className={styles.form}>
-
         <label>Nombre:</label>
-        <FormControl sx={{ m: 1, minWidth: 120 }}/> 
+        <FormControl sx={{ m: 1, minWidth: 120 }} />
         <InputLabel id='demo-simple-select-helper-label'>Nombre</InputLabel>
-        <TextField />
+        <TextField
+          name='name'
+          value={name}
+          onChange={e => handleInputChange(e)}
+        />
 
         <label>Estado de la mascota:</label>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <FormControl style={{ margin: '1px', minWidth: '120px' }}>
           <InputLabel id='demo-simple-select-helper-label'>estado</InputLabel>
           <Select
             required
@@ -111,14 +131,21 @@ export default function PostAPet() {
             <MenuItem value=''>
               <em></em>
             </MenuItem>
-            <MenuItem value='lost'>perdido</MenuItem>
-            <MenuItem value='found'>Encontrado</MenuItem>
-            <MenuItem value='adoption'>en adopcion</MenuItem>
+            <MenuItem value='perdido'>perdido</MenuItem>
+            <MenuItem value='encontrado'>Encontrado</MenuItem>
+            <MenuItem value='adopcion'>en adopcion</MenuItem>
           </Select>
         </FormControl>
 
+        <label>
+          Nombre del animal (en el caso de haber perdido a su mascota):{' '}
+        </label>
+        <InputLabel id='demo-simple-select-helper-label'>
+          <TextField />
+        </InputLabel>
+
         <label>Tipo de animal: </label>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <FormControl style={{ margin: '1px', minWidth: '120px' }}>
           <InputLabel id='demo-simple-select-helper-label'>tipo</InputLabel>
           <Select
             required
@@ -131,14 +158,14 @@ export default function PostAPet() {
             <MenuItem value=''>
               <em></em>
             </MenuItem>
-            <MenuItem value='perro'>perro</MenuItem>
-            <MenuItem value='gato'>gato</MenuItem>
+            <MenuItem value='perro'>Perro</MenuItem>
+            <MenuItem value='gato'>Gato</MenuItem>
             <MenuItem value='otro'>otro</MenuItem>
           </Select>
         </FormControl>
 
         <label>Genero </label>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <FormControl style={{ margin: '1px', minWidth: '120px' }}>
           <InputLabel id='demo-simple-select-helper-label'>genero</InputLabel>
           <Select
             required
@@ -151,8 +178,8 @@ export default function PostAPet() {
             <MenuItem value=''>
               <em></em>
             </MenuItem>
-            <MenuItem value='male'>macho</MenuItem>
-            <MenuItem value='female'>hembra</MenuItem>
+            <MenuItem value='macho'>macho</MenuItem>
+            <MenuItem value='hembra'>hembra</MenuItem>
           </Select>
         </FormControl>
 
