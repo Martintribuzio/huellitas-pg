@@ -28,7 +28,7 @@ function App() {
         <Route exact path='/home'>
           <Home/>
         </Route>
-        
+
         <Route exact path='/home/detail/:id'>
           <PostDetail/>   
         </Route>
