@@ -86,7 +86,7 @@ export default function Filters() {
       </FormControl>
 
       <FormControl sx={{ m: 1, minWidth: '12vw' }}>
-        <InputLabel id='demo-simple-select-helper-label'>especie</InputLabel>
+        <InputLabel id='demo-simple-select-helper-label'>Especie</InputLabel>
         <Select
           labelId='demo-simple-select-helper-label'
           id='demo-simple-select-helper'
@@ -98,13 +98,13 @@ export default function Filters() {
             <em></em>
           </MenuItem>
           <MenuItem value='Todos'>Todos</MenuItem>
-          <MenuItem value='perro'>perro</MenuItem>
-          <MenuItem value='gato'>gato</MenuItem>
-          <MenuItem value='otros'>otros</MenuItem>
+          <MenuItem value='perro'>Perro</MenuItem>
+          <MenuItem value='gato'>Gato</MenuItem>
+          <MenuItem value='otros'>Otros</MenuItem>
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, minWidth: '12vw' }}>
-        <InputLabel id='demo-simple-select-helper-label'>genero</InputLabel>
+        <InputLabel id='demo-simple-select-helper-label'>Género</InputLabel>
         <Select
           labelId='demo-simple-select-helper-label'
           id='demo-simple-select-helper'
@@ -126,13 +126,13 @@ export default function Filters() {
       variant="outlined"
       value='mas recientes'
       onClick={() => handleClick('mas recientes')}
-      >mas recientes</Button>
+      >Más recientes</Button>
       <Button 
       className={style.button}
       variant="outlined"
       value='mas antiguos'
       onClick={() => handleClick('mas antiguos')}
-      >mas antiguos</Button>
+      >Más antiguos</Button>
     </div>
   );
 }
