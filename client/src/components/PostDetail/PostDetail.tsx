@@ -12,6 +12,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import capitalize from "@mui/utils/capitalize";
+import { style } from '@mui/system';
 
 export default function ImgMediaCard() {
   const { id } = useParams<{ id?: string }>();
@@ -31,9 +32,9 @@ export default function ImgMediaCard() {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          maxHeight: '90vh',
+          maxHeight: '85vh',
         }}>
-        <Card elevation={5} sx={{ maxWidth: 345, minWidth:'20vw', marginTop:50,marginBottom:50 }}>
+        <Card elevation={5} sx={{ maxWidth: 345, minWidth:'20vw', marginTop:45,marginBottom:54 }}>
           <CardMedia
             component='img'
             alt={detailpost.type}
