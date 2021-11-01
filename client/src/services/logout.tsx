@@ -1,10 +1,5 @@
 import axios from 'axios';
 
-interface data {
-  email: string;
-  password: string;
-}
-
 const logoutService = async () => {
   try {
     const response: any = await axios.get('http://localhost:3001/user/logout', {

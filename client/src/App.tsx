@@ -1,9 +1,8 @@
-import { Redirect, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Navbar from './components/navBar/NavBar';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './themeConfig';
 import LandingPage from './components/LandingPage';
-import Feed from './components/Feed';
 import PostAPet from './components/PostAPet';
 import Profile from './components/Profile/Profile';
 import Messages from './components/Messages/Messages';
@@ -11,7 +10,6 @@ import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import PostDetail from './components/PostDetail/PostDetail';
 import Home from './components/Home';
-import useUser from './hooks/useUser';
 
 function App() {
   // const [result, user] = useUser();

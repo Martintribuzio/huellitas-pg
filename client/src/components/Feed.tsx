@@ -7,7 +7,6 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
-import dogloading from '../assets/loading/dog.gif';
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',

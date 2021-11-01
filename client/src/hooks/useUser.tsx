@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import axios from 'axios';
-import { setUser } from '../redux/actions';
 
 interface User {
   name: string;
@@ -31,7 +29,6 @@ const verifyUser = async (token: string) => {
 };
 
 const useUser = () => {
-  const dispatch = useDispatch();
   const [user, setUser] = useState<UserState>();
   const [result, setResult] = useState<string>();
   const [loading, setLoading] = useState(true);
@@ -58,7 +55,7 @@ const useUser = () => {
       }
     };
     verify();
-  }, []);
+  },[token]);
 
   return [loading, result, user];
 };
