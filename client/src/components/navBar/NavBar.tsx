@@ -24,7 +24,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getPostByQuery } from '../../redux/actions';
-import logoutService from '../../services/logout';
+import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -72,6 +73,31 @@ export default function PrimarySearchAppBar(): JSX.Element {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const dispatch = useDispatch();
   const [search, setSearch] = useState<string>('');
+   const history = useHistory();
+
+  const logoutService = async () => {
+   
+    try {
+      const response: any = await axios.get(
+        'http://localhost:3001/user/logout',
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+          },
+        }
+      );
+      if (response.data.success === true) {
+        window.localStorage.setItem('name', '');
+        window.localStorage.setItem('lastname', '');
+        window.localStorage.setItem('email', '');
+        window.localStorage.setItem('token', '');
+        window.localStorage.setItem('userId', '');
+      }
+      history.push('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -250,7 +276,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               </Button>
             </Link>
           </Box>
-          
+
           <Box
             sx={{
               display: {
