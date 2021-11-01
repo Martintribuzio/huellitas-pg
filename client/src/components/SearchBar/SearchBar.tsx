@@ -8,7 +8,7 @@ export default function SearchBar() {
 
   useEffect(() => {
     dispatch(getPostByQuery(search));
-  }, [search]);
+  }, [dispatch, search]);
 
   function handleChange(e: any) {
     e.preventDefault();

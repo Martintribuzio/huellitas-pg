@@ -92,7 +92,7 @@ export default function Feed() {
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
   let queryPost = useSelector((state: typeState) => state.queryPosts);
   //console.log('QUERY POSTS', queryPost);
-  console.log(allPosts)
+  //console.log(allPosts)
 
   let postsToShow = queryPost
     ? allPosts.filter(elem => elem.name?.toLowerCase().includes(queryPost.toLowerCase()))
