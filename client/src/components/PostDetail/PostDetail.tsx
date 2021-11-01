@@ -19,6 +19,8 @@ export default function ImgMediaCard() {
 
    const dispatch = useDispatch();
    let allPosts = useSelector((state: typeState) => (state.filteredPosts))
+
+
   
    useEffect(()=>{
      dispatch(getPosts());
