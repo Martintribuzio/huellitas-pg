@@ -7,7 +7,8 @@ import {
   GET_POSTS,
   GET_POST_QUERY,
   APPLY_FILTERS,
-  SET_USER
+  SET_USER,
+  ERROR
 } from '../types/actionTypes';
 import { FiltersActionTypes } from '../types/actionTypes';
 import { PostType } from '../types/types';
@@ -26,11 +27,6 @@ const initialState: typeState = {
   queryPosts: '',
 };
 
-function filtradosFunc(arr:Array<PostType> , state: string, type: string, genre: string){
-  let result:Array<PostType> =  arr.filter(p => p.state === state).concat(arr.filter(p => p.type === type).concat(arr.filter(p => p.genre === genre)))
-  return result
-}
-
 export default function rootReducer(
   state = initialState,
   action: FiltersActionTypes
@@ -47,12 +43,12 @@ export default function rootReducer(
         filteredPosts: action.payload,
         allPosts: action.payload,
       };
-    case POST_PET:
-      return {
-        ...state,
-        filteredPosts: action.payload,
-        allPosts: action.payload,
-      };
+    // case POST_PET:
+    //   return {
+    //     ...state,
+    //     filteredPosts: action.payload,
+    //     allPosts: action.payload,
+    //   };
     case FILTER_STATE:
       if (action.payload === 'Todos') {
         return {

@@ -8,21 +8,10 @@ import {
   GET_DETAIL,
   GET_POST_QUERY,
   APPLY_FILTERS,
+  ERROR
 } from '../types/actionTypes';
 import axios from 'axios';
 import { Filters } from '../types/types';
-
-export function postPet(input: FormData) {
-  return async function (dispatch: any) {
-    let info = await axios.post('http://localhost:3001/post', input, {
-      method: 'post',
-      url: 'http://localhost:3001/post',
-      data: input,
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-    return dispatch({ type: POST_PET, payload: info.data });
-  };
-}
 
 export function getPosts() {
   return async function (dispatch: any) {

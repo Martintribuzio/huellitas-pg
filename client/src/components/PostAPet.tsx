@@ -7,7 +7,7 @@ import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import '../CSS/PostAPet.module.css';
 import { useDispatch } from 'react-redux';
 import { PostType } from '../redux/types/types';
-import { getPosts, postPet } from '../redux/actions';
+import { getPosts} from '../redux/actions';
 import styles from '../CSS/PostAPet.module.css';
 import React from 'react';
 import Button from '@mui/material/Button';
@@ -15,6 +15,7 @@ import { TextField } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import useUser from '../hooks/useUser';
 import Swal from 'sweetalert2';
+import { postPet } from '../services/createPost';
 
 const Input = styled('input')({
   display: 'none',
@@ -117,7 +118,7 @@ export default function PostAPet() {
     if (id) {
       fd.append('id', id);
     }
-    dispatch(postPet(fd)); 
+    postPet(fd);
     Swal.fire({
       title: 'Publicado!',
       text: 'Publicacion realizada con exito!',
