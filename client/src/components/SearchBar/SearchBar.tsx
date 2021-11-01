@@ -27,7 +27,7 @@ export default function SearchBar() {
           placeholder='Buscar post'
           value={search}
           onChange={handleChange}
-        />
+        /> 
         <button onSubmit={handleSubmit} type='submit'>
           Search
         </button>

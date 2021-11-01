@@ -43,15 +43,15 @@ const upload = multer({
 //   }
 // });
 
-// userNetwork.get('/posts', async (req, res) => {
-//   try {
-//     const { id } = req.body;
-//     const posts = await postsByUser(id);
-//     return res.json(posts);
-//   } catch (err) {
-//     return res.json(err);
-//   }
-// });
+userNetwork.get('/posts', async (req, res) => {
+  try {
+    const { id } = req.body;
+    const posts = await postsByUser(id);
+    return res.json(posts);
+  } catch (err) {
+    return res.json(err);
+  }
+});
 
 // //TODO ESTO ES EL RUTEO DEL LOGIN/REGISTER
 // //Landing Page
@@ -101,6 +101,9 @@ const upload = multer({
 //   res.render('profile')
 // });
 
+userNetwork.get('/profile', isLoggedIn, (req, res, next) => {
+  res.render('profile');
+});
 //Registro
 userNetwork.post('/signup', (req, res) => {
   User.register(
@@ -138,24 +141,37 @@ userNetwork.post('/signup', (req, res) => {
 });
 
 //Login
+
 userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
-  const token = getToken({ _id: req.user._id });
-  const refreshToken = getRefreshToken({ _id: req.user._id });
-  User.findById(req.user._id).then(
-    user => {
-      user.refreshToken.push({ refreshToken });
-      user.save((err, user) => {
-        if (err) {
-          res.statusCode = 500;
-          res.send(err);
-        } else {
-          res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
-          res.send({ success: true, token });
-        }
-      });
-    },
-    err => next(err)
-  );
+  try {
+    const token = getToken({ _id: req.user._id });
+    const refreshToken = getRefreshToken({ _id: req.user._id });
+    User.findById(req.user._id).then(
+      user => {
+        user.refreshToken.push({ refreshToken });
+        user.save((err, user) => {
+          if (err) {
+            res.statusCode = 500;
+            res.send(err);
+          } else {
+            res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
+            const user = {
+              _id: req.user._id,
+              name: req.user.name,
+              lastname: req.user.lastname,
+              username: req.user.username,
+              postalCode: req.user.postalCode,
+              token,
+            };
+            res.send({ success: true, user });
+          }
+        });
+      },
+      err => next(err)
+    );
+  } catch (err) {
+    res.send(err);
+  }
 });
 
 //LogOut
@@ -243,6 +259,7 @@ userNetwork.post('/refreshToken', (req, res, next) => {
 
 //obtener los detalles del usuario que inició sesión
 userNetwork.get('/me', verifyUser, (req, res, next) => {
+  console.log(verifyUser);
   res.send(req.user);
 });
 

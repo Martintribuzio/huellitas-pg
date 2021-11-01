@@ -1,4 +1,3 @@
-
 import {
   POST_PET,
   FILTER_STATE,
@@ -62,16 +61,16 @@ export const filterByLatest = function (filter: string) {
   };
 };
 
-export const getTypes = function (filter: string) {
+export const getGenres = function (filter: string) {
   return {
-    type: GET_TYPES,
+    type: GET_GENRES,
     payload: filter,
   };
 };
 
-export const getGenres = function (filter: string) {
+export const getTypes = function (filter: string) {
   return {
-    type: GET_GENRES,
+    type: GET_TYPES,
     payload: filter,
   };
 };
@@ -83,3 +82,9 @@ export const sendFilters = function (filters: Filters){
   }
 }
 
+export const setUser = function (user: string) {
+  return {
+    type: 'SET_USER',
+    payload: user,
+  };
+};

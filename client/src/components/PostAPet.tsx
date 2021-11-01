@@ -1,8 +1,9 @@
 import { FormControl, SelectChangeEvent } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { InputLabel } from '@mui/material';
 import { Select } from '@mui/material';
 import { MenuItem } from '@mui/material';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import '../CSS/PostAPet.module.css';
 import { useDispatch } from 'react-redux';
 import { PostType } from '../redux/types/types';
@@ -10,9 +11,13 @@ import { postPet } from '../redux/actions';
 import styles from '../CSS/PostAPet.module.css';
 import React from 'react';
 import Button from '@mui/material/Button';
-import {TextField} from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-//import { TextField } from '@mui/material';
+import useUser from '../hooks/useUser';
+
+const Input = styled('input')({
+  display: 'none',
+});
 
 export default function PostAPet() {
   const dispatch = useDispatch();
@@ -20,10 +25,19 @@ export default function PostAPet() {
   const [state, setState] = React.useState('');
   const [type, setType] = React.useState('');
   const [genre, setGenre] = React.useState('');
+  const [description, setDescription] = React.useState('');
   const history = useHistory();
 
+  // HOOK PARA VERIFICACION DE USUARIO LOGEADO
+  // RETORNA Unauthorized si no esta logueado
+
+  const [loading, result, user] = useUser();
+  if (result === 'Unauthorized') {
+    history.push('/');
+  }
+
   const [input, setInput] = useState<PostType>({
-    name:'',
+    name: '',
     description: '',
     genre: '',
     date: '',
@@ -31,15 +45,21 @@ export default function PostAPet() {
     type: '',
     state: '',
   });
-  
+
   const handlegenrechange = (event: SelectChangeEvent) => {
     setGenre(event.target.value);
     setInput({ ...input, genre: event.target.value });
   };
 
+  const handlerdescritionchange = (event: string) => {
+    console.log(event);
+    setDescription(event);
+    setInput({ ...input, description: event });
+  };
+
   const handletypechange = (event: SelectChangeEvent) => {
     setType(event.target.value);
-    setInput({ ...input, type: event.target.value }); 
+    setInput({ ...input, type: event.target.value });
   };
 
   const handleSelectEstado = (event: SelectChangeEvent) => {
@@ -57,10 +77,12 @@ export default function PostAPet() {
       [e.target.name]: e.target.value,
     });
   }
-  
-  function handleInputChange(e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>){
+
+  function handleInputChange(
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) {
     setName(e.target.value);
-    setInput({ ...input, name: e.target.value }); 
+    setInput({ ...input, name: e.target.value });
   }
 
   function handleChangeImg(e: ChangeEvent<HTMLInputElement>) {
@@ -83,8 +105,8 @@ export default function PostAPet() {
     if (input.petImage) {
       fd.append('petImage', input.petImage);
     }
-    if(input.name && input.name !== ''){
-      fd.append('name', input.name)
+    if (input.name && input.name !== '') {
+      fd.append('name', input.name);
     }
     fd.append('state', input.state);
     fd.append('description', input.description);
@@ -100,7 +122,7 @@ export default function PostAPet() {
       <form onSubmit={handleSubmit} className={styles.form}>
 
         <label>Estado de la mascota:</label>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <FormControl style={{ margin: '1px', minWidth: '120px' }}>
           <InputLabel id='demo-simple-select-helper-label'>estado</InputLabel>
           <Select
             required
@@ -129,7 +151,7 @@ export default function PostAPet() {
         />
 
         <label>Tipo de animal: </label>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <FormControl style={{ margin: '1px', minWidth: '120px' }}>
           <InputLabel id='demo-simple-select-helper-label'>tipo</InputLabel>
           <Select
             required
@@ -149,7 +171,7 @@ export default function PostAPet() {
         </FormControl>
 
         <label>Genero </label>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
+        <FormControl style={{ margin: '1px', minWidth: '120px' }}>
           <InputLabel id='demo-simple-select-helper-label'>genero</InputLabel>
           <Select
             required
@@ -168,11 +190,17 @@ export default function PostAPet() {
         </FormControl>
 
         <label>Imagen: </label>
-        <input
+        <label>
+          <Input name='img' type='file' onChange={handleChangeImg} required />
+          <Button variant='contained' color='secondary' component='span'>
+            Upload
+          </Button>
+        </label>
+        {/*  <input
           name='img'
           type='file'
           onChange={handleChangeImg}
-          required></input>
+          required></input> */}
 
         <label>Fecha: </label>
         <input
@@ -182,11 +210,15 @@ export default function PostAPet() {
           required></input>
 
         <label>Descripcion: </label>
-        <textarea
+        <TextField
           placeholder='Ingrese descripcion de su publicacion'
+          multiline
+          rows={4}
           name='description'
-          onChange={e => handleChange(e)}
-          required></textarea>
+          onChange={e => handlerdescritionchange(e.target.value)}
+          required
+          label='Descripcion'
+        />
 
         <Button
           type='submit'

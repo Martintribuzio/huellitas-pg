@@ -1,7 +1,7 @@
-const passport = require("passport")
-const LocalStrategy = require("passport-local").Strategy
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 
-const User = require("../models/User");
+const User = require('../models/User');
 // const store = require("../components/user/store");
 
 //En vez de usar cookies para determinar si el usuario que navega por las distintas pestañas es válido y existe...
@@ -39,9 +39,6 @@ const User = require("../models/User");
 //     }//Null para el error, el segundo parametro es el usuario
 // }));
 
-
-
-
 // //Inicio de sesion
 // passport.use("local-signin", new LocalStrategy({
 //     usernameField: "email",
@@ -63,5 +60,7 @@ const User = require("../models/User");
 //         throw new Error(error);
 //     }
 // }));
-passport.use(new LocalStrategy(User.authenticate()))
-passport.serializeUser(User.serializeUser())
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());

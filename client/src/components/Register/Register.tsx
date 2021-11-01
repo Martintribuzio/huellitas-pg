@@ -4,10 +4,12 @@ import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { TextField } from '@material-ui/core';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 import './Register.css';
 import Box from '@mui/material/Box';
+import GoogleLogin from 'react-google-login';
+import axios from 'axios';
+import Button from '@mui/material/Button';
 
 type Data = {
   name: string;
@@ -17,6 +19,7 @@ type Data = {
   password: string;
   confirmPassword: string;
 };
+
 const schema = yup.object().shape({
   name: yup.string().required('Ingresa tu nombre'),
   lastname: yup.string().required('Ingresa tu apellido'),
@@ -30,19 +33,46 @@ const schema = yup.object().shape({
 
 function Register() {
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<Data>({ resolver: yupResolver(schema) });
 
+  const responseGoogle = (response: any) => {
+    console.log(response);
+    axios
+      .post('http://localhost:3001/user/signup', {
+        name: response.profileObj.givenName,
+        lastname: response.profileObj.familyName,
+        email: response.profileObj.email,
+        password: response.profileObj.googleId,
+        confirmPassword: response.profileObj.googleId,
+      })
+      .then(res => {
+        console.log(res);
+        Swal.fire({
+          title: 'Registro exitoso',
+          text: 'Ahora puedes iniciar sesión',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo registrar',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+      });
+  };
+
   const onSubmit = handleSubmit(data => {
-    /* alert(JSON.stringify(data))  */
-    /* alert(register) */
     console.log(document.getElementById('password'));
     axios
       .post('http://localhost:3001/user/signup', data)
-      .then(res => {
+      .then(async res => {
         Swal.fire({
           title: 'Success!',
           text: 'Fuiste registrado con exito',
@@ -55,7 +85,7 @@ function Register() {
   });
 
   return (
-    <Box sx={{ backgroundColor: 'secondary.main' }} className='container'>
+    <Box sx={{ backgroundColor: 'white' }} className='container'>
       <h1>Registrate</h1>
       <form onSubmit={onSubmit}>
         <div>
@@ -156,10 +186,17 @@ function Register() {
             )}
           />
         </div>
-        <p>¿Ya tienes cuenta?</p>
-        <Link to='/'>Ingresa</Link>
-        <button type='submit'>Registrar</button>
+        <Button variant='contained' type='submit'>
+          Registrar
+        </Button>
       </form>
+      <GoogleLogin
+        clientId='73850795306-qqjla4o7l7d8mha6209tu8h87asqu073.apps.googleusercontent.com'
+        buttonText='Login'
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+        cookiePolicy={'single_host_origin'}
+      />
     </Box>
   );
 }
