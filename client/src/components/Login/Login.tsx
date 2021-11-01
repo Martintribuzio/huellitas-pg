@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import Button from '@mui/material/Button';
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
+import logoutService from '../../services/logout';
 
 type LogIn = {
   email: string;
@@ -35,12 +36,6 @@ function Ingresar() {
     control,
     formState: { errors },
   } = useForm<LogIn>({ resolver: yupResolver(schema) });
-
-  // useEffect(() => {
-  //   if (window.localStorage.getItem('token')) {
-  //     history.push('/home');
-  //   }
-  // }, []);
 
   const onSubmit = handleSubmit(async data => {
     const response = await loginService(data);
@@ -210,6 +205,7 @@ function Ingresar() {
           cookiePolicy={'single_host_origin'}
       />
       </form>
+      
     </Box>
   );
 }
