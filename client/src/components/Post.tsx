@@ -1,11 +1,5 @@
 import { PostType } from '../redux/types/types';
-import styles from '../CSS/Post.module.css';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getPosts } from '../redux/actions';
-import { typeState } from '../redux/reducers/index';
-import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
