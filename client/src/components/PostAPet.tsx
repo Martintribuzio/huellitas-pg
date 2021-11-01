@@ -7,7 +7,7 @@ import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import '../CSS/PostAPet.module.css';
 import { useDispatch } from 'react-redux';
 import { PostType } from '../redux/types/types';
-import { getPosts, postPet } from '../redux/actions';
+import { getPosts} from '../redux/actions';
 import styles from '../CSS/PostAPet.module.css';
 import React from 'react';
 import Button from '@mui/material/Button';
@@ -15,6 +15,7 @@ import { TextField } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import useUser from '../hooks/useUser';
 import Swal from 'sweetalert2';
+import { postPet } from '../services/createPost';
 
 const Input = styled('input')({
   display: 'none',
@@ -100,6 +101,25 @@ export default function PostAPet() {
     | ChangeEvent<HTMLSelectElement>
     | ChangeEvent<HTMLInputElement>;
 
+  async function postApet(fd: FormData){
+    let result: any = await postPet(fd)
+    if(result.ERROR){
+      return (Swal.fire({
+        title: 'ERROR!',
+        // text: '!',
+        icon: 'error',
+        confirmButtonText: 'Intentar de nuevo',
+      }));
+    }
+    history.push('/home')
+    return ( Swal.fire({
+      title: 'Publicado!',
+      text: 'Publicacion realizada con exito!',
+      icon: 'success',
+      confirmButtonText: 'Ok',
+    }))
+  }
+
   function handleSubmit(e: any) {
     e.preventDefault();
     const id = window.localStorage.getItem('userId');
@@ -117,13 +137,7 @@ export default function PostAPet() {
     if (id) {
       fd.append('id', id);
     }
-    dispatch(postPet(fd)); 
-    Swal.fire({
-      title: 'Publicado!',
-      text: 'Publicacion realizada con exito!',
-      icon: 'success',
-      confirmButtonText: 'Ok',
-    });
+    postApet(fd);
   }
 
   return (
