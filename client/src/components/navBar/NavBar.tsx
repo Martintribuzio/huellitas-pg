@@ -228,40 +228,33 @@ export default function PrimarySearchAppBar(): JSX.Element {
           </Search>
           <Box
             sx={{
-              display: { xs: 'none', md: 'flex' },
-              width: '-webkit-fill-available',
-              justifyContent: 'center',
+              display: {
+                xs: 'none',
+                md: 'flex',
+              },
             }}>
-            <div
-              style={{
-                width: '-webkit-fill-available',
-                display: 'flex',
-                justifyContent: 'center',
-              }}>
-              <Link className={s.link} to='/home/createPost'>
-                <Button
-                  style={{
-                    margin: '5px',
-                    width: '100%',
-                    minWidth: '135px',
-                    maxWidth: '150px',
-                  }}
-                  size='small'
-                  color='secondary'
-                  variant='contained'>
-                  <AddCircleIcon />
-                  Crear Post
-                </Button>
-              </Link>
-            </div>
+            <Link className={s.link} to='/home/createPost'>
+              <Button
+                style={{
+                  margin: '5px',
+                  width: '100%',
+                  minWidth: '135px',
+                  maxWidth: '150px',
+                }}
+                size='small'
+                color='secondary'
+                variant='contained'>
+                <AddCircleIcon />
+                Crear Post
+              </Button>
+            </Link>
           </Box>
+
           <Box
             sx={{
               display: {
                 xs: 'flex',
                 md: 'none',
-                justifyContent: 'center',
-                width: '-webkit-fill-available',
               },
             }}>
             <IconButton>

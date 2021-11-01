@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import { TextField } from '@material-ui/core';
 import './Login.css';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
 type LogIn = {
   email: string;
@@ -34,7 +35,7 @@ function Ingresar() {
   });
 
   return (
-    <Box sx={{ backgroundColor: 'secondary.main' }} className='container'>
+    <Box sx={{ backgroundColor: 'wihte' }} className='container'>
       <div className='title'>
         <h1>Ingresa</h1>
       </div>
@@ -82,9 +83,9 @@ function Ingresar() {
             )}
           />
         </div>
-        <p>¿No tienes cuenta?</p>
-        <Link to='/register'>Registrate</Link>
-        <button type='submit'>Ingresar</button>
+        <Button variant='contained' type='submit'>
+          Ingresar
+        </Button>
       </form>
     </Box>
   );
