@@ -9,8 +9,10 @@ import { useHistory } from 'react-router-dom';
 import loginService from '../../services/loginService';
 import Swal from 'sweetalert2';
 import Button from '@mui/material/Button';
+
 import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
+
 
 type LogIn = {
   email: string;
@@ -32,6 +34,7 @@ function Ingresar() {
     control,
     formState: { errors },
   } = useForm<LogIn>({ resolver: yupResolver(schema) });
+
 
   const onSubmit = handleSubmit(async data => {
        const response = await loginService(data);
@@ -141,7 +144,14 @@ function Ingresar() {
   //-----------------------------------------------------------------------
   return (
     <Box sx={{ backgroundColor: 'wihte' }} className='container'>
-      <div className='title'>
+      <GoogleLogin
+        clientId='73850795306-qqjla4o7l7d8mha6209tu8h87asqu073.apps.googleusercontent.com'
+        buttonText='Login'
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+        cookiePolicy={'single_host_origin'}
+      />
+      <div>
         <h1>Ingresa</h1>
       </div>
       <form onSubmit={onSubmit}>
