@@ -139,7 +139,9 @@ export default function LandingPage() {
             width: '60%',
           }}>
           <Switch checked={auth} onChange={handleChange} />{' '}
-          <label>{auth ? 'ya tengo cuenta' : 'necesitas una cuenta?'}</label>
+          <label style={{ marginBottom: '10px' }}>
+            {auth ? 'ya tengo cuenta' : 'necesitas una cuenta?'}
+          </label>
           {auth ? <Register /> : <Login />}
         </Container>
       </Box>

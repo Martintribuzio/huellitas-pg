@@ -14,7 +14,6 @@ import Button from '@mui/material/Button';
 import { TextField } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import useUser from '../hooks/useUser';
-
 const Input = styled('input')({
   display: 'none',
 });
@@ -27,7 +26,6 @@ export default function PostAPet() {
   const [genre, setGenre] = React.useState('');
   const [description, setDescription] = React.useState('');
   const history = useHistory();
-
   // HOOK PARA VERIFICACION DE USUARIO LOGEADO
   // RETORNA Unauthorized si no esta logueado
 
@@ -126,6 +124,7 @@ export default function PostAPet() {
           name='name'
           value={name}
           onChange={e => handleInputChange(e)}
+          required
         />
 
         <label>Estado de la mascota:</label>
@@ -189,7 +188,13 @@ export default function PostAPet() {
 
         <label>Imagen: </label>
         <label>
-          <Input name='img' type='file' onChange={handleChangeImg} required />
+          <Input
+            accept='.jpg, .png'
+            name='img'
+            type='file'
+            onChange={handleChangeImg}
+            required
+          />
           <Button variant='contained' color='secondary' component='span'>
             Upload
           </Button>

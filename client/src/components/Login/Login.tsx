@@ -15,6 +15,7 @@ import { typeState } from '../../redux/reducers/index';
 import Swal from 'sweetalert2';
 import { useEffect } from 'react';
 import Button from '@mui/material/Button';
+import GoogleLogin from 'react-google-login';
 
 type LogIn = {
   email: string;
@@ -45,6 +46,36 @@ function Ingresar() {
   //   }
   // }, []);
 
+  const responseGoogle = (response: any) => {
+    console.log(response);
+    axios
+      .post('http://localhost:3001/user/signup', {
+        name: response.profileObj.givenName,
+        lastname: response.profileObj.familyName,
+        email: response.profileObj.email,
+        password: response.profileObj.googleId,
+        confirmPassword: response.profileObj.googleId,
+      })
+      .then(res => {
+        console.log(res);
+        Swal.fire({
+          title: 'Registro exitoso',
+          text: 'Ahora puedes iniciar sesión',
+          icon: 'success',
+          confirmButtonText: 'Ok',
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo registrar',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+      });
+  };
+
   const onSubmit = handleSubmit(async data => {
     const response = await loginService(data);
     if (response.error) {
@@ -63,7 +94,14 @@ function Ingresar() {
 
   return (
     <Box sx={{ backgroundColor: 'wihte' }} className='container'>
-      <div className='title'>
+      <GoogleLogin
+        clientId='73850795306-qqjla4o7l7d8mha6209tu8h87asqu073.apps.googleusercontent.com'
+        buttonText='Login'
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+        cookiePolicy={'single_host_origin'}
+      />
+      <div>
         <h1>Ingresa</h1>
       </div>
       <form onSubmit={onSubmit}>

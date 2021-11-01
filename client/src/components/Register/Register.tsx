@@ -7,7 +7,6 @@ import { TextField } from '@material-ui/core';
 import Swal from 'sweetalert2';
 import './Register.css';
 import Box from '@mui/material/Box';
-import GoogleLogin from 'react-google-login';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 
@@ -37,36 +36,6 @@ function Register() {
     control,
     formState: { errors },
   } = useForm<Data>({ resolver: yupResolver(schema) });
-
-  const responseGoogle = (response: any) => {
-    console.log(response);
-    axios
-      .post('http://localhost:3001/user/signup', {
-        name: response.profileObj.givenName,
-        lastname: response.profileObj.familyName,
-        email: response.profileObj.email,
-        password: response.profileObj.googleId,
-        confirmPassword: response.profileObj.googleId,
-      })
-      .then(res => {
-        console.log(res);
-        Swal.fire({
-          title: 'Registro exitoso',
-          text: 'Ahora puedes iniciar sesión',
-          icon: 'success',
-          confirmButtonText: 'Ok',
-        });
-      })
-      .catch(err => {
-        console.log(err);
-        Swal.fire({
-          title: 'Error',
-          text: 'No se pudo registrar',
-          icon: 'error',
-          confirmButtonText: 'Ok',
-        });
-      });
-  };
 
   const onSubmit = handleSubmit(data => {
     console.log(document.getElementById('password'));
@@ -190,13 +159,6 @@ function Register() {
           Registrar
         </Button>
       </form>
-      <GoogleLogin
-        clientId='73850795306-qqjla4o7l7d8mha6209tu8h87asqu073.apps.googleusercontent.com'
-        buttonText='Login'
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy={'single_host_origin'}
-      />
     </Box>
   );
 }
