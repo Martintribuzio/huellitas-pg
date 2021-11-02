@@ -76,13 +76,14 @@ export default function Feed() {
         elem.name?.toLowerCase().includes(queryPost.toLowerCase())
       )
     : allPosts;
-  console.log('POSTS', postsToShow);
+  // console.log('POSTS', postsToShow);
 
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]); 
 
-  if (postsToShow.length > 0) {
+  if (allPosts.length) {
+    if(postsToShow.length){
     return (
       <Box
         sx={{
@@ -93,6 +94,7 @@ export default function Feed() {
           width: '100%',
         }}>
         {postsToShow.reverse().map(item => {
+          console.log(item.petImage)
           if (typeof item.petImage === 'string') {
             if (item.petImage.search(/\\/)) {
               item.petImage = item.petImage.replace(/\\/g, '/');
@@ -110,7 +112,7 @@ export default function Feed() {
                 sx={{ minHeight: 200, minWidth: 200 }}>
                 <ImageSrc
                   style={{
-                    backgroundImage: `url(http://localhost:3001/${item.petImage}`,
+                    backgroundImage: `url(http://localhost:3001/${item.petImage})`,
                   }}
                 />
                 <ImageBackdrop className='MuiImageBackdrop-root' />
@@ -153,7 +155,9 @@ export default function Feed() {
         })}
       </Box>
     );
-  } else {
+  } else{
+    return(<h1>No hay publicaciones</h1>)
+  }}else {
     return (
       <div
         className='loading'

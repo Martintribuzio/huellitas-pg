@@ -175,14 +175,22 @@ export default function PostAPet() {
 
         {/* <label>Nombre:</label> */}
         <FormControl sx={{ m: 1, minWidth: 120 }} />
-        <InputLabel id='demo-simple-select-helper-label'>
-          Nombre de la mascota
-        </InputLabel>
-        <TextField
-          name='name'
-          value={name}
-          onChange={e => handleInputChange(e)}
-        />
+        {input.state === 'Perdido' || input.state === 'Adopción' ? (
+          <>
+            <InputLabel id='demo-simple-select-helper-label'>
+              Nombre de la mascota
+            </InputLabel>
+            <TextField
+              name='name'
+              value={name}
+              onChange={e => handleInputChange(e)}
+            />
+          </>
+        ) : (
+          <></>
+        )}
+
+
 
         <label>Tipo de animal: </label>
         <FormControl style={{ margin: '1px', minWidth: '120px' }}>

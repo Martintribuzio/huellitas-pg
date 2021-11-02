@@ -333,11 +333,11 @@ export default function PrimarySearchAppBar(): JSX.Element {
               <MoreIcon />
             </IconButton>
           </Box>
+          <button onClick={logoutService}>logout</button>
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
       {renderMenssage}
-      <button onClick={logoutService}>logout</button>
     </Box>
   );
 }
