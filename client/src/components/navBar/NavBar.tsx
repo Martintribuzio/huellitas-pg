@@ -24,7 +24,10 @@ import SearchIcon from '@mui/icons-material/Search';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getPostByQuery } from '../../redux/actions';
-import logoutService from '../../services/logout';
+import { useHistory } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
+import useUser from '../../hooks/useUser';
+import axios from 'axios';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -68,10 +71,47 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar(): JSX.Element {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorElProf, setAnchorElProf] = React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
+  const isMenuOpenProf = Boolean(anchorElProf);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const dispatch = useDispatch();
   const [search, setSearch] = useState<string>('');
+  const history = useHistory();
+  const [_loading, result] = useUser();
+
+  
+
+  const logoutService = async () => {
+   
+    try {
+      const response: any = await axios.get(
+        'http://localhost:3001/user/logout',
+        {
+          headers: {
+            Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+          },
+        }
+      );
+      if (response.data.success === true) {
+        window.localStorage.setItem('name', '');
+        window.localStorage.setItem('lastname', '');
+        window.localStorage.setItem('email', '');
+        window.localStorage.setItem('token', '');
+        window.localStorage.setItem('userId', '');
+      }
+      history.push('/');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleProfileMenuOpenProf = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElProf(event.currentTarget);
+  };
+  const handleMenuCloseProf = () => {
+    setAnchorElProf(null);
+  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -82,6 +122,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
   };
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
+    console.log(event.currentTarget);
     setAnchorEl(event.currentTarget);
   };
 
@@ -115,6 +156,41 @@ export default function PrimarySearchAppBar(): JSX.Element {
           <Button>Ver todos los mensajes</Button>
         </Link>
       </Stack>
+    </Menu>
+  );
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorElProf}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpenProf}
+      onClose={handleMenuCloseProf}
+    >
+      <Link to='/home/profile' style={{ textDecoration: 'none', color:'black' }}>
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      </Link>
+      {result === 'Unauthorized'?
+      null:
+      <IconButton
+              size='small'
+              edge='end'
+              aria-label='account of current user'
+              aria-controls={menuId}
+              aria-haspopup='true'
+              onClick={logoutService}
+              color='inherit'
+              >
+      <LogoutIcon/>
+      'Logout'
+            </IconButton>}
     </Menu>
   );
 
@@ -249,7 +325,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               </Button>
             </Link>
           </Box>
-          
+
           <Box
             sx={{
               display: {
@@ -290,10 +366,12 @@ export default function PrimarySearchAppBar(): JSX.Element {
               aria-label='account of current user'
               aria-controls={menuId}
               aria-haspopup='true'
-              color='inherit'>
-              <Link to='/home/profile' style={{ color: 'white' }}>
+              onClick={handleProfileMenuOpenProf}
+              color='inherit'
+              >
+              {/* <Link to='/home/profile' style={{ color: 'white' }}> */}
                 <AccountCircle />
-              </Link>
+              {/* </Link> */}
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
@@ -309,9 +387,11 @@ export default function PrimarySearchAppBar(): JSX.Element {
           </Box>
         </Toolbar>
       </AppBar>
+      {renderMenu}
       {renderMobileMenu}
       {renderMenssage}
-      <button onClick={logoutService}>logout</button>
+
     </Box>
   );
 }
+
