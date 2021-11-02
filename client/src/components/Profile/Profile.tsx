@@ -13,6 +13,7 @@ interface User {
   name: string;
   lastname: string;
   username: string;
+  image: string;
 }
 
 export default function Profile() {
@@ -37,11 +38,13 @@ export default function Profile() {
       let name = localStorage.getItem('name');
       let lastname = localStorage.getItem('lastname');
       let username = localStorage.getItem('email');
+      let image = localStorage.getItem('image');
 
       const user = {
         name: name ? name : '',
         lastname: lastname ? lastname : '',
         username: username ? username : '',
+        image: image ? image : profile
       };
       setUser(user);
     }
@@ -55,9 +58,9 @@ export default function Profile() {
         alignItems: 'center',
         marginTop: '2%',
       }}>
-      <Avatar sx={{ width: '10%', height: '10%' }} src={profile} />
       {user ? (
         <>
+        <Avatar sx={{ width: '10%', height: '10%' }} src={user.image} />
           <Typography variant='h4'>
             {user.name} {user.lastname}
           </Typography>

@@ -75,7 +75,7 @@ export default function Filters() {
   return (
     <div className={style.div}>
       <FormControl sx={{ m: 1, minWidth: '12vw' }}>
-        <InputLabel id='demo-simple-select-helper-label'>estado</InputLabel>
+        <InputLabel id='demo-simple-select-helper-label'>Estado</InputLabel>
         <Select
           labelId='demo-simple-select-helper-label'
           id='demo-simple-select-helper'
@@ -87,9 +87,9 @@ export default function Filters() {
             <em></em>
           </MenuItem>
           <MenuItem value='Todos'>Todos</MenuItem>
-          <MenuItem value='perdido'>perdido</MenuItem>
-          <MenuItem value='encontrado'>encontrado</MenuItem>
-          <MenuItem value='en adopcion'>en adopcion</MenuItem>
+          <MenuItem value='Perdido'>Perdido</MenuItem>
+          <MenuItem value='Encontrado'>Encontrado</MenuItem>
+          <MenuItem value='Adopción'>En adopcion</MenuItem>
         </Select>
       </FormControl>
 
@@ -108,7 +108,7 @@ export default function Filters() {
           <MenuItem value='Todos'>Todos</MenuItem>
           <MenuItem value='perro'>Perro</MenuItem>
           <MenuItem value='gato'>Gato</MenuItem>
-          <MenuItem value='otros'>Otros</MenuItem>
+          <MenuItem value='otro'>Otros</MenuItem>
         </Select>
       </FormControl>
       <FormControl sx={{ m: 1, minWidth: '12vw' }}>
@@ -124,8 +124,8 @@ export default function Filters() {
             <em></em>
           </MenuItem>
           <MenuItem value='Todos'>Todos</MenuItem>
-          <MenuItem value='macho'>macho</MenuItem>
-          <MenuItem value='hembra'>hembra</MenuItem>
+          <MenuItem value='Macho'>macho</MenuItem>
+          <MenuItem value='Hembra'>hembra</MenuItem>
         </Select>
       </FormControl>
 

@@ -57,6 +57,9 @@ export default function ImgMediaCard() {
             <Typography gutterBottom variant='h6' component='div'>
               Genero: {capitalize(detailpost.genre)}
             </Typography>
+            {/* <Typography gutterBottom variant='h6' component='div'>
+              Fecha de publicacion: {capitalize(detailpost.date)}
+            </Typography> */}
             <Typography variant='body1' color='text.secondary'>
               {detailpost.description}
             </Typography>

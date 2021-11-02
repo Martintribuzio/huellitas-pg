@@ -25,8 +25,11 @@ import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getPostByQuery } from '../../redux/actions';
 import { useHistory } from 'react-router-dom';
+<<<<<<< HEAD
 import LogoutIcon from '@mui/icons-material/Logout';
 import useUser from '../../hooks/useUser';
+=======
+>>>>>>> f06cf4aa69a89750580395cb7affc72c64c30772
 import axios from 'axios';
 
 const Search = styled('div')(({ theme }) => ({
@@ -77,10 +80,14 @@ export default function PrimarySearchAppBar(): JSX.Element {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const dispatch = useDispatch();
   const [search, setSearch] = useState<string>('');
+<<<<<<< HEAD
   const history = useHistory();
   const [_loading, result] = useUser();
 
   
+=======
+   const history = useHistory();
+>>>>>>> f06cf4aa69a89750580395cb7affc72c64c30772
 
   const logoutService = async () => {
    
@@ -105,6 +112,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
       console.log(error);
     }
   };
+<<<<<<< HEAD
 
   const handleProfileMenuOpenProf = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElProf(event.currentTarget);
@@ -112,6 +120,8 @@ export default function PrimarySearchAppBar(): JSX.Element {
   const handleMenuCloseProf = () => {
     setAnchorElProf(null);
   };
+=======
+>>>>>>> f06cf4aa69a89750580395cb7affc72c64c30772
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);

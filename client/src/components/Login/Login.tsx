@@ -55,6 +55,7 @@ function Ingresar() {
   //Login Facebook--------------------------------------------------------------
   const responseFacebook = async (response: any) => {
     let respLogin;
+    console.log(response)
     try {
       respLogin = await loginService({
         email: response.email,
@@ -62,9 +63,11 @@ function Ingresar() {
       });
       if (respLogin.success) {
         history.push('/home');
+      }else{
+        registerWithFacebook(response); //Invoco a la funcion para registrar
       }
     } catch (err: any) {
-      registerWithFacebook(response); //Invoco a la funcion para registrar
+      return{'ERROR': err}
     }
   };
 
@@ -108,8 +111,11 @@ function Ingresar() {
       if (respLogin.success) {
         history.push('/home');
       }
+      else{
+        registerWithGoogle(response); //Invoco a la funcion para registrar
+      }
     } catch (err: any) {
-      registerWithGoogle(response); //Invoco a la funcion para registrar
+        return{'Error': err}
     }
   };
 
@@ -121,6 +127,7 @@ function Ingresar() {
         lastname: response.profileObj.familyName,
         email: response.profileObj.email,
         password: response.profileObj.googleId,
+        picture: response.profileObj.imageUrl,
       });
       // console.log('ok', respSignup.status);
       if (respSignup.status === 200) {
@@ -144,13 +151,6 @@ function Ingresar() {
   //-----------------------------------------------------------------------
   return (
     <Box sx={{ backgroundColor: 'wihte' }} className='container'>
-      <GoogleLogin
-        clientId='73850795306-qqjla4o7l7d8mha6209tu8h87asqu073.apps.googleusercontent.com'
-        buttonText='Login'
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy={'single_host_origin'}
-      />
       <div>
         <h1>Ingresa</h1>
       </div>
@@ -195,21 +195,21 @@ function Ingresar() {
         <Button variant='contained' type='submit'>
           Ingresar
         </Button>
-        <FacebookLogin
+      </form>
+      <GoogleLogin
+        clientId='73850795306-qqjla4o7l7d8mha6209tu8h87asqu073.apps.googleusercontent.com'
+        buttonText='Login'
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
+        cookiePolicy={'single_host_origin'}
+      />
+      {/* <FacebookLogin
           appId='275207664365572'
           autoLoad={false}
           fields='first_name,email,picture,last_name'
           // onClick={componentClicked}
           callback={responseFacebook}
-        />
-        <GoogleLogin
-          clientId='73850795306-qqjla4o7l7d8mha6209tu8h87asqu073.apps.googleusercontent.com'
-          buttonText='Login'
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy={'single_host_origin'}
-        />
-      </form>
+        /> */}
     </Box>
   );
 }

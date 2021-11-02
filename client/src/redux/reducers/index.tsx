@@ -54,7 +54,7 @@ export default function rootReducer(
       } else {
         return {
           ...state,
-          filteredPosts: state.allPosts.filter(p => p.state === action.payload),
+          filteredPosts: state.allPosts.filter(p => p.state === action.payload).reverse(),
         };
       }
     case FILTER_LATEST:
@@ -77,7 +77,7 @@ export default function rootReducer(
       }
       return {
         ...state,
-        filteredPosts: state.allPosts.filter(p => p.type === action.payload),
+        filteredPosts: state.allPosts.filter(p => p.type === action.payload).reverse(),
       };
     case GET_GENRES:
       if (action.payload === 'Todos') {
@@ -88,7 +88,7 @@ export default function rootReducer(
       }
       return {
         ...state,
-        filteredPosts: state.allPosts.filter(p => p.genre === action.payload),
+        filteredPosts: state.allPosts.filter(p => p.genre === action.payload).reverse(),
       };
     // case APPLY_FILTERS:
     //   if(action.payload.state === 'Todos' || action.payload.type === 'Todos' || action.payload.genre === 'Todos'){

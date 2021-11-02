@@ -57,14 +57,17 @@ function App() {
         <Route exact path='/notification'>
           {/* <Notification /> */}
         </Route>
+        
         <Route path='/register'>
           <Register />
         </Route>
+
         <Route path='/found'>{/* <Found/> */}</Route>
         <Route path='/lost'>{/* <Lost/> */}</Route>
         <Route path='/adoption'>{/* <Adoption /> */}</Route>
+        
         <Route path='/home'>
-          <Footer />
+          {/* <Footer /> */}
         </Route>
       </div>
     </ThemeProvider>

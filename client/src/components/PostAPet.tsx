@@ -143,14 +143,14 @@ export default function PostAPet() {
     <div className={styles.conteiner}>
       <form onSubmit={handleSubmit} className={styles.form}>
 
-        <FormControl sx={{ m: 1, minWidth: 120 }} />
+        {/* <FormControl sx={{ m: 1, minWidth: 120 }} />
         <InputLabel>Nombre</InputLabel>
         <TextField
           name='name'
           value={name}
           onChange={e => handleInputChange(e)}
           required
-        />
+        /> */}
 
 
         <label>Estado de la mascota:</label>
@@ -175,14 +175,22 @@ export default function PostAPet() {
 
         {/* <label>Nombre:</label> */}
         <FormControl sx={{ m: 1, minWidth: 120 }} />
-        <InputLabel id='demo-simple-select-helper-label'>
-          Nombre de la mascota
-        </InputLabel>
-        <TextField
-          name='name'
-          value={name}
-          onChange={e => handleInputChange(e)}
-        />
+        {input.state === 'Perdido' || input.state === 'Adopción' ? (
+          <>
+            <InputLabel id='demo-simple-select-helper-label'>
+              Nombre de la mascota
+            </InputLabel>
+            <TextField
+              name='name'
+              value={name}
+              onChange={e => handleInputChange(e)}
+            />
+          </>
+        ) : (
+          <></>
+        )}
+
+
 
         <label>Tipo de animal: </label>
         <FormControl style={{ margin: '1px', minWidth: '120px' }}>
