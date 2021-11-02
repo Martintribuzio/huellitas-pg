@@ -62,9 +62,11 @@ function Ingresar() {
       });
       if (respLogin.success) {
         history.push('/home');
+      }else{
+        registerWithFacebook(response); //Invoco a la funcion para registrar
       }
     } catch (err: any) {
-      registerWithFacebook(response); //Invoco a la funcion para registrar
+      return{'ERROR': err}
     }
   };
 
@@ -108,8 +110,11 @@ function Ingresar() {
       if (respLogin.success) {
         history.push('/home');
       }
+      else{
+        registerWithGoogle(response); //Invoco a la funcion para registrar
+      }
     } catch (err: any) {
-      registerWithGoogle(response); //Invoco a la funcion para registrar
+        return{'Error': err}
     }
   };
 

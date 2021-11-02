@@ -67,7 +67,7 @@ function App() {
         <Route path='/adoption'>{/* <Adoption /> */}</Route>
         
         <Route path='/home'>
-          <Footer />
+          {/* <Footer /> */}
         </Route>
       </div>
     </ThemeProvider>

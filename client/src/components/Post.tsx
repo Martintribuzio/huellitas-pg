@@ -93,7 +93,11 @@ export default function Post({ post }: { post: PostType }) {
   //     <p>{`Estado: ${props.state}`}</p>
   //   </>
   // );
-
+  if (typeof post.petImage === 'string') {
+    if (post.petImage.search(/\\/)) {
+      post.petImage = post.petImage.replace(/\\/g, '/');
+    }
+  }
   return (
     <Link to={`/home/detail/${post._id}`}>
       <ImageButton
@@ -104,9 +108,10 @@ export default function Post({ post }: { post: PostType }) {
           margin: '10px',
         }}
         sx={{ minHeight: 200, minWidth: 200 }}>
+          {console.log(`http://localhost:3001/${post.petImage}`)}
         <ImageSrc
           style={{
-            backgroundImage: `url(http://localhost:3001/${post.petImage}`,
+            backgroundImage: `url(http://localhost:3001/${post.petImage})`,
           }}
         />
         <ImageBackdrop className='MuiImageBackdrop-root' />
