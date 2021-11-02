@@ -116,6 +116,7 @@ userNetwork.post('/signup', (req, res) => {
       lastname: req.body.lastname,
       username: req.body.email,
       postalCode: req.body.postalCode,
+      picture: req.body.picture,
     }),
     req.body.password,
     (err, user) => {
@@ -165,6 +166,7 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
               lastname: req.user.lastname,
               username: req.user.username,
               postalCode: req.user.postalCode,
+              picture: req.user.picture,
               token,
             };
             res.send({ success: true, user });
