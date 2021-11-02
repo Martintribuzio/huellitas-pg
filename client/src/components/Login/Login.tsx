@@ -55,6 +55,7 @@ function Ingresar() {
   //Login Facebook--------------------------------------------------------------
   const responseFacebook = async (response: any) => {
     let respLogin;
+    console.log(response)
     try {
       respLogin = await loginService({
         email: response.email,
@@ -202,13 +203,13 @@ function Ingresar() {
         onFailure={responseGoogle}
         cookiePolicy={'single_host_origin'}
       />
-      <FacebookLogin
+      {/* <FacebookLogin
           appId='275207664365572'
           autoLoad={false}
           fields='first_name,email,picture,last_name'
           // onClick={componentClicked}
           callback={responseFacebook}
-        />
+        /> */}
     </Box>
   );
 }
