@@ -126,6 +126,7 @@ export default function LandingPage() {
             }}>
             <Box
               sx={{
+                maxHeight: 'max-content',
                 width: '10vw',
                 display: 'flex',
                 flexDirection: 'column',
@@ -162,6 +163,7 @@ export default function LandingPage() {
             </Box>
             <Container
               style={{
+                height: '95vh',
                 borderTopLeftRadius: '5%',
                 borderTopRightRadius: '5%',
                 display: 'flex',
