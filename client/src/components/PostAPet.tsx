@@ -27,6 +27,7 @@ export default function PostAPet() {
   const [type, setType] = React.useState('');
   const [genre, setGenre] = React.useState('');
   const [description, setDescription] = React.useState('');
+  const [selectedDate, handleDateChange] = useState(new Date());
   const history = useHistory();
   // HOOK PARA VERIFICACION DE USUARIO LOGEADO
   // RETORNA Unauthorized si no esta logueado
@@ -154,7 +155,7 @@ export default function PostAPet() {
 
 
         <label>Estado de la mascota:</label>
-        <FormControl style={{ margin: '1px', minWidth: '120px' }}>
+        <FormControl style={{ margin: '1px', minWidth: '120px'}}>
           <InputLabel id='demo-simple-select-helper-label'>Estado</InputLabel>
           <Select
             required

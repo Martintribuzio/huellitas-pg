@@ -27,6 +27,7 @@ import axios from 'axios';
 import PreviewIcon from '@mui/icons-material/Preview';
 import InfoIcon from '@mui/icons-material/Info';
 
+
 /* const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -261,7 +262,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               },
             }}>
             <Link className={s.link} to='/home/createPost'>
-              <Button
+              {/* <Button
                 style={{
                   margin: '5px',
                   width: '100%',
@@ -273,9 +274,9 @@ export default function PrimarySearchAppBar(): JSX.Element {
                 variant='contained'>
                 <AddCircleIcon />
                 Crear Post
-              </Button>
-            </Link>
-          </Box>
+              </Button> */}
+            {/* </Link> */}
+          {/* </Box> */}
 
           <Box
             sx={{
@@ -286,10 +287,10 @@ export default function PrimarySearchAppBar(): JSX.Element {
             }}>
             <IconButton>
               <Link to='/home/createPost'>
-                <AddCircleIcon fontSize='large' color='secondary' />
+                {/* <AddCircleIcon fontSize='large' color='secondary'/> */}
               </Link>
             </IconButton>
-          </Box> */}
+          </Box> 
 
           <Box sx={{ display: { xs: 'none', md: 'flex' }, marginLeft: '25px' }}>
             <Link style={{ textDecoration: 'none', color: 'white' }} to='/home'>
