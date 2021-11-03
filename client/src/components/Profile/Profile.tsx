@@ -23,6 +23,12 @@ export default function Profile() {
 
   const [loading, result] = useUser();
 
+  if (result === 'Unauthorized') {
+    history.push('/login');
+    console.log(loading);
+  }
+
+
   const id = localStorage.getItem('userId');
 
   useEffect(() => {
