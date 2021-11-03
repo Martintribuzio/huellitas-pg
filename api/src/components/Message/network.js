@@ -1,25 +1,22 @@
 const messageNetwork = require('express').Router()
-const { message } = require('../../models/Message')
-const createMessage = require('./controller')
+const {createMess, findMess} = require('./controller')
 
 messageNetwork.post('/', async (req, res) => {
     try{
-      const Message = await createMessage(req.body)
+      const Message = await createMess(req.body)
       res.send(Message)
     }catch(err){
       res.send(err.message)
     }
 })
 
-messageNetwork.get('/:Converseid', async (req, res) => {
+messageNetwork.get('/:converseid', async (req, res) => {
     try{
-        const messages = await message.find({
-            Converseid: req.params.Converseid
-        });
-        res.status(200).send(messages)
+        const messages = await findMess(req.params)
+        res.send(messages)
     } catch(err){
-        res.status(404).json(err)
+        res.status(404).json(err.message)
     }
 })
 
-module.exports = message
+module.exports = messageNetwork
