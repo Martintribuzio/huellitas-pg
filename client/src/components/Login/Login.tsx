@@ -150,7 +150,7 @@ function Ingresar() {
   };
   //-----------------------------------------------------------------------
   return (
-    <Box sx={{ backgroundColor: 'wihte' }} className='container'>
+    <Box sx={{ backgroundColor: 'white' }} className='container'>
       <div>
         <Typography variant='h2'>Ingresa</Typography>
       </div>

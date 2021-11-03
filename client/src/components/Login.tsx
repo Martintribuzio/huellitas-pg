@@ -52,7 +52,7 @@ export default function LandingPage() {
               flexDirection: 'column',
               flexWrap: 'wrap',
               alignContent: 'end',
-              justifyContent: 'space-between',
+              justifyContent: 'space-around',
               alignItems: 'center',
             }}>
             <Box
@@ -87,10 +87,12 @@ export default function LandingPage() {
                 justifyContent: 'space-evenly',
                 width: '100%',
                 height: '70%',
-                marginBottom: '10%',
-                marginLeft: '5%',
               }}>
-              <img src={img1} alt=' ' />
+              <img
+                style={{ width: '90%', alignSelf: 'center' }}
+                src={img1}
+                alt=' '
+              />
             </Box>
           </Box>
 

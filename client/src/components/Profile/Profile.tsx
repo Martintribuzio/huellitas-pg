@@ -28,7 +28,6 @@ export default function Profile() {
     console.log(loading);
   }
 
-
   const id = localStorage.getItem('userId');
 
   useEffect(() => {
@@ -59,7 +58,8 @@ export default function Profile() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginTop: '2%',
+        padding: '20px 0 ',
+        height: '71vh',
       }}>
       {user ? (
         <>
