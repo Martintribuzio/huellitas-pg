@@ -27,7 +27,6 @@ import axios from 'axios';
 import PreviewIcon from '@mui/icons-material/Preview';
 import InfoIcon from '@mui/icons-material/Info';
 
-
 /* const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -78,14 +77,11 @@ export default function PrimarySearchAppBar(): JSX.Element {
 
   const logoutService = async () => {
     try {
-      const response: any = await axios.get(
-        'http://localhost:3001/user/logout',
-        {
-          headers: {
-            Authorization: `Bearer ${window.localStorage.getItem('token')}`,
-          },
-        }
-      );
+      const response: any = await axios.get('/user/logout', {
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem('token')}`,
+        },
+      });
       if (response.data.success === true) {
         window.localStorage.setItem('name', '');
         window.localStorage.setItem('lastname', '');
@@ -275,7 +271,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
                 <AddCircleIcon />
                 Crear Post
               </Button> */}
-            {/* </Link> */}
+          {/* </Link> */}
           {/* </Box> */}
 
           <Box
@@ -290,7 +286,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
                 {/* <AddCircleIcon fontSize='large' color='secondary'/> */}
               </Link>
             </IconButton>
-          </Box> 
+          </Box>
 
           <Box sx={{ display: { xs: 'none', md: 'flex' }, marginLeft: '25px' }}>
             <Link style={{ textDecoration: 'none', color: 'white' }} to='/home'>
@@ -307,7 +303,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
             </Link>
             <Link
               style={{ textDecoration: 'none', color: 'white' }}
-              to='home/about'>
+              to='/home/about'>
               <Button className={s.btnNav} color='inherit'>
                 nosotros
               </Button>
