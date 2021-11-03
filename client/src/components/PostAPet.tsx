@@ -16,7 +16,6 @@ import useUser from '../hooks/useUser';
 import Swal from 'sweetalert2';
 import { postPet } from '../services/createPost';
 
-
 const Input = styled('input')({
   display: 'none',
 });
@@ -36,7 +35,7 @@ export default function PostAPet() {
   // if (result === 'Unauthorized') {
   //   history.push('/');
   // }
-
+  console.log('POST');
   const [input, setInput] = useState<PostType>({
     name: '',
     description: '',
@@ -101,23 +100,23 @@ export default function PostAPet() {
     | ChangeEvent<HTMLSelectElement>
     | ChangeEvent<HTMLInputElement>;
 
-  async function postApet(fd: FormData){
-    let result: any = await postPet(fd)
-    if(result.ERROR){
-      return (Swal.fire({
+  async function postApet(fd: FormData) {
+    let result: any = await postPet(fd);
+    if (result.ERROR) {
+      return Swal.fire({
         title: 'ERROR!',
         // text: '!',
         icon: 'error',
         confirmButtonText: 'Intentar de nuevo',
-      }));
+      });
     }
-    history.push('/home')
-    return ( Swal.fire({
+    history.push('/home');
+    return Swal.fire({
       title: 'Publicado!',
       text: 'Publicacion realizada con exito!',
       icon: 'success',
       confirmButtonText: 'Ok',
-    }))
+    });
   }
 
   function handleSubmit(e: any) {
@@ -143,7 +142,6 @@ export default function PostAPet() {
   return (
     <div className={styles.conteiner}>
       <form onSubmit={handleSubmit} className={styles.form}>
-
         {/* <FormControl sx={{ m: 1, minWidth: 120 }} />
         <InputLabel>Nombre</InputLabel>
         <TextField
@@ -153,9 +151,8 @@ export default function PostAPet() {
           required
         /> */}
 
-
         <label>Estado de la mascota:</label>
-        <FormControl style={{ margin: '1px', minWidth: '120px'}}>
+        <FormControl style={{ margin: '1px', minWidth: '120px' }}>
           <InputLabel id='demo-simple-select-helper-label'>Estado</InputLabel>
           <Select
             required
@@ -190,8 +187,6 @@ export default function PostAPet() {
         ) : (
           <></>
         )}
-
-
 
         <label>Tipo de animal: </label>
         <FormControl style={{ margin: '1px', minWidth: '120px' }}>
