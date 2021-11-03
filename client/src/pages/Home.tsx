@@ -4,9 +4,9 @@ import pets from '../assets/home/pets2.png';
 import post1 from '../assets/home/post1.svg';
 import post2 from '../assets/home/post2.svg';
 import post3 from '../assets/home/post3.svg';
-import post4 from '../assets/home/iconoDeAbajo.svg'
-import post5 from '../assets/home/iconoDeAbajo2.svg'
-import post6 from '../assets/home/iconoDeAbajo3.svg'
+import post4 from '../assets/home/iconoDeAbajo.svg';
+import post5 from '../assets/home/iconoDeAbajo2.svg';
+import post6 from '../assets/home/iconoDeAbajo3.svg';
 import { useState } from 'react';
 import Card from './Card';
 import Textra from 'react-textra';
@@ -42,15 +42,17 @@ export const Home = () => {
       </section>
 
       <section className='Secondary'>
-        <div className='Description'>
-          <h1> Services available to the community </h1>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe
-            sapiente consequuntur corporis temporibus provident doloribus ex
-            fugit aut possimus, qui tempora vitae error asperiores omnis,
-            voluptas impedit! Ipsam, asperiores neque?
-          </p>
-        </div>
+        <Fade>
+          <div className='Description'>
+            <h1> Services available to the community </h1>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe
+              sapiente consequuntur corporis temporibus provident doloribus ex
+              fugit aut possimus, qui tempora vitae error asperiores omnis,
+              voluptas impedit! Ipsam, asperiores neque?
+            </p>
+          </div>
+        </Fade>
       </section>
       <div className='Posts'>
         <Fade direction='up' triggerOnce className='Fade'>
@@ -82,48 +84,42 @@ export const Home = () => {
         </Fade>
       </div>
 
-      <Fade direction='up' triggerOnce className='Fade'>    
-      <section className='Secondary3'>
-      <div className='Posts2'>
-        <Fade direction='up' triggerOnce className='Fade'>
-          <CardChiquita
-            type='35+'
-            img={post4}
-            description={
-              'En adopcion'
-            }
-          />
-        </Fade>
-        <Fade direction='up' triggerOnce className='Fade'>
-          <CardChiquita
-            type='50+'
-            img={post6}
-            description={
-              'En busqueda'
-            }
-          />
-        </Fade>
-        <Fade direction='up' triggerOnce className='Fade2'>
-          <CardChiquita
-            type='450+'
-            img={post5}
-            description={
-              'Encontrado'
-            }
-          />
-        </Fade>
-      </div>
-      <div className='Description2'>
-          <h1> In order to seek the best for the animals in the world</h1>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe
-            sapiente consequuntur corporis temporibus provident doloribus ex
-            fugit aut possimus, qui tempora vitae error asperiores omnis,
-            voluptas impedit! Ipsam, asperiores neque?
-          </p>
-          <button>Registrate</button>
-        </div>
-      </section>
+      <Fade direction='up' triggerOnce className='Fade'>
+        <section className='Secondary3'>
+          <div className='Posts2'>
+            <Fade direction='up' triggerOnce className='Fade'>
+              <CardChiquita
+                type='35+'
+                img={post4}
+                description={'En adopcion'}
+              />
+            </Fade>
+            <Fade direction='up' triggerOnce className='Fade'>
+              <CardChiquita
+                type='50+'
+                img={post6}
+                description={'En busqueda'}
+              />
+            </Fade>
+            <Fade direction='up' triggerOnce className='Fade2'>
+              <CardChiquita
+                type='450+'
+                img={post5}
+                description={'Encontrado'}
+              />
+            </Fade>
+          </div>
+          <div className='Description2'>
+            <h1> In order to seek the best for the animals in the world</h1>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe
+              sapiente consequuntur corporis temporibus provident doloribus ex
+              fugit aut possimus, qui tempora vitae error asperiores omnis,
+              voluptas impedit! Ipsam, asperiores neque?
+            </p>
+            <button>Registrate</button>
+          </div>
+        </section>
       </Fade>
     </div>
   );
