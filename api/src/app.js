@@ -47,7 +47,7 @@ app.use((req, res, next) => {
 
 console.log('ENV COOKIE', process.env.COOKIE_SECRET);
 app.use(cookieParser(process.env.COOKIE_SECRET));
-
+app.use(morgan("dev"))
 app.use('/', route);
 
 module.exports = app;
