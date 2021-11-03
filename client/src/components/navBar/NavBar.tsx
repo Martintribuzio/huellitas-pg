@@ -15,19 +15,19 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import Button from '@mui/material/Button';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
 import Inbox from '../Messages/Messages';
 import Stack from '@mui/material/Stack';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import SearchIcon from '@mui/icons-material/Search';
 import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getPostByQuery } from '../../redux/actions';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import PreviewIcon from '@mui/icons-material/Preview';
+import InfoIcon from '@mui/icons-material/Info';
 
-const Search = styled('div')(({ theme }) => ({
+/* const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -64,7 +64,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       width: '20ch',
     },
   },
-}));
+})); */
 
 export default function PrimarySearchAppBar(): JSX.Element {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -73,10 +73,9 @@ export default function PrimarySearchAppBar(): JSX.Element {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const dispatch = useDispatch();
   const [search, setSearch] = useState<string>('');
-   const history = useHistory();
+  const history = useHistory();
 
   const logoutService = async () => {
-   
     try {
       const response: any = await axios.get(
         'http://localhost:3001/user/logout',
@@ -209,18 +208,20 @@ export default function PrimarySearchAppBar(): JSX.Element {
     dispatch(getPostByQuery(search));
   }, [dispatch, search]);
 
-  function handleChange(e: any) {
+  /*   function handleChange(e: any) {
     e.preventDefault();
     setSearch(e.target.value);
   }
 
   function handleSubmit() {
     setSearch('');
-  }
+  } */
 
   return (
     <Box className={s.box} sx={{ flexGrow: 1 }}>
-      <AppBar position='static'>
+      <AppBar
+        position='static'
+        sx={{ height: '9vh', display: 'flex', justifyContent: 'center' }}>
         <Toolbar>
           <IconButton
             size='large'
@@ -241,7 +242,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
             }}>
             Huellitas
           </Typography>
-          <Search>
+          {/* <Search>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -288,7 +289,47 @@ export default function PrimarySearchAppBar(): JSX.Element {
                 <AddCircleIcon fontSize='large' color='secondary' />
               </Link>
             </IconButton>
+          </Box> */}
+
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, marginLeft: '25px' }}>
+            <Link style={{ textDecoration: 'none', color: 'white' }} to='/home'>
+              <Button className={s.btnNav} color='inherit'>
+                inicio
+              </Button>
+            </Link>
+            <Link
+              style={{ textDecoration: 'none', color: 'white' }}
+              to='/home/feed'>
+              <Button className={s.btnNav} color='inherit'>
+                publicaciones
+              </Button>
+            </Link>
+            <Link
+              style={{ textDecoration: 'none', color: 'white' }}
+              to='home/about'>
+              <Button className={s.btnNav} color='inherit'>
+                nosotros
+              </Button>
+            </Link>
           </Box>
+
+          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+            <Link
+              style={{ textDecoration: 'none', color: 'white' }}
+              to='/home/feed'>
+              <IconButton sx={{ mr: 2 }} color='inherit'>
+                <PreviewIcon />
+              </IconButton>
+            </Link>
+            <Link
+              style={{ textDecoration: 'none', color: 'white' }}
+              to='/home/about'>
+              <IconButton sx={{ mr: 2 }} color='inherit'>
+                <InfoIcon />
+              </IconButton>
+            </Link>
+          </Box>
+
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton
@@ -322,6 +363,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               </Link>
             </IconButton>
           </Box>
+          <button onClick={logoutService}>logout</button>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size='large'
@@ -337,7 +379,6 @@ export default function PrimarySearchAppBar(): JSX.Element {
       </AppBar>
       {renderMobileMenu}
       {renderMenssage}
-      <button onClick={logoutService}>logout</button>
     </Box>
   );
 }
