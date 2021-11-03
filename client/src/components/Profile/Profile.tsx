@@ -24,7 +24,7 @@ export default function Profile() {
   const [loading, result] = useUser();
 
   if (result === 'Unauthorized') {
-    history.push('/');
+    history.push('/login');
     console.log(loading);
   }
 
@@ -44,7 +44,7 @@ export default function Profile() {
         name: name ? name : '',
         lastname: lastname ? lastname : '',
         username: username ? username : '',
-        image: image ? image : profile
+        image: image ? image : profile,
       };
       setUser(user);
     }
@@ -60,7 +60,7 @@ export default function Profile() {
       }}>
       {user ? (
         <>
-        <Avatar sx={{ width: '10%', height: '10%' }} src={user.image} />
+          <Avatar sx={{ width: '10%', height: '10%' }} src={user.image} />
           <Typography variant='h4'>
             {user.name} {user.lastname}
           </Typography>

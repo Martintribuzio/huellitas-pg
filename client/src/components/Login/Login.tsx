@@ -12,6 +12,7 @@ import Button from '@mui/material/Button';
 import dotenv from 'dotenv';
 // import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
+import Typography from '@mui/material/Typography';
 
 dotenv.config();
 
@@ -151,7 +152,7 @@ function Ingresar() {
   return (
     <Box sx={{ backgroundColor: 'wihte' }} className='container'>
       <div>
-        <h1>Ingresa</h1>
+        <Typography variant='h2'>Ingresa</Typography>
       </div>
       <form onSubmit={onSubmit}>
         <div className='inputs'>

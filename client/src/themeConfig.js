@@ -11,5 +11,9 @@ const theme = createTheme({
       main: yellow[800],
     },
   },
+  typography: {
+    fontFamily: "poppins",
+    
+  }
 });
 export default theme;
