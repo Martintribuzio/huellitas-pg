@@ -7,6 +7,8 @@ import post3 from '../assets/home/post3.svg';
 import { useState } from 'react';
 import Card from './Card';
 import Textra from 'react-textra';
+import { Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const data = [
   'Toda la informacion sobre los pets',
@@ -26,7 +28,9 @@ export const Home = () => {
             laboriosam voluptas, labore voluptatum illo placeat id odio ipsum
             pariatur.
           </p>
-          <button>Registrate</button>
+          <Link style={{ textDecoration: 'none' }} to='/login'>
+            <Button variant='contained'>Registrate</Button>
+          </Link>
         </div>
         <div className='Images'>
           <img src={pets} alt='' />
