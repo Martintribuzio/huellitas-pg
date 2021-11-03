@@ -1,23 +1,22 @@
-.footer{
-    position:fixed;
-    bottom: 0px;
-    width: 100%;
-    margin-top: 5px;
+.footer {
+  bottom: 0px;
+  width: 100%;
+  margin-top: 5px;
 }
-.hue{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
+.hue {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
 }
-.text{
-    user-select: none;
+.text {
+  user-select: none;
 }
-.name{
-    user-select: none;
+.name {
+  user-select: none;
 }
-@media (max-width: 540px){
-    .text{
-        font-size: 10px !important;
-    }
+@media (max-width: 540px) {
+  .text {
+    font-size: 10px !important;
+  }
 }
