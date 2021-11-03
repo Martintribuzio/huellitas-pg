@@ -203,13 +203,13 @@ function Ingresar() {
         onFailure={responseGoogle}
         cookiePolicy={'single_host_origin'}
       />
-      {/* <FacebookLogin
-          appId='275207664365572'
+      <FacebookLogin
+          appId='3182768378715170'
           autoLoad={false}
           fields='first_name,email,picture,last_name'
           // onClick={componentClicked}
           callback={responseFacebook}
-        /> */}
+        />
     </Box>
   );
 }
