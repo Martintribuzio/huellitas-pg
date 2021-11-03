@@ -6,11 +6,12 @@ import LandingPage from './components/LandingPage';
 import PostAPet from './components/PostAPet';
 import Profile from './components/Profile/Profile';
 import Messages from './components/Messages/Messages';
-import Footer from './components/Footer/Footer'
+import Footer from './components/Footer/Footer';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
-import PostDetail from './components/PostDetail/PostDetail'
-import Home from './components/Home';
+import PostDetail from './components/PostDetail/PostDetail';
+import Publicaciones from './components/Home';
+import { Home } from './pages/Home';
 
 function App() {
   // const [result, user] = useUser();
@@ -57,7 +58,7 @@ function App() {
         <Route exact path='/notification'>
           {/* <Notification /> */}
         </Route>
-        
+
         <Route path='/register'>
           <Register />
         </Route>
@@ -65,9 +66,10 @@ function App() {
         <Route path='/found'>{/* <Found/> */}</Route>
         <Route path='/lost'>{/* <Lost/> */}</Route>
         <Route path='/adoption'>{/* <Adoption /> */}</Route>
-        
+
         <Route path='/home'>
-          {/* <Footer /> */}
+          {' '}
+          <Footer />
         </Route>
       </div>
     </ThemeProvider>

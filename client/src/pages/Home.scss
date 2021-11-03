@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
+  max-width: 80%;
+  width: 330px;
+  height: 400px;
+  background-color: white;
+  border-radius: 7%;
+  padding: 20px 15px;
+  justify-self: center;
+  align-self: center;
+
+  .cardImage {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    img {
+      width: 100%;
+    }
+  }
+}
+
+.Fade {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Home__container {
+  font-family: 'Poppins', sans-serif;
+  width: 100%;
+  height: 100%;
+  background-color: #e9e9e9;
+  color: #707070;
+  h1 {
+    margin: 0;
+  }
+  section {
+    height: 100vh;
+  }
+  .Primary {
+    display: flex;
+    flex-direction: row;
+    height: 91vh;
+
+    .Description {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-left: 10%;
+      width: 50%;
+      height: 100%;
+    }
+    .Images {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+      height: 100%;
+
+      img {
+        width: 80%;
+        align-self: center;
+        justify-self: center;
+      }
+    }
+  }
+  button {
+    font-family: 'Poppins';
+    width: 150px;
+    height: 40px;
+    border-radius: 50px;
+    background-color: #73a7cb;
+    font-weight: 500;
+  }
+  .Secondary {
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .Description {
+      height: max-content;
+      text-align: center;
+      width: 100%;
+      padding: 0 20%;
+      margin-bottom: 50px;
+      h1 {
+        font-size: 2.5rem;
+        font-weight: 500;
+      }
+    }
+  }
+  .Posts {
+    width: 100%;
+    flex-wrap: wrap;
+    display: flex;
+    gap: 50px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 50px;
+  }
+}
+
+@media (max-width: 900px) {
+  .Home__container {
+    .Primary {
+      flex-direction: column;
+      justify-content: space-around;
+      height: 91vh;
+      .Description {
+        text-align: center;
+        order: 2;
+        width: 100%;
+        padding: 0 10vw;
+        height: max-content;
+      }
+      .Images {
+        height: max-content;
+        order: 1;
+        width: 100%;
+        img {
+          width: 50%;
+        }
+      }
+    }
+  }
+}
