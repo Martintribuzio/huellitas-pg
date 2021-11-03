@@ -38,7 +38,7 @@ function Register({ inicio }: any) {
   const onSubmit = handleSubmit(data => {
     console.log(document.getElementById('password'));
     axios
-      .post('http://localhost:3001/user/signup', data)
+      .post('/user/signup', data)
       .then(async res => {
         Swal.fire({
           title: 'Success!',
