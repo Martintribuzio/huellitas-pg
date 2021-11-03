@@ -4,11 +4,15 @@ import pets from '../assets/home/pets2.png';
 import post1 from '../assets/home/post1.svg';
 import post2 from '../assets/home/post2.svg';
 import post3 from '../assets/home/post3.svg';
+import post4 from '../assets/home/iconoDeAbajo.svg'
+import post5 from '../assets/home/iconoDeAbajo2.svg'
+import post6 from '../assets/home/iconoDeAbajo3.svg'
 import { useState } from 'react';
 import Card from './Card';
 import Textra from 'react-textra';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import CardChiquita from './CardChiquita';
 
 const data = [
   'Toda la informacion sobre los pets',
@@ -82,29 +86,29 @@ export const Home = () => {
       <section className='Secondary3'>
       <div className='Posts2'>
         <Fade direction='up' triggerOnce className='Fade'>
-          <Card
-            type='Encontrado'
-            img={post2}
+          <CardChiquita
+            type='35+'
+            img={post4}
             description={
-              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi dolores consequuntur sequi ab neque quam eum.'
+              'En adopcion'
             }
           />
         </Fade>
         <Fade direction='up' triggerOnce className='Fade'>
-          <Card
-            type='Perdido'
-            img={post3}
+          <CardChiquita
+            type='50+'
+            img={post6}
             description={
-              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi dolores consequuntur sequi ab neque quam eum.'
+              'En busqueda'
             }
           />
         </Fade>
         <Fade direction='up' triggerOnce className='Fade2'>
-          <Card
-            type='En adopción'
-            img={post1}
+          <CardChiquita
+            type='450+'
+            img={post5}
             description={
-              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi dolores consequuntur sequi ab neque quam eum.'
+              'Encontrado'
             }
           />
         </Fade>

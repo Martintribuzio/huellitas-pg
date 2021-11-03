@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
   position: 'relative',
@@ -108,10 +110,9 @@ export default function Post({ post }: { post: PostType }) {
           margin: '10px',
         }}
         sx={{ minHeight: 200, minWidth: 200 }}>
-          {console.log(`http://localhost:3001/${post.petImage}`)}
         <ImageSrc
           style={{
-            backgroundImage: `url(http://localhost:3001/${post.petImage})`,
+            backgroundImage: `url(${process.env.REACT_APP_API}/${post.petImage})`,
           }}
         />
         <ImageBackdrop className='MuiImageBackdrop-root' />
@@ -144,7 +145,7 @@ const itemData = [
     img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
     title: 'Burger',
     author: '@rollelflex_graphy726',
-  }
+  },
 ];
 // import { PostType } from "../redux/types/types"
 // import styles from '../CSS/Post.module.css'
@@ -162,4 +163,4 @@ const itemData = [
 //             <p>{`Estado: ${props.postType}`}</p>
 //         </div>
 //     )
-// } 
+// }

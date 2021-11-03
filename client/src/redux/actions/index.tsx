@@ -6,14 +6,16 @@ import {
   GET_POSTS,
   GET_DETAIL,
   GET_POST_QUERY,
-  APPLY_FILTERS
+  APPLY_FILTERS,
 } from '../types/actionTypes';
 import axios from 'axios';
 import { Filters } from '../types/types';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export function getPosts() {
   return async function (dispatch: any) {
-    let data = (await axios.get('http://localhost:3001/post')).data;
+    let data = (await axios.get('/post')).data;
     // console.log(data)
     return dispatch({ type: GET_POSTS, payload: data });
   };
@@ -21,7 +23,7 @@ export function getPosts() {
 
 export function getPostDetail(id: String) {
   return async function (dispatch: any) {
-    let data = (await axios.get('http://localhost:3001/post?id=' + id)).data;
+    let data = (await axios.get('/post?id=' + id)).data;
     return dispatch({ type: GET_DETAIL, payload: data });
   };
 }
@@ -61,12 +63,12 @@ export const getTypes = function (filter: string) {
   };
 };
 
-export const sendFilters = function (filters: Filters){
-  return{
+export const sendFilters = function (filters: Filters) {
+  return {
     type: APPLY_FILTERS,
-    payload: filters
-  }
-}
+    payload: filters,
+  };
+};
 
 export const setUser = function (user: string) {
   return {

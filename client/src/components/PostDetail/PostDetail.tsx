@@ -10,7 +10,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import capitalize from "@mui/utils/capitalize";
+import capitalize from '@mui/utils/capitalize';
 import { style } from '@mui/system';
 
 export default function ImgMediaCard() {
@@ -33,18 +33,29 @@ export default function ImgMediaCard() {
           alignItems: 'center',
           maxHeight: '85vh',
         }}>
-        <Card elevation={5} sx={{ maxWidth: 345, minWidth:'20vw', marginTop:45,marginBottom:54 }}>
+        <Card
+          elevation={5}
+          sx={{
+            maxWidth: 345,
+            minWidth: '20vw',
+            marginTop: 45,
+            marginBottom: 54,
+          }}>
           <CardMedia
             component='img'
             alt={detailpost.type}
             sx={{
-              maxHeight:300,
+              maxHeight: 300,
             }}
-            image={`http://localhost:3001/${detailpost.petImage}`}
+            image={`/${detailpost.petImage}`}
           />
           <CardContent>
             {detailpost.name ? (
-              <Typography sx={{textAlign:'center'}} gutterBottom variant='h4' component='div'>
+              <Typography
+                sx={{ textAlign: 'center' }}
+                gutterBottom
+                variant='h4'
+                component='div'>
                 {detailpost.name}
               </Typography>
             ) : null}
