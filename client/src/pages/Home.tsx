@@ -6,13 +6,20 @@ import post2 from '../assets/home/post2.svg';
 import post3 from '../assets/home/post3.svg';
 import { useState } from 'react';
 import Card from './Card';
+import Textra from 'react-textra';
+
+const data = [
+  'Toda la informacion sobre los pets',
+  'Encontra tu perro perdido',
+  'Publica el gato que encontraste',
+];
 
 export const Home = () => {
   return (
     <div className='Home__container'>
       <section className='Primary'>
         <div className='Description'>
-          <h1> In order to seek the best for the animals of the world! </h1>
+          <Textra className='Textra' effect='leftRight' data={data} />
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
             dolores consequuntur sequi ab neque quam eum, hic qui doloremque sed
