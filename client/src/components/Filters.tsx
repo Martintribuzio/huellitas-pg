@@ -3,7 +3,7 @@ import {
   filterByState,
   filterByLatest,
   getTypes,
-  getGenres
+  getGenres,
 } from '../redux/actions';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -11,7 +11,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import React from 'react';
 import { Button } from '@mui/material';
-import style from '../CSS/Filter.module.css'
+import style from '../CSS/Filter.module.css';
 
 export default function Filters() {
   const dispatch = useDispatch();
@@ -42,34 +42,34 @@ export default function Filters() {
     //console.log(e.target.value)
     dispatch(getTypes(e.target.value));
     setType(e.target.value);
-    setState('')
-    setGenre('')
+    setState('');
+    setGenre('');
   }
 
   function handleSelectGenres(e: SelectChangeEvent) {
     //console.log(e.target.value)
     dispatch(getGenres(e.target.value));
     setGenre(e.target.value);
-    setType('')
-    setState('')
+    setType('');
+    setState('');
   }
 
   function handleSelectState(e: SelectChangeEvent) {
     //console.log(e.target.value)
     dispatch(filterByState(e.target.value));
     setState(e.target.value);
-    setGenre('')
-    setType('')
+    setGenre('');
+    setType('');
   }
 
-  console.log(state)
+  console.log(state);
 
   function handleClick(value: string) {
     //  console.log(value)
     dispatch(filterByLatest(value));
-    setGenre('')
-    setType('')
-    setState('')
+    setGenre('');
+    setType('');
+    setState('');
   }
 
   return (
@@ -83,9 +83,6 @@ export default function Filters() {
           // name = 'state'
           label='estado'
           onChange={e => handleSelectState(e)}>
-          <MenuItem value=''>
-            <em></em>
-          </MenuItem>
           <MenuItem value='Todos'>Todos</MenuItem>
           <MenuItem value='Perdido'>Perdido</MenuItem>
           <MenuItem value='Encontrado'>Encontrado</MenuItem>
@@ -102,9 +99,6 @@ export default function Filters() {
           // name = 'type'
           label='estado'
           onChange={e => handleSelectType(e)}>
-          <MenuItem value=''>
-            <em></em>
-          </MenuItem>
           <MenuItem value='Todos'>Todos</MenuItem>
           <MenuItem value='perro'>Perro</MenuItem>
           <MenuItem value='gato'>Gato</MenuItem>
@@ -120,27 +114,26 @@ export default function Filters() {
           // name = 'genre'
           label='estado'
           onChange={e => handleSelectGenres(e)}>
-          <MenuItem value=''>
-            <em></em>
-          </MenuItem>
           <MenuItem value='Todos'>Todos</MenuItem>
           <MenuItem value='Macho'>macho</MenuItem>
           <MenuItem value='Hembra'>hembra</MenuItem>
         </Select>
       </FormControl>
 
-      <Button 
-      className={style.button}
-      variant="outlined"
-      value='mas recientes'
-      onClick={() => handleClick('mas recientes')}
-      >Más recientes</Button>
-      <Button 
-      className={style.button}
-      variant="outlined"
-      value='mas antiguos'
-      onClick={() => handleClick('mas antiguos')}
-      >Más antiguos</Button>
+      <Button
+        className={style.button}
+        variant='outlined'
+        value='mas recientes'
+        onClick={() => handleClick('mas recientes')}>
+        Más recientes
+      </Button>
+      <Button
+        className={style.button}
+        variant='outlined'
+        value='mas antiguos'
+        onClick={() => handleClick('mas antiguos')}>
+        Más antiguos
+      </Button>
     </div>
   );
 }
