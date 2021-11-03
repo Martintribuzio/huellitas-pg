@@ -1,9 +1,12 @@
 .link {
   text-decoration: none;
 }
-.box{
+.box {
   position: sticky;
-  top:0;
+  top: 0;
   z-index: 5;
-  margin-bottom: 5px;
+}
+.btnNav {
+  margin-right: 1vw;
+  margin-left: 1vw;
 }
