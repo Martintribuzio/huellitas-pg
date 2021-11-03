@@ -260,7 +260,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               },
             }}>
             <Link className={s.link} to='/home/createPost'>
-              <Button
+              {/* <Button
                 style={{
                   margin: '5px',
                   width: '100%',
@@ -272,7 +272,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
                 variant='contained'>
                 <AddCircleIcon />
                 Crear Post
-              </Button>
+              </Button> */}
             </Link>
           </Box>
 
