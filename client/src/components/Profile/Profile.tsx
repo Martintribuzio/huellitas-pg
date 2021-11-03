@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import getPostsUser from '../../services/getPostsUser';
 import Post from '../Post';
 import { PostType } from '../../redux/types/types';
@@ -28,6 +28,7 @@ export default function Profile() {
     console.log(loading);
   }
 
+
   const id = localStorage.getItem('userId');
 
   useEffect(() => {
@@ -50,7 +51,9 @@ export default function Profile() {
     }
   }, [id]);
 
-  return (
+  return result === 'Unauthorized' ? (
+    <Redirect to='/login' />
+  ) : (
     <Box
       sx={{
         display: 'flex',
