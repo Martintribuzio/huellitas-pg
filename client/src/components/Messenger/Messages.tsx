@@ -11,7 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import Messages from '../Messages/Messages';
 import Input from '@mui/material/Input'
 import {useState, useEffect} from 'react'
-import style from './MessengerNoti.module.css'
+import style from './Messenger.module.css'
 import axios from 'axios'
 import Conversations from '../conversations/Conversations';
 import getPostsUser from '../../services/getPostsUser';
