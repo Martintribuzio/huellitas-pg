@@ -35,6 +35,15 @@ const upload = multer({
   fileFilter,
 });
 
+userNetwork.get('/:id',async (req,res)=>{
+  try{
+    const user = await getUserById(req.params);
+    res.send(user);
+  }
+  catch(err){
+    res.status(400).send(err);}
+})
+
 userNetwork.get('/posts', async (req, res) => {
   try {
     const { id } = req.query;
@@ -203,14 +212,5 @@ userNetwork.get('/me', verifyUser, (req, res, next) => {
   res.send(req.user);
 });
 
-userNetwork.get('/:id',async (req,res)=>{
-  console.log(req.query);
-  try{
-    const user = await getUserById(req.query);
-    res.send(user);
-  }
-  catch(err){
-    res.status(400).send(err.message);}
-})
 
 module.exports = userNetwork;

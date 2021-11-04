@@ -24,7 +24,7 @@ const searchUserByIdDB = async id => {
     const user = await User.findById(id);
     return user;
   } catch (error) {
-    throw new Error('Error al buscar');
+    throw new Error('Error al buscar el usuario');
   }
 }
 
