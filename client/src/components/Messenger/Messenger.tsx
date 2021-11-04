@@ -2,6 +2,7 @@ import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
@@ -57,27 +58,32 @@ export default function BottomAppBar() {
           <CssBaseline />
           <Input className={style.BarraBusqueda} placeholder="Buscar usuarios" type="text" value={search} onChange={handleChange}/>
           <Paper square sx={{ pb: '50px'}}>
-            <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
+            {/* <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
               Mensajes
-            </Typography>
-            <div className="container">
+            </Typography> */}
+            <div className={style.container}>
               
               <div>
                  {conversation?.map((c:any) => (
                   <Conversations conversation={c} currentUser={id}/>
                   ))}   
               </div>
-              
-              <div>
+            </div>
+             <div className={style.fondoChat}>
+               <div>
                   {/* {message.map((m:message) => (
                     <Messages text={m.content} own={m.sender === id} />
                   ))} */}
-              </div>
-
-              <div>
-                  <input placeholder="Escribe un mensaje" />
-              </div>
-    
+               </div>
+             <div className={style.inputSubmit}>
+               <div className={style.inputChat}>
+                  <Input placeholder="Escribe un mensaje" />
+               </div>
+               <div className={style.boton}>
+                  <Button>enviar</Button>
+               </div>
+             </div>
+             </div>
             {/* <List sx={{ mb: 2 }} > /}
               {/ {messages.slice(0,5).map(({ id, primary, secondary, person }) => (
                   <React.Fragment key={id}>
@@ -108,8 +114,7 @@ export default function BottomAppBar() {
                   {/ {message.map((m:object) => (
                     <Messages message={m} own={m.sender===user.id}/>
                   ))} */}
-                </div>
-              ):<span>Comienza una conversación</span>
+              {/* <span className={style.mensajeComienzo}>Comienza una conversación</span> */}
             {/* </div> */}
           </Paper>
         </div>
