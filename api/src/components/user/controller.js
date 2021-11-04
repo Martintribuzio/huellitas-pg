@@ -12,10 +12,8 @@ const createUser = async ({ name, email, password, postalCode }) => {
 const postsByUser = async id => {
   try {
     const posts = await postsByUserDB(id);
-    console.log('POSTS', posts);
     return posts;
   } catch (e) {
-    console.log('POSTBYUSERC', e.message);
     return { e: e.message };
   }
 };

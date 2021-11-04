@@ -37,11 +37,9 @@ const upload = multer({
 userNetwork.get('/posts', async (req, res) => {
   try {
     const { id } = req.query;
-    console.log('USER ID', id);
     const posts = await postsByUser(id);
     return res.json(posts);
   } catch (err) {
-    console.log(err, err.message);
     return res.json(err);
   }
 });
@@ -60,7 +58,6 @@ userNetwork.post('/signup', (req, res) => {
     (err, user) => {
       if (err) {
         res.statusCode = 500;
-        console.log('NETWORK', err);
         res.send(err);
       } else {
         const token = getToken({ _id: user._id });
@@ -71,7 +68,6 @@ userNetwork.post('/signup', (req, res) => {
         user.save((err, user) => {
           if (err) {
             res.statusCode = 500;
-            console.log('NETWORK SAVE', err);
             res.send(err);
           } else {
             res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
@@ -120,7 +116,6 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
 
 //LogOut
 userNetwork.get('/logout', verifyUser, (req, res, next) => {
-  console.log(req);
   const { signedCookies = {} } = req;
   const { refreshToken } = signedCookies;
   User.findById(req.user._id).then(
@@ -204,7 +199,6 @@ userNetwork.post('/refreshToken', (req, res, next) => {
 
 //obtener los detalles del usuario que inició sesión
 userNetwork.get('/me', verifyUser, (req, res, next) => {
-  console.log(verifyUser);
   res.send(req.user);
 });
 

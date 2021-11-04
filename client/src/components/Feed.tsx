@@ -69,7 +69,6 @@ export default function Feed() {
   const dispatch = useDispatch();
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
   let queryPost = useSelector((state: typeState) => state.queryPosts);
-  //console.log('QUERY POSTS', queryPost);
   console.log(allPosts);
 
   let postsToShow = queryPost
@@ -95,11 +94,14 @@ export default function Feed() {
             width: '100%',
           }}>
           {postsToShow.reverse().map(item => {
-            console.log(item.petImage);
             if (typeof item.petImage === 'string') {
               if (item.petImage.search(/\\/)) {
                 item.petImage = item.petImage.replace(/\\/g, '/');
               }
+              console.log(
+                'FEED IMAGE',
+                `url(${process.env.REACT_APP_API}${item.petImage})`
+              );
             }
             return (
               <Link to={`/home/detail/${item._id}`}>
@@ -113,7 +115,7 @@ export default function Feed() {
                   sx={{ minHeight: 200, minWidth: 200 }}>
                   <ImageSrc
                     style={{
-                      backgroundImage: `url(${process.env.REACT_APP_API}/${item.petImage})`,
+                      backgroundImage: `url(${process.env.REACT_APP_API}${item.petImage})`,
                     }}
                   />
                   <ImageBackdrop className='MuiImageBackdrop-root' />
