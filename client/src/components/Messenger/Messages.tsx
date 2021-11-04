@@ -82,7 +82,7 @@ export default function BottomAppBar() {
           Mensajes
         </Typography>
         <div className="container">
-          {conversation.map((c:any) => (
+        {conversation?.map((c:any) => (
             <Conversations conversation={c} currentUser={id}/>
           ))}
           

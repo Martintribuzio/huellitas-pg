@@ -7,12 +7,15 @@ import post3 from '../assets/home/post3.svg';
 import post4 from '../assets/home/iconoDeAbajo.svg'
 import post5 from '../assets/home/iconoDeAbajo2.svg'
 import post6 from '../assets/home/iconoDeAbajo3.svg'
-import { useState } from 'react';
+import { useState,useEffect} from 'react';
 import Card from './Card';
 import Textra from 'react-textra';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CardChiquita from './CardChiquita';
+import useUser from '../hooks/useUser';
+import { useDispatch } from 'react-redux';
+import { getConvers } from '../redux/actions';
 
 const data = [
   'Toda la informacion sobre los pets',
@@ -21,6 +24,17 @@ const data = [
 ];
 
 export const Home = () => {
+  const [loading, result] = useUser();
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if(result !== 'Unauthorized'){
+      const id = localStorage.getItem('userId');
+      if(id){
+        dispatch(getConvers(id));
+      }
+      }}, [dispatch,result]);
+
   return (
     <div className='Home__container'>
       <section className='Primary'>

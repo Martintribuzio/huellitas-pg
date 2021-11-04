@@ -7,6 +7,7 @@ import {
   GET_DETAIL,
   GET_POST_QUERY,
   APPLY_FILTERS,
+  GET_CONVERSATIONS,
 } from '../types/actionTypes';
 import axios from 'axios';
 import { Filters } from '../types/types';
@@ -27,6 +28,13 @@ export function getPostDetail(id: String) {
     return dispatch({ type: GET_DETAIL, payload: data });
   };
 }
+export function getConvers(ida:string) {
+  return async function (dispatch: any) {
+    let data = (await axios.get(`/conversation?ida=${ida}`)).data;
+    return dispatch({ type: GET_CONVERSATIONS, payload: data });
+  };
+}
+
 
 export const filterByState = function (filter: string) {
   return {
@@ -76,3 +84,4 @@ export const setUser = function (user: string) {
     payload: user,
   };
 };
+
