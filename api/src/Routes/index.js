@@ -1,9 +1,11 @@
-require('../mongo');
+require('../mongo')
+const { Router } = require('express')
+const userNetwork = require('../components/user/network')
+const postNetwork = require('../components/post/network')
+const conversationNetwork = require('../components/Conversation/network')
+const messageNetwork = require('../components/Message/network')
 const fs = require('fs');
 const path = require('path');
-const { Router } = require('express');
-const userNetwork = require('../components/user/network');
-const postNetwork = require('../components/post/network');
 
 const router = Router();
 router.delete('/images', (req, res) => {
@@ -11,6 +13,7 @@ router.delete('/images', (req, res) => {
   try {
     if (fs.existsSync(path)) {
       const files = fs.readdirSync(path);
+
 
       if (files.length > 0) {
         files.forEach(function (filename) {
@@ -33,5 +36,7 @@ router.delete('/images', (req, res) => {
 
 router.use('/user', userNetwork);
 router.use('/post', postNetwork);
+router.use('/conversation', conversationNetwork)
+router.use('/message', messageNetwork)
 
 module.exports = router;

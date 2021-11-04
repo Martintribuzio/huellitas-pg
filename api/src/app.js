@@ -6,6 +6,7 @@ const passport = require('passport');
 
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
+const morgan = require('morgan');
 
 app.use('/uploads', express.static('uploads'));
 app.use(express.json());
@@ -29,7 +30,7 @@ app.use((req, res, next) => {
 });
 
 app.use(cookieParser(process.env.COOKIE_SECRET));
-
+app.use(morgan("dev"))
 app.use('/', route);
 
 module.exports = app;

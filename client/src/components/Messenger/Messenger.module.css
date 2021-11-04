@@ -1,0 +1,45 @@
+.BarraBusqueda{
+    position:relative;
+    right:535px;
+    top:40px;
+}
+
+.boton{
+    width:65px;
+    height:50px;
+    position:absolute;
+    right:0px;
+    border: 1px solid black;
+}
+
+.fondoChat{
+    border: 1px solid black;
+    width:600px;
+    height:450px;
+    position:absolute;
+    left:400px;
+    top:90px;
+}
+
+.inputChat{
+    position:absolute;
+    bottom:5px;
+    left:5px;
+}
+
+.inputSubmit{
+    width:600px;
+    height:50px;
+    border:1px solid black;
+    position:relative;
+    top:450px;
+}
+
+.container{
+    width: 350px;
+    height: 500px;
+    border-radius: 7%;
+    text-align: center;
+    border:1px solid black;
+    
+}

@@ -15,7 +15,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import Button from '@mui/material/Button';
-import Inbox from '../Messages/Messages';
+import Inbox from '../Messenger/Messenger';
 import Stack from '@mui/material/Stack';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
@@ -131,7 +131,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
       <Inbox />
       <Stack direction='row' justifyContent='center'>
         <Link
-          to='/home/menssage'
+          to='/home/messenger'
           style={{ textDecoration: 'none' }}
           onClick={handleMenuClose}>
           <Button>Ver todos los mensajes</Button>
@@ -157,7 +157,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}>
       <Link
-        to='/home/menssage'
+        to='/home/messenger'
         className={s.link}
         style={{ color: 'black' }}
         onClick={handleMobileMenuClose}>
@@ -178,7 +178,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
           size='large'
           aria-label='show 17 new notifications'
           color='inherit'>
-          <Badge badgeContent={17} color='error'>
+          <Badge badgeContent={0} color='error'>
             <NotificationsIcon />
           </Badge>
         </IconButton>

@@ -1,4 +1,4 @@
-import { PostType } from './types';
+import { conversation, PostType } from './types';
 
 export const FILTER_STATE = 'FILTER_STATE';
 export const FILTER_LATEST = 'FILTER_LATEST';
@@ -11,7 +11,12 @@ export const GET_POST_QUERY = 'GET_POST_QUERY';
 export const APPLY_FILTERS = "APPLY_FILTERS";
 export const SET_USER = 'SET_USER';
 export const ERROR = 'ERROR';
+export const GET_CONVERSATIONS = 'GET_CONVERSATIONS';
 
+export interface getConversation{
+  type: typeof GET_CONVERSATIONS,
+  payload: Array<conversation>
+}
 export interface getPosts {
   type: typeof GET_POSTS;
   payload: Array<PostType>;
@@ -72,4 +77,5 @@ export type FiltersActionTypes =
   | getDetail
   | setUser
   | getPostQuery
-  | catchErrors;
+  | catchErrors
+  | getConversation;
