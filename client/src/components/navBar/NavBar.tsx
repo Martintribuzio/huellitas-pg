@@ -412,7 +412,6 @@ export default function PrimarySearchAppBar(): JSX.Element {
               {/* </Link> */}
             </IconButton>
           </Box>
-          <button onClick={logoutService}>logout</button>
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size='large'

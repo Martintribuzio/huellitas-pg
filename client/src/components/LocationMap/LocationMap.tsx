@@ -1,6 +1,6 @@
 import React from "react";
 import {MapContainer,TileLayer, Marker, Popup} from 'react-leaflet';
-import {Icon} from 'leaflet';
+// import {Icon} from 'leaflet';
 import "./LocationMap.css"
 
 export default function LocationMap(){
