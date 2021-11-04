@@ -22,54 +22,56 @@ function App() {
         <Route path='/home'>
           <Navbar />
         </Route>
-        <Route
-          exact
-          path='/login'
-          // render={() =>
-          //   result === 'Success' ? <Redirect to='/home' /> : <LandingPage />
-          // }
-        >
+
+        <Route exact path='/login'>
           <Login />
         </Route>
+
         <Route exact path='/home'>
           <Home />
         </Route>
+
         <Route exact path='/home/detail/:id'>
           <PostDetail />
         </Route>
-        <Route
-          path='/home/createPost'
-          // render={() =>
-          //   result === 'Success' ? <PostAPet /> : <Redirect to='/' />
-          // }
-        >
+
+        <Route path='/home/createPost'>
           <PostAPet />
         </Route>
+
         <Route path='/home/profile'>
           <Profile />
         </Route>
 
+        <Route path='/home/feed'>
+          <Publicaciones />
+        </Route>
+
         <Route path='/alldogs'>{/* <Alldogs /> */}</Route>
+
         <Route exact path='/home/menssage'>
           <Messenger />
         </Route>
+
         <Route exact path='/notification'>
           {/* <Notification /> */}
         </Route>
 
-        <Route path='/register'>
+        {/* <Route path='/register'>
           <Register />
-        </Route>
+        </Route> */}
 
         <Route path='/found'>{/* <Found/> */}</Route>
+
         <Route path='/lost'>{/* <Lost/> */}</Route>
+
         <Route path='/adoption'>{/* <Adoption /> */}</Route>
 
         <Route path='/home'>
-          {' '}
           <Footer />
         </Route>
-        <Route path='/'>
+
+        <Route exact path='/'>
           <Redirect to='/home' />
         </Route>
       </div>

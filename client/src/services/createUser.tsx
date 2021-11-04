@@ -1,5 +1,7 @@
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export default function createUser(data: any, origen: string) {
   //     e.preventDefault();

@@ -8,7 +8,7 @@ interface data {
 const loginService = async (data: data) => {
   try {
     const { email, password } = data;
-    const response = await axios.post('http://localhost:3001/user/login', {
+    const response = await axios.post('/user/login', {
       username: email,
       password: password,
     });
@@ -19,13 +19,12 @@ const loginService = async (data: data) => {
     window.localStorage.setItem('token', response.data.user.token);
     window.localStorage.setItem('userId', response.data.user._id);
     window.localStorage.setItem('image', response.data.user.picture);
-    console.log(response.data)
+    console.log(response.data);
     return response.data;
   } catch (error: any) {
     return { error: error.message };
 
     // throw new Error(error)
-
   }
 };
 

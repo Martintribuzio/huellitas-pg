@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import dotenv from 'dotenv';
+dotenv.config();
 interface User {
   name: string;
   lastname: string;
@@ -13,7 +14,7 @@ type UserState = User | { error: string };
 
 const verifyUser = async (token: string) => {
   try {
-    const response = await axios.get('http://localhost:3001/user/me', {
+    const response = await axios.get('/user/me', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -39,10 +40,10 @@ const useUser = () => {
       try {
         if (token) {
           const userData: any = await verifyUser(token);
-          if(userData.error){
+          if (userData.error) {
             throw new Error(userData.error);
           }
-            
+
           setUser(userData);
           setResult('Success');
           setLoading(false);
@@ -55,7 +56,7 @@ const useUser = () => {
       }
     };
     verify();
-  },[token]);
+  }, [token]);
 
   return [loading, result, user];
 };

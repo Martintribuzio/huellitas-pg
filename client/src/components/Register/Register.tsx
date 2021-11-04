@@ -7,6 +7,7 @@ import './Register.css';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
 
 type Data = {
   name: string;
@@ -38,7 +39,7 @@ function Register({ inicio }: any) {
   const onSubmit = handleSubmit(data => {
     console.log(document.getElementById('password'));
     axios
-      .post('http://localhost:3001/user/signup', data)
+      .post('/user/signup', data)
       .then(async res => {
         Swal.fire({
           title: 'Success!',
@@ -55,7 +56,7 @@ function Register({ inicio }: any) {
 
   return (
     <Box sx={{ backgroundColor: 'white' }} className='container'>
-      <h1>Regístrate</h1>
+      <Typography variant='h2'>Regístrate</Typography>
       <form onSubmit={onSubmit}>
         <div>
           <Controller

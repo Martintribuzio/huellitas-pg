@@ -11,11 +11,13 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
+    "chokidar": "^3.5.2",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "morgan": "^1.10.0",
     "express-session": "^1.17.2",
     "jsonwebtoken": "^8.5.1",
     "moment-timezone": "^0.5.33",
@@ -30,5 +32,8 @@
   "devDependencies": {
     "morgan": "^1.10.0",
     "nodemon": "^2.0.14"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
   }
 }
