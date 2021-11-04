@@ -24,11 +24,9 @@ const userSchema = new Schema({
   },
   email: {
     type: String,
-    // required: true, Verificar esto...
   },
   password: {
     type: String,
-    // required: true, Verificar esto...
   },
   postalCode: Number,
   posts: [{ type: Schema.Types.ObjectId, ref: 'Post' }],
@@ -40,15 +38,6 @@ const userSchema = new Schema({
     type: [Session],
   },
 });
-//Encriptacion
-// userSchema.methods.encryptPassword = (password) => {
-//   return bcrypt.hashSync(password, bcrypt.genSaltSync(10))
-// }
-
-// //Comparacion de la contraseña que puso el usuario con la de la DB encriptada
-// userSchema.methods.comparePassword = function(password){
-//   return bcrypt.compareSync(password, this.password)
-// }
 
 userSchema.set('toJSON', {
   transform: (doc, ret, options) => {
