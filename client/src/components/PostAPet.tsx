@@ -10,7 +10,7 @@ import styles from '../CSS/PostAPet.module.css';
 import React from 'react';
 import Button from '@mui/material/Button';
 import { TextField } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import useUser from '../hooks/useUser';
 
 import Swal from 'sweetalert2';
@@ -28,13 +28,10 @@ export default function PostAPet() {
   const [description, setDescription] = React.useState('');
   const [selectedDate, handleDateChange] = useState(new Date());
   const history = useHistory();
+  const [loading, result, user] = useUser();
   // HOOK PARA VERIFICACION DE USUARIO LOGEADO
   // RETORNA Unauthorized si no esta logueado
 
-  // const [loading, result, user] = useUser();
-  // if (result === 'Unauthorized') {
-  //   history.push('/');
-  // }
   console.log('POST');
   const [input, setInput] = useState<PostType>({
     name: '',
@@ -110,7 +107,7 @@ export default function PostAPet() {
         confirmButtonText: 'Intentar de nuevo',
       });
     }
-    history.push('/home');
+    history.push('/home/feed');
     return Swal.fire({
       title: 'Publicado!',
       text: 'Publicacion realizada con exito!',
@@ -139,6 +136,12 @@ export default function PostAPet() {
     postApet(fd);
   }
 
+  // if (result === 'Unauthorized') {
+  //   history.push('/');
+  // }
+  if (result === 'Unauthorized') {
+    return <Redirect to='/login' />;
+  }
   return (
     <div className={styles.conteiner}>
       <form onSubmit={handleSubmit} className={styles.form}>

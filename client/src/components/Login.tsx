@@ -7,7 +7,7 @@ import Register from './Register/Register';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import img1 from '../assets/home/pets2.png';
-
+import SwitchCustom from '../components/Login/Switch';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { IconButton } from '@mui/material';
@@ -15,6 +15,7 @@ import PetsIcon from '@mui/icons-material/Pets';
 import Switch from '@mui/material/Switch';
 import React from 'react';
 import useUser from '../hooks/useUser';
+import background from '../assets/home/background.png';
 
 export default function LandingPage() {
   const [auth, setAuth] = React.useState(false);
@@ -52,7 +53,7 @@ export default function LandingPage() {
               flexDirection: 'column',
               flexWrap: 'wrap',
               alignContent: 'end',
-              justifyContent: 'space-between',
+              justifyContent: 'space-around',
               alignItems: 'center',
             }}>
             <Box
@@ -60,15 +61,10 @@ export default function LandingPage() {
                 width: '100%',
                 height: '10%',
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <IconButton size='large' color='inherit' sx={{ ml: 2 }}>
-                <Link to='/home' style={{ color: 'white' }}>
-                  <PetsIcon />
-                </Link>
-              </IconButton>
               <Typography
                 variant='h5'
                 noWrap
@@ -77,7 +73,15 @@ export default function LandingPage() {
                 sx={{
                   display: { overflow: 'inherit', xs: 'none', sm: 'block' },
                 }}>
+                <IconButton size='large' color='inherit' sx={{ ml: 2 }}>
+                  <Link to='/home' style={{ color: 'white' }}>
+                    <PetsIcon />
+                  </Link>
+                </IconButton>
                 Huellitas
+              </Typography>
+              <Typography variant='h6' color='white'>
+                In order to seek the best for the animals of the world
               </Typography>
             </Box>
             <Box
@@ -87,15 +91,18 @@ export default function LandingPage() {
                 justifyContent: 'space-evenly',
                 width: '100%',
                 height: '70%',
-                marginBottom: '10%',
-                marginLeft: '5%',
               }}>
-              <img src={img1} alt=' ' />
+              <img
+                style={{ width: '90%', alignSelf: 'center' }}
+                src={img1}
+                alt=' '
+              />
             </Box>
           </Box>
 
           <Container
             style={{
+              backgroundImage: `url(${background})`,
               borderTopLeftRadius: '5%',
               borderBottomLeftRadius: '5%',
               display: 'flex',
@@ -104,14 +111,19 @@ export default function LandingPage() {
               justifyContent: 'center',
               marginLeft: '0px',
               marginRight: '0px',
-              backgroundColor: 'white',
+              backgroundColor: '#F5F5F5',
               width: '60%',
             }}>
-            <Switch checked={auth} onChange={handleChange} />{' '}
-            <label style={{ marginBottom: '10px' }}>
-              {auth ? 'ya tengo cuenta' : 'necesitas una cuenta?'}
-            </label>
-            {auth ? <Register /> : <Login />}
+            <SwitchCustom
+              onColor='#F5F5F5'
+              isOn={auth}
+              handleToggle={() => setAuth(!auth)}
+            />
+            {/* <Switch checked={auth} onChange={handleChange} /> */}
+            {/* <label style={{ marginBottom: '10px' }}>
+              {auth ? 'Ya tengo cuenta' : '¿Necesitas una cuenta?'}
+            </label> */}
+            {auth ? <Register inicio={setAuth} /> : <Login />}
           </Container>
         </Box>
         <Box>
@@ -120,7 +132,7 @@ export default function LandingPage() {
               display: { xs: 'flex', md: 'none' },
               backgroundColor: 'primary.main',
               minHeight: '100vh',
-              justifyContent: 'space-between',
+              justifyContent: 'center',
               flexDirection: 'column',
               alignItems: 'center',
             }}>
@@ -163,7 +175,8 @@ export default function LandingPage() {
             </Box>
             <Container
               style={{
-                height: '95vh',
+                backgroundImage: `url(${background})`,
+                height: '94vh',
                 borderTopLeftRadius: '5%',
                 borderTopRightRadius: '5%',
                 display: 'flex',
@@ -172,12 +185,17 @@ export default function LandingPage() {
                 justifyContent: 'center',
                 marginLeft: '0px',
                 marginRight: '0px',
-                backgroundColor: 'white',
+                backgroundColor: '#F5F5F5',
               }}>
-              <Switch checked={auth} onChange={handleChange} />{' '}
+              <SwitchCustom
+                onColor='#F5F5F5'
+                isOn={auth}
+                handleToggle={() => setAuth(!auth)}
+              />
+              {/* <Switch checked={auth} onChange={handleChange} />{' '}
               <label style={{ marginBottom: '10px' }}>
-                {auth ? 'ya tengo cuenta' : 'necesitas una cuenta?'}
-              </label>
+                {auth ? 'Ya tengo cuenta' : '¿Necesitas una cuenta?'}
+              </label> */}
               {auth ? <Register /> : <Login />}
             </Container>
           </Box>
