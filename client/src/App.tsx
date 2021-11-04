@@ -4,7 +4,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './themeConfig';
 import PostAPet from './components/PostAPet';
 import Profile from './components/Profile/Profile';
-import Messenger from './components/Messenger/Messages';
+import Messenger from './components/Messenger/Messenger';
 import Footer from './components/Footer/Footer';
 import Login from './components/Login';
 import Register from './components/Register/Register';
@@ -49,7 +49,7 @@ function App() {
 
         <Route path='/alldogs'>{/* <Alldogs /> */}</Route>
 
-        <Route exact path='/home/menssage'>
+        <Route exact path='/home/messenger'>
           <Messenger />
         </Route>
 

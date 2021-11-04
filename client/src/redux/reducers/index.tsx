@@ -104,11 +104,11 @@ export default function rootReducer(
     //     ...state,
     //     filteredPosts: filtradosFunc(state.allPosts, action.payload.state, action.payload.type, action.payload.genre)
     //   }
-    case GET_CONVERSATIONS:{console.log('entre',state)
+    case GET_CONVERSATIONS:
       return{
       ...state,
       conversations: action.payload
-    }}
+    }
     default:
       return state;
   }
