@@ -1,5 +1,5 @@
 const postNetwork = require('express').Router();
-const { createPost, findPost } = require('./controller');
+const { createPost, findPost, editPost } = require('./controller');
 const multer = require('multer');
 const uniqid = require('uniqid');
 
@@ -38,6 +38,16 @@ postNetwork.get('/', async (req, res) => {
   try {
     const post = await findPost(req.query.id);
     return res.json(post);
+  } catch (error) {
+    return res.send(error);
+  }
+});
+
+postNetwork.put("/", async (req, res) => {
+  try {
+    const { _id, name, type, state, genre, description } = req.body;
+    editPost(_id, name, type, state, genre, description);
+    return res.send("post editado");
   } catch (error) {
     return res.send(error);
   }

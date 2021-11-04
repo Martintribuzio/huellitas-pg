@@ -45,7 +45,27 @@ const findPostDB = async id => {
   }
 };
 
+const editPostDB = async (_id, name, type, state, description, genre, date) => {
+  try {
+    const post = await Post.findById(_id);
+    
+    post.name = name;
+    post.type = type;
+    post.state = state;
+    post.description = description;
+    post.genre = genre;
+    post.date = date;
+    await post.save();
+    return post;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+};
+
+
 module.exports = {
   createPostDB,
   findPostDB,
+  editPostDB,
 };

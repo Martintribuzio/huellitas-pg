@@ -117,7 +117,9 @@ export const Home = () => {
               fugit aut possimus, qui tempora vitae error asperiores omnis,
               voluptas impedit! Ipsam, asperiores neque?
             </p>
-            <button>Registrate</button>
+            <Link style={{ textDecoration: 'none' }} to='/login'>
+              <Button variant='contained'>Registrate</Button>
+            </Link>
           </div>
         </section>
       </Fade>
