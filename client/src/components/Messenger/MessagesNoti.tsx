@@ -10,11 +10,11 @@ import ListSubheader from '@mui/material/ListSubheader';
 import Avatar from '@mui/material/Avatar';
 import Messages from '../Messages/Messages';
 import Input from '@mui/material/Input'
-import {useState, useEffect} from 'react'
+import {useState, useEffect, ChangeEvent} from 'react'
 import style from './MessengerNoti.module.css'
 import axios from 'axios'
 import Conversations from '../conversations/Conversations';
-import getPostsUser from '../../services/getPostsUser';
+
 
 // const messages = [
 //   {
@@ -61,7 +61,7 @@ export default function BottomAppBar() {
     getConversations()
   })
 
-  function handleChange(e: any) {
+  function handleChange(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     setSearch(e.target.value);
   }

@@ -36,7 +36,7 @@ export default function BottomAppBar() {
   
   return (
     <div className={style.dviMens}>
-      <CssBaseline />
+      {/* <CssBaseline />
       <Paper elevation={0} sx={{ pb: '50px'}}>
         <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
           Mensajes
@@ -63,7 +63,7 @@ export default function BottomAppBar() {
             </React.Fragment>
           ))}
         </List>
-      </Paper>
+      </Paper> */}
     </div>
   );
 }
