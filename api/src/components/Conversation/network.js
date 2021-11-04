@@ -1,6 +1,6 @@
 const conversationNetwork = require('express').Router()
 const { conversation } = require('../../models/Conversation')
-const createConverse = require('./controller')
+const {createConverse, getConversation} = require('./controller')
 
 conversationNetwork.post('/', async (req, res) => {
   try{
@@ -13,10 +13,8 @@ conversationNetwork.post('/', async (req, res) => {
 
 conversationNetwork.get('/', async (req, res) => {
   try{
-    const Conversation = await conversation.find({
-      members: { $in: [req.body.idEnv]},
-    })
-    res.status(200).json(Conversation)
+    const Conversation = await getConversation(req.query)
+    res.status(200).send(Conversation)
   }catch(err){
     res.status(404).send(err.message)
   }

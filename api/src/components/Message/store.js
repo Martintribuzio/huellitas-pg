@@ -10,4 +10,21 @@ const createMessageDB = async (content, Converseid, sender) => {
     }
 }
 
-module.exports = createMessageDB
+const findMessagesDB = async (converseid) => {
+  try{
+    const mensajes = await message.find({Converseid: converseid});
+    if(mensajes){
+    return mensajes}
+    else{
+      throw new Error('No existe el mensaje')
+    }
+  }
+  catch(err){
+    return err.message
+  }
+}
+
+module.exports = {
+  createMessageDB,
+  findMessagesDB
+}

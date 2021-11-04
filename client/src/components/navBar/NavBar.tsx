@@ -15,7 +15,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import Button from '@mui/material/Button';
-import Inbox from '../Messages/Messages';
+import Inbox from '../Messenger/MessagesNoti';
 import Stack from '@mui/material/Stack';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
@@ -26,6 +26,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import PreviewIcon from '@mui/icons-material/Preview';
 import InfoIcon from '@mui/icons-material/Info';
+
 
 /* const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -181,7 +182,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
           size='large'
           aria-label='show 17 new notifications'
           color='inherit'>
-          <Badge badgeContent={17} color='error'>
+          <Badge badgeContent={0} color='error'>
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -261,7 +262,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               },
             }}>
             <Link className={s.link} to='/home/createPost'>
-              <Button
+              {/* <Button
                 style={{
                   margin: '5px',
                   width: '100%',
@@ -273,9 +274,9 @@ export default function PrimarySearchAppBar(): JSX.Element {
                 variant='contained'>
                 <AddCircleIcon />
                 Crear Post
-              </Button>
-            </Link>
-          </Box>
+              </Button> */}
+            {/* </Link> */}
+          {/* </Box> */}
 
           <Box
             sx={{
@@ -286,10 +287,10 @@ export default function PrimarySearchAppBar(): JSX.Element {
             }}>
             <IconButton>
               <Link to='/home/createPost'>
-                <AddCircleIcon fontSize='large' color='secondary' />
+                {/* <AddCircleIcon fontSize='large' color='secondary'/> */}
               </Link>
             </IconButton>
-          </Box> */}
+          </Box> 
 
           <Box sx={{ display: { xs: 'none', md: 'flex' }, marginLeft: '25px' }}>
             <Link style={{ textDecoration: 'none', color: 'white' }} to='/home'>
