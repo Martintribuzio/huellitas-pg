@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { setUncaughtExceptionCaptureCallback } from 'process';
 
 type Data = {
   name: string;
@@ -37,7 +38,6 @@ function Register({ inicio }: any) {
   } = useForm<Data>({ resolver: yupResolver(schema) });
 
   const onSubmit = handleSubmit(data => {
-    console.log(document.getElementById('password'));
     axios
       .post('/user/signup', data)
       .then(async res => {
@@ -51,12 +51,23 @@ function Register({ inicio }: any) {
       .then(() => {
         inicio(false);
       })
-      .catch(error => console.log(error.message));
+      .catch(error =>
+        Swal.fire({
+          title: 'Error',
+          text: 'El email ingresado ya pertenece a una cuenta',
+          icon: 'error',
+          confirmButtonText: 'Intentar de nuevo',
+        })
+      );
   });
 
   return (
-    <Box sx={{ backgroundColor: 'white' }} className='container'>
-      <Typography variant='h2'>Regístrate</Typography>
+    <Box sx={{ backgroundColor: '#F5F5F5' }} className='container'>
+      <Typography
+        variant='h4'
+        style={{ color: '#4A4A4A', marginBottom: '10px' }}>
+        Regístrate
+      </Typography>
       <form onSubmit={onSubmit}>
         <div>
           <Controller
@@ -99,7 +110,6 @@ function Register({ inicio }: any) {
           <Controller
             name='email'
             control={control}
-            defaultValue='ejemplo@email.com'
             render={({ field }) => (
               <TextField
                 {...field}
@@ -156,7 +166,10 @@ function Register({ inicio }: any) {
             )}
           />
         </div>
-        <Button variant='contained' type='submit'>
+        <Button
+          style={{ marginTop: '20px', width: '300px' }}
+          variant='contained'
+          type='submit'>
           Registrar
         </Button>
       </form>
