@@ -68,7 +68,7 @@ export default function BottomAppBar() {
     getConversations()
   })
 
-  function handleChange(e: any) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     setSearch(e.target.value);
   }

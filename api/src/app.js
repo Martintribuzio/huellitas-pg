@@ -1,5 +1,4 @@
 const express = require('express');
-const morgan = require('morgan');
 const app = express();
 const cors = require('cors');
 const route = require('./Routes/index');
@@ -8,6 +7,7 @@ const passport = require('passport');
 // const flash = require("connect-flash");
 const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
+const morgan = require('morgan');
 
 app.use('/uploads', express.static('uploads'));
 app.use(express.json());

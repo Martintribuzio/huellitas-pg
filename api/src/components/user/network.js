@@ -34,15 +34,6 @@ const upload = multer({
   fileFilter,
 });
 
-// userNetwork.post('/', async (req, res) => {
-//   try {
-//     const user = await createUser(req.body);
-//     return res.json(user);
-//   } catch (err) {
-//     return res.json(err); //Esta ruta se usa??
-//   }
-// });
-
 userNetwork.get('/posts', async (req, res) => {
   try {
     const { id } = req.query;
@@ -54,59 +45,6 @@ userNetwork.get('/posts', async (req, res) => {
     return res.json(err);
   }
 });
-
-// //TODO ESTO ES EL RUTEO DEL LOGIN/REGISTER
-// //Landing Page
-// userNetwork.get("/", (req,res) => {
-//   res.send("Welcome")
-// })
-// //Profile home
-// userNetwork.get("/home", (req,res) => {
-//   res.send("Welcome to home")
-// })
-
-// // // Login Page
-// userNetwork.get("/login", (req,res) => {
-//   res.send("login")
-
-// })
-// userNetwork.post("/login", passport.authenticate("local-signin", {
-//   successRedirect: "/user/home",
-//   failureRedirect: "/user/login",
-//   passReqToCallback: true
-// }))
-
-// // Register Page
-// userNetwork.get("/signup", (req,res) => {
-
-//   res.send("signup")
-// })
-// userNetwork.post("/signup", passport.authenticate("local-signup", {
-//   successRedirect: "/user/login",
-//   failureRedirect: "/user/signup",
-//   passReqToCallback: true
-// }));
-
-// userNetwork.get('/logout', (req, res, next) => {
-//   req.logout();
-//   res.redirect('/');
-// });
-
-// //Autenticacion para navegar entre páginas
-// function isLoggedIn(req, res, next) {
-//   if (req.isAuthenticated())
-//       return next();
-//   res.redirect('/user/login');
-// };
-
-
-// userNetwork.get('/profile', isLoggedIn, (req, res, next) => {
-//   res.render('profile')
-// });
-
-/* userNetwork.get('/profile', isLoggedIn, (req, res, next) => {
-  res.render('profile');
-}); */
 
 //Registro
 userNetwork.post('/signup', (req, res) => {
@@ -182,7 +120,7 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
 
 //LogOut
 userNetwork.get('/logout', verifyUser, (req, res, next) => {
-  console.log(req)
+  console.log(req);
   const { signedCookies = {} } = req;
   const { refreshToken } = signedCookies;
   User.findById(req.user._id).then(

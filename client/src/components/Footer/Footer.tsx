@@ -16,7 +16,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 export default function ButtonAppBar() {
   return (
     <Box className={style.footer}>
-      <AppBar position="static">
+      <AppBar position="static" sx = {{height: '25vh', display: 'flex',  justifyContent: 'center', backgroundColor: 'RGB(112, 112 , 112)'}}>
           <StyledToolbar >
             <section className={style.hue}>
             <IconButton
@@ -33,7 +33,7 @@ export default function ButtonAppBar() {
                Huellitas
             </Typography>
             </section>
-             <Typography className={style.text} variant='body2' color='text.secondary'>
+             <Typography className={style.text} variant='body2' color='white'>
              © Huellitas 2021 — Todos los derechos reservados
              </Typography>
             <IconButton href='https://github.com/Martintribuzio/huellitas-pg' size='large' color='inherit'>
