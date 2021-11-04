@@ -1,15 +1,16 @@
-import axios from "axios";
-
-export async function postPet(input: FormData){
-      try{
-        await axios.post('http://localhost:3001/post', input, {
-        method: 'post',
-        url: 'http://localhost:3001/post',
-        data: input,
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      return('success');
-      }catch(e: any){
-        return({"ERROR": e.message});
-      }
+import axios from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();
+export async function postPet(input: FormData) {
+  try {
+    await axios.post('/post', input, {
+      method: 'post',
+      url: `${process.env.REACT_APP_API}/post`,
+      data: input,
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+    return 'success';
+  } catch (e: any) {
+    return { ERROR: e.message };
   }
+}

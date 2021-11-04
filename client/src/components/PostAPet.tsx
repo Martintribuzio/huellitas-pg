@@ -10,12 +10,11 @@ import styles from '../CSS/PostAPet.module.css';
 import React from 'react';
 import Button from '@mui/material/Button';
 import { TextField } from '@material-ui/core';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import useUser from '../hooks/useUser';
 
 import Swal from 'sweetalert2';
 import { postPet } from '../services/createPost';
-
 
 const Input = styled('input')({
   display: 'none',
@@ -27,15 +26,13 @@ export default function PostAPet() {
   const [type, setType] = React.useState('');
   const [genre, setGenre] = React.useState('');
   const [description, setDescription] = React.useState('');
+  const [selectedDate, handleDateChange] = useState(new Date());
   const history = useHistory();
+  const [loading, result, user] = useUser();
   // HOOK PARA VERIFICACION DE USUARIO LOGEADO
   // RETORNA Unauthorized si no esta logueado
 
-  // const [loading, result, user] = useUser();
-  // if (result === 'Unauthorized') {
-  //   history.push('/');
-  // }
-
+  console.log('POST');
   const [input, setInput] = useState<PostType>({
     name: '',
     description: '',
@@ -100,23 +97,23 @@ export default function PostAPet() {
     | ChangeEvent<HTMLSelectElement>
     | ChangeEvent<HTMLInputElement>;
 
-  async function postApet(fd: FormData){
-    let result: any = await postPet(fd)
-    if(result.ERROR){
-      return (Swal.fire({
+  async function postApet(fd: FormData) {
+    let result: any = await postPet(fd);
+    if (result.ERROR) {
+      return Swal.fire({
         title: 'ERROR!',
         // text: '!',
         icon: 'error',
         confirmButtonText: 'Intentar de nuevo',
-      }));
+      });
     }
-    history.push('/home')
-    return ( Swal.fire({
+    history.push('/home/feed');
+    return Swal.fire({
       title: 'Publicado!',
       text: 'Publicacion realizada con exito!',
       icon: 'success',
       confirmButtonText: 'Ok',
-    }))
+    });
   }
 
   function handleSubmit(e: any) {
@@ -139,10 +136,15 @@ export default function PostAPet() {
     postApet(fd);
   }
 
+  // if (result === 'Unauthorized') {
+  //   history.push('/');
+  // }
+  if (result === 'Unauthorized') {
+    return <Redirect to='/login' />;
+  }
   return (
     <div className={styles.conteiner}>
       <form onSubmit={handleSubmit} className={styles.form}>
-
         {/* <FormControl sx={{ m: 1, minWidth: 120 }} />
         <InputLabel>Nombre</InputLabel>
         <TextField
@@ -151,7 +153,6 @@ export default function PostAPet() {
           onChange={e => handleInputChange(e)}
           required
         /> */}
-
 
         <label>Estado de la mascota:</label>
         <FormControl style={{ margin: '1px', minWidth: '120px' }}>
@@ -189,8 +190,6 @@ export default function PostAPet() {
         ) : (
           <></>
         )}
-
-
 
         <label>Tipo de animal: </label>
         <FormControl style={{ margin: '1px', minWidth: '120px' }}>

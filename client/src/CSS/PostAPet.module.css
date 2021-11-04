@@ -1,16 +1,18 @@
-.conteiner{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 50px;
+.conteiner {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 50px;
 }
 
-.form{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 20px;
-    border: 1px solid;
-    width: 50%;
-    margin-top: 30px;
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  width: 30%;
+  margin-top: 30px;
+  background-color: rgba(204, 200, 200, 0.774);
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
