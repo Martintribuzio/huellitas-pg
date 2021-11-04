@@ -18,6 +18,16 @@ const searchUserDB = async email => {
   }
 };
 
+const searchUserByIdDB = async id => {
+  try {
+    console.log(id);
+    const user = await User.findById(id);
+    return user;
+  } catch (error) {
+    throw new Error('Error al buscar');
+  }
+}
+
 const postsByUserDB = async userId => {
   try {
     const user = await User.findById(userId).populate('posts');
@@ -31,4 +41,5 @@ module.exports = {
   createUserDB,
   searchUserDB,
   postsByUserDB,
+  searchUserByIdDB
 };

@@ -16,13 +16,16 @@ import style from './Messenger.module.css'
 import axios from 'axios'
 import Conversations from '../conversations/Conversations';
 import getPostsUser from '../../services/getPostsUser';
+import { useSelector } from 'react-redux';
+import { typeState } from '../../redux/reducers/index';
+import { conversation } from '../../redux/types/types';
 
 export default function BottomAppBar() {
     const [search, setSearch] = useState<string>('');
   
     const id = localStorage.getItem('userId');
-  
-    const [conversation,setConversation] = useState<Array<string>>(['','']);
+    const conversations:Array<conversation> = useSelector((state:typeState) => state.conversations);
+    const [conversation,setConversation] = useState<Array<conversation>>();
     const [message,setMessage] = useState([]);
     const [currentChat, setCurrentChat]=useState(null);
   
@@ -37,16 +40,8 @@ export default function BottomAppBar() {
     }
     
     useEffect(() => {
-      const getConversations = async() => {
-        try{
-          const res:converseichon = (await axios.get(`/conversation?ida=${id}`)).data
-          setConversation(res.members)
-        }catch(err:any){
-          console.log(err.message)
-        }
-      }
-      getConversations()
-    })
+      setConversation(conversations);
+    },[conversation])
   
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
       e.preventDefault();
@@ -63,11 +58,11 @@ export default function BottomAppBar() {
             </Typography> */}
             <div className={style.container}>
               
-              <div>
+            <List sx={{ mb: 2 }} >
                  {conversation?.map((c:any) => (
                   <Conversations conversation={c} currentUser={id}/>
                   ))}   
-              </div>
+              </List>
             </div>
              <div className={style.fondoChat}>
                <div>

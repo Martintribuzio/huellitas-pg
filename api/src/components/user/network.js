@@ -1,5 +1,5 @@
 const userNetwork = require('express').Router();
-const { createUser, postsByUser } = require('./controller');
+const { createUser, postsByUser,getUserById } = require('./controller');
 const passport = require('passport');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
@@ -21,6 +21,7 @@ const storage = multer.diskStorage({
     cb(null, uniqid('', file.originalname.split(' ').join('')));
   },
 });
+
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png')
@@ -201,5 +202,15 @@ userNetwork.post('/refreshToken', (req, res, next) => {
 userNetwork.get('/me', verifyUser, (req, res, next) => {
   res.send(req.user);
 });
+
+userNetwork.get('/:id',async (req,res)=>{
+  console.log(req.query);
+  try{
+    const user = await getUserById(req.query);
+    res.send(user);
+  }
+  catch(err){
+    res.status(400).send(err.message);}
+})
 
 module.exports = userNetwork;
