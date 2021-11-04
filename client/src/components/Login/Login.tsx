@@ -13,6 +13,7 @@ import dotenv from 'dotenv';
 // import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import Typography from '@mui/material/Typography';
+import Switch from './Switch';
 
 dotenv.config();
 
@@ -150,9 +151,13 @@ function Ingresar() {
   };
   //-----------------------------------------------------------------------
   return (
-    <Box sx={{ backgroundColor: 'white' }} className='container'>
+    <Box sx={{ backgroundColor: '#F5F5F5' }} className='container'>
       <div>
-        <Typography variant='h2'>Ingresa</Typography>
+        <Typography
+          style={{ color: '#4A4A4A', marginBottom: '10px' }}
+          variant='h4'>
+          Ingresa
+        </Typography>
       </div>
       <form onSubmit={onSubmit}>
         <div className='inputs'>
@@ -192,13 +197,15 @@ function Ingresar() {
             )}
           />
         </div>
-        <Button variant='contained' type='submit'>
+        <Button className='loginButton' variant='contained' type='submit'>
           Ingresar
         </Button>
       </form>
+      <hr className='Line' />
       <GoogleLogin
+        className='googleButton'
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || ''}
-        buttonText='Login'
+        buttonText='Sign up with Google'
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
         cookiePolicy={'single_host_origin'}

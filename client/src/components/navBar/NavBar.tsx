@@ -291,21 +291,21 @@ export default function PrimarySearchAppBar(): JSX.Element {
           <Box sx={{ display: { xs: 'none', md: 'flex' }, marginLeft: '25px' }}>
             <Link style={{ textDecoration: 'none', color: 'white' }} to='/home'>
               <Button className={s.btnNav} color='inherit'>
-                inicio
+                Inicio
               </Button>
             </Link>
             <Link
               style={{ textDecoration: 'none', color: 'white' }}
               to='/home/feed'>
               <Button className={s.btnNav} color='inherit'>
-                publicaciones
+                Publicaciones
               </Button>
             </Link>
             <Link
               style={{ textDecoration: 'none', color: 'white' }}
               to='/home/about'>
               <Button className={s.btnNav} color='inherit'>
-                nosotros
+                Nosotros
               </Button>
             </Link>
           </Box>

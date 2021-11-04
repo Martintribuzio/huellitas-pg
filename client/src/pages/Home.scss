@@ -16,11 +16,11 @@
   align-self: center;
 
   .cardImage {
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     overflow: hidden;
     img {
-      width: 100%;
+      width: 95%;
     }
   }
 }
@@ -118,10 +118,11 @@
     cursor: pointer;
   }
   .Secondary {
-    height: max-content;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 
     .Description {
       height: max-content;
@@ -138,12 +139,11 @@
 
   .Secondary3 {
     padding-top: 50px;
-    height: max-content;
+    height: 100vh;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: row;
-    margin-top: 100px;
     background-image: url('../assets/home/background.png');
 
     .Description2 {
