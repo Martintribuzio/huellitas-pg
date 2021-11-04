@@ -1,9 +1,4 @@
-.dviMens{
-    height: 88vh;
-    margin-bottom: 50px;
+.BarraBusqueda{
+    position:absolute;
+    left:20px;
 }
-
-.container{
-    width:300px
-}
-

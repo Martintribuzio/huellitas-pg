@@ -49,7 +49,7 @@ function App() {
 
         <Route path='/alldogs'>{/* <Alldogs /> */}</Route>
 
-        <Route exact path='/home/menssage'>
+        <Route exact path='/home/messenger'>
           <Messenger />
         </Route>
 

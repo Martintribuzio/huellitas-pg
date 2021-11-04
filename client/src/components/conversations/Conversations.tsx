@@ -3,7 +3,8 @@ import {useState, useEffect} from 'react'
 
 
 export default function Conversations(conversation:any, currentUser:string){
-    const [user,setUser] = useState(Object)
+    const [user,setUser] = useState(Object);
+    
 
     useEffect(() => {
         const friendId = conversation.members?.find((elem:string) => elem !== currentUser)
@@ -23,8 +24,8 @@ export default function Conversations(conversation:any, currentUser:string){
     
     return(
         <div>
-            <img src={user.image}/>
-            <span>{user.name}</span>
+            <img src={user?.image}/>
+            <span>{user?.name}</span>
         </div>
     )
 }
