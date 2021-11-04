@@ -41,6 +41,7 @@ export default function BottomAppBar() {
         <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
           Mensajes
         </Typography>
+        
         <List sx={{ mb: 2 }}>
           {messages.slice(0,5).map(({ id, primary, secondary, person }) => (
               <React.Fragment key={id}>

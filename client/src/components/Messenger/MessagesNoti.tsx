@@ -43,16 +43,23 @@ export default function BottomAppBar() {
 
   const id = localStorage.getItem('userId');
 
-  const [conversation,setConversation] = useState<Array<string>>(['',''])
+  const [conversation,setConversation] = useState<Array<string>>(['','']);
+  const [message,setMessage] = useState([]);
+  const [currentChat, setCurrentChat]=useState(null);
+
   
   interface converseichon{
     conversation:Array<string>
+  }
+  interface message{
+    message:string
+
   }
 
   useEffect(() => {
     const getConversations = async() => {
       try{
-        const res = await axios.get("/conversation")
+        const res = await axios.get(`/conversation?ida=${id}`)
         setConversation(res.data)
       }catch(err:any){
         console.log(err.message)
@@ -100,8 +107,17 @@ export default function BottomAppBar() {
               </ListItem>
             </React.Fragment>
           ))} */}
-          <Messages/>
+          
         {/* </List> */}
+        </div>
+        <div>
+          {currentChat?(
+            <div>
+              {/* {message.map((m:object) => (
+                <Messages message={m} own={m.sender===user.id}/>
+              ))} */}
+            </div>
+          ):<span>Comienza una conversación</span>}
         </div>
       </Paper>
     </div>
