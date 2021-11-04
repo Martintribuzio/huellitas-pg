@@ -8,7 +8,9 @@ export interface PostType{
     state: string,
     _id?: string
 }
-
+export interface conversation{
+menbers: string[],
+}
 export interface detailProps{
     id:string,
 }

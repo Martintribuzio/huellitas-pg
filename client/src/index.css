@@ -1,6 +1,10 @@
 #root {
   height: 100%;
 }
+Button {
+  text-transform: none !important;
+}
+
 html {
   margin: 0;
   padding: 0;

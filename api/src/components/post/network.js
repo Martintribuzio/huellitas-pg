@@ -1,14 +1,23 @@
 const postNetwork = require('express').Router();
+<<<<<<< HEAD
 const { createPost, findPost, editPost } = require('./controller');
+=======
+const { createPost, findPost } = require('./controller');
+const fs = require('fs');
+>>>>>>> 5c99c84dca7bd8e9febca2d0d110c32c0598f630
 const multer = require('multer');
 const uniqid = require('uniqid');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
+    if(!fs.existsSync('./uploads')){
+      console.log("PATH NOT FOUND")
+      fs.mkdirSync('./uploads')
+    } 
     cb(null, './uploads');
   },
   filename: function (req, file, cb) {
-    cb(null, uniqid());
+    cb(null, uniqid() + '.' + file.mimetype.split('/')[1]);
   },
 });
 

@@ -5,15 +5,17 @@ import {
   GET_GENRES,
   GET_POSTS,
   GET_POST_QUERY,
+  GET_CONVERSATIONS,
 } from '../types/actionTypes';
 import { FiltersActionTypes } from '../types/actionTypes';
-import { PostType } from '../types/types';
+import { PostType,conversation } from '../types/types';
 
 export interface typeState {
   allPosts: Array<PostType>;
   filteredPosts: Array<PostType>;
   queryPosts: string;
   user: Object;
+  conversations: Array<conversation>;
 }
 
 const initialState: typeState = {
@@ -21,6 +23,7 @@ const initialState: typeState = {
   filteredPosts: [],
   user: {},
   queryPosts: '',
+  conversations: [],
 };
 
 export default function rootReducer(
@@ -101,6 +104,11 @@ export default function rootReducer(
     //     ...state,
     //     filteredPosts: filtradosFunc(state.allPosts, action.payload.state, action.payload.type, action.payload.genre)
     //   }
+    case GET_CONVERSATIONS:
+      return{
+      ...state,
+      conversations: action.payload
+    }
     default:
       return state;
   }

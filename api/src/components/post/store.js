@@ -23,7 +23,6 @@ const createPostDB = async (
       petImage,
     });
     await post.save();
-    console.log('USER', id, User);
     const userById = await User.findById(id);
 
     userById.posts.push(post);
@@ -31,8 +30,7 @@ const createPostDB = async (
 
     return post;
   } catch (e) {
-    console.log(e.message);
-    throw new Error(e.message);
+    res.send({ e: e.message });
   }
 };
 
