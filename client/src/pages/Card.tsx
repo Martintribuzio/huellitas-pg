@@ -8,7 +8,11 @@ const Card = (props: CardProps) => {
   return (
     <div className='card'>
       <div className='cardImage'>
-        <img src={props.img} alt='post' />
+        <img
+          style={{ filter: 'drop-shadow(2px 2px 2px rgb(0 0 0 / 0.2))' }}
+          src={props.img}
+          alt='post'
+        />
       </div>
       <h3>{props.type}</h3>
       <p>{props.description}</p>

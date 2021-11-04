@@ -53,36 +53,36 @@ export const Home = () => {
             </p>
           </div>
         </Fade>
+        <div className='Posts'>
+          <Fade direction='up' triggerOnce className='Fade'>
+            <Card
+              type='Encontrado'
+              img={post2}
+              description={
+                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi dolores consequuntur sequi ab neque quam eum.'
+              }
+            />
+          </Fade>
+          <Fade direction='up' triggerOnce className='Fade'>
+            <Card
+              type='Perdido'
+              img={post3}
+              description={
+                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi dolores consequuntur sequi ab neque quam eum.'
+              }
+            />
+          </Fade>
+          <Fade direction='up' triggerOnce className='Fade'>
+            <Card
+              type='En adopción'
+              img={post1}
+              description={
+                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi dolores consequuntur sequi ab neque quam eum.'
+              }
+            />
+          </Fade>
+        </div>
       </section>
-      <div className='Posts'>
-        <Fade direction='up' triggerOnce className='Fade'>
-          <Card
-            type='Encontrado'
-            img={post2}
-            description={
-              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi dolores consequuntur sequi ab neque quam eum.'
-            }
-          />
-        </Fade>
-        <Fade direction='up' triggerOnce className='Fade'>
-          <Card
-            type='Perdido'
-            img={post3}
-            description={
-              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi dolores consequuntur sequi ab neque quam eum.'
-            }
-          />
-        </Fade>
-        <Fade direction='up' triggerOnce className='Fade'>
-          <Card
-            type='En adopción'
-            img={post1}
-            description={
-              'Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi dolores consequuntur sequi ab neque quam eum.'
-            }
-          />
-        </Fade>
-      </div>
 
       <Fade direction='up' triggerOnce className='Fade'>
         <section className='Secondary3'>
