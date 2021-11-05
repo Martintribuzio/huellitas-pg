@@ -2000,6 +2000,18 @@
     "@svgr/plugin-svgo" "^5.5.0"
     "loader-utils" "^2.0.0"
 
+"@terraformer/arcgis@^2.0.7":
+  "integrity" "sha512-eKTvNXze2Fo7vAEjvJFIGn5QdU0OP4aD9DuT/uTBLRM1QS+ju7KtPITbVW+xgCviHLnOVeFQ1UsIs9kjkakD4g=="
+  "resolved" "https://registry.npmjs.org/@terraformer/arcgis/-/arcgis-2.1.0.tgz"
+  "version" "2.1.0"
+  dependencies:
+    "@terraformer/common" "^2.0.7"
+
+"@terraformer/common@^2.0.7":
+  "integrity" "sha512-8bl+/JT0Rw6FYe2H3FfJS8uQwgzGl+UHs+8JX0TQLHgA4sMDEwObbMwo0iP3FVONwPXrPHEpC5YH7Grve0cl9A=="
+  "resolved" "https://registry.npmjs.org/@terraformer/common/-/common-2.0.7.tgz"
+  "version" "2.0.7"
+
 "@testing-library/dom@^7.28.1", "@testing-library/dom@>=7.21.4":
   "integrity" "sha512-3UqjCpey6HiTZT92vODYLPxTBWlM8ZOOjr3LX5F37/VRipW2M1kX6I/Cm4VXzteZqfGfagg8yXywpcOgQBlNsQ=="
   "resolved" "https://registry.npmjs.org/@testing-library/dom/-/dom-7.31.2.tgz"
@@ -2102,6 +2114,21 @@
     "@types/estree" "*"
     "@types/json-schema" "*"
 
+"@types/esri-leaflet-geocoder@^2.2.3":
+  "integrity" "sha512-SyJuRZlPARrPWwx7L5KrvKLNZcbyw4CuCzyj7e3kgo7MZFpFCkGpO7Po5J6kvZt+OdT138u3WpXRVnRNNrSeRQ=="
+  "resolved" "https://registry.npmjs.org/@types/esri-leaflet-geocoder/-/esri-leaflet-geocoder-2.2.3.tgz"
+  "version" "2.2.3"
+  dependencies:
+    "@types/esri-leaflet" "*"
+    "@types/leaflet" "*"
+
+"@types/esri-leaflet@*":
+  "integrity" "sha512-Z3GLyJTepEsEpo2FB3eRqSRxGw1Y2Vohpuu5Qp87tc3MGbXjhSUTRYldoaACZj6JQQJuOnyK9FLMdSziq5C1Ow=="
+  "resolved" "https://registry.npmjs.org/@types/esri-leaflet/-/esri-leaflet-2.1.9.tgz"
+  "version" "2.1.9"
+  dependencies:
+    "@types/leaflet" "*"
+
 "@types/estree@*":
   "integrity" "sha512-C6N5s2ZFtuZRj54k2/zyRhNDjJwwcViAM3Nbm8zjBpbqAdZ00mr0CFxvSKeO8Y/e03WVFLpQMdHYVfUd6SB+Hw=="
   "resolved" "https://registry.npmjs.org/@types/estree/-/estree-0.0.50.tgz"
@@ -2111,6 +2138,11 @@
   "integrity" "sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw=="
   "resolved" "https://registry.npmjs.org/@types/estree/-/estree-0.0.39.tgz"
   "version" "0.0.39"
+
+"@types/geojson@*":
+  "integrity" "sha512-1rkryxURpr6aWP7R786/UQOkJ3PcpQiWkAXBmdWc7ryFWqN6a4xfK7BtjXvFBKO9LjQ+MWQSWxYeZX1OApnArA=="
+  "resolved" "https://registry.npmjs.org/@types/geojson/-/geojson-7946.0.8.tgz"
+  "version" "7946.0.8"
 
 "@types/glob@^7.1.1":
   "integrity" "sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA=="
@@ -2181,6 +2213,13 @@
   "integrity" "sha1-7ihweulOEdK4J7y+UnC86n8+ce4="
   "resolved" "https://registry.npmjs.org/@types/json5/-/json5-0.0.29.tgz"
   "version" "0.0.29"
+
+"@types/leaflet@*":
+  "integrity" "sha512-+Myo00Yb5OuvUyrH+vUwn9DRgOaBJsF/etIMdMcNhWGBMo58Mo1cxLInvCd0ZpvItju/AeDYFB/Od2pLiHB3VA=="
+  "resolved" "https://registry.npmjs.org/@types/leaflet/-/leaflet-1.7.5.tgz"
+  "version" "1.7.5"
+  dependencies:
+    "@types/geojson" "*"
 
 "@types/lodash@^4.14.175":
   "integrity" "sha512-xZmuPTa3rlZoIbtDUyJKZQimJV3bxCmzMIO2c9Pz9afyDro6kr7R79GwcB6mRhuoPmV2p1Vb66WOJH7F886WKQ=="
@@ -4614,6 +4653,11 @@
   "resolved" "https://registry.npmjs.org/depd/-/depd-1.1.2.tgz"
   "version" "1.1.2"
 
+"dequal@2.0.2":
+  "integrity" "sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug=="
+  "resolved" "https://registry.npmjs.org/dequal/-/dequal-2.0.2.tgz"
+  "version" "2.0.2"
+
 "des.js@^1.0.0":
   "integrity" "sha512-Q0I4pfFrv2VPd34/vfLrFOoRmlYj3OV50i7fskps1jZWK1kApMWWT9G6RRUeYedLcBDIhnSDaUvJMb3AhUlaEA=="
   "resolved" "https://registry.npmjs.org/des.js/-/des.js-1.0.1.tgz"
@@ -5301,6 +5345,22 @@
   "version" "4.3.0"
   dependencies:
     "estraverse" "^5.2.0"
+
+"esri-leaflet-geocoder@^3.1.1":
+  "integrity" "sha512-G0fGOxRQn5YZurd+8b5LQu1pRJvHJVIlOnXfA/B7UCw+enRFOn3VB/KT1XctIC7BsO/vXEPGy7XH3qEd9dZfaA=="
+  "resolved" "https://registry.npmjs.org/esri-leaflet-geocoder/-/esri-leaflet-geocoder-3.1.1.tgz"
+  "version" "3.1.1"
+  dependencies:
+    "esri-leaflet" "^3.0.2"
+    "leaflet" "^1.0.0"
+
+"esri-leaflet@^3.0.2":
+  "integrity" "sha512-TTfUQ00r9dMVhb8ipTEIN/cF3SDvCQj2kQcmnwNyuFO5wcOM3y59ou3xwTMp5mMjpyYfelPl9s5LjosaqgxGaQ=="
+  "resolved" "https://registry.npmjs.org/esri-leaflet/-/esri-leaflet-3.0.3.tgz"
+  "version" "3.0.3"
+  dependencies:
+    "@terraformer/arcgis" "^2.0.7"
+    "tiny-binary-search" "^1.0.3"
 
 "estraverse@^4.1.1":
   "integrity" "sha512-39nnKffWz8xN1BU/2c79n9nB9HDzo0niYUqx6xyqUnyoAnQyyWpOTdZEeiCch8BBu515t4wp9ZmgVfVhn9EBpw=="
@@ -7620,7 +7680,29 @@
     "lodash" "^4.17.5"
     "webpack-sources" "^1.1.0"
 
-"leaflet@^1.7.1":
+"leaflet-control-geocoder@^2.3.0":
+  "integrity" "sha512-Zi5cebDsfAq6B0ZilDGn/W5oNM8pQu6cltEHBxfR56XnN3f/Lmez1+qrdyRY6oTlP740caBHHCmd35Z/eif7/w=="
+  "resolved" "https://registry.npmjs.org/leaflet-control-geocoder/-/leaflet-control-geocoder-2.3.0.tgz"
+  "version" "2.3.0"
+  optionalDependencies:
+    "open-location-code" "^1.0.0"
+
+"leaflet-geosearch@^2.7.0":
+  "integrity" "sha512-6rZIZ5mp9Ifp3R37DKe7ipHV6/qnUY5kP1gNDz3oMT4hp5FqKyB2V4enoTDT1iziE8yrn0hy/OP9oI4HG1dKEw=="
+  "resolved" "https://registry.npmjs.org/leaflet-geosearch/-/leaflet-geosearch-2.7.0.tgz"
+  "version" "2.7.0"
+  dependencies:
+    "lodash.debounce" "^4.0.8"
+    "nodent-runtime" "^3.0.4"
+
+"leaflet-geosearch@^3.6.0":
+  "integrity" "sha512-TkJOi+eVbsQB7wC0ssGzV9eGQv5BgEwDyb0QOunYA64qe53lB+ostUemvQD7Cmari0shtgBr3Patn5galjr3WA=="
+  "resolved" "https://registry.npmjs.org/leaflet-geosearch/-/leaflet-geosearch-3.6.0.tgz"
+  "version" "3.6.0"
+  optionalDependencies:
+    "leaflet" "^1.6.0"
+
+"leaflet@^1.0.0", "leaflet@^1.6.0", "leaflet@^1.7.1":
   "integrity" "sha512-/xwPEBidtg69Q3HlqPdU3DnrXQOvQU/CCHA1tcDQVzOwm91YMYaILjNp7L4Eaw5Z4sOYdbBz6koWyibppd8Zqw=="
   "resolved" "https://registry.npmjs.org/leaflet/-/leaflet-1.7.1.tgz"
   "version" "1.7.1"
@@ -8292,6 +8374,11 @@
   "resolved" "https://registry.npmjs.org/node-releases/-/node-releases-2.0.1.tgz"
   "version" "2.0.1"
 
+"nodent-runtime@^3.0.4":
+  "integrity" "sha512-7Ws63oC+215smeKJQCxzrK21VFVlCFBkwl0MOObt0HOpVQXs3u483sAmtkF33nNqZ5rSOQjB76fgyPBmAUrtCA=="
+  "resolved" "https://registry.npmjs.org/nodent-runtime/-/nodent-runtime-3.2.1.tgz"
+  "version" "3.2.1"
+
 "normalize-package-data@^2.5.0":
   "integrity" "sha512-/5CMN3T0R4XTj4DcGaexo+roZSdSFW/0AOOTROrjxzCG1wrWXEsGbRKevjlIL+ZDE4sZlJr5ED4YW0yqmkK+eA=="
   "resolved" "https://registry.npmjs.org/normalize-package-data/-/normalize-package-data-2.5.0.tgz"
@@ -8502,6 +8589,11 @@
   "version" "5.1.2"
   dependencies:
     "mimic-fn" "^2.1.0"
+
+"open-location-code@^1.0.0":
+  "integrity" "sha1-XqGjTuUiHGyvoEOS4b2Qb9dIj34="
+  "resolved" "https://registry.npmjs.org/open-location-code/-/open-location-code-1.0.3.tgz"
+  "version" "1.0.3"
 
 "open@^7.0.2":
   "integrity" "sha512-MVHddDVweXZF3awtlAS+6pgKLlm/JgxZ90+/NBurBoQctVOOB/zDdVjcyPzQ+0laDGbsWgrRkflI65sQeOgT9Q=="
@@ -9880,7 +9972,7 @@
     "strip-ansi" "6.0.0"
     "text-table" "0.2.0"
 
-"react-dom@*", "react-dom@^16 || ^17", "react-dom@^16.8.0 || ^17.0.0", "react-dom@^17.0.1", "react-dom@^17.0.2", "react-dom@>=16.6.0", "react-dom@>=16.8 || ^17.0.0":
+"react-dom@*", "react-dom@^15.0.0 || ^16.0.0 || ^17.0.0", "react-dom@^16 || ^17", "react-dom@^16.8.0 || ^17.0.0", "react-dom@^17.0.1", "react-dom@^17.0.2", "react-dom@>=16.6.0", "react-dom@>=16.8 || ^17.0.0":
   "integrity" "sha512-s4h96KtLDUQlsENhMn1ar8t2bEa+q/YAtj8pPPdIjPDGBDIVNsrD9aXNWqspUe6AzKCIG0C1HZZLqLV7qpOBGA=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-17.0.2.tgz"
   "version" "17.0.2"
@@ -9937,7 +10029,15 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   "version" "16.13.1"
 
-"react-leaflet@^3.1.0":
+"react-leaflet-geosearch@^0.3.4":
+  "integrity" "sha512-hI1QfdZ4AAKSij9e6HCfAVDVgBuCGqqRN40WOCNfXOvbLH9dzNpzmrGSp/GY2euDCqOTdGqYa0jfy8hwCxKDWg=="
+  "resolved" "https://registry.npmjs.org/react-leaflet-geosearch/-/react-leaflet-geosearch-0.3.4.tgz"
+  "version" "0.3.4"
+  dependencies:
+    "leaflet-geosearch" "^2.7.0"
+    "react-leaflet" "^3.0.5"
+
+"react-leaflet@^3.0.5", "react-leaflet@^3.1.0":
   "integrity" "sha512-kdZS8NYbYFPmkQr7zSDR2gkKGFeWvkxqoqcmZEckzHL4d5c85dJ2gbbqhaPDpmWWgaRw9O29uA/77qpKmK4mTQ=="
   "resolved" "https://registry.npmjs.org/react-leaflet/-/react-leaflet-3.1.0.tgz"
   "version" "3.1.0"
@@ -10071,7 +10171,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@*", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0|| ^18.0.0", "react@^16 || ^17", "react@^16.0.0", "react@^16.8.0 || ^17", "react@^16.8.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@^17.0.1", "react@^17.0.2", "react@>= 16", "react@>=15", "react@>=16.14.0", "react@>=16.6.0", "react@>=16.8", "react@>=16.8 || ^17.0.0", "react@>=16.8.0", "react@17.0.2":
+"react@*", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0|| ^18.0.0", "react@^16 || ^17", "react@^16.0.0", "react@^16.11.0 || ^17.0.0", "react@^16.8.0 || ^17", "react@^16.8.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@^17.0.1", "react@^17.0.2", "react@>= 16", "react@>=15", "react@>=16.14.0", "react@>=16.6.0", "react@>=16.8", "react@>=16.8 || ^17.0.0", "react@>=16.8.0", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"
@@ -11415,6 +11515,13 @@
   "resolved" "https://registry.npmjs.org/sweetalert2/-/sweetalert2-11.1.9.tgz"
   "version" "11.1.9"
 
+"swr@^1.0.1":
+  "integrity" "sha512-EPQAxSjoD4IaM49rpRHK0q+/NzcwoT8c0/Ylu/u3/6mFj/CWnQVjNJ0MV2Iuw/U+EJSd2TX5czdAwKPYZIG0YA=="
+  "resolved" "https://registry.npmjs.org/swr/-/swr-1.0.1.tgz"
+  "version" "1.0.1"
+  dependencies:
+    "dequal" "2.0.2"
+
 "symbol-tree@^3.2.4":
   "integrity" "sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw=="
   "resolved" "https://registry.npmjs.org/symbol-tree/-/symbol-tree-3.2.4.tgz"
@@ -11569,6 +11676,11 @@
   "integrity" "sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q="
   "resolved" "https://registry.npmjs.org/timsort/-/timsort-0.3.0.tgz"
   "version" "0.3.0"
+
+"tiny-binary-search@^1.0.3":
+  "integrity" "sha512-STSHX/L5nI9WTLv6wrzJbAPbO7OIISX83KFBh2GVbX1Uz/vgZOU/ANn/8iV6t35yMTpoPzzO+3OQid3mifE0CA=="
+  "resolved" "https://registry.npmjs.org/tiny-binary-search/-/tiny-binary-search-1.0.3.tgz"
+  "version" "1.0.3"
 
 "tiny-invariant@^1.0.2":
   "integrity" "sha512-ytxQvrb1cPc9WBEI/HSeYYoGD0kWnGEOR8RY6KomWLBVhqz0RgTwVO9dLrGz7dC+nN9llyI7OKAgRq8Vq4ZBSw=="

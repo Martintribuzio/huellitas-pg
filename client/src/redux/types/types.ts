@@ -6,7 +6,9 @@ export interface PostType{
     petImage: File | null | undefined | string,
     type: string,
     state: string,
-    _id?: string
+    _id?: string,
+    latitude: number,
+    longitude: number
 }
 
 export interface detailProps{

@@ -16,8 +16,22 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js%22%3E"></script>
+    <!-- Load Leaflet from CDN-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet-src.js"></script>
+
+    <!-- Load Esri Leaflet from CDN -->
+    <script src="https://unpkg.com/esri-leaflet"></script>
+
+    <!-- Esri Leaflet Geocoder -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css"
+    />
+    <script src="https://unpkg.com/esri-leaflet-geocoder"></script>
+
+    <script src="leaflet-search-master\src\leaflet-search.js"></script>
+    <link rel="stylesheet"        href="leaflet-search-master\src\leaflet-search.css" />
 
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
