@@ -49,7 +49,7 @@ export default function Conversations(params:any){
   
     if(user && message){
     return(
-        <Link key={user._id} style={{textDecoration:'none'}} to={`/home/messenger/${params.conversation._id}`}>
+        <Link  style={{textDecoration:'none'}} to={`/home/messenger/${params.conversation._id}`}>
             {/* {id === 1 && (
             <ListSubheader sx={{ bgcolor: 'background.paper' }}>
             Hoy
