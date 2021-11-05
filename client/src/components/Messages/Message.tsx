@@ -4,6 +4,7 @@ import axios from "axios"
 import style from './Message.module.css'
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input'
+import { CollectionsOutlined } from "@mui/icons-material";
 
 interface message{
   content: string;
@@ -30,12 +31,13 @@ export default function Message(){
   }, [ConverseId])
   
   const handleSubmit = async (e:any) => {
+    console.log(ConverseId)
     try{
       e.preventDefault()
       const message = {
         sender:idSender,
         content: newMessage,
-        conversationId: ConverseId
+        Converseid: ConverseId
       }
       const res = await axios.post("/message", message)
       console.log(res.data)
