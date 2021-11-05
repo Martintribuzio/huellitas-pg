@@ -13,20 +13,20 @@ interface message{
 
 export default function Message(){
   const [message,setMessage] = useState<message[]>()
-  // const {Converseid} = useParams()
-  // useEffect(() => {
-  //   const getMessage= async () => {
-  //     try{
-  //         // console.log('ID CONVERSACION',Converseid)
-  //         // const res = await axios.get(`/message/${Converseid}`)
-  //         console.log(res.data)
-  //         setMessage(res.data)
-  //     }catch(err:any){
-  //         return err.message
-  //     }
-  //   }
-  //   getMessage()
-  // }, [Converseid])
+  const { ConverseId } = useParams<{ConverseId?:string}>()
+  useEffect(() => {
+    const getMessage= async () => {
+      try{
+          console.log('ID CONVERSACION',ConverseId)
+          const res = await axios.get(`/message/${ConverseId}`)
+          console.log(res.data)
+          setMessage(res.data)
+      }catch(err:any){
+          return err.message
+      }
+    }
+    getMessage()
+  }, [ConverseId])
   
      
   return (
@@ -41,7 +41,6 @@ export default function Message(){
           {message?.map((c) => (
              <p>{c.content}</p>
           ))}
-          hola??
         </div>
       </div>
       </>

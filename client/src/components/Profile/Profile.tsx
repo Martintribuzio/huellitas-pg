@@ -49,7 +49,6 @@ export default function Profile() {
       setUser(user);
     }
   }, [id]);
-
   return result === 'Unauthorized' ? (
     <Redirect to='/login' />
   ) : (
@@ -69,7 +68,7 @@ export default function Profile() {
           </Typography>
           <Typography variant='h6'>{user.username}</Typography>
           <Typography>Mis posts!</Typography>
-          {posts.length ? (
+          {Array.isArray(posts) ? (
             posts.map(post => <Post post={post}></Post>)
           ) : (
             <Typography>No hay posts</Typography>

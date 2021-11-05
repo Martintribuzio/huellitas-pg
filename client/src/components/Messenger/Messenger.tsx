@@ -19,6 +19,7 @@ import getPostsUser from '../../services/getPostsUser';
 import { useSelector } from 'react-redux';
 import { typeState } from '../../redux/reducers/index';
 import { conversation } from '../../redux/types/types';
+import Box from '@mui/material/Box';
 
 interface menssage{
   content: string,
@@ -29,12 +30,12 @@ export default function BottomAppBar() {
     const [search, setSearch] = useState<string>('');
     // const {currentChat, setcurrentChat} = useState<conversation>()
     const id = localStorage.getItem('userId');
-    console.log('MESSENGER ID ',id);
-    const conversation:Array<conversation> = useSelector((state:typeState) => state.conversations);
 
-    // interface converseichon{
-    //   members:Array<string>
-    // }
+    const convers:Array<conversation> = useSelector((state:typeState) => state.conversations);
+  
+    interface converseichon{
+      members:Array<string>
+    }
 
     // interface message{
     //   content:string
@@ -46,24 +47,27 @@ export default function BottomAppBar() {
       e.preventDefault();
       setSearch(e.target.value);
     }
-    
-    if(conversation){
+    if(!Array.isArray(convers)){
+      return(
+        <div>
+          <h1>No conversations</h1>
+        </div>
+      )
+    }else{
     return (
         <div>
           <CssBaseline />
-          <Input className={style.BarraBusqueda} placeholder="Buscar usuarios" type="text" value={search} onChange={handleChange}/>
-          <Paper square sx={{ pb: '50px'}}>
+          <Paper square sx={{ pb: '50px',marginTop:3}}>
             {/* <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
               Mensajes
             </Typography> */}
             <div className={style.container}>
               
-            <List sx={{ mb: 2 }} >
-                 {conversation?.map((c:any) => (
-                  // <div onClick={() => setcurrentChat(c)}>
-                    <Conversations conversation={c} own={id}/>
-                  // </div>
-                  ))}   
+            <List  >
+            <Input className={style.BarraBusqueda} placeholder="Buscar usuarios" type="text" value={search} onChange={handleChange}/>
+                 {convers.length? convers.map((c:any) => (
+                  <Conversations conversation={c} own={id}/>
+                  )):null}   
               </List>
             </div>
              <div className={style.fondoChat}>
@@ -118,8 +122,4 @@ export default function BottomAppBar() {
         </div>
       );
     }
-  else{
-    return(
-      <div>No tenes conversaciones</div>
-    )
-  }}
+  }
