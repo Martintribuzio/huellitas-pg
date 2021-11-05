@@ -16,7 +16,7 @@ conversationNetwork.get('/', async (req, res) => {
     const Conversation = await getConversation(req.query)
     res.status(200).send(Conversation)
   }catch(err){
-    res.status(404).send(err.message)
+    res.status(404).send([])
   }
 })
 
