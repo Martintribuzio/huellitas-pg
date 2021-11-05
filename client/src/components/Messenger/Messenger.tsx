@@ -29,10 +29,9 @@ export default function BottomAppBar() {
     const [search, setSearch] = useState<string>('');
   
     const id = localStorage.getItem('userId');
-    console.log('MESSENGER ID ',id);
-    const conversation:Array<conversation> = useSelector((state:typeState) => state.conversations);
-  
 
+    const convers:Array<conversation> = useSelector((state:typeState) => state.conversations);
+    console.log('CONVERS',convers);
   
     interface converseichon{
       members:Array<string>
@@ -48,9 +47,16 @@ export default function BottomAppBar() {
       e.preventDefault();
       setSearch(e.target.value);
     }
-
+    if(!Array.isArray(convers)){
+      return(
+        <div>
+          <h1>No conversations</h1>
+        </div>
+      )
+    }else{
     return (
         <div>
+          {console.log('Entre Igual')}
           <CssBaseline />
           <Input className={style.BarraBusqueda} placeholder="Buscar usuarios" type="text" value={search} onChange={handleChange}/>
           <Paper square sx={{ pb: '50px'}}>
@@ -60,9 +66,9 @@ export default function BottomAppBar() {
             <div className={style.container}>
               
             <List sx={{ mb: 2 }} >
-                 {conversation?.map((c:any) => (
+                 {convers.length? convers.map((c:any) => (
                   <Conversations conversation={c} own={id}/>
-                  ))}   
+                  )):null}   
               </List>
             </div>
              <div className={style.fondoChat}>
@@ -114,5 +120,5 @@ export default function BottomAppBar() {
             {/* </div> */}
           </Paper>
         </div>
-      );
+      );}
     }
