@@ -173,6 +173,24 @@ export default function PrimarySearchAppBar(): JSX.Element {
           <p>Messages</p>
         </MenuItem>
       </Link>
+<<<<<<< HEAD
+      <Link
+        to='/home/notification'
+        className={s.link}
+        style={{ color: 'black' }}>
+        <MenuItem>
+          <IconButton
+            size='large'
+            aria-label='show 17 new notifications'
+            color='inherit'>
+            <Badge badgeContent={17} color='error'>
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <p>Notifications</p>
+        </MenuItem>
+      </Link>
+=======
       <MenuItem>
         <IconButton
           size='large'
@@ -184,10 +202,11 @@ export default function PrimarySearchAppBar(): JSX.Element {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
+>>>>>>> 5c99c84dca7bd8e9febca2d0d110c32c0598f630
       <MenuItem>
         <Link
           style={{ display: 'flex', color: 'black', textDecoration: 'none' }}
-          to='/profile'>
+          to='/home/profile'>
           <IconButton
             size='large'
             aria-label='account of current user'
