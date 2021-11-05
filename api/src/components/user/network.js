@@ -1,5 +1,5 @@
 const userNetwork = require('express').Router();
-const { createUser, postsByUser } = require('./controller');
+const { createUser, postsByUser,getUserById } = require('./controller');
 const passport = require('passport');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
@@ -22,6 +22,7 @@ const storage = multer.diskStorage({
   },
 });
 
+
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png')
     cb(null, true);
@@ -33,6 +34,15 @@ const upload = multer({
   limits: { fileSize: 1024 * 1024 * 3 },
   fileFilter,
 });
+
+userNetwork.get('/:id',async (req,res)=>{
+  try{
+    const user = await getUserById(req.params);
+    res.send(user);
+  }
+  catch(err){
+    res.status(400).send(err);}
+})
 
 userNetwork.get('/posts', async (req, res) => {
   try {
@@ -201,5 +211,6 @@ userNetwork.post('/refreshToken', (req, res, next) => {
 userNetwork.get('/me', verifyUser, (req, res, next) => {
   res.send(req.user);
 });
+
 
 module.exports = userNetwork;
