@@ -1,10 +1,6 @@
 const postNetwork = require('express').Router();
-<<<<<<< HEAD
-const { createPost, findPost, editPost } = require('./controller');
-=======
 const { createPost, findPost } = require('./controller');
 const fs = require('fs');
->>>>>>> 5c99c84dca7bd8e9febca2d0d110c32c0598f630
 const multer = require('multer');
 const uniqid = require('uniqid');
 
