@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import dotenv from 'dotenv';
 dotenv.config();
-interface User {
+export interface User {
   name: string;
   lastname: string;
   _id: string;

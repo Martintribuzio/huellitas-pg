@@ -33,7 +33,7 @@ export const Home = () => {
       if(id){
         dispatch(getConvers(id));
       }
-      }}, [dispatch,result]);
+      }}, [result]);
 
   return (
     <div className='Home__container'>
