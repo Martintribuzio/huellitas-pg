@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import { TextField } from '@material-ui/core';
 import { useHistory, Redirect } from 'react-router-dom';
 import useUser from '../hooks/useUser';
-
+import LocationMap from './LocationMap/LocationMap.js';
 import Swal from 'sweetalert2';
 import { postPet } from '../services/createPost';
 
@@ -32,7 +32,7 @@ export default function PostAPet() {
   // HOOK PARA VERIFICACION DE USUARIO LOGEADO
   // RETORNA Unauthorized si no esta logueado
 
-  console.log('POST');
+  //console.log('POST');
   const [input, setInput] = useState<PostType>({
     name: '',
     description: '',
@@ -41,6 +41,8 @@ export default function PostAPet() {
     petImage: null,
     type: '',
     state: '',
+    latitude: 0,
+    longitude: 0
   });
 
   const handlegenrechange = (event: SelectChangeEvent) => {
@@ -153,6 +155,10 @@ export default function PostAPet() {
           onChange={e => handleInputChange(e)}
           required
         /> */}
+
+        <div>
+          <LocationMap/>
+        </div>
 
         <label>Estado de la mascota:</label>
         <FormControl style={{ margin: '1px', minWidth: '120px' }}>
