@@ -1,14 +1,19 @@
 const postNetwork = require('express').Router();
 const { createPost, findPost } = require('./controller');
+const fs = require('fs');
 const multer = require('multer');
 const uniqid = require('uniqid');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
+    if(!fs.existsSync('./uploads')){
+      console.log("PATH NOT FOUND")
+      fs.mkdirSync('./uploads')
+    } 
     cb(null, './uploads');
   },
   filename: function (req, file, cb) {
-    cb(null, uniqid());
+    cb(null, uniqid() + '.' + file.mimetype.split('/')[1]);
   },
 });
 
@@ -38,6 +43,16 @@ postNetwork.get('/', async (req, res) => {
   try {
     const post = await findPost(req.query.id);
     return res.json(post);
+  } catch (error) {
+    return res.send(error);
+  }
+});
+
+postNetwork.put("/", async (req, res) => {
+  try {
+    const { _id, name, type, state, genre, description } = req.body;
+    editPost(_id, name, type, state, genre, description);
+    return res.send("post editado");
   } catch (error) {
     return res.send(error);
   }

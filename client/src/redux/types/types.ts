@@ -10,7 +10,10 @@ export interface PostType{
     latitude: number,
     longitude: number
 }
-
+export interface conversation{
+menbers: string[],
+_id: string,
+}
 export interface detailProps{
     id:string,
 }

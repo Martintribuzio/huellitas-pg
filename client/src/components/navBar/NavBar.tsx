@@ -15,7 +15,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import Button from '@mui/material/Button';
-import Inbox from '../Messages/Messages';
+import Inbox from '../Messenger/Messenger';
 import Stack from '@mui/material/Stack';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
@@ -23,9 +23,12 @@ import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getPostByQuery } from '../../redux/actions';
 import { useHistory } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
+import useUser from '../../hooks/useUser';
 import axios from 'axios';
 import PreviewIcon from '@mui/icons-material/Preview';
 import InfoIcon from '@mui/icons-material/Info';
+
 
 /* const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -69,11 +72,14 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar(): JSX.Element {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorElProf,setAnchorElProf]=React.useState<null | HTMLElement>(null);
   const isMenuOpen = Boolean(anchorEl);
+  const isMenuOpenProf=Boolean(anchorElProf);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const dispatch = useDispatch();
   const [search, setSearch] = useState<string>('');
   const history = useHistory();
+  const [_loading, result]=useUser();
 
   const logoutService = async () => {
     try {
@@ -94,6 +100,13 @@ export default function PrimarySearchAppBar(): JSX.Element {
       console.log(error);
     }
   };
+  
+  const handleProfileMenuOpenProf = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElProf(event.currentTarget);
+  };
+  const handleMenuCloseProf=()=>{
+    setAnchorElProf(null);
+  }
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -131,7 +144,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
       <Inbox />
       <Stack direction='row' justifyContent='center'>
         <Link
-          to='/home/menssage'
+          to='/home/messenger'
           style={{ textDecoration: 'none' }}
           onClick={handleMenuClose}>
           <Button>Ver todos los mensajes</Button>
@@ -139,7 +152,43 @@ export default function PrimarySearchAppBar(): JSX.Element {
       </Stack>
     </Menu>
   );
-
+const renderMenu=(
+  <Menu
+    anchorEl={anchorElProf}
+    anchorOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+    id={menuId}
+    keepMounted
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'right',
+    }}
+    open={isMenuOpenProf}
+    onClose={handleMenuCloseProf}
+    >
+    
+    <Link to='/home/profile'style={{ textDecoration: 'none',color:'black' }}>
+      <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
+    </Link>
+    {result==='Unauthorized'?
+    null:
+    <IconButton
+        size='small'
+        edge='end'
+        aria-label='account of current user'
+        aria-controls={menuId}
+        aria-haspopup='true'
+        onClick={logoutService}
+        color='inherit'
+        >
+        <LogoutIcon />
+        Cerrar sesión
+        </IconButton>
+        }
+  </Menu>
+);
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
@@ -157,7 +206,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}>
       <Link
-        to='/home/menssage'
+        to='/home/messenger'
         className={s.link}
         style={{ color: 'black' }}
         onClick={handleMobileMenuClose}>
@@ -170,24 +219,29 @@ export default function PrimarySearchAppBar(): JSX.Element {
               <MailIcon />
             </Badge>
           </IconButton>
-          <p>Messages</p>
+          <p>Mensajes</p>
+        </MenuItem>
+      </Link>
+      <Link
+        to='/home/notification'
+        className={s.link}
+        style={{ color: 'black' }}>
+        <MenuItem>
+          <IconButton
+            size='large'
+            aria-label='show 17 new notifications'
+            color='inherit'>
+            <Badge badgeContent={0} color='error'>
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
+          <p>Notifications</p>
         </MenuItem>
       </Link>
       <MenuItem>
-        <IconButton
-          size='large'
-          aria-label='show 17 new notifications'
-          color='inherit'>
-          <Badge badgeContent={17} color='error'>
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem>
         <Link
           style={{ display: 'flex', color: 'black', textDecoration: 'none' }}
-          to='/profile'>
+          to='/home/profile'>
           <IconButton
             size='large'
             aria-label='account of current user'
@@ -196,7 +250,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
             color='inherit'>
             <AccountCircle />
           </IconButton>
-          <p>Profile</p>
+          <p>Perfil</p>
         </Link>
       </MenuItem>
     </Menu>
@@ -291,21 +345,21 @@ export default function PrimarySearchAppBar(): JSX.Element {
           <Box sx={{ display: { xs: 'none', md: 'flex' }, marginLeft: '25px' }}>
             <Link style={{ textDecoration: 'none', color: 'white' }} to='/home'>
               <Button className={s.btnNav} color='inherit'>
-                inicio
+                Inicio
               </Button>
             </Link>
             <Link
               style={{ textDecoration: 'none', color: 'white' }}
               to='/home/feed'>
               <Button className={s.btnNav} color='inherit'>
-                publicaciones
+                Publicaciones
               </Button>
             </Link>
             <Link
               style={{ textDecoration: 'none', color: 'white' }}
               to='/home/about'>
               <Button className={s.btnNav} color='inherit'>
-                nosotros
+                Nosotros
               </Button>
             </Link>
           </Box>
@@ -354,13 +408,15 @@ export default function PrimarySearchAppBar(): JSX.Element {
               aria-label='account of current user'
               aria-controls={menuId}
               aria-haspopup='true'
-              color='inherit'>
-              <Link to='/home/profile' style={{ color: 'white' }}>
+              onClick={handleProfileMenuOpenProf}
+              color='inherit'
+              >
+              {/* <Link to='/home/profile' style={{ color: 'white' }}> */}
                 <AccountCircle />
-              </Link>
+              {/* </Link> */}
             </IconButton>
           </Box>
-          <button onClick={logoutService}>logout</button>
+          {/* <button onClick={logoutService}>logout</button> */}
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size='large'
@@ -374,6 +430,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
           </Box>
         </Toolbar>
       </AppBar>
+      {renderMenu}
       {renderMobileMenu}
       {renderMenssage}
     </Box>

@@ -1,6 +1,23 @@
-button {
-  background-color: #4e330a;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
+.inputs {
+  margin-bottom: 20px;
+}
+
+.loginButton {
+  text-transform: none;
+  width: 300px;
+}
+
+.Line {
+  border-bottom: none;
+  border-top: 1px solid gray;
+  margin-top: 30px;
+}
+
+.googleButton {
+  margin-top: 20px;
+  text-transform: none;
+  display: flex;
+  justify-content: center;
+  width: 200px;
+  text-align: center;
 }

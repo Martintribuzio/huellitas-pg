@@ -8,8 +8,8 @@ import 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css';
 import LeafletControlGeocoder from "./LeafletControlGeocoder";
 
 const fetcher = (...args) => fetch(...args).then(response => response.json());
-const defaultCenter = [0, 0];
-const defaultZoom = 4;    
+const defaultCenter = [-34.6038, -58.3816];
+const defaultZoom = 20;    
 
 function DisplayPosition({ map }) {
   const [position, setPosition] = useState(map.getCenter())
@@ -51,7 +51,7 @@ export default function LocationMap(){
     const displayMap = useMemo(
       () => (
         <MapContainer
-          style={{ height:"400px", backgroundColor:"transparent", marginTop:"80px", marginBottom:'90px'}}
+          style={{ height:"400px", backgroundColor:"transparent", marginTop:"80px", marginBottom:'90px', width:"400px"}}
           center={defaultCenter}
           zoom={defaultZoom}
           scrollWheelZoom={false}

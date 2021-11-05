@@ -47,7 +47,7 @@ export default function ImgMediaCard() {
             sx={{
               maxHeight: 300,
             }}
-            image={`/${detailpost.petImage}`}
+            image={`${process.env.REACT_APP_API}/${detailpost.petImage}`}
           />
           <CardContent>
             {detailpost.name ? (

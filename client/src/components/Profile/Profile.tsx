@@ -28,7 +28,6 @@ export default function Profile() {
     console.log(loading);
   }
 
-
   const id = localStorage.getItem('userId');
 
   useEffect(() => {
@@ -50,7 +49,6 @@ export default function Profile() {
       setUser(user);
     }
   }, [id]);
-
   return result === 'Unauthorized' ? (
     <Redirect to='/login' />
   ) : (
@@ -59,24 +57,25 @@ export default function Profile() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        marginTop: '2%',
+        padding: '20px 0 ',
+        height: '71vh',
       }}>
       {user ? (
         <>
-          <Avatar sx={{ width: '10%', height: '10%' }} src={user.image} />
+          <Avatar sx={{ width: '96px', height: '96px' }} src={user.image} />
           <Typography variant='h4'>
             {user.name} {user.lastname}
           </Typography>
           <Typography variant='h6'>{user.username}</Typography>
+          <Typography>Mis posts!</Typography>
+          {Array.isArray(posts) ? (
+            posts.map(post => <Post post={post}></Post>)
+          ) : (
+            <Typography>No hay posts</Typography>
+          )}
         </>
       ) : (
         ''
-      )}
-      <Typography>Mis posts!</Typography>
-      {posts.length ? (
-        posts.map(post => <Post post={post}></Post>)
-      ) : (
-        <Typography>No hay posts</Typography>
       )}
     </Box>
   );
