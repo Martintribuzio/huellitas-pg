@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router"
 import axios from "axios"
 import style from './Message.module.css'
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input'
 import { CollectionsOutlined } from "@mui/icons-material";
+
 
 interface message{
   content: string;
@@ -15,7 +16,8 @@ interface message{
 export default function Message(){
   const [messages,setMessages] = useState<message[]>()
   const [newMessage,setnewMessage] = useState<string>()
-  
+  const scrollRef = useRef<any>()
+
   const idSender = localStorage.getItem('userId');
   const { ConverseId } = useParams<{ConverseId?:string}>()
   useEffect(() => {
@@ -43,16 +45,20 @@ export default function Message(){
       console.log(res.data)
       if(messages !== undefined){
         setMessages([...messages, res.data])
+        setnewMessage('')
       }
     }catch(err:any){
       console.log(err.message)
     }
   }   
+  
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({behavior:"smooth"})
+  },[messages])
 
   return (
-      <>
       <div /* className={params.own ? "message own" : "message"} */ >
-        <div className={style.mensaje}>
+        <div className={style.mensaje} ref={scrollRef}>
           {/* <img
             className="messageImg"
             src="https://images.pexels.com/photos/3686769/pexels-photo-3686769.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
@@ -75,6 +81,5 @@ export default function Message(){
             </div>
           </div>
       </div>
-      </>
     );
   }
