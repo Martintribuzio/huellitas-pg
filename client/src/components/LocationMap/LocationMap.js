@@ -1,6 +1,6 @@
 import React , {useState, useCallback, useEffect, useMemo }from 'react';
 import {MapContainer,TileLayer, Marker} from 'react-leaflet';
-import {geosearch} from 'esri-leaflet-geocoder'; 
+// import {geosearch} from 'esri-leaflet-geocoder'; 
 import "./LocationMap.css"
 import useSwr from "swr"; 
 import 'leaflet/dist/leaflet.css';
