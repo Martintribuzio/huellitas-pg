@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { PostType } from '../../redux/types/types';
+import { PostType,conversation } from '../../redux/types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { typeState } from '../../redux/reducers/index';
 import { getPosts } from '../../redux/actions';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -12,19 +12,44 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import capitalize from '@mui/utils/capitalize';
 import { style } from '@mui/system';
+import axios  from 'axios';
+import useUser from '../../hooks/useUser';
 
 export default function ImgMediaCard() {
   const { id } = useParams<{ id?: string }>();
 
   const dispatch = useDispatch();
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
+  const history = useHistory();
+  const [loading, result] = useUser();
 
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
 
   let detailpost = allPosts.find((elem: PostType) => elem._id === id);
+  const contact = async () => {
+    if(result !== 'Unauthorized'){
+    const idSender = localStorage.getItem('userId');
+    if(detailpost){
+        const conver:conversation = (await axios.get(`/conversation?ida=${idSender}&idb=${detailpost.user}`)).data[0];
+        if(conver._id){
+          history.push(`/home/messenger/${conver._id}`);
+        }
+        else{
+          const newConver: conversation = (await axios.post('/conversation',{
+            idRec: detailpost.user,
+            idEnv: idSender,
+          })).data;
+          console.log('NEW COVER',newConver);
+          history.push(`/home/messenger/${newConver._id}`)
+        }
+  }
+}
+}
+
   if (detailpost !== undefined) {
+    console.log('DETAIL POST', detailpost)
     return (
       <div
         style={{
@@ -76,7 +101,7 @@ export default function ImgMediaCard() {
             </Typography>
           </CardContent>
           <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Button size='small'>Contactar</Button>
+            <Button onClick={contact}  size='small'>Contactar</Button>
           </CardActions>
         </Card>
       </div>
