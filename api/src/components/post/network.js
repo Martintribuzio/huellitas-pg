@@ -48,4 +48,14 @@ postNetwork.get('/', async (req, res) => {
   }
 });
 
+postNetwork.put("/", async (req, res) => {
+  try {
+    const { _id, name, type, state, genre, description } = req.body;
+    editPost(_id, name, type, state, genre, description);
+    return res.send("post editado");
+  } catch (error) {
+    return res.send(error);
+  }
+});
+
 module.exports = postNetwork;

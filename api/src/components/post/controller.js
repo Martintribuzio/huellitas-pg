@@ -1,4 +1,4 @@
-const { createPostDB, findPostDB } = require('./store');
+const { createPostDB, findPostDB, editPostDB } = require('./store');
 const moment = require('moment-timezone');
 
 const createPost = async (
@@ -9,6 +9,7 @@ const createPost = async (
     .tz('America/Argentina/Buenos_Aires')
     .format('YYYY-MM-DD HH:mm:ss');
   try {
+    
     const post = await createPostDB(
       name,
       type,
@@ -34,4 +35,29 @@ const findPost = async id => {
   }
 };
 
-module.exports = { createPost, findPost };
+const editPost = async (_id, name, type, state, genre, description) => {
+  try {
+    const post = await findPostDB(_id);
+    if (post.error) {
+      return { error: post.error };
+    }
+    const date = moment
+      .tz('America/Argentina/Buenos_Aires')
+      .format('YYYY-MM-DD HH:mm:ss');
+    const editPost = await editPostDB(
+      _id,
+      name,
+      type,
+      state,
+      description,
+      genre,
+      date,
+    );
+    
+    return editPost;
+  } catch (error) {
+    return { error: error.message };
+  }
+};
+
+module.exports = { createPost, findPost, editPost };
