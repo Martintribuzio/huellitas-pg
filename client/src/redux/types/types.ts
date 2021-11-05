@@ -10,6 +10,7 @@ export interface PostType{
 }
 export interface conversation{
 menbers: string[],
+_id: string,
 }
 export interface detailProps{
     id:string,

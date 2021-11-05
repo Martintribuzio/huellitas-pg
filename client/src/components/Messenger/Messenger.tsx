@@ -20,15 +20,19 @@ import { useSelector } from 'react-redux';
 import { typeState } from '../../redux/reducers/index';
 import { conversation } from '../../redux/types/types';
 
+interface messages{
+  content: string,
+  id: string
+}
+
 export default function BottomAppBar() {
     const [search, setSearch] = useState<string>('');
   
     const id = localStorage.getItem('userId');
-    const conversations:Array<conversation> = useSelector((state:typeState) => state.conversations);
-    const [conversation,setConversation] = useState<Array<conversation>>();
-    const [message,setMessage] = useState([]);
-    const [currentChat, setCurrentChat]=useState(null);
+    console.log('MESSENGER ID ',id);
+    const conversation:Array<conversation> = useSelector((state:typeState) => state.conversations);
   
+
   
     interface converseichon{
       members:Array<string>
@@ -39,9 +43,6 @@ export default function BottomAppBar() {
       sender:string
     }
     
-    useEffect(() => {
-      setConversation(conversations);
-    },[conversation])
   
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
       e.preventDefault();
@@ -60,7 +61,7 @@ export default function BottomAppBar() {
               
             <List sx={{ mb: 2 }} >
                  {conversation?.map((c:any) => (
-                  <Conversations conversation={c} currentUser={id}/>
+                  <Conversations conversation={c} own={id}/>
                   ))}   
               </List>
             </div>
