@@ -71,7 +71,7 @@ export default function Conversations(params:any){
     else{
         return(
             <div>
-                No hay conversaciones
+                Loading...
             </div>
         )
     }

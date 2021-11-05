@@ -13,9 +13,6 @@ import Textra from 'react-textra';
 import { Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CardChiquita from './CardChiquita';
-import useUser from '../hooks/useUser';
-import { useDispatch } from 'react-redux';
-import { getConvers } from '../redux/actions';
 
 const data = [
   'Toda la informacion sobre los pets',
@@ -24,17 +21,6 @@ const data = [
 ];
 
 export const Home = () => {
-  const [loading, result] = useUser();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (result !== 'Unauthorized') {
-      const id = localStorage.getItem('userId');
-      if (id) {
-        dispatch(getConvers(id));
-      }
-    }
-  }, [result]);
 
   return (
     <div className='Home__container'>

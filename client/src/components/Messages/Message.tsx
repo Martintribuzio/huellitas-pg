@@ -59,7 +59,7 @@ export default function Message(){
             alt=""
           /> */}
           {messages?.map((c) => (
-             <p>{c.content}</p>
+             <p className={c.sender === idSender? 'own':'other' }>{c.content}</p>
           ))}
         </div>
         <div className={style.inputSubmit}>

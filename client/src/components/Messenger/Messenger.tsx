@@ -14,14 +14,27 @@ import Input from '@mui/material/Input'
 import {useState} from 'react'
 import style from './Messenger.module.css'
 import Conversations from '../conversations/Conversations';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { typeState } from '../../redux/reducers/index';
 import { conversation } from '../../redux/types/types';
+import useUser from '../../hooks/useUser';
+import { getConvers } from '../../redux/actions';
 
 
 export default function BottomAppBar() {
     const [search, setSearch] = useState<string>('');
     const id = localStorage.getItem('userId');
+    const [loading, result] = useUser();
+    const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    if (result !== 'Unauthorized') {
+      const id = localStorage.getItem('userId');
+      if (id) {
+        dispatch(getConvers(id));
+      }
+    }
+  }, [result]);
 
     const convers:Array<conversation> = useSelector((state:typeState) => state.conversations);
   
