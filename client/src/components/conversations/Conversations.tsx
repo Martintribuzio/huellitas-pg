@@ -64,7 +64,7 @@ export default function Conversations(params:any){
           <ListItemAvatar>
             <Avatar alt="Profile Picture" src={user.picture} />
           </ListItemAvatar>
-          <ListItemText primary={user.name} secondary={message[0]?.content}  />
+          <ListItemText primary={user.name} secondary={message[message.length - 1]?.content}  />
         </ListItem>
       </div>
     )}

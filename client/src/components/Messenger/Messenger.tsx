@@ -9,7 +9,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import Avatar from '@mui/material/Avatar';
-import Messages from '../Messages/Messages';
+import Message from '../Messages/Message';
 import Input from '@mui/material/Input'
 import {useState, useEffect} from 'react'
 import style from './Messenger.module.css'
@@ -20,35 +20,34 @@ import { useSelector } from 'react-redux';
 import { typeState } from '../../redux/reducers/index';
 import { conversation } from '../../redux/types/types';
 
-interface messages{
+interface menssage{
   content: string,
-  id: string
+  sender: string
 }
 
 export default function BottomAppBar() {
     const [search, setSearch] = useState<string>('');
-  
+    // const {currentChat, setcurrentChat} = useState<conversation>()
     const id = localStorage.getItem('userId');
     console.log('MESSENGER ID ',id);
     const conversation:Array<conversation> = useSelector((state:typeState) => state.conversations);
-  
 
-  
-    interface converseichon{
-      members:Array<string>
-    }
+    // interface converseichon{
+    //   members:Array<string>
+    // }
 
-    interface message{
-      content:string
-      sender:string
-    }
+    // interface message{
+    //   content:string
+    //   sender:string
+    // }
     
   
     function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
       e.preventDefault();
       setSearch(e.target.value);
     }
-
+    
+    if(conversation){
     return (
         <div>
           <CssBaseline />
@@ -61,15 +60,18 @@ export default function BottomAppBar() {
               
             <List sx={{ mb: 2 }} >
                  {conversation?.map((c:any) => (
-                  <Conversations conversation={c} own={id}/>
+                  // <div onClick={() => setcurrentChat(c)}>
+                    <Conversations conversation={c} own={id}/>
+                  // </div>
                   ))}   
               </List>
             </div>
              <div className={style.fondoChat}>
                <div>
-                  {/* {message.map((m:message) => (
-                    <Messages text={m.content} own={m.sender === id} />
+                  {/* {message?.map((m:menssage) => (
+                    <Message text={m.content} own={m.sender === id} />
                   ))} */}
+                  <Message />
                </div>
              <div className={style.inputSubmit}>
                <div className={style.inputChat}>
@@ -116,3 +118,8 @@ export default function BottomAppBar() {
         </div>
       );
     }
+  else{
+    return(
+      <div>No tenes conversaciones</div>
+    )
+  }}
