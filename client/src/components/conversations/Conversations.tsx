@@ -4,6 +4,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
+import { Link } from 'react-router-dom';
 
 interface User{
     name: string;
@@ -35,7 +36,6 @@ export default function Conversations(params:any){
         }
         const getMessage= async () => {
             try{
-                console.log('ID CONVERSACION',params.conversation._id)
                 const res = await axios.get(`/message/${params.conversation._id}`)
                 setMessage(res.data)
             }catch(err:any){
@@ -49,7 +49,7 @@ export default function Conversations(params:any){
   
     if(user && message){
     return(
-        <div >
+        <Link style={{textDecoration:'none'}} to={`/home/messenger/${params.conversation._id}`}>
             {/* {id === 1 && (
             <ListSubheader sx={{ bgcolor: 'background.paper' }}>
             Hoy
@@ -66,12 +66,12 @@ export default function Conversations(params:any){
           </ListItemAvatar>
           <ListItemText primary={user.name} secondary={message[0]?.content}  />
         </ListItem>
-      </div>
+      </Link>
     )}
     else{
         return(
             <div>
-                Loading...
+                No hay conversaciones
             </div>
         )
     }
