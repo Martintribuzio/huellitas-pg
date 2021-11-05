@@ -1,4 +1,4 @@
-const { createUserDB, postsByUserDB } = require('./store');
+const { createUserDB, postsByUserDB,searchUserByIdDB } = require('./store');
 
 const createUser = async ({ name, email, password, postalCode }) => {
   try {
@@ -17,8 +17,17 @@ const postsByUser = async id => {
     return { e: e.message };
   }
 };
+const getUserById = async ({id}) => {
+  try {
+    const user = await searchUserByIdDB(id);
+    return user;
+  } catch (e) {
+    return e.message;
+  }
+}
 
 module.exports = {
   createUser,
   postsByUser,
+  getUserById
 };

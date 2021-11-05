@@ -4,11 +4,11 @@ import  rootReducer  from '../reducers';
 
 declare global {
     interface Window {
-      REDUX_DEVTOOLS_EXTENSION_COMPOSE?: typeof compose;
+      __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?: typeof compose;
     }
   }
 
-const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__  || compose;
 const store = createStore(rootReducer,composeEnhancers(applyMiddleware(thunk)));
 
 
