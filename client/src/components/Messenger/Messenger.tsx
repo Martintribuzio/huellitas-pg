@@ -25,12 +25,7 @@ export default function BottomAppBar() {
     const [search, setSearch] = useState<string>('');
     const id = localStorage.getItem('userId');
     const [loading, result] = useUser();
-    // const socket:<DefaultEventsMap, DefaultEventsMap> = useRef()
     const dispatch = useDispatch();
-
-  useEffect(() => {
-    // socket.current = io("ws://localhost:3002")
-  },[])
 
   useEffect(() => {
     if (result !== 'Unauthorized') {
@@ -40,13 +35,6 @@ export default function BottomAppBar() {
       }
     }
   }, [result]);
-
-  useEffect(() => {
-    // socket.current.emit("addUser",id)
-    // socket.current.on("getUsers", (users:[]) => {
-    //   console.log(users)
-    // })
-  },[localStorage])
 
   const convers:Array<conversation> = useSelector((state:typeState) => state.conversations);
   
@@ -83,7 +71,7 @@ export default function BottomAppBar() {
                   {/* {message?.map((m:menssage) => (
                     <Message text={m.content} own={m.sender === id} />
                   ))} */}
-                  <Message />
+                  <Message convers={convers}/>
                </div>
              </div>
             {/* <List sx={{ mb: 2 }} > /}

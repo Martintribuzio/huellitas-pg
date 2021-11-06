@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router"
+import { useSelector } from "react-redux"
 import axios from "axios"
 import style from './Message.module.css'
 import Button from '@mui/material/Button';
@@ -7,19 +8,21 @@ import Input from '@mui/material/Input'
 import { CollectionsOutlined } from "@mui/icons-material";
 import {io} from "socket.io-client"
 
+
 interface message{
   content: string;
   Converseid: string;
   sender: string;
 }
 
-export default function Message(){
+export default function Message(convers:any){
   const [messages,setMessages] = useState<message[]>()
   const [newMessage,setnewMessage] = useState<string>()
-  const scrollRef = useRef<any>()
-
+  const [arrivalMessage,setArrivalMessage] = useState<any>();
+  const socket:any = useRef()
   const idSender = localStorage.getItem('userId');
   const { ConverseId } = useParams<{ConverseId?:string}>()
+
   useEffect(() => {
     const getMessage= async () => {
       try{
@@ -32,8 +35,38 @@ export default function Message(){
     getMessage()
   }, [ConverseId])
   
+  useEffect(() => {
+    socket.current = io("ws://localhost:3002")
+    socket.current.on("getMessage", (data:message) => {
+      setArrivalMessage({
+        sender: data.sender,
+        content: data.content
+      })
+    })
+  },[])
+  
+  useEffect(() => {
+    if(messages !== undefined){
+      arrivalMessage && convers?.menbers.includes(arrivalMessage.sender) && setMessages((prev:any) => [...prev, arrivalMessage])
+    }
+  },[arrivalMessage,convers])
+
+  useEffect(() => {
+    socket.current.emit("addUser",idSender)
+    socket.current.on("getUsers", (users:[]) => {
+      console.log(users)
+    })
+  },[localStorage])
+
+  const receiverId = convers.menbers?.find((member:string) => member !== idSender)
+
   const handleSubmit = async (e:any) => {
-    console.log(ConverseId)
+    socket.current.emit("sendMessage", {
+      senderId: idSender,
+      receiverId:receiverId,
+      text:newMessage
+    })
+
     try{
       e.preventDefault()
       const message = {
@@ -53,13 +86,9 @@ export default function Message(){
   }   
   
 
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({behavior:"smooth"})
-  },[messages])
-
   return (
-      <div /* className={params.own ? "message own" : "message"} */ >
-        <div className={style.mensaje} ref={scrollRef}>
+      <div >
+        <div className={style.mensaje} >
           {/* <img
             className="messageImg"
             src="https://images.pexels.com/photos/3686769/pexels-photo-3686769.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"

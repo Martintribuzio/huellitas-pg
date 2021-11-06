@@ -12,8 +12,8 @@ export interface PostType{
     user?:string
 }
 export interface conversation{
-menbers: string[],
-_id: string,
+    menbers: string[],
+    _id: string,
 }
 export interface detailProps{
     id:string,
