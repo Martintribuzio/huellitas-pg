@@ -5,7 +5,7 @@ import style from './Message.module.css'
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input'
 import { CollectionsOutlined } from "@mui/icons-material";
-
+import {io} from "socket.io-client"
 
 interface message{
   content: string;
@@ -52,6 +52,7 @@ export default function Message(){
     }
   }   
   
+
   useEffect(() => {
     scrollRef.current?.scrollIntoView({behavior:"smooth"})
   },[messages])
