@@ -11,7 +11,7 @@ import ListSubheader from '@mui/material/ListSubheader';
 import Avatar from '@mui/material/Avatar';
 import Message from '../Messages/Message';
 import Input from '@mui/material/Input'
-import {useState} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import style from './Messenger.module.css'
 import Conversations from '../conversations/Conversations';
 import { useDispatch, useSelector } from 'react-redux';
@@ -19,15 +19,20 @@ import { typeState } from '../../redux/reducers/index';
 import { conversation } from '../../redux/types/types';
 import useUser from '../../hooks/useUser';
 import { getConvers } from '../../redux/actions';
-
+import {io} from "socket.io-client"
 
 export default function BottomAppBar() {
     const [search, setSearch] = useState<string>('');
     const id = localStorage.getItem('userId');
     const [loading, result] = useUser();
+    // const socket:<DefaultEventsMap, DefaultEventsMap> = useRef()
     const dispatch = useDispatch();
 
-  React.useEffect(() => {
+  useEffect(() => {
+    // socket.current = io("ws://localhost:3002")
+  },[])
+
+  useEffect(() => {
     if (result !== 'Unauthorized') {
       const id = localStorage.getItem('userId');
       if (id) {
@@ -36,22 +41,29 @@ export default function BottomAppBar() {
     }
   }, [result]);
 
-    const convers:Array<conversation> = useSelector((state:typeState) => state.conversations);
-  
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-      e.preventDefault();
-      setSearch(e.target.value);
-    }
+  useEffect(() => {
+    // socket.current.emit("addUser",id)
+    // socket.current.on("getUsers", (users:[]) => {
+    //   console.log(users)
+    // })
+  },[localStorage])
 
-    if(!Array.isArray(convers)){
-      return(
-        <div>
-          <h1>No conversations</h1>
-        </div>
-      )
-    }else{
+  const convers:Array<conversation> = useSelector((state:typeState) => state.conversations);
+  
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    e.preventDefault();
+    setSearch(e.target.value);
+  }
+
+  if(!Array.isArray(convers)){
+    return(
+      <div>
+        <h1>No conversations</h1>
+      </div>
+    )
+  }else{
     return (
-        <div>
+      <div>
           <CssBaseline />
           <Paper square sx={{ pb: '50px',marginTop:3}}>
             {/* <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
