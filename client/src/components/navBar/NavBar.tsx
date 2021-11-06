@@ -81,7 +81,9 @@ export default function PrimarySearchAppBar(): JSX.Element {
   const [search, setSearch] = useState<string>('');
   const history = useHistory();
   const [_loading, result] = useUser();
+
   console.log(_loading, result);
+
 
   const logoutService = async () => {
     try {
@@ -382,6 +384,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
           </Box>
 
           <Box sx={{ flexGrow: 1 }} />
+
           {result === 'Success' ? (
             <Box>
               <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
