@@ -35,14 +35,10 @@ const upload = multer({
   fileFilter,
 });
 
-userNetwork.get('/:id',async (req,res)=>{
-  try{
-    const user = await getUserById(req.params);
-    res.send(user);
-  }
-  catch(err){
-    res.status(400).send(err);}
-})
+//obtener los detalles del usuario que inició sesión
+userNetwork.get('/me', verifyUser, (req, res, next) => {
+  res.send(req.user);
+});
 
 userNetwork.get('/posts', async (req, res) => {
   try {
@@ -72,7 +68,7 @@ userNetwork.post('/signup', (req, res) => {
       } else {
         const token = getToken({ _id: user._id });
         const refreshToken = getRefreshToken({ _id: user._id });
-
+        
         user.refreshToken.push({ refreshToken });
 
         user.save((err, user) => {
@@ -118,7 +114,7 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
         });
       },
       err => next(err)
-    );
+      );
   } catch (err) {
     res.send(err);
   }
@@ -126,6 +122,7 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
 
 //LogOut
 userNetwork.get('/logout', verifyUser, (req, res, next) => {
+  console.log('cdwenz', req);
   const { signedCookies = {} } = req;
   const { refreshToken } = signedCookies;
   User.findById(req.user._id).then(
@@ -137,7 +134,7 @@ userNetwork.get('/logout', verifyUser, (req, res, next) => {
       if (tokenIndex !== -1) {
         user.refreshToken.id(user.refreshToken[tokenIndex]._id).remove();
       }
-
+      
       user.save((err, user) => {
         if (err) {
           res.statusCode = 500;
@@ -149,14 +146,14 @@ userNetwork.get('/logout', verifyUser, (req, res, next) => {
       });
     },
     err => next(err)
-  );
+    );
 });
 
 //Ruta para refrescar el token
 userNetwork.post('/refreshToken', (req, res, next) => {
   const { signedCookies = {} } = req;
   const { refreshToken } = signedCookies;
-
+  
   if (refreshToken) {
     try {
       const payload = jwt.verify(
@@ -196,8 +193,8 @@ userNetwork.post('/refreshToken', (req, res, next) => {
           }
         },
         err => next(err)
-      );
-    } catch (err) {
+        );
+      } catch (err) {
       res.statusCode = 401;
       res.send('Unauthorized');
     }
@@ -207,10 +204,21 @@ userNetwork.post('/refreshToken', (req, res, next) => {
   }
 });
 
-//obtener los detalles del usuario que inició sesión
-userNetwork.get('/me', verifyUser, (req, res, next) => {
-  res.send(req.user);
-});
+userNetwork.get('/:id',async (req,res)=>{
+  try{
+    const user = await getUserById(req.params.id);
+    if(user){
+      res.status(200).json({
+        user,
+        token: getToken(user),
+        refreshToken: getRefreshToken(user),
+      })}
+    else{res.status(404).send("usuario no encontradooooo")}
+  }
+  catch(err){
+    res.status(400).send(err);}
+})
+
 
 
 module.exports = userNetwork;

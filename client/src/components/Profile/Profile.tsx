@@ -8,6 +8,8 @@ import Post from '../Post';
 import { PostType } from '../../redux/types/types';
 import useUser from '../../hooks/useUser';
 import profile from '../../assets/profile.png';
+import deletePostService from '../../services/deletePost';
+import Button from '@mui/material/Button';
 
 interface User {
   name: string;
@@ -29,6 +31,11 @@ export default function Profile() {
   }
 
   const id = localStorage.getItem('userId');
+
+  const handleClick = (id: string | undefined) => {
+    deletePostService(id);
+    setPosts(posts.filter(post => post._id !== id));
+  };
 
   useEffect(() => {
     if (id) {
@@ -58,7 +65,7 @@ export default function Profile() {
         flexDirection: 'column',
         alignItems: 'center',
         padding: '20px 0 ',
-        height: '71vh',
+        minHeight: '71vh',
       }}>
       {user ? (
         <>
@@ -69,7 +76,19 @@ export default function Profile() {
           <Typography variant='h6'>{user.username}</Typography>
           <Typography>Mis posts!</Typography>
           {Array.isArray(posts) ? (
-            posts.map(post => <Post post={post}></Post>)
+            posts.map(post => {
+              return (
+                <div>
+                  <Post post={post}></Post>
+                  <Button
+                    variant='contained'
+                    onClick={() => handleClick(post._id)}>
+                    {' '}
+                    eliminar
+                  </Button>
+                </div>
+              );
+            })
           ) : (
             <Typography>No hay posts</Typography>
           )}

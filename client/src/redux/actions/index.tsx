@@ -8,11 +8,30 @@ import {
   GET_POST_QUERY,
   APPLY_FILTERS,
   GET_CONVERSATIONS,
+  EDIT_POST,
+  DELETE_POST,
 } from '../types/actionTypes';
 import axios from 'axios';
 import { Filters } from '../types/types';
 import dotenv from 'dotenv';
 dotenv.config();
+
+export function deletePost(id: string | undefined) {
+  return async (dispatch: any) => {
+    console.log(id);
+    try {
+      const res = await axios.delete(
+        `${process.env.REACT_APP_API_URL}/posts/${id}`
+      );
+      dispatch({
+        type: DELETE_POST,
+        payload: res.data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+}
 
 export function getPosts() {
   return async function (dispatch: any) {
@@ -28,13 +47,12 @@ export function getPostDetail(id: String) {
     return dispatch({ type: GET_DETAIL, payload: data });
   };
 }
-export function getConvers(ida:string) {
+export function getConvers(ida: string) {
   return async function (dispatch: any) {
     let data = (await axios.get(`/conversation?ida=${ida}`)).data;
     return dispatch({ type: GET_CONVERSATIONS, payload: data });
   };
 }
-
 
 export const filterByState = function (filter: string) {
   return {
@@ -84,4 +102,3 @@ export const setUser = function (user: string) {
     payload: user,
   };
 };
-
