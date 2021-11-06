@@ -20,7 +20,6 @@ import { conversation } from '../../redux/types/types';
 import useUser from '../../hooks/useUser';
 import { getConvers } from '../../redux/actions';
 import { useParams } from 'react-router';
-
 import {io} from "socket.io-client"
 
 export default function BottomAppBar() {
