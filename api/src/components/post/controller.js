@@ -1,4 +1,4 @@
-const { createPostDB, findPostDB, editPostDB } = require('./store');
+const { createPostDB, findPostDB, editPostDB, deletePostDB } = require('./store');
 const moment = require('moment-timezone');
 
 const createPost = async (
@@ -60,4 +60,13 @@ const editPost = async (_id, name, type, state, genre, description) => {
   }
 };
 
-module.exports = { createPost, findPost, editPost };
+const deletePost = async _id => {
+  try {
+    deletePostDB(_id);
+  } catch (error) {
+    console.log(error);
+    return { error: error.message };
+  }
+};
+
+module.exports = { createPost, findPost, editPost, deletePost };
