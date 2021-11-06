@@ -28,43 +28,28 @@ const fileFilter = (req, file, cb) => {
     cb(null, true);
   else cb(new Error('File must be a image (jpg,png)'), false);
 };
-const changeTokens = (user) => {
-  const token = getToken(user);
-  const refreshToken = getRefreshToken(user);
-  return {...user, token: token, refreshToken:refreshToken };
-};
+
 const upload = multer({
   storage,
   limits: { fileSize: 1024 * 1024 * 3 },
   fileFilter,
 });
 
-userNetwork.get('/:id',async (req,res)=>{
+
+userNetwork.get('/', async(req, res) => {
   try{
-    const user = await getUserById(req.params.id);
-    // console.log(user);
-    if(user.name){
-      // res.status(200).json({
-      //   user,
-      //   token: getToken(user),
-      //   refreshToken: getRefreshToken(user),
-      // })}
-      // user = changeTokens(user);
-      // console.log(user);
-      res.send(user);
-    }
+    const user = await getUserById(req.query);
+    if(user){
+      res.status(200).json(user)}
     else{res.status(404).send("usuario no encontradooooo")}
   }
   catch(err){
-    console.log(err);
     res.status(400).send(err);}
-})
-
+});
 //obtener los detalles del usuario que inició sesión
 userNetwork.get('/me', verifyUser, (req, res, next) => {
   res.send(req.user);
 });
-
 
 userNetwork.get('/posts', async (req, res) => {
   try {
@@ -230,7 +215,20 @@ userNetwork.post('/refreshToken', (req, res, next) => {
   }
 });
 
-
+userNetwork.get('/:id',async (req,res)=>{
+  try{
+    const user = await getUserById(req.params.id);
+    if(user){
+      res.status(200).json({
+        user,
+        token: getToken(user),
+        refreshToken: getRefreshToken(user),
+      })}
+    else{res.status(404).send("usuario no encontradooooo")}
+  }
+  catch(err){
+    res.status(400).send(err);}
+})
 
 
 
