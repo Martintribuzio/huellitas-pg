@@ -1,78 +1,85 @@
 .App {
-    text-align: center;
-  }
-  
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    height: 40vmin;
-    pointer-events: none;
+    animation: App-logo-spin infinite 20s linear;
   }
-  
-  @media (prefers-reduced-motion: no-preference) {
-    .App-logo {
-      animation: App-logo-spin infinite 20s linear;
-    }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
   }
-  
-  .App-header {
-    background-color: #282c34;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+  to {
+    transform: rotate(360deg);
   }
-  
-  .App-link {
-    color: #61dafb;
-  }
-  
-  @keyframes App-logo-spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
-  .leaflet-container {
-    width: 100vw;
-    height: 100vh;
-  }
-  
-  /**
+}
+
+.leaflet-container {
+  width: 100vw;
+  height: 100vh;
+}
+
+.mapContainer {
+  align-self: center;
+  max-width: 500px;
+  max-height: 510px;
+  width: 100%;
+  position: relative;
+}
+
+/**
    * The styles setting up the images below were added to this demo
    * to avoid import issues when embedded with Codesandbox.
    */
-  
-  .leaflet-container .geocoder-control-input {
-    /* background-image: url('/images/search.png'); */
-  }
-  
-  .leaflet-container .geocoder-control-input-disabled {
-    /* background-image: url('/images/search-disabled.png') */
-  }
-  
-  .leaflet-container .geocoder-control-input.geocoder-control-loading {
-    /* background-image: url('/images/loading.gif'); */
-  }
-  
-  @media only screen and (min--moz-device-pixel-ratio: 2),
+
+.leaflet-container .geocoder-control-input {
+  /* background-image: url('/images/search.png'); */
+}
+
+.leaflet-container .geocoder-control-input-disabled {
+  /* background-image: url('/images/search-disabled.png') */
+}
+
+.leaflet-container .geocoder-control-input.geocoder-control-loading {
+  /* background-image: url('/images/loading.gif'); */
+}
+
+@media only screen and (min--moz-device-pixel-ratio: 2),
   only screen and (-o-min-device-pixel-ratio: 2 / 1),
   only screen and (-webkit-min-device-pixel-ratio: 2),
   only screen and (min-device-pixel-ratio: 2) {
-    .leaflet-container .geocoder-control-input {
-      /* background-image: url('/images/search@2x.png') */
-    }
-  
-    .leaflet-container .geocoder-control-input-disabled {
-      /* background-image: url('/images/search@2x-disabled.png') */
-    }
-  
-    .leaflet-container .geocoder-control-input.geocoder-control-loading {
-      /* background-image: url('/images/loading@2x.gif') */
-    }
+  .leaflet-container .geocoder-control-input {
+    /* background-image: url('/images/search@2x.png') */
   }
-  
+
+  .leaflet-container .geocoder-control-input-disabled {
+    /* background-image: url('/images/search@2x-disabled.png') */
+  }
+
+  .leaflet-container .geocoder-control-input.geocoder-control-loading {
+    /* background-image: url('/images/loading@2x.gif') */
+  }
+}
