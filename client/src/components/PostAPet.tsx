@@ -15,12 +15,16 @@ import useUser from '../hooks/useUser';
 import LocationMap from './LocationMap/LocationMap.js';
 import Swal from 'sweetalert2';
 import { postPet } from '../services/createPost';
+import { useSelector } from 'react-redux';
+import { getCoordenadas } from '../redux/types/actionTypes';
+import { typeState } from '../redux/reducers';
 
 const Input = styled('input')({
   display: 'none',
 });
 
 export default function PostAPet() {
+  const coordenadas = useSelector((state: typeState) => state.coordenadas);
   const [name, setName] = React.useState('');
   const [state, setState] = React.useState('');
   const [type, setType] = React.useState('');
@@ -31,6 +35,7 @@ export default function PostAPet() {
   const [loading, result, user] = useUser();
   // HOOK PARA VERIFICACION DE USUARIO LOGEADO
   // RETORNA Unauthorized si no esta logueado
+
 
   //console.log('POST');
   const [input, setInput] = useState<PostType>({
@@ -120,8 +125,11 @@ export default function PostAPet() {
 
   function handleSubmit(e: any) {
     e.preventDefault();
+    setInput({...input, latitude: coordenadas.lat, longitude: coordenadas.long })
     const id = window.localStorage.getItem('userId');
     const fd = new FormData();
+    fd.append("latitude", input.latitude.toString())
+    fd.append("longitude", input.longitude.toString())
     if (input.petImage) {
       fd.append('petImage', input.petImage);
     }
@@ -144,6 +152,8 @@ export default function PostAPet() {
   if (result === 'Unauthorized') {
     return <Redirect to='/login' />;
   }
+  console.log("LATITUD", input.latitude)
+  console.log("LONGITUD", input.longitude)
   return (
     <div className={styles.conteiner}>
       <form onSubmit={handleSubmit} className={styles.form}>

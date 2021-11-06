@@ -6,6 +6,7 @@ import {
   GET_POSTS,
   GET_POST_QUERY,
   GET_CONVERSATIONS,
+  GET_COORDENADAS
 } from '../types/actionTypes';
 import { FiltersActionTypes } from '../types/actionTypes';
 import { PostType,conversation } from '../types/types';
@@ -16,6 +17,7 @@ export interface typeState {
   queryPosts: string;
   user: Object;
   conversations: Array<conversation>;
+  coordenadas: {long: number, lat: number}
 }
 
 const initialState: typeState = {
@@ -24,6 +26,7 @@ const initialState: typeState = {
   user: {},
   queryPosts: '',
   conversations: [],
+  coordenadas: {long: 0, lat: 0}
 };
 
 export default function rootReducer(
@@ -41,6 +44,11 @@ export default function rootReducer(
         ...state,
         filteredPosts: action.payload,
         allPosts: action.payload,
+      };
+    case GET_COORDENADAS:
+      return {
+        ...state,
+        coordenadas: action.payload
       };
     // case POST_PET:
     //   return {

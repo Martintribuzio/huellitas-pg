@@ -6,6 +6,8 @@ import useSwr from "swr";
 import 'leaflet/dist/leaflet.css';
 import 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css';
 import LeafletControlGeocoder from "./LeafletControlGeocoder";
+import { useDispatch } from 'react-redux';
+import { getCoords } from '../../redux/actions';
 
 const fetcher = (...args) => fetch(...args).then(response => response.json());
 const defaultCenter = [-34.6038, -58.3816];
@@ -22,12 +24,17 @@ function DisplayPosition({ map }) {
     setPosition(map.getCenter())
   }, [map])
 
+  // console.log(position.lat.toString())
   useEffect(() => {
     map.on('move', onMove)
     return () => {
       map.off('move', onMove)
+      
+      dispatch(getCoords(position.lat, position.lng))
     }
   }, [map, onMove])
+
+  const dispatch = useDispatch()
 
   return (
     <p>
