@@ -16,8 +16,9 @@ import { Filters } from '../types/types';
 import dotenv from 'dotenv';
 dotenv.config();
 
-export function deletePost(id: string) {
+export function deletePost(id: string | undefined) {
   return async (dispatch: any) => {
+    console.log(id);
     try {
       const res = await axios.delete(
         `${process.env.REACT_APP_API_URL}/posts/${id}`
