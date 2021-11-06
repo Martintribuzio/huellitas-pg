@@ -29,7 +29,6 @@ import axios from 'axios';
 import PreviewIcon from '@mui/icons-material/Preview';
 import InfoIcon from '@mui/icons-material/Info';
 
-
 /* const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -72,14 +71,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export default function PrimarySearchAppBar(): JSX.Element {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const [anchorElProf,setAnchorElProf]=React.useState<null | HTMLElement>(null);
+  const [anchorElProf, setAnchorElProf] = React.useState<null | HTMLElement>(
+    null
+  );
   const isMenuOpen = Boolean(anchorEl);
-  const isMenuOpenProf=Boolean(anchorElProf);
+  const isMenuOpenProf = Boolean(anchorElProf);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const dispatch = useDispatch();
   const [search, setSearch] = useState<string>('');
   const history = useHistory();
-  const [_loading, result]=useUser();
+  const [_loading, result] = useUser();
 
   const logoutService = async () => {
     try {
@@ -100,13 +101,13 @@ export default function PrimarySearchAppBar(): JSX.Element {
       console.log(error);
     }
   };
-  
+
   const handleProfileMenuOpenProf = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElProf(event.currentTarget);
   };
-  const handleMenuCloseProf=()=>{
+  const handleMenuCloseProf = () => {
     setAnchorElProf(null);
-  }
+  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -152,43 +153,41 @@ export default function PrimarySearchAppBar(): JSX.Element {
       </Stack>
     </Menu>
   );
-const renderMenu=(
-  <Menu
-    anchorEl={anchorElProf}
-    anchorOrigin={{
-      vertical: 'top',
-      horizontal: 'right',
-    }}
-    id={menuId}
-    keepMounted
-    transformOrigin={{
-      vertical: 'top',
-      horizontal: 'right',
-    }}
-    open={isMenuOpenProf}
-    onClose={handleMenuCloseProf}
-    >
-    
-    <Link to='/home/profile'style={{ textDecoration: 'none',color:'black' }}>
-      <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
-    </Link>
-    {result==='Unauthorized'?
-    null:
-    <IconButton
-        size='small'
-        edge='end'
-        aria-label='account of current user'
-        aria-controls={menuId}
-        aria-haspopup='true'
-        onClick={logoutService}
-        color='inherit'
-        >
-        <LogoutIcon />
-        Cerrar sesión
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorElProf}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={isMenuOpenProf}
+      onClose={handleMenuCloseProf}>
+      <Link
+        to='/home/profile'
+        style={{ textDecoration: 'none', color: 'black' }}>
+        <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
+      </Link>
+      {result === 'Unauthorized' ? null : (
+        <IconButton
+          size='small'
+          edge='end'
+          aria-label='account of current user'
+          aria-controls={menuId}
+          aria-haspopup='true'
+          onClick={logoutService}
+          color='inherit'>
+          <LogoutIcon />
+          Cerrar sesión
         </IconButton>
-        }
-  </Menu>
-);
+      )}
+    </Menu>
+  );
   const mobileMenuId = 'primary-search-account-menu-mobile';
   const renderMobileMenu = (
     <Menu
@@ -409,10 +408,9 @@ const renderMenu=(
               aria-controls={menuId}
               aria-haspopup='true'
               onClick={handleProfileMenuOpenProf}
-              color='inherit'
-              >
+              color='inherit'>
               {/* <Link to='/home/profile' style={{ color: 'white' }}> */}
-                <AccountCircle />
+              <AccountCircle />
               {/* </Link> */}
             </IconButton>
           </Box>
