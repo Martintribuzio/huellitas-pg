@@ -19,12 +19,14 @@ import { typeState } from '../../redux/reducers/index';
 import { conversation } from '../../redux/types/types';
 import useUser from '../../hooks/useUser';
 import { getConvers } from '../../redux/actions';
+import { useParams } from 'react-router';
 
 
 export default function BottomAppBar() {
     const [search, setSearch] = useState<string>('');
     const id = localStorage.getItem('userId');
     const [loading, result] = useUser();
+    const { ConverseId } = useParams<{ConverseId?:string}>()
     const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -66,7 +68,7 @@ export default function BottomAppBar() {
                   )):null}   
               </List>
             </div>
-             <div className={style.fondoChat}>
+             <div className={ConverseId?style.fondoChat:style.none}>
                <div>
                   {/* {message?.map((m:menssage) => (
                     <Message text={m.content} own={m.sender === id} />
