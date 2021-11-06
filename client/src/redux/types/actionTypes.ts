@@ -12,6 +12,9 @@ export const APPLY_FILTERS = "APPLY_FILTERS";
 export const SET_USER = 'SET_USER';
 export const ERROR = 'ERROR';
 export const GET_CONVERSATIONS = 'GET_CONVERSATIONS';
+export const EDIT_POST = 'EDIT_POST';
+export const DELETE_POST = 'DELETE_POST';
+
 
 export interface getConversation{
   type: typeof GET_CONVERSATIONS,

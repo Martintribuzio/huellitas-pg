@@ -8,6 +8,7 @@ import Post from '../Post';
 import { PostType } from '../../redux/types/types';
 import useUser from '../../hooks/useUser';
 import profile from '../../assets/profile.png';
+import deletePostService from '../../services/deletePost';
 
 interface User {
   name: string;
