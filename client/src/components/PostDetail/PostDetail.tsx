@@ -22,6 +22,7 @@ export default function ImgMediaCard() {
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
   const history = useHistory();
   const [loading, result] = useUser();
+  const idSender = localStorage.getItem('userId');
 
   useEffect(() => {
     dispatch(getPosts());
@@ -30,7 +31,6 @@ export default function ImgMediaCard() {
   let detailpost = allPosts.find((elem: PostType) => elem._id === id);
   const contact = async () => {
     if(result !== 'Unauthorized'){
-    const idSender = localStorage.getItem('userId');
     if(detailpost){
         const conver:conversation = (await axios.get(`/conversation?ida=${idSender}&idb=${detailpost.user}`)).data[0];
         if(conver._id){
@@ -100,9 +100,9 @@ export default function ImgMediaCard() {
               {detailpost.description}
             </Typography>
           </CardContent>
-          <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
+         {detailpost.user !== idSender? <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button onClick={contact}  size='small'>Contactar</Button>
-          </CardActions>
+          </CardActions>:null}
         </Card>
       </div>
     );
