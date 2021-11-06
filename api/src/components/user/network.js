@@ -35,6 +35,17 @@ const upload = multer({
   fileFilter,
 });
 
+
+userNetwork.get('/', async(req, res) => {
+  try{
+    const user = await getUserById(req.query);
+    if(user){
+      res.status(200).json(user)}
+    else{res.status(404).send("usuario no encontradooooo")}
+  }
+  catch(err){
+    res.status(400).send(err);}
+});
 //obtener los detalles del usuario que inició sesión
 userNetwork.get('/me', verifyUser, (req, res, next) => {
   res.send(req.user);

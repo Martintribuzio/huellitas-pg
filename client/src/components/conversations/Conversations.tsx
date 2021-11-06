@@ -28,7 +28,7 @@ export default function Conversations(params:any){
         const friendId = params.conversation.members?.find((elem:string) => elem !== params.own)
         const getUser = async (friendId:string) => {
             try{
-              const res = await axios.get(`/user/${friendId}`)
+              const res = await axios.get(`/user?id=${friendId}`)
               setUser(res.data)
             }catch(err:any){
               return err.message
@@ -46,7 +46,7 @@ export default function Conversations(params:any){
         getMessage()
 
     },[params])
-  
+    console.log('USER ',user, 'MESSAGE ',message)
     if(user && message){
     return(
         <Link  style={{textDecoration:'none'}} to={`/home/messenger/${params.conversation._id}`}>
