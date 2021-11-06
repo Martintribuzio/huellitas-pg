@@ -46,7 +46,7 @@ export default function Conversations(params:any){
         getMessage()
 
     },[params])
-  
+    console.log('USER ',user, 'MESSAGE ',message)
     if(user && message){
     return(
         <Link  style={{textDecoration:'none'}} to={`/home/messenger/${params.conversation._id}`}>
