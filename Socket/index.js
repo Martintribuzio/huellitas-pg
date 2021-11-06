@@ -20,7 +20,7 @@ const getUser = (receiverId) => {
   };
 
 io.on('connection',(socket)=>{
-    console.log('a user connected');
+    console.log("a new user has connected");
     
     // io.emit("welcome", "hello there")
 

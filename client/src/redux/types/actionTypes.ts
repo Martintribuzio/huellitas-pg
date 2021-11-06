@@ -70,6 +70,11 @@ export interface setUser {
   payload: string;
 }
 
+export interface deletePost{
+  type: typeof DELETE_POST;
+  payload: any
+}
+
 export type FiltersActionTypes =
   | filterByState
   | filterByLatest
@@ -81,4 +86,5 @@ export type FiltersActionTypes =
   | setUser
   | getPostQuery
   | catchErrors
-  | getConversation;
+  | getConversation
+  | deletePost

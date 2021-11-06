@@ -12,7 +12,7 @@ export interface PostType{
     user?:string
 }
 export interface conversation{
-    menbers: string[],
+    members: string[],
     _id: string,
 }
 export interface detailProps{

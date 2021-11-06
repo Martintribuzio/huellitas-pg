@@ -47,7 +47,7 @@ export default function Message(convers:any){
   
   useEffect(() => {
     if(messages !== undefined){
-      arrivalMessage && convers?.menbers.includes(arrivalMessage.sender) && setMessages((prev:any) => [...prev, arrivalMessage])
+      arrivalMessage && convers?.menbers.includes(arrivalMessage.sender) && setMessages([...messages, arrivalMessage])
     }
   },[arrivalMessage,convers])
 
@@ -75,7 +75,6 @@ export default function Message(convers:any){
         Converseid: ConverseId
       }
       const res = await axios.post("/message", message)
-      console.log(res.data)
       if(messages !== undefined){
         setMessages([...messages, res.data])
         setnewMessage('')

@@ -13,7 +13,7 @@ import Message from '../Messages/Message';
 import Input from '@mui/material/Input'
 import {useState, useEffect, useRef} from 'react'
 import style from './Messenger.module.css'
-import Conversations from '../conversations/Conversations';
+import Conversations from '../conversations/Conversation';
 import { useDispatch, useSelector } from 'react-redux';
 import { typeState } from '../../redux/reducers/index';
 import { conversation } from '../../redux/types/types';
@@ -27,7 +27,6 @@ export default function BottomAppBar() {
     const id = localStorage.getItem('userId');
     const [loading, result] = useUser();
     const { ConverseId } = useParams<{ConverseId?:string}>()
-    // const socket:<DefaultEventsMap, DefaultEventsMap> = useRef()
     const dispatch = useDispatch();
 
   useEffect(() => {
@@ -64,10 +63,8 @@ export default function BottomAppBar() {
               
             <List  >
             <Input className={style.BarraBusqueda} placeholder="Buscar usuarios" type="text" value={search} onChange={handleChange}/>
-                 {convers.length? convers.map((c:any) => (
-                  <Conversations conversation={c} own={id}/>
-                  )):null}   
-              </List>
+              <Conversations/>
+            </List>
             </div>
              <div className={ConverseId?style.fondoChat:style.none}>
                <div>
