@@ -12,7 +12,7 @@ const fetcher = (...args) => fetch(...args).then(response => response.json());
 let defaultCenter = [-34.6038, -58.3816];
 let defaultZoom = 13;  
 
-////////////////////////////localizacion////////////////////////////////////////////
+////////////////////////////localizacion//////////////////////////////////////////
 var options = {
   enableHighAccuracy: true,
   timeout: 5000,
@@ -29,7 +29,7 @@ function error(err) {
 
 navigator.geolocation.getCurrentPosition(success, error, options);
 
-////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 
 function DisplayPosition({ map }) {
   const [position, setPosition] = useState(map.getCenter())
