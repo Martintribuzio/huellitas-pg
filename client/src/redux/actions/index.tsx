@@ -36,7 +36,7 @@ export function getConvers(ida:string) {
   };
 }
 
-export function getCoords(long: number, lat:number) {
+export function getCoords(long: string, lat:string) {
   return {type: GET_COORDENADAS, payload: {long, lat}}
 }
 

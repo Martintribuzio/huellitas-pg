@@ -70,7 +70,7 @@ export interface setUser {
 
 export interface getCoordenadas {
   type: typeof GET_COORDENADAS;
-  payload: {long: number, lat: number};
+  payload: {long: string, lat: string};
 }
 
 export type FiltersActionTypes =

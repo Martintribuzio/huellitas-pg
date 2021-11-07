@@ -17,7 +17,7 @@ export interface typeState {
   queryPosts: string;
   user: Object;
   conversations: Array<conversation>;
-  coordenadas: {long: number, lat: number}
+  coordenadas: {long: string, lat: string}
 }
 
 const initialState: typeState = {
@@ -26,7 +26,7 @@ const initialState: typeState = {
   user: {},
   queryPosts: '',
   conversations: [],
-  coordenadas: {long: 0, lat: 0}
+  coordenadas: {long: '', lat: ''}
 };
 
 export default function rootReducer(
@@ -46,6 +46,7 @@ export default function rootReducer(
         allPosts: action.payload,
       };
     case GET_COORDENADAS:
+
       return {
         ...state,
         coordenadas: action.payload

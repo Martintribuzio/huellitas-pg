@@ -36,7 +36,6 @@ export default function PostAPet() {
   // HOOK PARA VERIFICACION DE USUARIO LOGEADO
   // RETORNA Unauthorized si no esta logueado
 
-
   //console.log('POST');
   const [input, setInput] = useState<PostType>({
     name: '',
@@ -46,8 +45,8 @@ export default function PostAPet() {
     petImage: null,
     type: '',
     state: '',
-    latitude: 0,
-    longitude: 0
+    latitude: '',
+    longitude: '',
   });
 
   const handlegenrechange = (event: SelectChangeEvent) => {
@@ -56,10 +55,13 @@ export default function PostAPet() {
   };
 
   const handlerdescritionchange = (event: string) => {
-    console.log(event);
     setDescription(event);
-    console.log(description);
-    setInput({ ...input, description: event });
+    setInput({
+      ...input,
+      description: event,
+      latitude: coordenadas.lat,
+      longitude: coordenadas.long,
+    });
   };
 
   const handletypechange = (event: SelectChangeEvent) => {
@@ -125,11 +127,11 @@ export default function PostAPet() {
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    setInput({...input, latitude: coordenadas.lat, longitude: coordenadas.long })
     const id = window.localStorage.getItem('userId');
     const fd = new FormData();
-    fd.append("latitude", input.latitude.toString())
-    fd.append("longitude", input.longitude.toString())
+    console.log('SE SETEO?', input);
+    fd.append('latitude', input.latitude);
+    fd.append('longitude', input.longitude);
     if (input.petImage) {
       fd.append('petImage', input.petImage);
     }
@@ -152,8 +154,6 @@ export default function PostAPet() {
   if (result === 'Unauthorized') {
     return <Redirect to='/login' />;
   }
-  console.log("LATITUD", input.latitude)
-  console.log("LONGITUD", input.longitude)
   return (
     <div className={styles.conteiner}>
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -167,7 +167,7 @@ export default function PostAPet() {
         /> */}
 
         <div>
-          <LocationMap/>
+          <LocationMap />
         </div>
 
         <label>Estado de la mascota:</label>
