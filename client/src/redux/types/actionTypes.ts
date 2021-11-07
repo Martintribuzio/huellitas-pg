@@ -8,17 +8,17 @@ export const GET_POSTS = 'GET_POSTS';
 export const POST_PET = 'POST_PET';
 export const GET_DETAIL = 'GET_DETAIL';
 export const GET_POST_QUERY = 'GET_POST_QUERY';
-export const APPLY_FILTERS = "APPLY_FILTERS";
+export const APPLY_FILTERS = 'APPLY_FILTERS';
 export const SET_USER = 'SET_USER';
 export const ERROR = 'ERROR';
 export const GET_CONVERSATIONS = 'GET_CONVERSATIONS';
+export const GET_COORDENADAS = 'GET_COORDENADAS';
 export const EDIT_POST = 'EDIT_POST';
 export const DELETE_POST = 'DELETE_POST';
 
-
-export interface getConversation{
-  type: typeof GET_CONVERSATIONS,
-  payload: Array<conversation>
+export interface getConversation {
+  type: typeof GET_CONVERSATIONS;
+  payload: Array<conversation>;
 }
 export interface getPosts {
   type: typeof GET_POSTS;
@@ -60,9 +60,9 @@ export interface getGenres {
   payload: string;
 }
 
-export interface catchErrors{
-    type: typeof ERROR,
-    payload: any
+export interface catchErrors {
+  type: typeof ERROR;
+  payload: any;
 }
 
 export interface setUser {
@@ -72,7 +72,10 @@ export interface setUser {
 
 export interface deletePost{
   type: typeof DELETE_POST;
-  payload: any
+  payload: any}
+export interface getCoordenadas {
+  type: typeof GET_COORDENADAS;
+  payload: { long: string; lat: string };
 }
 
 export type FiltersActionTypes =
@@ -88,3 +91,4 @@ export type FiltersActionTypes =
   | catchErrors
   | getConversation
   | deletePost
+  | getCoordenadas;

@@ -62,8 +62,6 @@ export default function Filters() {
     setType('');
   }
 
-  console.log(state);
-
   function handleClick(value: string) {
     //  console.log(value)
     dispatch(filterByLatest(value));

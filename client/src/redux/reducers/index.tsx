@@ -6,9 +6,10 @@ import {
   GET_POSTS,
   GET_POST_QUERY,
   GET_CONVERSATIONS,
+  GET_COORDENADAS,
 } from '../types/actionTypes';
 import { FiltersActionTypes } from '../types/actionTypes';
-import { PostType,conversation } from '../types/types';
+import { PostType, conversation } from '../types/types';
 
 export interface typeState {
   allPosts: Array<PostType>;
@@ -16,6 +17,7 @@ export interface typeState {
   queryPosts: string;
   user: Object;
   conversations: Array<conversation>;
+  coordenadas: { long: string; lat: string };
 }
 
 const initialState: typeState = {
@@ -24,6 +26,7 @@ const initialState: typeState = {
   user: {},
   queryPosts: '',
   conversations: [],
+  coordenadas: { long: '', lat: '' },
 };
 
 export default function rootReducer(
@@ -40,7 +43,12 @@ export default function rootReducer(
       return {
         ...state,
         filteredPosts: action.payload,
-        allPosts: action.payload,
+        allPosts: action.payload.reverse(),
+      };
+    case GET_COORDENADAS:
+      return {
+        ...state,
+        coordenadas: action.payload,
       };
     // case POST_PET:
     //   return {
@@ -57,7 +65,9 @@ export default function rootReducer(
       } else {
         return {
           ...state,
-          filteredPosts: state.allPosts.filter(p => p.state === action.payload).reverse(),
+          filteredPosts: state.allPosts
+            .filter(p => p.state === action.payload)
+            .reverse(),
         };
       }
     case FILTER_LATEST:
@@ -80,7 +90,9 @@ export default function rootReducer(
       }
       return {
         ...state,
-        filteredPosts: state.allPosts.filter(p => p.type === action.payload).reverse(),
+        filteredPosts: state.allPosts
+          .filter(p => p.type === action.payload)
+          .reverse(),
       };
     case GET_GENRES:
       if (action.payload === 'Todos') {
@@ -91,7 +103,9 @@ export default function rootReducer(
       }
       return {
         ...state,
-        filteredPosts: state.allPosts.filter(p => p.genre === action.payload).reverse(),
+        filteredPosts: state.allPosts
+          .filter(p => p.genre === action.payload)
+          .reverse(),
       };
     // case APPLY_FILTERS:
     //   if(action.payload.state === 'Todos' || action.payload.type === 'Todos' || action.payload.genre === 'Todos'){
@@ -105,10 +119,10 @@ export default function rootReducer(
     //     filteredPosts: filtradosFunc(state.allPosts, action.payload.state, action.payload.type, action.payload.genre)
     //   }
     case GET_CONVERSATIONS:
-      return{
-      ...state,
-      conversations: action.payload
-    }
+      return {
+        ...state,
+        conversations: action.payload,
+      };
     default:
       return state;
   }

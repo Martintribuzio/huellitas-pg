@@ -1,9 +1,4 @@
-import { FormControl, SelectChangeEvent } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { InputLabel } from '@mui/material';
-import { Select } from '@mui/material';
-import { MenuItem } from '@mui/material';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import '../CSS/PostAPet.module.css';
 import { PostType } from '../redux/types/types';
 import styles from '../CSS/PostAPet.module.css';
@@ -15,101 +10,128 @@ import useUser from '../hooks/useUser';
 import LocationMap from './LocationMap/LocationMap.js';
 import Swal from 'sweetalert2';
 import { postPet } from '../services/createPost';
+import Switch from './Login/Switch';
+import { useSelector } from 'react-redux';
+import { typeState } from '../redux/reducers';
+import { getCoordenadas } from '../redux/types/actionTypes';
+import { validation } from '../helpers/validationPost';
 
-const Input = styled('input')({
-  display: 'none',
-});
+type event =
+  | ChangeEvent<HTMLInputElement>
+  | ChangeEvent<HTMLTextAreaElement>
+  | ChangeEvent<HTMLSelectElement>;
 
-export default function PostAPet() {
+interface HTMLInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
+}
+
+const initialState = {
+  name: '',
+  description: '',
+  genre: '',
+  date: '',
+  petImage: null,
+  type: '',
+  state: '',
+  latitude: '',
+  longitude: '',
+};
+
+export default function PostAPet(props: any) {
+  const coordenadas = useSelector((state: typeState) => state.coordenadas);
   const [name, setName] = React.useState('');
   const [state, setState] = React.useState('');
   const [type, setType] = React.useState('');
   const [genre, setGenre] = React.useState('');
   const [description, setDescription] = React.useState('');
-  const [selectedDate, handleDateChange] = useState(new Date());
-  const history = useHistory();
+  const [selectedDate, handleDateChange] = useState();
   const [loading, result, user] = useUser();
-  // HOOK PARA VERIFICACION DE USUARIO LOGEADO
-  // RETORNA Unauthorized si no esta logueado
-
-  //console.log('POST');
-  const [input, setInput] = useState<PostType>({
-    name: '',
+  const [step, setStep] = useState(false);
+  const history = useHistory();
+  const [input, setInput] = useState<PostType>(initialState);
+  const [error, setError] = useState({
     description: '',
     genre: '',
     date: '',
-    petImage: null,
+    petImage: '',
     type: '',
     state: '',
-    latitude: 0,
-    longitude: 0
+    ubication: '',
   });
 
-  const handlegenrechange = (event: SelectChangeEvent) => {
-    setGenre(event.target.value);
-    setInput({ ...input, genre: event.target.value });
+  const handleToggle = () => setStep(!step);
+
+  useEffect(() => {
+    if (props.isOpen) {
+      setStep(false);
+    }
+  }, [props.isOpen]);
+
+  useEffect(() => {
+    if (coordenadas.lat && coordenadas.long) {
+      //Las coordenadas se obtienen de la ubicación del usuario
+      //Las coordenadas estan al revez porque nose pero anda
+      setInput({
+        ...input,
+        latitude: coordenadas.long,
+        longitude: coordenadas.lat,
+      });
+    }
+  }, [coordenadas]);
+
+  const handlegenrechange = (e: event) => {
+    setGenre(e.target.value);
+    setInput({ ...input, genre: e.target.value });
   };
 
   const handlerdescritionchange = (event: string) => {
-    console.log(event);
     setDescription(event);
-    console.log(description);
-    setInput({ ...input, description: event });
-  };
-
-  const handletypechange = (event: SelectChangeEvent) => {
-    setType(event.target.value);
-    setInput({ ...input, type: event.target.value });
-  };
-
-  const handleSelectEstado = (event: SelectChangeEvent) => {
-    //console.log(event);
     setInput({
       ...input,
-      [event.target.name]: event.target.value as string,
+      description: event,
     });
-    setState(event.target.value);
   };
 
-  function handleChange(e: htmlTypes) {
+  const handletypechange = (e: event) => {
+    setType(e.target.value);
+    setInput({ ...input, type: e.target.value });
+  };
+
+  const handleSelectEstado = (e: event) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value as string,
+    });
+    setState(e.target.value);
+  };
+
+  function handleChange(e: event) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
   }
 
-  function handleInputChange(
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) {
-    setName(e.target.value);
-    setInput({ ...input, name: e.target.value });
-  }
+  function handleChangeImg(e: Event | event) {
+    const target = e.target as HTMLInputElement;
+    const file: File = (target.files as FileList)[0];
 
-  function handleChangeImg(e: ChangeEvent<HTMLInputElement>) {
     setInput({
       ...input,
-      petImage: e.target.files?.item(0),
+      petImage: file,
     });
   }
-
-  //console.log(input);
-
-  type htmlTypes =
-    | ChangeEvent<HTMLTextAreaElement>
-    | ChangeEvent<HTMLSelectElement>
-    | ChangeEvent<HTMLInputElement>;
 
   async function postApet(fd: FormData) {
     let result: any = await postPet(fd);
     if (result.ERROR) {
       return Swal.fire({
         title: 'ERROR!',
-        // text: '!',
         icon: 'error',
         confirmButtonText: 'Intentar de nuevo',
       });
     }
-    history.push('/home/feed');
+    props.closeModal();
     return Swal.fire({
       title: 'Publicado!',
       text: 'Publicacion realizada con exito!',
@@ -118,169 +140,175 @@ export default function PostAPet() {
     });
   }
 
-  function handleSubmit(e: any) {
+  console.log('input', input);
+
+  async function handleSubmit(e: any) {
     e.preventDefault();
-    const id = window.localStorage.getItem('userId');
-    const fd = new FormData();
-    if (input.petImage) {
-      fd.append('petImage', input.petImage);
+
+    const errors = validation(input);
+
+    if (Object.values(errors).every(error => error === '')) {
+      const id = window.localStorage.getItem('userId');
+      const fd = new FormData();
+      fd.append('latitude', input.latitude);
+      fd.append('longitude', input.longitude);
+      input.petImage && fd.append('petImage', input.petImage);
+      input.name && fd.append('name', input.name);
+      fd.append('state', input.state);
+      fd.append('description', input.description);
+      fd.append('type', input.type);
+      fd.append('genre', input.genre);
+      id && fd.append('id', id);
+
+      postApet(fd);
     }
-    if (input.name && input.name !== '') {
-      fd.append('name', input.name);
-    }
-    fd.append('state', input.state);
-    fd.append('description', input.description);
-    fd.append('type', input.type);
-    fd.append('genre', input.genre);
-    if (id) {
-      fd.append('id', id);
-    }
-    postApet(fd);
+    setError(errors);
   }
 
-  // if (result === 'Unauthorized') {
-  //   history.push('/');
-  // }
+  const maxDate = (): string => {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    console.log(`${yyyy}-${mm}-${dd}`);
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
   if (result === 'Unauthorized') {
     return <Redirect to='/login' />;
   }
   return (
-    <div className={styles.conteiner}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        {/* <FormControl sx={{ m: 1, minWidth: 120 }} />
-        <InputLabel>Nombre</InputLabel>
-        <TextField
-          name='name'
-          value={name}
-          onChange={e => handleInputChange(e)}
-          required
-        /> */}
-
-        <div>
-          <LocationMap/>
-        </div>
-
-        <label>Estado de la mascota:</label>
-        <FormControl style={{ margin: '1px', minWidth: '120px' }}>
-          <InputLabel id='demo-simple-select-helper-label'>Estado</InputLabel>
-          <Select
-            required
-            name='state'
-            labelId='demo-simple-select-helper-label'
-            id='demo-simple-select-helper'
-            value={state}
-            label='Estado'
-            onChange={e => handleSelectEstado(e)}>
-            <MenuItem value=''>
-              <em></em>
-            </MenuItem>
-            <MenuItem value='Perdido'>Perdido</MenuItem>
-            <MenuItem value='Encontrado'>Encontrado</MenuItem>
-            <MenuItem value='Adopción'>En adopcion</MenuItem>
-          </Select>
-        </FormControl>
-
-        {/* <label>Nombre:</label> */}
-        <FormControl sx={{ m: 1, minWidth: 120 }} />
-        {input.state === 'Perdido' || input.state === 'Adopción' ? (
-          <>
-            <InputLabel id='demo-simple-select-helper-label'>
-              Nombre de la mascota
-            </InputLabel>
-            <TextField
-              name='name'
-              value={name}
-              onChange={e => handleInputChange(e)}
-            />
-          </>
-        ) : (
-          <></>
-        )}
-
-        <label>Tipo de animal: </label>
-        <FormControl style={{ margin: '1px', minWidth: '120px' }}>
-          <InputLabel id='demo-simple-select-helper-label'>Tipo</InputLabel>
-          <Select
-            required
-            name='type'
-            labelId='demo-simple-select-helper-label'
-            id='demo-simple-select-helper'
-            value={type}
-            label='Tipo'
-            onChange={e => handletypechange(e)}>
-            <MenuItem value=''>
-              <em></em>
-            </MenuItem>
-            <MenuItem value='perro'>Perro</MenuItem>
-            <MenuItem value='gato'>Gato</MenuItem>
-            <MenuItem value='otro'>Otro</MenuItem>
-          </Select>
-        </FormControl>
-
-        <label>Género </label>
-        <FormControl style={{ margin: '1px', minWidth: '120px' }}>
-          <InputLabel id='demo-simple-select-helper-label'>Género</InputLabel>
-          <Select
-            required
-            name='genero'
-            labelId='demo-simple-select-helper-label'
-            id='demo-simple-select-helper'
-            value={genre}
-            label='Género'
-            onChange={e => handlegenrechange(e)}>
-            <MenuItem value=''>
-              <em></em>
-            </MenuItem>
-            <MenuItem value='Macho'>Macho</MenuItem>
-            <MenuItem value='Hembra'>Hembra</MenuItem>
-          </Select>
-        </FormControl>
-
-        <label>Imagen: </label>
-        <label>
-          <Input
-            accept='.jpg, .png'
-            name='img'
-            type='file'
-            onChange={handleChangeImg}
-            required
-          />
-          <Button variant='contained' color='secondary' component='span'>
-            Upload
-          </Button>
-        </label>
-        {/*  <input
-          name='img'
-          type='file'
-          onChange={handleChangeImg}
-          required></input> */}
-
-        <label>Fecha: </label>
-        <input
-          name='date'
-          type='date'
-          onChange={e => handleChange(e)}
-          required></input>
-
-        <label>Descripcion: </label>
-        <TextField
-          placeholder='Ingrese descripcion de su publicación'
-          multiline
-          rows={4}
-          name='description'
-          onChange={e => handlerdescritionchange(e.target.value)}
-          required
-          label='Descripción'
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <div className={styles.formContainer}>
+        <Switch
+          handleToggle={handleToggle}
+          isOn={step}
+          onColor='white'
+          label1='Datos'
+          label2='Localizacion'
         />
+        {!step ? (
+          <div className={styles.inputsContainer}>
+            <label>
+              Estado de la mascota
+              <select
+                name='state'
+                value={state}
+                onChange={e => handleSelectEstado(e)}>
+                <option hidden selected>
+                  Estado
+                </option>
+                <option value='Perdido'>Perdido</option>
+                <option value='Encontrado'>Encontrado</option>
+                <option value='Adopción'>En adopcion</option>
+              </select>
+              <small className={styles.error}>{error.state}</small>
+            </label>
 
-        <Button
-          type='submit'
-          style={{ marginBottom: '10px' }}
-          variant='contained'
-          color='secondary'>
-          Publicar
-        </Button>
-      </form>
-    </div>
+            {input.state === 'Perdido' || input.state === 'Adopción' ? (
+              <label>
+                Nombre
+                <input
+                  value={input.name}
+                  onChange={e => {
+                    setInput({ ...input, name: e.target.value });
+                  }}
+                  type='text'></input>
+              </label>
+            ) : null}
+
+            <label>
+              Tipo de animal
+              <select
+                name='type'
+                value={type}
+                onChange={e => handletypechange(e)}>
+                <option hidden selected>
+                  Tipo
+                </option>
+                <option value='perro'> Perro </option>
+                <option value='gato'> Gato </option>
+                <option value='otro'> Otro </option>
+              </select>
+              <small className={styles.error}>{error.type}</small>
+            </label>
+
+            <label>
+              Género
+              <select
+                name='genero'
+                value={genre}
+                onChange={e => handlegenrechange(e)}>
+                <option hidden selected>
+                  Género
+                </option>
+                <option value='Macho'> Macho </option>
+                <option value='Hembra'> Hembra </option>
+              </select>
+              <small className={styles.error}>{error.genre}</small>
+            </label>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+              }}>
+              <label className={styles.file}>
+                Imagen
+                <input
+                  style={{ display: 'none' }}
+                  type='file'
+                  onChange={e => handleChangeImg(e)}
+                  accept='image/png, image/jpg'
+                />
+              </label>
+              <small className={error.petImage ? styles.error : ''}>
+                {error.petImage
+                  ? error.petImage
+                  : input.petImage
+                  ? 'Archivo seleccionado'
+                  : ''}
+              </small>
+            </div>
+
+            <label>
+              Fecha
+              <input
+                name='date'
+                type='date'
+                value={selectedDate}
+                onChange={e => handleChange(e)}
+                max={maxDate()}
+              />
+              <small className={styles.error}>{error.date}</small>
+            </label>
+
+            <label>
+              Descripcion:
+              <textarea
+                style={{ resize: 'none' }}
+                rows={3}
+                cols={21}
+                maxLength={200}
+                placeholder='Ingrese descripcion de su publicación'
+                value={description}
+                name='description'
+                onChange={e => handlerdescritionchange(e.target.value)}
+              />
+              <small className={styles.error}>{error.description}</small>
+            </label>
+          </div>
+        ) : (
+          <>
+            <LocationMap />
+            <small className={styles.error}>{error.ubication}</small>
+          </>
+        )}
+      </div>
+      <Button className={styles.submit} type='submit'>
+        Submit
+      </Button>
+    </form>
   );
 }

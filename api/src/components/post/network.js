@@ -30,6 +30,7 @@ const upload = multer({
 });
 
 postNetwork.post('/', upload.single('petImage'), async (req, res) => {
+  console.log("bodyPost",req.body)
   try {
     const post = await createPost(req.body, req.file.path);
     return res.json(post);

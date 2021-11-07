@@ -1,18 +1,199 @@
-.conteiner {
+/* .conteiner {
   display: flex;
+  align-items: center;
   justify-content: center;
-  margin-bottom: 50px;
-}
+  min-height: 71vh;
+  width: 90vw;
+  background-color: #e9e9e9;
+  background-image: url('../assets/home/background.png');
+} */
 
 .form {
+  align-self: center;
+  padding: 30px;
+  font-family: 'Poppins';
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 20px;
-  width: 30%;
-  margin-top: 30px;
-  background-color: rgba(204, 200, 200, 0.774);
-  border-radius: 10px;
+  width: 100%;
+  background: #e9e9e9;
+  background-image: url('../assets/home/background.png');
+  color: black;
+  max-height: 90%;
+  border-radius: 20px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.form .formContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: max-content;
+  width: 100%;
+}
+
+.form .inputsContainer {
+  max-width: 600px;
+  height: max-content;
+  align-self: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.form .error {
+  color: red;
+  font-size: 12px;
+}
+.form label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 10px;
+  margin-bottom: 0;
+}
+
+.form select,
+input {
+  align-self: center;
+  margin-top: 5px;
+  cursor: pointer;
+  border: 1px solid black;
+  color: white;
+  font-family: 'Poppins';
+  padding-left: 10px;
+  max-height: 40px;
+  height: 20vh;
+  width: 150px;
+  background-color: #73a6cbf1;
+  border-radius: 5px;
+  outline: none;
+}
+
+.form .file {
+  display: flex;
+  justify-content: flex-start;
+  order: 0;
+  width: 150px;
+  position: relative;
+  transition: 0.4s;
+}
+
+.form .file::before {
+  background-color: #73a6cbf1;
+  order: 1;
+  display: flex;
+  margin-top: 5px;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  content: 'Subir imagen';
+  width: 150px;
+  border: 1px solid black;
+  border-radius: 5px;
+  height: 40px;
+  bottom: 0;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.form button[type='submit'] {
+  font-family: 'Poppins';
+  font-weight: 500;
+
+  font-size: 16px;
+  padding: 10px 50px;
+  margin: 10px;
+  background-color: #73a6cb80;
+  border: 0;
+  border: 1px solid black;
+  color: black;
+  border-radius: 10px;
+  display: inline-block;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.86, 0.01, 0.15, 0.99);
+  position: relative;
+  transition: 0.4s;
+}
+
+.form button::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0;
+  transition: 0.4s;
+}
+
+.form button.gradient:hover {
+  color: white;
+  box-shadow: 0 5px 35px rgba(0, 0, 0, 0.6);
+  transform: translateY(-5px);
+}
+
+.submit {
+  max-width: 200px;
+  width: 200px;
+  background: #fff;
+  transform: perspective(1px) translateZ(0);
+  color: black;
+  transition: 0.4s;
+}
+
+.submit::before {
+  background-color: #73a6cbf1;
+  clip-path: inset(0 100% 0 0);
+  opacity: 1;
+  transition: 0.4s;
+}
+.submit:hover::before {
+  clip-path: inset(0 0 0 0);
+}
+
+.submit:hover {
+  color: white;
+  box-shadow: 0 0 0 10px rgba(250, 250, 250, 0.1);
+}
+
+.form .file:hover::before {
+  color: white;
+  background-color: #73a7cb;
+}
+
+.form textarea {
+  font-family: 'Poppins';
+  padding: 10px 10px;
+  outline: none;
+  background-color: #73a6cbf1;
+  border: 1px solid black;
+  border-radius: 5px;
+  overflow: visible;
+}
+
+.form textarea::placeholder {
+  color: white;
+}
+
+.form .MuiFormControl-root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (max-width: 900px) {
+  .form .formContainer {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .form select,
+  .form input,
+  .form .file::before {
+    height: max-content;
+  }
 }
