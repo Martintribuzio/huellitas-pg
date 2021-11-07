@@ -9,7 +9,8 @@ import { CollectionsOutlined } from '@mui/icons-material';
 import { io } from 'socket.io-client';
 import SendIcon from '@mui/icons-material/Send';
 import { typeState } from '../../redux/reducers/index';
-
+import dotenv from 'dotenv';
+dotenv.config();
 interface message {
   content: string;
   Converseid: string;
@@ -39,11 +40,8 @@ export default function Message() {
     };
     getMessage();
   }, [ConverseId]);
-
   useEffect(() => {
-    socket.current = io(
-      process.env.REACT_APP_SOCKET_URL || 'http://localhost:3002'
-    );
+    socket.current = io(`${process.env.REACT_APP_SOCKET_URL}`);
     socket.current.on('getMessage', (data: any) => {
       console.log('DATA QUE MANDA EL SOCKET', data);
       setArrivalMessage({
