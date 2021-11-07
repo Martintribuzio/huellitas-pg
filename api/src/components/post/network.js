@@ -6,10 +6,10 @@ const uniqid = require('uniqid');
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    if(!fs.existsSync('./uploads')){
-      console.log("PATH NOT FOUND")
-      fs.mkdirSync('./uploads')
-    } 
+    if (!fs.existsSync('./uploads')) {
+      console.log('PATH NOT FOUND');
+      fs.mkdirSync('./uploads');
+    }
     cb(null, './uploads');
   },
   filename: function (req, file, cb) {
@@ -30,13 +30,12 @@ const upload = multer({
 });
 
 postNetwork.post('/', upload.single('petImage'), async (req, res) => {
-  console.log("bodyPost",req.body)
+  console.log('bodyPost', req.body);
   try {
     const post = await createPost(req.body, req.file.path);
     return res.json(post);
   } catch (error) {
-    console.log(error, error.message);
-    return res.send(error);
+    return res.send({ error: error.message });
   }
 });
 
@@ -49,21 +48,21 @@ postNetwork.get('/', async (req, res) => {
   }
 });
 
-postNetwork.put("/", async (req, res) => {
+postNetwork.put('/', async (req, res) => {
   try {
     const { _id, name, type, state, genre, description } = req.body;
     editPost(_id, name, type, state, genre, description);
-    return res.send("post editado");
+    return res.send('post editado');
   } catch (error) {
     return res.send(error);
   }
 });
 
-postNetwork.delete("/", async (req, res) => {
+postNetwork.delete('/', async (req, res) => {
   try {
     const { _id } = req.body;
     deletePost(_id);
-    return res.send("post eliminado");
+    return res.send('post eliminado');
   } catch (error) {
     return res.send(error);
   }

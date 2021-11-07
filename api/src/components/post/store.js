@@ -1,5 +1,6 @@
 const { Post } = require('../../models/Post');
 const User = require('../../models/User');
+const fs = require('fs');
 
 const createPostDB = async (
   name,
@@ -24,13 +25,12 @@ const createPostDB = async (
     });
     await post.save();
     const userById = await User.findById(id);
-
     userById.posts.push(post);
     await userById.save();
 
     return post;
   } catch (e) {
-    res.send({ e: e.message });
+    throw new Error(e.message);
   }
 };
 
@@ -46,7 +46,7 @@ const findPostDB = async id => {
 const editPostDB = async (_id, name, type, state, description, genre, date) => {
   try {
     const post = await Post.findById(_id);
-    
+
     post.name = name;
     post.type = type;
     post.state = state;
@@ -56,7 +56,6 @@ const editPostDB = async (_id, name, type, state, description, genre, date) => {
     await post.save();
     return post;
   } catch (error) {
-    console.log(error);
     throw new Error(error);
   }
 };
@@ -64,8 +63,13 @@ const editPostDB = async (_id, name, type, state, description, genre, date) => {
 const deletePostDB = async id => {
   try {
     const post = await Post.findById(id);
-    
-    if (post !== null){
+    if (post !== null) {
+      const path = `./${post.petImage}`;
+      await fs.unlink(path, err => {
+        if (err) {
+          throw new Error(err);
+        }
+      });
       await post.remove();
       return post;
     }
@@ -73,7 +77,6 @@ const deletePostDB = async id => {
     throw new Error(error);
   }
 };
-
 
 module.exports = {
   createPostDB,
