@@ -70,6 +70,9 @@ export interface setUser {
   payload: string;
 }
 
+export interface deletePost{
+  type: typeof DELETE_POST;
+  payload: any}
 export interface getCoordenadas {
   type: typeof GET_COORDENADAS;
   payload: { long: string; lat: string };
@@ -87,4 +90,5 @@ export type FiltersActionTypes =
   | getPostQuery
   | catchErrors
   | getConversation
+  | deletePost
   | getCoordenadas;

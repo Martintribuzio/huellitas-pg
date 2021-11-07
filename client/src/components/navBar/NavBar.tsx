@@ -15,7 +15,7 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import { Link } from 'react-router-dom';
 import s from './NavBar.module.css';
 import Button from '@mui/material/Button';
-import Inbox from '../Messenger/Messenger';
+import Inbox from '../conversations/Conversations';
 import Stack from '@mui/material/Stack';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';

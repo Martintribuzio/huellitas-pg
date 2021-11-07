@@ -4,7 +4,7 @@
     top:40px;
 } */
 
-.boton{
+/* .boton{
     width:65px;
     height:50px;
     position:absolute;
@@ -42,4 +42,58 @@
     text-align: center;
     border:1px solid black;
     
+}
+.none{
+    display: none;
+} */
+body{
+    background-color: #e9e9e9;
+    background-image: url('../../assets/home/background.png');
+    height: 150%;
+    width: 100%;
+    z-index: -1;
+    position: relative;
+    font-family: 'Roboto', sans-serif;
+}
+.BarraBusqueda{
+    position:relative;
+    right:0px;
+    top:0px;
+    border-radius: 10px;
+    background-color: #e9e9e9;
+}
+.conv{
+    width: 400px;
+    height: 600px;
+    margin: 10px;
+    background-color: #b6b6b64d;
+    border-radius: 30px;
+    backdrop-filter: blur(2px);
+}
+.none{
+    background-color: #e9e9e9;
+    height: 400px;
+    width: 400px;
+}
+.fondoChat{
+    border: none;
+    width:800px;
+    height:550px;
+    position:absolute;
+    left:430px;
+    top:100px;
+    border-radius: 20px;
+    backdrop-filter: blur(2px);
+    background-color: rgba(255, 255, 255, 0.315);
+}
+.own{
+    right: 1px;
+    float: right;
+    background-color: rgb(70, 155, 204);
+    color: rgba(255, 255, 255);
+    border-radius: 5px;
+    padding: 10px;
+    position: relative;
+    align-self: flex-end;
+    margin: 15px;
 }
