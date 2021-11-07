@@ -260,7 +260,7 @@ export default function PostAPet(props: any) {
                   style={{ display: 'none' }}
                   type='file'
                   onChange={e => handleChangeImg(e)}
-                  accept='image/png, image/jpg'
+                  accept='.png, .jpg'
                 />
               </label>
               <small className={error.petImage ? styles.error : ''}>
