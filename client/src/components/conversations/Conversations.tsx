@@ -6,6 +6,7 @@ import useUser from '../../hooks/useUser';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { getConvers } from '../../redux/actions';
+import style from '../Messages/Message.module.css';
 
 export default function Conversations(){
     const convers:Array<conversation> = useSelector((state:typeState) => state.conversations);
@@ -24,7 +25,7 @@ export default function Conversations(){
 
     return(
         convers.length?
-        <div>
+        <div className={style.conv}>
             {convers.length? convers.map((c:any) => (
                   <Conversation conversation={c} />
             )):null}
