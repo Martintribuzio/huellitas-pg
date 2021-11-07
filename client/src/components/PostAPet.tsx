@@ -140,7 +140,6 @@ export default function PostAPet(props: any) {
     });
   }
 
-  console.log('input', input);
 
   async function handleSubmit(e: any) {
     e.preventDefault();
@@ -170,7 +169,6 @@ export default function PostAPet(props: any) {
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
-    console.log(`${yyyy}-${mm}-${dd}`);
     return `${yyyy}-${mm}-${dd}`;
   };
 

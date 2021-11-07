@@ -21,9 +21,7 @@ const PORT = process.env.PORT || 3002;
 const server = http.createServer(app);
 
 const io = socketio(server, {
-  // cors: {
-  //   origins: '*',
-  // },
+  
   cors: {
     origin: process.env.FRONT_URL, // I copied the origin in the error message and pasted here
     methods: ['GET', 'POST'],
@@ -52,7 +50,6 @@ const removeUser = id => {
 };
 
 const getUser = receiverId => {
-  console.log('log de receiverId', receiverId);
   return users.find(user => user.id === receiverId);
 };
 
@@ -63,15 +60,10 @@ io.on('connection', socket => {
 
   socket.on('addUser', id => {
     addUser(id, socket.id);
-    console.log('que carajo es este id ', id);
-    console.log('usuarios = ', users);
-    io.emit('getUsers', users);
   });
 
   socket.on('sendMessage', ({ senderId, receiverId, text }) => {
-    console.log('ID', receiverId);
     const user = getUser(receiverId);
-    console.log(user);
     if (user.socketId) {
       io.emit('getMessage', {
         senderId,
@@ -83,6 +75,5 @@ io.on('connection', socket => {
   socket.on('disconnect', () => {
     console.log('user disconnected');
     removeUser(socket.id);
-    io.emit('getUsers', users);
   });
 });
