@@ -21,10 +21,6 @@ const searchUserDB = async email => {
 const searchUserByIdDB = async id => {
   try {
     const user = await User.findById(id);
-<<<<<<< HEAD
-    // console.log(user)
-=======
->>>>>>> 099afffc2f84058c94b89f7cd2f2b503c7daf720
     return user;
   } catch (error) {
     throw new Error('Error al buscar el usuario');

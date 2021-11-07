@@ -26,7 +26,7 @@ export default function Conversation(params:any){
     
 
     useEffect(() => {
-        const friendId = params.conversation?.members?.find((elem:string) => elem !== myId)
+        const friendId = params.conversation.members.find((elem:string) => elem !== myId)
         const getUser = async (friendId:string) => {
             try{
               const res = await axios.get(`/user?id=${friendId}`)

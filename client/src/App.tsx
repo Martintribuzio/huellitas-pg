@@ -56,8 +56,10 @@ function App() {
         </Route>
         
         <Route exact path='/home/messenger/:ConverseId'>
+          <div className='divCon'>
           <Conversations/>
           <Message/>
+          </div>
         </Route>
 
         <Route exact path='/notification'>

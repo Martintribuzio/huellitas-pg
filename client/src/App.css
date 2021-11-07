@@ -1,6 +1,10 @@
 #root {
   height: 100%;
 }
+.divCon{
+  display: flex;
+  flex-direction: row;
+}
 
 .App {
   text-align: center;
