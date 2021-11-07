@@ -10,25 +10,49 @@
 }
 
 .inputSubmit{
-    width:600px;
+    width:760px;
     height:50px;
-    border:1px solid black;
+    border:none;
     position:absolute;
-    bottom:0px;
-    right:0px;
+    bottom:10px;
+    right:18px;
+    background-color: rgba(255, 255, 255, 0.445);
+    border-radius:5px;
 }
 
 .boton{
     width:65px;
     height:50px;
+    top: 12px;
     position:absolute;
-    right:0px;
-    border: 1px solid black;
+    right:-10px;
+    border: none;
+    color: rgb(44, 141, 197);
+}
+/* .mensaje.own {
+    right: 1px;
+    float: right;
+    background-color: rgb(3, 20, 31);
+    color: rgba(255, 255, 255);
+    border-radius: 5px;
+    padding: 10px;
+    position: relative;
+    align-self: flex-end;
+    margin: 15px;
+}
+mensaje.other{
+    left: 1px;
+    float: left;
+    background-color: rgba(255, 255, 255);
+    color:rgb(70, 155, 204) ;
+    padding: 0px 8px;
+    margin: 15px;
+} */
+.messages.own{
+    align-items: flex-end;
 }
 
-.own{
-    right: 1px;
-}
-.other{
-    left: 1px;
+.messages.own .messageText{
+    background-color: rgb(245, 241, 241);
+    color: black;
 }

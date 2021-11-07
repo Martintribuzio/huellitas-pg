@@ -129,14 +129,15 @@ export default function BottomAppBar() {
     )
   }else{
     return (
-      <div>
-          <CssBaseline />
-          <Paper square sx={{ pb: '50px',marginTop:3}}>
+
+      <div className={style.container}>
+          {/* <CssBaseline /> */}
+          {/* <Paper square sx={{ pb: '50px',marginTop:3}}> */}
             {/* <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
               Mensajes
             </Typography> */}
-            <div className={style.container}>
-              
+            <div className={style.conv}>
+            
             <List  >
             <Input className={style.BarraBusqueda} placeholder="Buscar usuarios" type="text" value={search} onChange={handleChange}/>
               <Conversations/>
@@ -144,7 +145,7 @@ export default function BottomAppBar() {
             </div>
              {/* <div className={ConverseId?style.fondoChat:style.none}>
                <div>
-                  <Message/>
+                  <Message />
                </div>
              </div> */}
       <div className={ConverseId?style.fondoChat:style.none}>
@@ -166,7 +167,6 @@ export default function BottomAppBar() {
             </div>
           </div>
           </div>
-          </Paper>
         </div>
       
       );
