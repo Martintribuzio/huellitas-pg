@@ -16,14 +16,47 @@
 }
 
 .modal-container {
+  overflow: scroll;
+  max-height: 100vh;
+  align-self: center;
+  justify-self: center;
   position: relative;
-  background-color: rgba(255, 255, 255, 0.192);
-  width: 90%;
+  width: 100%;
   max-width: 1000px;
 }
 
+.modal-container::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}
 .modal-close {
+  font-family: 'Poppins';
   position: absolute;
   top: 0;
+  font-weight: 500;
+  width: 30px;
+  color: black;
+  height: 30px;
   right: 0;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: none;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 20px;
+  transition: 0.3s ease;
 }
+
+.modal-close:hover {
+  cursor: pointer;
+  color: white;
+  background-color: #73a6cbf1;
+}
+
+/* @media screen and (max-width: 768px) {
+  .modal-container {
+    max-width: 100%;
+    align-self: flex-start;
+    justify-self: flex-start;
+  }
+} */

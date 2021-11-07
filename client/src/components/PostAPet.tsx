@@ -10,6 +10,7 @@ import useUser from '../hooks/useUser';
 import LocationMap from './LocationMap/LocationMap.js';
 import Swal from 'sweetalert2';
 import { postPet } from '../services/createPost';
+import Switch from './Login/Switch';
 
 type event =
   | ChangeEvent<HTMLInputElement>
@@ -19,6 +20,45 @@ type event =
 interface HTMLInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 }
+
+const validation = (input: any) => {
+  const errors = {
+    name: '',
+    description: '',
+    genre: '',
+    date: '',
+    petImage: '',
+    type: '',
+    state: '',
+    ubication: '',
+  };
+
+  if (!input.name) {
+    errors.name = 'El nombre es requerido';
+  }
+  if (!input.description) {
+    errors.description = 'La descripción es requerida';
+  }
+  if (!input.genre) {
+    errors.genre = 'El género es requerido';
+  }
+  if (!input.date) {
+    errors.date = 'La fecha es requerida';
+  }
+  if (!input.petImage) {
+    errors.petImage = 'La imagen es requerida';
+  }
+  if (!input.type) {
+    errors.type = 'El tipo es requerido';
+  }
+  if (!input.state) {
+    errors.state = 'El estado es requerido';
+  }
+  if (!input.ubication) {
+    errors.ubication = 'La ubicación es requerida';
+  }
+  return errors;
+};
 
 const initialState = {
   name: '',
@@ -41,12 +81,24 @@ export default function PostAPet(props: any) {
   const [selectedDate, handleDateChange] = useState();
   const history = useHistory();
   const [loading, result, user] = useUser();
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(false);
   const [input, setInput] = useState<PostType>(initialState);
+  const [error, setError] = useState({
+    name: '',
+    description: '',
+    genre: '',
+    date: '',
+    petImage: '',
+    type: '',
+    state: '',
+    ubication: '',
+  });
+
+  const handleToggle = () => setStep(!step);
 
   useEffect(() => {
     if (props.isOpen) {
-      setStep(0);
+      setStep(false);
     }
   }, [props.isOpen]);
 
@@ -80,16 +132,9 @@ export default function PostAPet(props: any) {
     });
   }
 
-  function handleInputChange(e: event) {
-    setName(e.target.value);
-    setInput({ ...input, name: e.target.value });
-  }
-
   function handleChangeImg(e: Event | event) {
     const target = e.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
-
-    console.log(file);
 
     setInput({
       ...input,
@@ -118,23 +163,21 @@ export default function PostAPet(props: any) {
 
   function handleSubmit(e: any) {
     e.preventDefault();
-    const id = window.localStorage.getItem('userId');
-    const fd = new FormData();
-    if (input.petImage) {
-      fd.append('petImage', input.petImage);
-    }
-    if (input.name && input.name !== '') {
-      fd.append('name', input.name);
-    }
-    fd.append('state', input.state);
-    fd.append('description', input.description);
-    fd.append('type', input.type);
-    fd.append('genre', input.genre);
-    if (id) {
-      fd.append('id', id);
-    }
-    setStep(step + 1);
-    if (step === 2) {
+    const errors = validation(input);
+    setError(errors);
+
+    if (!Object.values(error).some(error => error !== '')) {
+      const id = window.localStorage.getItem('userId');
+      const fd = new FormData();
+
+      input.petImage && fd.append('petImage', input.petImage);
+      input.name && fd.append('name', input.name);
+      fd.append('state', input.state);
+      fd.append('description', input.description);
+      fd.append('type', input.type);
+      fd.append('genre', input.genre);
+      id && fd.append('id', id);
+
       postApet(fd);
     }
   }
@@ -142,56 +185,63 @@ export default function PostAPet(props: any) {
   if (result === 'Unauthorized') {
     return <Redirect to='/login' />;
   }
-  if (step === 0) {
-  }
   return (
-    <div className={styles.conteiner + '' + styles.isOpen}>
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.formContainer}>
-          {!step ? (
-            <div className={styles.inputsContainer}>
-              <label>
-                Estado de la mascota
-                <select
-                  required
-                  name='state'
-                  value={state}
-                  onChange={e => handleSelectEstado(e)}>
-                  <option value='Perdido'>Perdido</option>
-                  <option value='Encontrado'>Encontrado</option>
-                  <option value='Adopción'>En adopcion</option>
-                </select>
-              </label>
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <div className={styles.formContainer}>
+        <Switch
+          handleToggle={handleToggle}
+          isOn={step}
+          onColor='white'
+          label1='Datos'
+          label2='Localizacion'
+        />
+        {!step ? (
+          <div className={styles.inputsContainer}>
+            <label>
+              Estado de la mascota
+              <select
+                name='state'
+                value={state}
+                onChange={e => handleSelectEstado(e)}>
+                <option value='Perdido'>Perdido</option>
+                <option value='Encontrado'>Encontrado</option>
+                <option value='Adopción'>En adopcion</option>
+              </select>
+              <small className={styles.error}>{error.state}</small>
+            </label>
 
-              {input.state === 'Perdido' || input.state === 'Adopción' ? (
+            {input.state === 'Perdido' || input.state === 'Adopción' ? (
+              <label>
+                Nombre
                 <input type='text'></input>
-              ) : null}
-
-              <label>
-                Tipo de animal
-                <select
-                  required
-                  name='type'
-                  value={type}
-                  onChange={e => handletypechange(e)}>
-                  <option value='perro'> Perro </option>
-                  <option value='gato'> Gato </option>
-                  <option value='otro'> Otro </option>
-                </select>
               </label>
+            ) : null}
 
-              <label>
-                Género
-                <select
-                  required
-                  name='genero'
-                  value={genre}
-                  onChange={e => handlegenrechange(e)}>
-                  <option value='Macho'> Macho </option>
-                  <option value='Hembra'> Hembra </option>
-                </select>
-              </label>
+            <label>
+              Tipo de animal
+              <select
+                name='type'
+                value={type}
+                onChange={e => handletypechange(e)}>
+                <option value='perro'> Perro </option>
+                <option value='gato'> Gato </option>
+                <option value='otro'> Otro </option>
+              </select>
+              <small className={styles.error}>{error.type}</small>
+            </label>
 
+            <label>
+              Género
+              <select
+                name='genero'
+                value={genre}
+                onChange={e => handlegenrechange(e)}>
+                <option value='Macho'> Macho </option>
+                <option value='Hembra'> Hembra </option>
+              </select>
+              <small className={styles.error}>{error.genre}</small>
+            </label>
+            <div>
               <label className={styles.file}>
                 Imagen
                 <input
@@ -200,41 +250,45 @@ export default function PostAPet(props: any) {
                   onChange={e => handleChangeImg(e)}
                 />
               </label>
-
-              <label>
-                Fecha
-                <input
-                  name='date'
-                  type='date'
-                  value={selectedDate}
-                  onChange={e => handleChange(e)}
-                  required
-                />
-              </label>
-
-              <label>
-                Descripcion:
-                <textarea
-                  style={{ resize: 'none' }}
-                  rows={7}
-                  cols={21}
-                  maxLength={200}
-                  placeholder='Ingrese descripcion de su publicación'
-                  value={description}
-                  name='description'
-                  onChange={e => handlerdescritionchange(e.target.value)}
-                  required
-                />
-              </label>
+              <small className={styles.error}>{error.petImage}</small>
             </div>
-          ) : (
+
+            <label>
+              Fecha
+              <input
+                name='date'
+                type='date'
+                value={selectedDate}
+                onChange={e => handleChange(e)}
+              />
+              <small className={styles.error}>{error.date}</small>
+            </label>
+
+            <label>
+              Descripcion:
+              <textarea
+                style={{ resize: 'none' }}
+                rows={3}
+                cols={21}
+                maxLength={200}
+                placeholder='Ingrese descripcion de su publicación'
+                value={description}
+                name='description'
+                onChange={e => handlerdescritionchange(e.target.value)}
+              />
+              <small className={styles.error}>{error.description}</small>
+            </label>
+          </div>
+        ) : (
+          <>
             <LocationMap />
-          )}
-        </div>
-        <Button className={styles.submit} type='submit'>
-          Submit
-        </Button>
-      </form>
-    </div>
+            <small className={styles.error}>{error.ubication}</small>
+          </>
+        )}
+      </div>
+      <Button className={styles.submit} type='submit'>
+        Submit
+      </Button>
+    </form>
   );
 }
