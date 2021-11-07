@@ -40,6 +40,7 @@ export default function Message() {
     };
     getMessage();
   }, [ConverseId]);
+  console.log('ENVV', process.env.REACT_APP_SOCKET_URL);
   useEffect(() => {
     socket.current = io(`${process.env.REACT_APP_SOCKET_URL}`);
     socket.current.on('getMessage', (data: any) => {
