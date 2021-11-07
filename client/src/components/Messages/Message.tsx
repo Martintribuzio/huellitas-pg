@@ -110,13 +110,18 @@ export default function Message() {
         <div className={style.inputSubmit}>
           <div className={style.inputChat}>
             <Input
+              onKeyPress={e => {
+                if (e.key === 'Enter') {
+                  handleSubmit(e);
+                }
+              }}
               placeholder='Escribe un mensaje'
               onChange={e => setnewMessage(e.target.value)}
               value={newMessage}
             />
           </div>
-          <div className={style.boton}>
-            <SendIcon onClick={handleSubmit}></SendIcon>
+          <div onClick={handleSubmit} className={style.boton}>
+            <SendIcon></SendIcon>
           </div>
         </div>
       </div>
