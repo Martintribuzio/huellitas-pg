@@ -70,15 +70,15 @@ export default function BottomAppBar() {
     }
   }, [result]);
   
-  useEffect(() => {
-    socket.current = io("ws://localhost:3002")
-    socket.current.on("getMessage", (data:message) => {
-      setArrivalMessage({
-        sender: data.sender,
-        content: data.content
-      })
-    })
-  },[])
+  // useEffect(() => {
+  //   socket.current = io("ws://localhost:3002")
+  //   socket.current.on("getMessage", (data:message) => {
+  //     setArrivalMessage({
+  //       sender: data.sender,
+  //       content: data.content
+  //     })
+  //   })
+  // },[])
   
   useEffect(() => {
     if(messages !== undefined){

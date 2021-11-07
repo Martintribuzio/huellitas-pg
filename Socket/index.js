@@ -25,18 +25,21 @@ io.on('connection',(socket)=>{
     // io.emit("welcome", "hello there")
 
     socket.on('addUser',(id)=>{
-        addUser(id,socket.id);
-
+        addUser(id,socket.id)
+        console.log("que carajo es este id " ,id)
+        console.log("usuarios = ", users)
         io.emit('getUsers',users)
     })
 
     socket.on("sendMessage", ({ senderId,receiverId, text }) => {
         const user = getUser(receiverId);
-        console.log(receiverId)
-        io.to(user.socketId).emit("getMessage", {
-          senderId,
-          text,
-        });
+        console.log(user)
+        if(user){
+            io.to(user.socketId).emit("getMessage", {
+            senderId,
+            text,
+            });
+        }
       });
     
     

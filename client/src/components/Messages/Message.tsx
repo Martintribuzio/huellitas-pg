@@ -8,7 +8,7 @@ import Input from '@mui/material/Input'
 import { CollectionsOutlined } from "@mui/icons-material";
 import {io} from "socket.io-client";
 import SendIcon from '@mui/icons-material/Send';
-
+import { typeState } from '../../redux/reducers/index';
 
 interface message{
   content: string;
@@ -16,7 +16,7 @@ interface message{
   sender: string;
 }
 
-export default function Message(convers:any){
+export default function Message(){
   const [messages,setMessages] = useState<message[]>()
   const [newMessage,setnewMessage] = useState<string>()
   const [arrivalMessage,setArrivalMessage] = useState<any>();
@@ -24,6 +24,7 @@ export default function Message(convers:any){
   const idSender = localStorage.getItem('userId');
   const { ConverseId } = useParams<{ConverseId:string}>()
 
+  const convers:any = useSelector((state:typeState) => state.conversations).filter(elem => elem._id === ConverseId)[0];
   
   useEffect(() => {
     const getMessage= async () => {
@@ -37,15 +38,15 @@ export default function Message(convers:any){
     getMessage()
   }, [ConverseId])
   
-  // useEffect(() => {
-  //   socket.current = io("ws://localhost:3002")
-  //   socket.current.on("getMessage", (data:message) => {
-  //     setArrivalMessage({
-  //       sender: data.sender,
-  //       content: data.content
-  //     })
-  //   })
-  // },[])
+  useEffect(() => {
+    socket.current = io("ws://localhost:3002")
+    socket.current.on("getMessage", (data:message) => {
+      setArrivalMessage({
+        sender: data.sender,
+        content: data.content
+      })
+    })
+  },[])
   
   useEffect(() => {
     if(messages !== undefined){
@@ -53,20 +54,21 @@ export default function Message(convers:any){
     }
   },[arrivalMessage,convers])
 
-  // useEffect(() => {
-  //   socket.current.emit("addUser",idSender)
-  // },[localStorage])
+  useEffect(() => {
+    socket.current.emit("addUser",idSender)
+  },[localStorage])
 
-  const receiverId = convers.members?.find((member:string) => member !== idSender)
+  const receiverId = convers?.members?.find((member:string) => member !== idSender)
+  console.log("este es receiverId ", receiverId)
 
   const handleSubmit = async (e:any) => {
     try{
       e.preventDefault()
-      socket.current.emit("sendMessage", {
-        senderId: idSender,
-        receiverId:receiverId,
-        text:newMessage
-      })
+      // socket.current.emit("sendMessage", {
+      //   senderId: idSender,
+      //   receiverId:receiverId,
+      //   text:newMessage
+      // })
       const message = {
         sender:idSender,
         content: newMessage,
@@ -85,7 +87,7 @@ export default function Message(convers:any){
 
   return (
       <div >
-         {/* <div className={style.mensaje} > */}
+        <div /* className={style.mensaje} */ > 
          <div>
            <img
             className="messageImg"
@@ -108,7 +110,7 @@ export default function Message(convers:any){
             <div className={style.boton}>
               <SendIcon onClick={handleSubmit}></SendIcon>
             </div>
-      
+           </div>
           </div> 
       </div>
     );
