@@ -6,7 +6,8 @@ import style from './Message.module.css'
 import Button from '@mui/material/Button';
 import Input from '@mui/material/Input'
 import { CollectionsOutlined } from "@mui/icons-material";
-import {io} from "socket.io-client"
+import {io} from "socket.io-client";
+import SendIcon from '@mui/icons-material/Send';
 
 
 interface message{
@@ -91,7 +92,8 @@ export default function Message(convers:any){
             alt=""
           /> */}
           {messages?.map((c) => (
-             <p className={c.sender === idSender? 'own':'other' }>{c.content}</p>
+             <div className={c.sender!==idSender?'other':'own'}>
+               <p>{c.content}</p></div>
           ))}
         </div>
         <div className={style.inputSubmit}>
@@ -103,8 +105,9 @@ export default function Message(convers:any){
             />
           </div>
             <div className={style.boton}>
-              <Button onClick={handleSubmit}>enviar</Button>
+              <SendIcon onClick={handleSubmit}></SendIcon>
             </div>
+        
           </div>
       </div>
     );
