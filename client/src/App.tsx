@@ -12,6 +12,8 @@ import PostDetail from './components/PostDetail/PostDetail';
 import Publicaciones from './components/Home.jsx';
 import { Home } from './pages/Home';
 import { Redirect } from 'react-router';
+import Conversations from './components/conversations/Conversations';
+import Message from './components/Messages/Message';
 
 function App() {
   // const [result, user] = useUser();
@@ -50,11 +52,12 @@ function App() {
         <Route path='/alldogs'>{/* <Alldogs /> */}</Route>
 
         <Route exact path='/home/messenger'>
-          <Messenger />
+          <Conversations />
         </Route>
         
         <Route exact path='/home/messenger/:ConverseId'>
-          <Messenger />
+          <Conversations/>
+          <Message/>
         </Route>
 
         <Route exact path='/notification'>
