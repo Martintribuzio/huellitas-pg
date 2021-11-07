@@ -1,7 +1,7 @@
 import React from 'react';
 import './switch.css';
 
-const Switch = ({ isOn, handleToggle, onColor }) => {
+const Switch = ({ isOn, handleToggle, onColor, label1, label2 }) => {
   return (
     <label style={{ background: isOn && onColor }} className='react-switch'>
       <input
@@ -12,11 +12,9 @@ const Switch = ({ isOn, handleToggle, onColor }) => {
       />
       <div className='react-switch-button' />
       <div className='react-switch-labels'>
-        <span className={isOn ? 'labelActive' : 'labelInactive'}>
-          Iniciar Sesion
-        </span>
+        <span className={isOn ? 'labelActive' : 'labelInactive'}>{label1}</span>
         <span className={!isOn ? 'labelActive' : 'labelInactive'}>
-          Registrarse
+          {label2}
         </span>
       </div>
     </label>

@@ -8,6 +8,7 @@ import {
   GET_POST_QUERY,
   APPLY_FILTERS,
   GET_CONVERSATIONS,
+  GET_COORDENADAS,
   EDIT_POST,
   DELETE_POST,
 } from '../types/actionTypes';
@@ -52,6 +53,10 @@ export function getConvers(ida: string) {
     let data = (await axios.get(`/conversation?ida=${ida}`)).data;
     return dispatch({ type: GET_CONVERSATIONS, payload: data });
   };
+}
+
+export function getCoords(long: string, lat: string) {
+  return { type: GET_COORDENADAS, payload: { long, lat } };
 }
 
 export const filterByState = function (filter: string) {

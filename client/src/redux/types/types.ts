@@ -7,8 +7,8 @@ export interface PostType{
     type: string,
     state: string,
     _id?: string,
-    latitude: number,
-    longitude: number
+    latitude: string,
+    longitude: string
 }
 export interface conversation{
 menbers: string[],

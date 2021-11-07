@@ -4,9 +4,6 @@ dotenv.config();
 export async function postPet(input: FormData) {
   try {
     await axios.post('/post', input, {
-      method: 'post',
-      url: `${process.env.REACT_APP_API}/post`,
-      data: input,
       headers: { 'Content-Type': 'multipart/form-data' },
     });
     return 'success';

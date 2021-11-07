@@ -9,7 +9,7 @@ import Footer from './components/Footer/Footer';
 import Login from './components/Login';
 import Register from './components/Register/Register';
 import PostDetail from './components/PostDetail/PostDetail';
-import Publicaciones from './components/Home';
+import Publicaciones from './components/Home.jsx';
 import { Home } from './pages/Home';
 import { Redirect } from 'react-router';
 

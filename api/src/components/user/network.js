@@ -1,5 +1,5 @@
 const userNetwork = require('express').Router();
-const { createUser, postsByUser,getUserById } = require('./controller');
+const { createUser, postsByUser, getUserById } = require('./controller');
 const passport = require('passport');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
@@ -21,7 +21,6 @@ const storage = multer.diskStorage({
     cb(null, uniqid('', file.originalname.split(' ').join('')));
   },
 });
-
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png')
@@ -68,7 +67,7 @@ userNetwork.post('/signup', (req, res) => {
       } else {
         const token = getToken({ _id: user._id });
         const refreshToken = getRefreshToken({ _id: user._id });
-        
+
         user.refreshToken.push({ refreshToken });
 
         user.save((err, user) => {
@@ -114,7 +113,7 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
         });
       },
       err => next(err)
-      );
+    );
   } catch (err) {
     res.send(err);
   }
@@ -134,7 +133,7 @@ userNetwork.get('/logout', verifyUser, (req, res, next) => {
       if (tokenIndex !== -1) {
         user.refreshToken.id(user.refreshToken[tokenIndex]._id).remove();
       }
-      
+
       user.save((err, user) => {
         if (err) {
           res.statusCode = 500;
@@ -146,14 +145,14 @@ userNetwork.get('/logout', verifyUser, (req, res, next) => {
       });
     },
     err => next(err)
-    );
+  );
 });
 
 //Ruta para refrescar el token
 userNetwork.post('/refreshToken', (req, res, next) => {
   const { signedCookies = {} } = req;
   const { refreshToken } = signedCookies;
-  
+
   if (refreshToken) {
     try {
       const payload = jwt.verify(
@@ -193,8 +192,8 @@ userNetwork.post('/refreshToken', (req, res, next) => {
           }
         },
         err => next(err)
-        );
-      } catch (err) {
+      );
+    } catch (err) {
       res.statusCode = 401;
       res.send('Unauthorized');
     }
@@ -204,21 +203,23 @@ userNetwork.post('/refreshToken', (req, res, next) => {
   }
 });
 
-userNetwork.get('/:id',async (req,res)=>{
-  try{
-    const user = await getUserById(req.params.id);
-    if(user){
+userNetwork.get('/', async (req, res) => {
+  try {
+    const user = await getUserById(req.query.id);
+    console.log('user', user);
+    if (user) {
+      console.log('el martoooo');
       res.status(200).json({
         user,
-        token: getToken(user),
-        refreshToken: getRefreshToken(user),
-      })}
-    else{res.status(404).send("usuario no encontradooooo")}
+        token: getToken({ _id: user._id }),
+        refreshToken: getRefreshToken({ _id: user._id }),
+      });
+    } else {
+      res.status(404).send('usuario no encontrado');
+    }
+  } catch (err) {
+    res.status(400).send(err.message);
   }
-  catch(err){
-    res.status(400).send(err);}
-})
-
-
+});
 
 module.exports = userNetwork;
