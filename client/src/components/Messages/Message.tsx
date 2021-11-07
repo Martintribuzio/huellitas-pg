@@ -40,11 +40,9 @@ export default function Message() {
     };
     getMessage();
   }, [ConverseId]);
-  console.log('ENVV', process.env.REACT_APP_SOCKET_URL);
   useEffect(() => {
     socket.current = io(`${process.env.REACT_APP_SOCKET_URL}`);
     socket.current.on('getMessage', (data: any) => {
-      console.log('DATA QUE MANDA EL SOCKET', data);
       setArrivalMessage({
         sender: data.senderId,
         content: data.text,
@@ -67,7 +65,6 @@ export default function Message() {
   const receiverId = convers?.members?.find(
     (member: string) => member !== idSender
   );
-  console.log('este es receiverId ', receiverId);
 
   const handleSubmit = async (e: any) => {
     try {

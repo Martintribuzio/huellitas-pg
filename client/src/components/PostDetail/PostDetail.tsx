@@ -15,7 +15,6 @@ import { style } from '@mui/system';
 import axios from 'axios';
 import useUser from '../../hooks/useUser';
 
-console.log('ASDSADSA', process.env.REACT_APP_API);
 export default function ImgMediaCard() {
   const { id } = useParams<{ id?: string }>();
 
@@ -47,7 +46,6 @@ export default function ImgMediaCard() {
               idEnv: idSender,
             })
           ).data;
-          console.log('NEW COVER', newConver);
           history.push(`/home/messenger/${newConver._id}`);
         }
       }
@@ -55,7 +53,6 @@ export default function ImgMediaCard() {
   };
 
   if (detailpost !== undefined) {
-    console.log('DETAIL POST', detailpost);
     return (
       <div
         style={{
