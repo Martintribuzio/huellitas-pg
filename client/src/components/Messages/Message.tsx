@@ -24,11 +24,13 @@ export default function Message() {
   const socket: any = useRef();
   const idSender = localStorage.getItem('userId');
   const { ConverseId } = useParams<{ ConverseId: string }>();
+  const scrollRef = useRef();
 
   const convers: any = useSelector(
     (state: typeState) => state.conversations
   ).filter(elem => elem._id === ConverseId)[0];
 
+  
   useEffect(() => {
     const getMessage = async () => {
       try {
@@ -108,7 +110,9 @@ export default function Message() {
             </div>
           ))}
         </div>
-        <div className={style.inputSubmit}>
+        
+      </div>
+      <div className={style.inputSubmit}>
           <div className={style.inputChat}>
             <Input
               onKeyPress={e => {
@@ -125,8 +129,6 @@ export default function Message() {
             <SendIcon></SendIcon>
           </div>
         </div>
-      </div>
-    
     </>
   );
 }
