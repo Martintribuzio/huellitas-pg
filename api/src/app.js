@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 });
 
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(morgan("dev"))
+app.use(morgan('dev'));
 app.use('/', route);
 
 module.exports = app;
