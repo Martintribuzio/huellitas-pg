@@ -109,7 +109,7 @@ export default function Feed(props: any) {
                   sx={{ minHeight: 200, minWidth: 200 }}>
                   <ImageSrc
                     style={{
-                      backgroundImage: `url(${process.env.REACT_APP_API}${item.petImage})`,
+                      backgroundImage: `url(${process.env.REACT_APP_API}/${item.petImage})`,
                     }}
                   />
                   <ImageBackdrop className='MuiImageBackdrop-root' />
