@@ -27,8 +27,8 @@ export const validation = (input: any) => {
   if (input.petImage && input.petImage.type.split('/')[0] !== 'image') {
     errors.petImage = 'La imagen debe ser de tipo imagen';
   }
-  console.log(input.petImage.type);
   if (
+    input.petImage &&
     input.petImage.type.split('/')[1] !== 'jpeg' &&
     input.petImage.type.split('/')[1] !== 'png' &&
     input.petImage.type.split('/')[1] !== 'jpg'
