@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { PostType,conversation } from '../../redux/types/types';
+import { PostType, conversation } from '../../redux/types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { typeState } from '../../redux/reducers/index';
 import { getPosts } from '../../redux/actions';
@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import capitalize from '@mui/utils/capitalize';
 import { style } from '@mui/system';
-import axios  from 'axios';
+import axios from 'axios';
 import useUser from '../../hooks/useUser';
 
 export default function ImgMediaCard() {
@@ -30,26 +30,29 @@ export default function ImgMediaCard() {
 
   let detailpost = allPosts.find((elem: PostType) => elem._id === id);
   const contact = async () => {
-    if(result !== 'Unauthorized'){
-    if(detailpost){
-        const conver:conversation = (await axios.get(`/conversation?ida=${idSender}&idb=${detailpost.user}`)).data[0];
-        if(conver._id){
+    if (result !== 'Unauthorized') {
+      if (detailpost) {
+        const conver: conversation = (
+          await axios.get(
+            `/conversation?ida=${idSender}&idb=${detailpost.user}`
+          )
+        ).data[0];
+        if (conver._id) {
           history.push(`/home/messenger/${conver._id}`);
+        } else {
+          const newConver: conversation = (
+            await axios.post('/conversation', {
+              idRec: detailpost.user,
+              idEnv: idSender,
+            })
+          ).data;
+          history.push(`/home/messenger/${newConver._id}`);
         }
-        else{
-          const newConver: conversation = (await axios.post('/conversation',{
-            idRec: detailpost.user,
-            idEnv: idSender,
-          })).data;
-          console.log('NEW COVER',newConver);
-          history.push(`/home/messenger/${newConver._id}`)
-        }
-  }
-}
-}
+      }
+    }
+  };
 
   if (detailpost !== undefined) {
-    console.log('DETAIL POST', detailpost)
     return (
       <div
         style={{
@@ -100,9 +103,13 @@ export default function ImgMediaCard() {
               {detailpost.description}
             </Typography>
           </CardContent>
-         {detailpost.user !== idSender? <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Button onClick={contact}  size='small'>Contactar</Button>
-          </CardActions>:null}
+          {detailpost.user !== idSender ? (
+            <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Button onClick={contact} size='small'>
+                Contactar
+              </Button>
+            </CardActions>
+          ) : null}
         </Card>
       </div>
     );
