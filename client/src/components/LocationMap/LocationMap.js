@@ -1,11 +1,13 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-import { geosearch } from 'esri-leaflet-geocoder';
+// import {geosearch} from 'esri-leaflet-geocoder';
 import './LocationMap.css';
 import useSwr from 'swr';
 import 'leaflet/dist/leaflet.css';
 import 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css';
 import LeafletControlGeocoder from './LeafletControlGeocoder';
+import { useDispatch } from 'react-redux';
+import { getCoords } from '../../redux/actions';
 
 const fetcher = (...args) => fetch(...args).then(response => response.json());
 const defaultCenter = [-34.6038, -58.3816];
@@ -13,7 +15,8 @@ const defaultZoom = 20;
 
 function DisplayPosition({ map }) {
   const [position, setPosition] = useState(map.getCenter());
-
+  const dispatch = useDispatch();
+  // console.log('POSITION', position);
   const onClick = useCallback(() => {
     map.setView(defaultCenter, defaultZoom);
   }, [map]);
@@ -22,19 +25,21 @@ function DisplayPosition({ map }) {
     setPosition(map.getCenter());
   }, [map]);
 
+  // console.log(position.lat.toString())
+
   useEffect(() => {
     map.on('move', onMove);
     return () => {
       map.off('move', onMove);
+      dispatch(getCoords(position.lat.toString(), position.lng.toString()));
     };
-  }, [map, onMove]);
+  }, [map, onMove, position, dispatch]);
 
   return (
-    <></>
-    // <p style={{ margin: '0px' }}>
-    //   latitude: {position.lat.toFixed(4)}, longitude: {position.lng.toFixed(4)}{' '}
-    //   <button onClick={onClick}>reset</button>
-    // </p>
+    <>
+      {/* latitude: {position.lat.toFixed(4)}, longitude: {position.lng.toFixed(4)}{' '}
+      <button onClick={onClick}>reset</button> */}
+    </>
   );
 }
 

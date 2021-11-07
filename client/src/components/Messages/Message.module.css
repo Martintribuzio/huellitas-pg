@@ -1,0 +1,27 @@
+.mensaje{
+    position:absolute;
+    left:0px;
+}
+
+.inputChat{
+    position:absolute;
+    bottom:5px;
+    left:5px;
+}
+
+.inputSubmit{
+    width:600px;
+    height:50px;
+    border:1px solid black;
+    position:absolute;
+    bottom:0px;
+    right:0px;
+}
+
+.boton{
+    width:65px;
+    height:50px;
+    position:absolute;
+    right:0px;
+    border: 1px solid black;
+}

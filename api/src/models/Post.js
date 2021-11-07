@@ -26,6 +26,8 @@ const postSchema = new Schema({
   petImage: {
     type: String,
   },
+  latitude: Number,
+  longitude: Number,
 });
 
 const Post = new model('Post', postSchema);

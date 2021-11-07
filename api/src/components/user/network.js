@@ -1,5 +1,5 @@
 const userNetwork = require('express').Router();
-const { createUser, postsByUser,getUserById } = require('./controller');
+const { createUser, postsByUser, getUserById } = require('./controller');
 const passport = require('passport');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
@@ -22,7 +22,6 @@ const storage = multer.diskStorage({
   },
 });
 
-
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png')
     cb(null, true);
@@ -35,14 +34,10 @@ const upload = multer({
   fileFilter,
 });
 
-userNetwork.get('/:id',async (req,res)=>{
-  try{
-    const user = await getUserById(req.params);
-    res.send(user);
-  }
-  catch(err){
-    res.status(400).send(err);}
-})
+//obtener los detalles del usuario que inició sesión
+userNetwork.get('/me', verifyUser, (req, res, next) => {
+  res.send(req.user);
+});
 
 userNetwork.get('/posts', async (req, res) => {
   try {
@@ -126,6 +121,7 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
 
 //LogOut
 userNetwork.get('/logout', verifyUser, (req, res, next) => {
+  console.log('cdwenz', req);
   const { signedCookies = {} } = req;
   const { refreshToken } = signedCookies;
   User.findById(req.user._id).then(
@@ -207,10 +203,23 @@ userNetwork.post('/refreshToken', (req, res, next) => {
   }
 });
 
-//obtener los detalles del usuario que inició sesión
-userNetwork.get('/me', verifyUser, (req, res, next) => {
-  res.send(req.user);
+userNetwork.get('/', async (req, res) => {
+  try {
+    const user = await getUserById(req.query.id);
+    console.log('user', user);
+    if (user) {
+      console.log('el martoooo');
+      res.status(200).json({
+        user,
+        token: getToken({ _id: user._id }),
+        refreshToken: getRefreshToken({ _id: user._id }),
+      });
+    } else {
+      res.status(404).send('usuario no encontrado');
+    }
+  } catch (err) {
+    res.status(400).send(err.message);
+  }
 });
-
 
 module.exports = userNetwork;

@@ -20,7 +20,6 @@ const searchUserDB = async email => {
 
 const searchUserByIdDB = async id => {
   try {
-    console.log(id);
     const user = await User.findById(id);
     return user;
   } catch (error) {

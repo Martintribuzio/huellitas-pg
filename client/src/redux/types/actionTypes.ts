@@ -12,6 +12,7 @@ export const APPLY_FILTERS = "APPLY_FILTERS";
 export const SET_USER = 'SET_USER';
 export const ERROR = 'ERROR';
 export const GET_CONVERSATIONS = 'GET_CONVERSATIONS';
+export const GET_COORDENADAS = 'GET_COORDENADAS';
 
 export interface getConversation{
   type: typeof GET_CONVERSATIONS,
@@ -67,6 +68,11 @@ export interface setUser {
   payload: string;
 }
 
+export interface getCoordenadas {
+  type: typeof GET_COORDENADAS;
+  payload: {long: string, lat: string};
+}
+
 export type FiltersActionTypes =
   | filterByState
   | filterByLatest
@@ -78,4 +84,5 @@ export type FiltersActionTypes =
   | setUser
   | getPostQuery
   | catchErrors
-  | getConversation;
+  | getConversation
+  | getCoordenadas;

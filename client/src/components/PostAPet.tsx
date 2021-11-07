@@ -11,6 +11,9 @@ import LocationMap from './LocationMap/LocationMap.js';
 import Swal from 'sweetalert2';
 import { postPet } from '../services/createPost';
 import Switch from './Login/Switch';
+import { useSelector } from 'react-redux';
+import { typeState } from '../redux/reducers';
+import { getCoordenadas } from '../redux/types/actionTypes';
 
 type event =
   | ChangeEvent<HTMLInputElement>
@@ -23,7 +26,6 @@ interface HTMLInputEvent extends Event {
 
 const validation = (input: any) => {
   const errors = {
-    name: '',
     description: '',
     genre: '',
     date: '',
@@ -33,9 +35,6 @@ const validation = (input: any) => {
     ubication: '',
   };
 
-  if (!input.name) {
-    errors.name = 'El nombre es requerido';
-  }
   if (!input.description) {
     errors.description = 'La descripción es requerida';
   }
@@ -48,13 +47,28 @@ const validation = (input: any) => {
   if (!input.petImage) {
     errors.petImage = 'La imagen es requerida';
   }
+  if (input.petImage && input.petImage.size > 1024 * 1024 * 3) {
+    errors.petImage = 'La imagen debe tener como tamaño maximo 3MB';
+  }
+  if (input.petImage && input.petImage.type.split('/')[0] !== 'image') {
+    errors.petImage = 'La imagen debe ser de tipo imagen';
+  }
+
+  if (
+    input.petImage &&
+    (!input.petImage.type.includes('jpg') ||
+      input.petImage.type.includes('png'))
+  ) {
+    errors.petImage = 'La imagen debe ser de tipo jpg o png';
+  }
+
   if (!input.type) {
     errors.type = 'El tipo es requerido';
   }
   if (!input.state) {
     errors.state = 'El estado es requerido';
   }
-  if (!input.ubication) {
+  if (!input.latitude && !input.longitude) {
     errors.ubication = 'La ubicación es requerida';
   }
   return errors;
@@ -68,23 +82,23 @@ const initialState = {
   petImage: null,
   type: '',
   state: '',
-  latitude: 0,
-  longitude: 0,
+  latitude: '',
+  longitude: '',
 };
 
 export default function PostAPet(props: any) {
+  const coordenadas = useSelector((state: typeState) => state.coordenadas);
   const [name, setName] = React.useState('');
   const [state, setState] = React.useState('');
   const [type, setType] = React.useState('');
   const [genre, setGenre] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [selectedDate, handleDateChange] = useState();
-  const history = useHistory();
   const [loading, result, user] = useUser();
   const [step, setStep] = useState(false);
+  const history = useHistory();
   const [input, setInput] = useState<PostType>(initialState);
   const [error, setError] = useState({
-    name: '',
     description: '',
     genre: '',
     date: '',
@@ -102,14 +116,29 @@ export default function PostAPet(props: any) {
     }
   }, [props.isOpen]);
 
+  useEffect(() => {
+    if (coordenadas.lat && coordenadas.long) {
+      //Las coordenadas se obtienen de la ubicación del usuario
+      //Las coordenadas estan al revez porque nose pero anda
+      setInput({
+        ...input,
+        latitude: coordenadas.long,
+        longitude: coordenadas.lat,
+      });
+    }
+  }, [coordenadas]);
+
   const handlegenrechange = (e: event) => {
     setGenre(e.target.value);
     setInput({ ...input, genre: e.target.value });
   };
 
-  const handlerdescritionchange = (e: string) => {
-    setDescription(e);
-    setInput({ ...input, description: e });
+  const handlerdescritionchange = (event: string) => {
+    setDescription(event);
+    setInput({
+      ...input,
+      description: event,
+    });
   };
 
   const handletypechange = (e: event) => {
@@ -147,12 +176,11 @@ export default function PostAPet(props: any) {
     if (result.ERROR) {
       return Swal.fire({
         title: 'ERROR!',
-        // text: '!',
         icon: 'error',
         confirmButtonText: 'Intentar de nuevo',
       });
     }
-    history.push('/home/feed');
+    props.closeModal();
     return Swal.fire({
       title: 'Publicado!',
       text: 'Publicacion realizada con exito!',
@@ -161,15 +189,18 @@ export default function PostAPet(props: any) {
     });
   }
 
-  function handleSubmit(e: any) {
-    e.preventDefault();
-    const errors = validation(input);
-    setError(errors);
+  console.log('input', input);
 
-    if (!Object.values(error).some(error => error !== '')) {
+  async function handleSubmit(e: any) {
+    e.preventDefault();
+
+    const errors = validation(input);
+
+    if (Object.values(errors).every(error => error === '')) {
       const id = window.localStorage.getItem('userId');
       const fd = new FormData();
-
+      fd.append('latitude', input.latitude);
+      fd.append('longitude', input.longitude);
       input.petImage && fd.append('petImage', input.petImage);
       input.name && fd.append('name', input.name);
       fd.append('state', input.state);
@@ -180,7 +211,17 @@ export default function PostAPet(props: any) {
 
       postApet(fd);
     }
+    setError(errors);
   }
+
+  const maxDate = (): string => {
+    const today = new Date();
+    const dd = String(today.getDate()).padStart(2, '0');
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const yyyy = today.getFullYear();
+    console.log(`${yyyy}-${mm}-${dd}`);
+    return `${yyyy}-${mm}-${dd}`;
+  };
 
   if (result === 'Unauthorized') {
     return <Redirect to='/login' />;
@@ -203,6 +244,9 @@ export default function PostAPet(props: any) {
                 name='state'
                 value={state}
                 onChange={e => handleSelectEstado(e)}>
+                <option hidden selected>
+                  Estado
+                </option>
                 <option value='Perdido'>Perdido</option>
                 <option value='Encontrado'>Encontrado</option>
                 <option value='Adopción'>En adopcion</option>
@@ -213,7 +257,12 @@ export default function PostAPet(props: any) {
             {input.state === 'Perdido' || input.state === 'Adopción' ? (
               <label>
                 Nombre
-                <input type='text'></input>
+                <input
+                  value={input.name}
+                  onChange={e => {
+                    setInput({ ...input, name: e.target.value });
+                  }}
+                  type='text'></input>
               </label>
             ) : null}
 
@@ -223,6 +272,9 @@ export default function PostAPet(props: any) {
                 name='type'
                 value={type}
                 onChange={e => handletypechange(e)}>
+                <option hidden selected>
+                  Tipo
+                </option>
                 <option value='perro'> Perro </option>
                 <option value='gato'> Gato </option>
                 <option value='otro'> Otro </option>
@@ -236,21 +288,37 @@ export default function PostAPet(props: any) {
                 name='genero'
                 value={genre}
                 onChange={e => handlegenrechange(e)}>
+                <option hidden selected>
+                  Género
+                </option>
                 <option value='Macho'> Macho </option>
                 <option value='Hembra'> Hembra </option>
               </select>
               <small className={styles.error}>{error.genre}</small>
             </label>
-            <div>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                flexDirection: 'column',
+              }}>
               <label className={styles.file}>
                 Imagen
                 <input
                   style={{ display: 'none' }}
                   type='file'
                   onChange={e => handleChangeImg(e)}
+                  accept='image/png, image/jpg'
                 />
               </label>
-              <small className={styles.error}>{error.petImage}</small>
+              <small className={error.petImage ? styles.error : ''}>
+                {error.petImage
+                  ? error.petImage
+                  : input.petImage
+                  ? 'Archivo seleccionado'
+                  : ''}
+              </small>
             </div>
 
             <label>
@@ -260,6 +328,7 @@ export default function PostAPet(props: any) {
                 type='date'
                 value={selectedDate}
                 onChange={e => handleChange(e)}
+                max={maxDate()}
               />
               <small className={styles.error}>{error.date}</small>
             </label>

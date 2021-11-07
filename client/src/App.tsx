@@ -52,6 +52,10 @@ function App() {
         <Route exact path='/home/messenger'>
           <Messenger />
         </Route>
+        
+        <Route exact path='/home/messenger/:ConverseId'>
+          <Messenger />
+        </Route>
 
         <Route exact path='/notification'>
           {/* <Notification /> */}

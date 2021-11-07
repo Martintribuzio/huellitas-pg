@@ -118,7 +118,7 @@
     cursor: pointer;
   }
   .Secondary {
-    height: 100vh;
+    height: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -127,7 +127,7 @@
     .Description {
       height: max-content;
       text-align: center;
-      width: 100%;
+
       padding: 0 20%;
       margin-bottom: 50px;
       h1 {

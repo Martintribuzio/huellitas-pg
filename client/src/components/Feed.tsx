@@ -65,7 +65,7 @@ const ImageBackdrop = styled('span')(({ theme }) => ({
   transition: theme.transitions.create('opacity'),
 }));
 
-export default function Feed() {
+export default function Feed(props: any) {
   const dispatch = useDispatch();
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
   let queryPost = useSelector((state: typeState) => state.queryPosts);
@@ -77,8 +77,8 @@ export default function Feed() {
     : allPosts;
 
   useEffect(() => {
-    dispatch(getPosts());
-  }, [dispatch]);
+    if (!props.isOpen) dispatch(getPosts());
+  }, [dispatch, props.isOpen]);
 
   if (allPosts.length) {
     if (postsToShow.length) {
@@ -91,7 +91,7 @@ export default function Feed() {
             minWidth: 300,
             width: '100%',
           }}>
-          {postsToShow.reverse().map(item => {
+          {postsToShow.map(item => {
             if (typeof item.petImage === 'string') {
               if (item.petImage.search(/\\/)) {
                 item.petImage = item.petImage.replace(/\\/g, '/');

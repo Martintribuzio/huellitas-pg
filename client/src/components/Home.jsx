@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import Feed from './Feed';
 import Filters from './Filters';
 import { Modal } from './Modal';
@@ -24,11 +25,11 @@ export default function Home() {
       </button>
 
       <Modal isOpen={isOpen} closeModal={closeModal}>
-        <PostAPet isOpen={isOpen} />
+        <PostAPet isOpen={isOpen} closeModal={closeModal} />
       </Modal>
 
       <Filters />
-      <Feed />
+      <Feed isOpen={isOpen} />
     </div>
   );
 }

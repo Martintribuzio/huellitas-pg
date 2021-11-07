@@ -17,7 +17,8 @@ const postsByUser = async id => {
     return { e: e.message };
   }
 };
-const getUserById = async ({id}) => {
+const getUserById = async (id) => {
+
   try {
     const user = await searchUserByIdDB(id);
     return user;
