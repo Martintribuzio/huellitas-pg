@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import '../CSS/PostAPet.module.css';
 import { PostType } from '../redux/types/types';
 import styles from '../CSS/PostAPet.module.css';
@@ -20,7 +20,19 @@ interface HTMLInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 }
 
-export default function PostAPet() {
+const initialState = {
+  name: '',
+  description: '',
+  genre: '',
+  date: '',
+  petImage: null,
+  type: '',
+  state: '',
+  latitude: 0,
+  longitude: 0,
+};
+
+export default function PostAPet(props: any) {
   const [name, setName] = React.useState('');
   const [state, setState] = React.useState('');
   const [type, setType] = React.useState('');
@@ -30,18 +42,14 @@ export default function PostAPet() {
   const history = useHistory();
   const [loading, result, user] = useUser();
   const [step, setStep] = useState(0);
-  const [input, setInput] = useState<PostType>({
-    name: '',
-    description: '',
-    genre: '',
-    date: '',
-    petImage: null,
-    type: '',
-    state: '',
-    latitude: 0,
-    longitude: 0,
-  });
-  console.log({ input });
+  const [input, setInput] = useState<PostType>(initialState);
+
+  useEffect(() => {
+    if (props.isOpen) {
+      setStep(0);
+    }
+  }, [props.isOpen]);
+
   const handlegenrechange = (e: event) => {
     setGenre(e.target.value);
     setInput({ ...input, genre: e.target.value });
@@ -137,7 +145,7 @@ export default function PostAPet() {
   if (step === 0) {
   }
   return (
-    <div className={styles.conteiner}>
+    <div className={styles.conteiner + '' + styles.isOpen}>
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formContainer}>
           {!step ? (
@@ -220,9 +228,7 @@ export default function PostAPet() {
               </label>
             </div>
           ) : (
-            <div className='mapContainer'>
-              <LocationMap />
-            </div>
+            <LocationMap />
           )}
         </div>
         <Button className={styles.submit} type='submit'>

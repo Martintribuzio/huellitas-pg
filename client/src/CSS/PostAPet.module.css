@@ -1,21 +1,22 @@
 .conteiner {
+  display: flex;
   align-items: center;
   justify-content: center;
   min-height: 71vh;
-  display: flex;
+  width: 90vw;
   background-color: #e9e9e9;
   background-image: url('../assets/home/background.png');
 }
 
 .form {
+  align-self: center;
   padding: 30px;
   font-family: 'Poppins';
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: max-content;
-  margin: 20px 0;
+  width: 100%;
   background: rgb(115, 167, 203);
   background: radial-gradient(
     circle,
@@ -30,7 +31,9 @@
 
 .form .formContainer {
   display: flex;
+  justify-content: center;
   height: max-content;
+  width: 100%;
 }
 
 .form .inputsContainer {
@@ -167,19 +170,8 @@ input {
   justify-content: center;
 }
 
-.MapContainer {
-  width: 500px;
-  height: 500px;
-}
-
 @media screen and (max-width: 900px) {
   .form .formContainer {
     flex-direction: column;
-  }
-  .MapContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
   }
 }

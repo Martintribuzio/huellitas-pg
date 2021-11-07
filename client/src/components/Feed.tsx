@@ -69,14 +69,12 @@ export default function Feed() {
   const dispatch = useDispatch();
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
   let queryPost = useSelector((state: typeState) => state.queryPosts);
-  console.log(allPosts);
 
   let postsToShow = queryPost
     ? allPosts.filter(elem =>
         elem.name?.toLowerCase().includes(queryPost.toLowerCase())
       )
     : allPosts;
-  // console.log('POSTS', postsToShow);
 
   useEffect(() => {
     dispatch(getPosts());
@@ -98,10 +96,6 @@ export default function Feed() {
               if (item.petImage.search(/\\/)) {
                 item.petImage = item.petImage.replace(/\\/g, '/');
               }
-              console.log(
-                'FEED IMAGE',
-                `url(${process.env.REACT_APP_API}${item.petImage})`
-              );
             }
             return (
               <Link to={`/home/detail/${item._id}`}>

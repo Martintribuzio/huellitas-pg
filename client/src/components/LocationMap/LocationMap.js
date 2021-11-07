@@ -43,7 +43,6 @@ export default function LocationMap() {
 
   //https://huellitas-pg.herokuapp.com/post
   const url = '';
-
   const { data, error } = useSwr(url, fetcher);
   const posts = data && !error ? data : [];
 
