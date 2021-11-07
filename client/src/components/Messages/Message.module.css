@@ -9,7 +9,7 @@
     left:5px;
 }
 
-.inputSubmit{
+/* .inputSubmit{
     width:760px;
     height:50px;
     border:none;
@@ -28,7 +28,7 @@
     right:-10px;
     border: none;
     color: rgb(44, 141, 197);
-}
+} */
 /* .mensaje.own {
     right: 1px;
     float: right;
@@ -48,11 +48,105 @@ mensaje.other{
     padding: 0px 8px;
     margin: 15px;
 } */
-.messages.own{
+/* .messages.own{
     align-items: flex-end;
 }
 
 .messages.own .messageText{
     background-color: rgb(245, 241, 241);
     color: black;
+} */
+.conv{
+    width:400px;
+    height:600px;
+    border:none;
+    margin: 10px;
+    border-radius: 20px;
+    text-align: left;
+    background-color: #99a3a75d;
+    backdrop-filter: blur(2px);
+    padding: 10px;
+}
+.cont{
+    color: #fff;
+    margin-left: 10px;
+}
+.inputChat{
+    position:absolute;
+    bottom:5px;
+    left:5px;
+}
+
+.inputSubmit{
+    width:780px;
+    height:50px;
+    border:none;
+    position:absolute;
+    bottom:10px;
+    background-color: rgba(255, 255, 255, 0.445);
+    border-radius:5px;
+    top: 500px;
+    left: 20px;
+}
+
+.boton{
+    width:65px;
+    height:50px;
+    top: 12px;
+    position:absolute;
+    right:-10px;
+    border: none;
+    color: rgb(44, 141, 197);
+}
+.own {
+    right: 1px;
+    float: right;
+    background-color: rgb(70, 155, 204);
+    color: rgba(255, 255, 255);
+    border-radius: 5px;
+    padding: 0px 5px 0px 5px;
+    position: relative;
+    align-self: flex-end;
+    left:750px;
+    margin: 5px;
+}
+.other{
+    left: 1px;
+    float: left;
+    background-color: rgba(255, 255, 255);
+    color:rgb(70, 155, 204) ;
+    position: relative;
+    align-self: flex-start;
+    margin: 5px;
+    padding: 0px 5px 0px 5px;
+    border-radius: 5px;
+}
+.mensaje{
+    display: flex;
+    flex-direction: column;
+   
+}
+body{
+    background-color: #e9e9e9;
+    background-image: url('../../assets/home/background.png');
+    font-family: 'Roboto',sans-serif;
+   
+}
+.fondoChat{
+    border:none;
+    width: 800px;
+    height: 550px;
+    padding: 8px;
+    position: absolute;
+    left: 430px;
+    top: 100px;
+    border-radius: 20px;
+    backdrop-filter: blur(2px);
+    background-color: rgba(255, 255, 255, 0.315);
+   
+}
+.none{
+    background-color: #e9e9e9;
+    height: 400px;
+    width: 400px;
 }

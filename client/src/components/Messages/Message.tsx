@@ -93,16 +93,17 @@ export default function Message() {
   };
 
   return (
-    <div>
-      <div /* className={style.mensaje} */>
-        <div>
+    <>
+    <div className={style.fondoChat}>
+     
+        <div className={style.mensaje}>
           <img
             className='messageImg'
             // src="https://images.pexels.com/photos/3686769/pexels-photo-3686769.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
             alt=''
           />
           {messages?.map(c => (
-            <div className={c.sender !== idSender ? 'other' : 'own'}>
+            <div className={c.sender !== idSender ? style.other : style.own}>
               <p>{c.content}</p>
             </div>
           ))}
@@ -125,6 +126,7 @@ export default function Message() {
           </div>
         </div>
       </div>
-    </div>
+    
+    </>
   );
 }
