@@ -40,17 +40,18 @@ export default function Message(){
   
   useEffect(() => {
     socket.current = io("ws://localhost:3002")
-    socket.current.on("getMessage", (data:message) => {
+    socket.current.on("getMessage", (data:any) => {
+      console.log('DATA QUE MANDA EL SOCKET' ,data)
       setArrivalMessage({
-        sender: data.sender,
-        content: data.content
+        sender: data.senderId,
+        content: data.text
       })
     })
   },[])
   
   useEffect(() => {
     if(messages !== undefined){
-      arrivalMessage && convers?.members.includes(arrivalMessage.sender) && setMessages([...messages, arrivalMessage])
+      arrivalMessage && convers?.members.includes(arrivalMessage.sender) && setMessages((prev:any) => [...prev, arrivalMessage]);
     }
   },[arrivalMessage,convers])
 
@@ -64,11 +65,11 @@ export default function Message(){
   const handleSubmit = async (e:any) => {
     try{
       e.preventDefault()
-      // socket.current.emit("sendMessage", {
-      //   senderId: idSender,
-      //   receiverId:receiverId,
-      //   text:newMessage
-      // })
+      socket.current.emit("sendMessage", {
+        senderId: idSender,
+        receiverId:receiverId,
+        text:newMessage
+      })
       const message = {
         sender:idSender,
         content: newMessage,
