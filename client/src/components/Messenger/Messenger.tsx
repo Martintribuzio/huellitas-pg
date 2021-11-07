@@ -48,23 +48,28 @@ export default function BottomAppBar() {
     }
   }, [result]);
   
-  useEffect(() => {
-    socket.current = io("ws://localhost:3002")
-    socket.current.on("getMessage", (data:message) => {
-      setArrivalMessage({
-        sender: data.sender,
-        content: data.content
-      })
-    })
-  },[])
+  // useEffect(() => {
+  //   socket.current = io("ws://localhost:3002")
+  //   socket.current.on("getMessage", (data:message) => {
+  //     setArrivalMessage({
+  //       sender: data.sender,
+  //       content: data.content
+  //     })
+  //   })
+  // },[])
   
-  useEffect(() => {
-    if(messages !== undefined){
-      arrivalMessage && convers?.members?.includes(arrivalMessage.sender) && setMessages([...messages, arrivalMessage])
-    }
-  },[arrivalMessage,convers])
+  // useEffect(() => {
+  //   if(messages !== undefined){
+  //     arrivalMessage && convers?.members?.includes(arrivalMessage.sender) && setMessages([...messages, arrivalMessage])
+  //   }
+  // },[arrivalMessage,convers])
 
- 
+  //  useEffect(() => {
+  //   socket.current.emit("addUser",id)
+  //   socket.current.on("getUsers", (users:[]) => {
+  //     console.log(users)
+  //   })
+  // },[localStorage])
   
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
