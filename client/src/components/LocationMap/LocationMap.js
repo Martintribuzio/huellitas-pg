@@ -10,8 +10,28 @@ import { useDispatch } from 'react-redux';
 import { getCoords } from '../../redux/actions';
 
 const fetcher = (...args) => fetch(...args).then(response => response.json());
-const defaultCenter = [-34.6038, -58.3816];
-const defaultZoom = 20;
+
+let defaultCenter = [-34.6038, -58.3816];
+let defaultZoom = 13;
+
+////////////////////////////localizacion//////////////////////////////////////////
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0,
+};
+
+function success(pos) {
+  var crd = pos.coords;
+  defaultCenter = [crd.latitude, crd.longitude];
+}
+function error(err) {
+  console.warn('ERROR(' + err.code + '): ' + err.message);
+}
+
+navigator.geolocation.getCurrentPosition(success, error, options);
+
+//////////////////////////////////////////////////////////////////////////////////
 
 function DisplayPosition({ map }) {
   const [position, setPosition] = useState(map.getCenter());

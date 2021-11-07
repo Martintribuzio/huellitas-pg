@@ -61,9 +61,23 @@ const editPostDB = async (_id, name, type, state, description, genre, date) => {
   }
 };
 
+const deletePostDB = async id => {
+  try {
+    const post = await Post.findById(id);
+    
+    if (post !== null){
+      await post.remove();
+      return post;
+    }
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 
 module.exports = {
   createPostDB,
   findPostDB,
   editPostDB,
+  deletePostDB,
 };
