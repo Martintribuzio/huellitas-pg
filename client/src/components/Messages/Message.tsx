@@ -25,37 +25,37 @@ export default function Message(convers:any){
   const { ConverseId } = useParams<{ConverseId?:string}>()
 
   
-  useEffect(() => {
-    const getMessage= async () => {
-      try{
-          const res = await axios.get(`/message/${ConverseId}`)
-          setMessages(res.data)
-      }catch(err:any){
-          return err.message
-      }
-    }
-    getMessage()
-  }, [ConverseId])
+  // useEffect(() => {
+  //   const getMessage= async () => {
+  //     try{
+  //         const res = await axios.get(`/message/${ConverseId}`)
+  //         setMessages(res.data)
+  //     }catch(err:any){
+  //         return err.message
+  //     }
+  //   }
+  //   getMessage()
+  // }, [ConverseId])
   
-  useEffect(() => {
-    socket.current = io("ws://localhost:3002")
-    socket.current.on("getMessage", (data:message) => {
-      setArrivalMessage({
-        sender: data.sender,
-        content: data.content
-      })
-    })
-  },[])
+  // useEffect(() => {
+  //   socket.current = io("ws://localhost:3002")
+  //   socket.current.on("getMessage", (data:message) => {
+  //     setArrivalMessage({
+  //       sender: data.sender,
+  //       content: data.content
+  //     })
+  //   })
+  // },[])
   
-  useEffect(() => {
-    if(messages !== undefined){
-      arrivalMessage && convers?.members.includes(arrivalMessage.sender) && setMessages([...messages, arrivalMessage])
-    }
-  },[arrivalMessage,convers])
+  // useEffect(() => {
+  //   if(messages !== undefined){
+  //     arrivalMessage && convers?.members.includes(arrivalMessage.sender) && setMessages([...messages, arrivalMessage])
+  //   }
+  // },[arrivalMessage,convers])
 
-  useEffect(() => {
-    socket.current.emit("addUser",idSender)
-  },[localStorage])
+  // useEffect(() => {
+  //   socket.current.emit("addUser",idSender)
+  // },[localStorage])
 
   const receiverId = convers.members?.find((member:string) => member !== idSender)
 
@@ -85,13 +85,13 @@ export default function Message(convers:any){
 
   return (
       <div >
-        <div className={style.mensaje} >
+        {/* <div className={style.mensaje} >
           {/* <img
             className="messageImg"
             src="https://images.pexels.com/photos/3686769/pexels-photo-3686769.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
             alt=""
           /> */}
-          {messages?.map((c) => (
+          {/* {messages?.map((c) => (
              <div className={c.sender!==idSender?'other':'own'}>
                <p>{c.content}</p></div>
           ))}
@@ -108,7 +108,7 @@ export default function Message(convers:any){
               <SendIcon onClick={handleSubmit}></SendIcon>
             </div>
         
-          </div>
+          </div> */}
       </div>
     );
   }

@@ -21,6 +21,8 @@ import useUser from '../../hooks/useUser';
 import { getConvers } from '../../redux/actions';
 import { useParams } from 'react-router';
 import {io} from "socket.io-client"
+import axios from "axios"
+import styles from '../Messages/Message.module.css'
 
 export default function BottomAppBar() {
     const [search, setSearch] = useState<string>('');
@@ -31,14 +33,34 @@ export default function BottomAppBar() {
     const { ConverseId } = useParams<{ConverseId?:string}>()
     const dispatch = useDispatch();
     const socket:any = useRef()
+    
+    const [newMessage,setnewMessage] = useState<string>()
 
   const convers:any = useSelector((state:typeState) => state.conversations);
+  console.log("convers = ", convers)
+  // const receiverId = convers.members?.find((member:string) => member !== id)
+  const receiverId = convers?.find((member:any) => {
+    return member.members?.find((m:string) => m !== id)
+  })
+  console.log("receiverId = ",receiverId)
 
   interface message{
     content: string;
     Converseid: string;
     sender: string;
   }
+
+  useEffect(() => {
+    const getMessage= async () => {
+      try{
+          const res = await axios.get(`/message/${ConverseId}`)
+          setMessages(res.data)
+      }catch(err:any){
+          return err.message
+      }
+    }
+    getMessage()
+  }, [ConverseId])
 
   useEffect(() => {
     if (result !== 'Unauthorized') {
@@ -48,29 +70,52 @@ export default function BottomAppBar() {
     }
   }, [result]);
   
-  // useEffect(() => {
-  //   socket.current = io("ws://localhost:3002")
-  //   socket.current.on("getMessage", (data:message) => {
-  //     setArrivalMessage({
-  //       sender: data.sender,
-  //       content: data.content
-  //     })
-  //   })
-  // },[])
+  useEffect(() => {
+    socket.current = io("ws://localhost:3002")
+    socket.current.on("getMessage", (data:message) => {
+      setArrivalMessage({
+        sender: data.sender,
+        content: data.content
+      })
+    })
+  },[])
   
-  // useEffect(() => {
-  //   if(messages !== undefined){
-  //     arrivalMessage && convers?.members?.includes(arrivalMessage.sender) && setMessages([...messages, arrivalMessage])
-  //   }
-  // },[arrivalMessage,convers])
+  useEffect(() => {
+    if(messages !== undefined){
+      arrivalMessage && convers?.members?.includes(arrivalMessage.sender) && setMessages([...messages, arrivalMessage])
+    }
+  },[arrivalMessage,convers])
 
-  //  useEffect(() => {
-  //   socket.current.emit("addUser",id)
-  //   socket.current.on("getUsers", (users:[]) => {
-  //     console.log(users)
-  //   })
-  // },[localStorage])
+   useEffect(() => {
+    socket.current.emit("addUser",id)
+    socket.current.on("getUsers", (users:[]) => {
+      console.log(users)
+    })
+  },[localStorage])
   
+  const handleSubmit = async (e:any) => {
+    try{
+      e.preventDefault()
+      socket.current.emit("sendMessage", {
+        senderId: id,
+        receiverId:receiverId,
+        text:newMessage
+      })
+      const message = {
+        sender:id,
+        content: newMessage,
+        Converseid: ConverseId
+      }
+      const res = await axios.post("/message", message)
+      if(messages !== undefined){
+        setMessages([...messages, res.data])
+        setnewMessage('')
+      }
+    }catch(err:any){
+      console.log(err.message)
+    }
+  }   
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     setSearch(e.target.value);
@@ -98,47 +143,32 @@ export default function BottomAppBar() {
               <Conversations/>
             </List>
             </div>
-            <div className={style.fondo}>
-             <div className={ConverseId?style.fondoChat:style.none}>
+             {/* <div className={ConverseId?style.fondoChat:style.none}>
                <div>
                   <Message />
                </div>
-             </div>
-             </div>
-            {/* <List sx={{ mb: 2 }} > /}
-              {/ {messages.slice(0,5).map(({ id, primary, secondary, person }) => (
-                  <React.Fragment key={id}>
-                  {id === 1 && (
-                      <ListSubheader sx={{ bgcolor: 'background.paper' }}>
-                      Hoy
-                    </ListSubheader>
-                  )}
-                  {id === 3 && (
-                      <ListSubheader sx={{ bgcolor: 'background.paper' }}>
-                      Este mes
-                    </ListSubheader>
-                  )}
-                  <ListItem button>
-                    <ListItemAvatar>
-                      <Avatar alt="Profile Picture" src={person} />
-                    </ListItemAvatar>
-                    <ListItemText primary={primary} secondary={secondary.length < 50? secondary:${secondary.slice(0,50)}...}  />
-                  </ListItem>
-                </React.Fragment>
-              ))} /}
-    
-            {/ </List> /}
-            </div>
-            <div>
-              {currentChat?(
-                <div>
-                  {/ {message.map((m:object) => (
-                    <Messages message={m} own={m.sender===user.id}/>
-                  ))} */}
-              {/* <span className={style.mensajeComienzo}>Comienza una conversación</span> */}
-            {/* </div> */}
-         {/*  </Paper> */}
+             </div> */}
+      <div className={ConverseId?style.fondoChat:style.none}>
+        <div className={styles.mensaje} >
+          {messages?.map((c) => (
+             <p className={c.sender === id? 'own':'other' }>{c.content}</p>
+          ))}
         </div>
+        <div className={styles.inputSubmit}>
+          <div className={styles.inputChat}>
+            <Input 
+              placeholder="Escribe un mensaje" 
+              onChange={(e) => setnewMessage(e.target.value)}
+              value={newMessage}  
+            />
+          </div>
+            <div className={styles.boton}>
+              <Button onClick={handleSubmit}>enviar</Button>
+            </div>
+          </div>
+          </div>
+        </div>
+      
       );
     }
   }
