@@ -13,7 +13,7 @@ import Message from '../Messages/Message';
 import Input from '@mui/material/Input'
 import {useState, useEffect, useRef} from 'react'
 import style from './Messenger.module.css'
-import Conversations from '../conversations/Conversation';
+import Conversations from '../conversations/Conversations';
 import { useDispatch, useSelector } from 'react-redux';
 import { typeState } from '../../redux/reducers/index';
 import { conversation } from '../../redux/types/types';
@@ -24,21 +24,47 @@ import {io} from "socket.io-client"
 
 export default function BottomAppBar() {
     const [search, setSearch] = useState<string>('');
+    const [arrivalMessage,setArrivalMessage] = useState<any>();
+    const [messages,setMessages] = useState<message[]>()
     const id = localStorage.getItem('userId');
     const [loading, result] = useUser();
     const { ConverseId } = useParams<{ConverseId?:string}>()
     const dispatch = useDispatch();
+    const socket:any = useRef()
+
+  const convers:any = useSelector((state:typeState) => state.conversations);
+
+  interface message{
+    content: string;
+    Converseid: string;
+    sender: string;
+  }
 
   useEffect(() => {
     if (result !== 'Unauthorized') {
-      const id = localStorage.getItem('userId');
       if (id) {
         dispatch(getConvers(id));
       }
     }
   }, [result]);
+  
+  useEffect(() => {
+    socket.current = io("ws://localhost:3002")
+    socket.current.on("getMessage", (data:message) => {
+      setArrivalMessage({
+        sender: data.sender,
+        content: data.content
+      })
+    })
+  },[])
+  
+  useEffect(() => {
+    if(messages !== undefined){
+      arrivalMessage && convers?.members?.includes(arrivalMessage.sender) && setMessages([...messages, arrivalMessage])
+    }
+  },[arrivalMessage,convers])
 
-  const convers:Array<conversation> = useSelector((state:typeState) => state.conversations);
+ 
   
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
@@ -68,10 +94,7 @@ export default function BottomAppBar() {
             </div>
              <div className={ConverseId?style.fondoChat:style.none}>
                <div>
-                  {/* {message?.map((m:menssage) => (
-                    <Message text={m.content} own={m.sender === id} />
-                  ))} */}
-                  <Message convers={convers}/>
+                  <Message/>
                </div>
              </div>
             {/* <List sx={{ mb: 2 }} > /}

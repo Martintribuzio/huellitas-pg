@@ -5,7 +5,6 @@ import { typeState } from '../../redux/reducers/index';
 
 export default function Conversations(){
     const convers:Array<conversation> = useSelector((state:typeState) => state.conversations);
-    console.log("Martooooo",{convers})
     return(
         <div>
             {convers.length? convers.map((c:any) => (

@@ -23,6 +23,7 @@ export default function Message(convers:any){
   const idSender = localStorage.getItem('userId');
   const { ConverseId } = useParams<{ConverseId?:string}>()
 
+  
   useEffect(() => {
     const getMessage= async () => {
       try{
@@ -35,30 +36,30 @@ export default function Message(convers:any){
     getMessage()
   }, [ConverseId])
   
-  useEffect(() => {
-    socket.current = io("ws://localhost:3002")
-    socket.current.on("getMessage", (data:message) => {
-      setArrivalMessage({
-        sender: data.sender,
-        content: data.content
-      })
-    })
-  },[])
+  // useEffect(() => {
+  //   socket.current = io("ws://localhost:3002")
+  //   socket.current.on("getMessage", (data:message) => {
+  //     setArrivalMessage({
+  //       sender: data.sender,
+  //       content: data.content
+  //     })
+  //   })
+  // },[])
   
-  useEffect(() => {
-    if(messages !== undefined){
-      arrivalMessage && convers?.menbers.includes(arrivalMessage.sender) && setMessages([...messages, arrivalMessage])
-    }
-  },[arrivalMessage,convers])
+  // useEffect(() => {
+  //   if(messages !== undefined){
+  //     arrivalMessage && convers?.members.includes(arrivalMessage.sender) && setMessages([...messages, arrivalMessage])
+  //   }
+  // },[arrivalMessage,convers])
 
-  useEffect(() => {
-    socket.current.emit("addUser",idSender)
-    socket.current.on("getUsers", (users:[]) => {
-      console.log(users)
-    })
-  },[localStorage])
+  // useEffect(() => {
+  //   socket.current.emit("addUser",idSender)
+  //   socket.current.on("getUsers", (users:[]) => {
+  //     console.log(users)
+  //   })
+  // },[localStorage])
 
-  const receiverId = convers.menbers?.find((member:string) => member !== idSender)
+  const receiverId = convers.members?.find((member:string) => member !== idSender)
 
   const handleSubmit = async (e:any) => {
     socket.current.emit("sendMessage", {

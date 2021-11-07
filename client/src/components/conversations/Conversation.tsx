@@ -27,11 +27,9 @@ export default function Conversation(params:any){
 
     useEffect(() => {
         const friendId = params.conversation?.members?.find((elem:string) => elem !== myId)
-        console.log(params.conversation?.members)
         const getUser = async (friendId:string) => {
             try{
               const res = await axios.get(`/user?id=${friendId}`)
-              console.log(res.data)
               setUser(res.data)
             }catch(err:any){
               return err.message
@@ -40,7 +38,6 @@ export default function Conversation(params:any){
         const getMessage= async () => {
             try{
                 const res = await axios.get(`/message/${params.conversation._id}`)
-                console.log(res.data)
                 setMessage(res.data)
             }catch(err:any){
                 return err.message
