@@ -3,15 +3,31 @@ const socketio = require('socket.io');
 const http = require('http');
 const app = express();
 const cors = require('cors');
+const dotenv = require('dotenv');
+dotenv.config();
 
 app.use(cors());
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
 
 const PORT = process.env.PORT || 3002;
 const server = http.createServer(app);
 
 const io = socketio(server, {
+  // cors: {
+  //   origins: '*',
+  // },
   cors: {
-    origins: '*',
+    origin: process.env.FRONT_URL, // I copied the origin in the error message and pasted here
+    methods: ['GET', 'POST'],
+    credentials: true,
   },
 });
 
