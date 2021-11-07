@@ -82,6 +82,9 @@ export default function PrimarySearchAppBar(): JSX.Element {
   const history = useHistory();
   const [_loading, result] = useUser();
 
+  console.log(_loading, result);
+
+
   const logoutService = async () => {
     try {
       const response: any = await axios.get('/user/logout', {
@@ -381,51 +384,65 @@ export default function PrimarySearchAppBar(): JSX.Element {
           </Box>
 
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <IconButton
-              size='large'
-              aria-label='show 4 new mails'
-              onClick={handleProfileMenuOpen}
-              color='inherit'>
-              <Badge badgeContent={0} color='error'>
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size='large'
-              aria-label='show 17 new notifications'
-              color='inherit'>
-              <Badge badgeContent={0} color='error'>
-                <Link to='/home/notification' style={{ color: 'white' }}>
-                  <NotificationsIcon />
-                </Link>
-              </Badge>
-            </IconButton>
-            <IconButton
-              size='large'
-              edge='end'
-              aria-label='account of current user'
-              aria-controls={menuId}
-              aria-haspopup='true'
-              onClick={handleProfileMenuOpenProf}
-              color='inherit'>
-              {/* <Link to='/home/profile' style={{ color: 'white' }}> */}
-              <AccountCircle />
-              {/* </Link> */}
-            </IconButton>
-          </Box>
+
+          {result === 'Success' ? (
+            <Box>
+              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                <IconButton
+                  size='large'
+                  aria-label='show 4 new mails'
+                  onClick={handleProfileMenuOpen}
+                  color='inherit'>
+                  <Badge badgeContent={0} color='error'>
+                    <MailIcon />
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  size='large'
+                  aria-label='show 17 new notifications'
+                  color='inherit'>
+                  <Badge badgeContent={0} color='error'>
+                    <Link to='/home/notification' style={{ color: 'white' }}>
+                      <NotificationsIcon />
+                    </Link>
+                  </Badge>
+                </IconButton>
+                <IconButton
+                  size='large'
+                  edge='end'
+                  aria-label='account of current user'
+                  aria-controls={menuId}
+                  aria-haspopup='true'
+                  onClick={handleProfileMenuOpenProf}
+                  color='inherit'>
+                  {/* <Link to='/home/profile' style={{ color: 'white' }}> */}
+                  <AccountCircle />
+                  {/* </Link> */}
+                </IconButton>
+              </Box>
+              <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
+                <IconButton
+                  size='large'
+                  aria-label='show more'
+                  aria-controls={mobileMenuId}
+                  aria-haspopup='true'
+                  onClick={handleMobileMenuOpen}
+                  color='inherit'>
+                  <MoreIcon />
+                </IconButton>
+              </Box>
+            </Box>
+          ) : (
+            <Link style={{ textDecoration: 'none' }} to='/login'>
+              <Button
+                color='secondary'
+                variant='contained'
+                sx={{ color: '#73A7CB' }}>
+                Registrate
+              </Button>
+            </Link>
+          )}
           {/* <button onClick={logoutService}>logout</button> */}
-          <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size='large'
-              aria-label='show more'
-              aria-controls={mobileMenuId}
-              aria-haspopup='true'
-              onClick={handleMobileMenuOpen}
-              color='inherit'>
-              <MoreIcon />
-            </IconButton>
-          </Box>
         </Toolbar>
       </AppBar>
       {renderMenu}
