@@ -7,6 +7,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 app.use(cors());
+
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*'); // update to match the domain you will make the request from
   res.header('Access-Control-Allow-Credentials', 'true');
@@ -23,9 +24,11 @@ const server = http.createServer(app);
 const io = socketio(server, {
   
   cors: {
-    origin: process.env.FRONT_URL, // I copied the origin in the error message and pasted here
+    origins: '*:*',
     methods: ['GET', 'POST'],
-    credentials: true,
+    allowedHeaders: ['content-type'],
+    pingTimeout: 7000,
+    pingInterval: 3000,
   },
 });
 
@@ -64,7 +67,8 @@ io.on('connection', socket => {
 
   socket.on('sendMessage', ({ senderId, receiverId, text }) => {
     const user = getUser(receiverId);
-    if (user.socketId) {
+    console.log(user);
+    if (user?.socketId) {
       io.emit('getMessage', {
         senderId,
         text,
