@@ -22,7 +22,7 @@ export default function Message(convers:any){
   const [arrivalMessage,setArrivalMessage] = useState<any>();
   const socket:any = useRef()
   const idSender = localStorage.getItem('userId');
-  const { ConverseId } = useParams<{ConverseId?:string}>()
+  const { ConverseId } = useParams<{ConverseId:string}>()
 
   
   // useEffect(() => {
