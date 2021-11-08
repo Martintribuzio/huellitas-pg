@@ -1,5 +1,3 @@
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
 import Feed from './Feed';
 import Filters from './Filters';
 import { Modal } from './Modal';

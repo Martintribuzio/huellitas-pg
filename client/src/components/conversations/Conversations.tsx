@@ -8,27 +8,32 @@ import axios from 'axios';
 import { getConvers } from '../../redux/actions';
 import style from '../Messages/Message.module.css';
 
-export default function Conversations(){
-    const convers:Array<conversation> = useSelector((state:typeState) => state.conversations);
-    const id = localStorage.getItem('userId');
-    const dispatch = useDispatch()
+export default function Conversations() {
+  const convers: Array<conversation> = useSelector(
+    (state: typeState) => state.conversations
+  );
+  const id = localStorage.getItem('userId');
+  const dispatch = useDispatch();
 
-    const [loading, result] = useUser();
+  const [loading, result] = useUser();
 
-      useEffect(() => {
-        if (result !== 'Unauthorized') {
-          if (id) {
-            dispatch(getConvers(id));
-          }
-        }
-      }, []);
+  useEffect(() => {
+    if (result !== 'Unauthorized') {
+      if (id) {
+        dispatch(getConvers(id));
+      }
+    }
+  }, []);
 
-    return(
-        convers.length?
-        <div className={style.conv}>
-            {convers.length? convers.map((c:any) => (
-                  <Conversation conversation={c} />
-            )):null}
-        </div>:<p>No conversations</p>
-    )
+  if (convers.length && Array.isArray(convers) && result !== 'Unauthorized') {
+    return (
+      <div className={style.conv}>
+        {convers.length
+          ? convers.map((c: any) => <Conversation conversation={c} />)
+          : null}
+      </div>
+    );
+  } else {
+    return <p>No conversations</p>;
+  }
 }

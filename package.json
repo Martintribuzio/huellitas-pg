@@ -2,6 +2,7 @@
   "dependencies": {
     "@types/react": "^17.0.33",
     "chokidar": "^3.5.2",
+    "engine.io-parser": "^5.0.1",
     "morgan": "^1.10.0"
   }
 }
