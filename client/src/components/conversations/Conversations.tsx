@@ -34,6 +34,8 @@ export default function Conversations() {
       </div>
     );
   } else {
-    return <p>No has iniciado ninguna conversación</p>;
+    return <div className={style.noConv}>
+     <p>No has iniciado ninguna conversación</p>
+     </div>
   }
 }
