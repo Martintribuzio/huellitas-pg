@@ -129,9 +129,6 @@ export default function Message() {
             <SendIcon></SendIcon>
           </div>
         </div>
-
-      </div>
-
     </>
   );
 }
