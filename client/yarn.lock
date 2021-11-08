@@ -10096,7 +10096,7 @@
     "leaflet-geosearch" "^2.7.0"
     "react-leaflet" "^3.0.5"
 
-"react-leaflet@^3.0.5", "react-leaflet@^3.1.0":
+"react-leaflet@^3.0.5", "react-leaflet@^3.2.2":
   "integrity" "sha512-5W7iWjI9+CdTGVAICe8RUyK0n+uLshr+eLQa8eBCbmstPNpCHZJTUSbju4Ws5dkS/PUCr9t5VmoIE9CXuSBEhw=="
   "resolved" "https://registry.npmjs.org/react-leaflet/-/react-leaflet-3.2.2.tgz"
   "version" "3.2.2"
