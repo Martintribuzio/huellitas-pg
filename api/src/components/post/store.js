@@ -10,7 +10,9 @@ const createPostDB = async (
   id,
   genre,
   date,
-  petImage
+  petImage,
+  latitude, 
+  longitude
 ) => {
   try {
     const post = new Post({
@@ -22,6 +24,8 @@ const createPostDB = async (
       genre,
       date,
       petImage,
+      latitude, 
+      longitude
     });
     await post.save();
     const userById = await User.findById(id);
