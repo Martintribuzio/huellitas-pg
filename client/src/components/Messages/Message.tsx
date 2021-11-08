@@ -61,7 +61,7 @@ export default function Message() {
         convers?.members.includes(arrivalMessage.sender) &&
         setMessages((prev: any) => [...prev, arrivalMessage]);
     }
-  }, [arrivalMessage, convers, messages]);
+  }, [arrivalMessage, convers]);
 
   useEffect(() => {
     socket.current.emit('addUser', idSender);
