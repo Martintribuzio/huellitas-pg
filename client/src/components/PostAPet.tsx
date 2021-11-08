@@ -44,6 +44,7 @@ export default function PostAPet(props: any) {
   const [loading, result] = useUser();
   const [step, setStep] = useState(false);
   const [input, setInput] = useState<PostType>(initialState);
+
   const [error, setError] = useState({
     description: '',
     genre: '',
@@ -154,6 +155,7 @@ export default function PostAPet(props: any) {
       id && fd.append('id', id);
 
       postApet(fd);
+      e.target.reset();
     }
     setError(errors);
   }
@@ -286,7 +288,7 @@ export default function PostAPet(props: any) {
                 cols={21}
                 maxLength={200}
                 placeholder='Ingrese descripcion de su publicación'
-                value={description}
+                value={input.description}
                 name='description'
                 onChange={e => handlerdescritionchange(e.target.value)}
               />

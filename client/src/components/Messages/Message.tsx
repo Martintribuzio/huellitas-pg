@@ -25,11 +25,14 @@ export default function Message() {
   const { ConverseId } = useParams<{ ConverseId: string }>();
   const scrollRef = useRef();
 
-  const convers: any = useSelector(
+  const conversState: any = useSelector(
     (state: typeState) => state.conversations
-  ).filter(elem => elem._id === ConverseId)[0];
+  );
+  console.log(conversState);
+  const convers = Array.isArray(conversState)
+    ? conversState.filter((elem: any) => elem._id === ConverseId)[0]
+    : [];
 
-  
   useEffect(() => {
     const getMessage = async () => {
       try {
@@ -93,8 +96,7 @@ export default function Message() {
 
   return (
     <div>
-    <div className={style.fondoChat}>
-     
+      <div className={style.fondoChat}>
         <div className={style.mensaje}>
           <img
             className='messageImg'
@@ -107,27 +109,24 @@ export default function Message() {
             </div>
           ))}
         </div>
-        
       </div>
       <div className={style.inputSubmit}>
-          <div className={style.inputChat}>
-            <Input
-              onKeyPress={e => {
-                if (e.key === 'Enter') {
-                  handleSubmit(e);
-                }
-              }}
-              placeholder='Escribe un mensaje'
-              onChange={e => setnewMessage(e.target.value)}
-              value={newMessage}
-            />
-          </div>
-          <div onClick={handleSubmit} className={style.boton}>
-            <SendIcon></SendIcon>
-          </div>
+        <div className={style.inputChat}>
+          <Input
+            onKeyPress={e => {
+              if (e.key === 'Enter') {
+                handleSubmit(e);
+              }
+            }}
+            placeholder='Escribe un mensaje'
+            onChange={e => setnewMessage(e.target.value)}
+            value={newMessage}
+          />
         </div>
-
+        <div onClick={handleSubmit} className={style.boton}>
+          <SendIcon></SendIcon>
+        </div>
+      </div>
     </div>
-
   );
 }
