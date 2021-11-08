@@ -7,7 +7,6 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { getConvers } from '../../redux/actions';
 import style from '../Messages/Message.module.css';
-import { useHistory } from 'react-router';
 
 export default function Conversations() {
   const convers: Array<conversation> = useSelector(
@@ -15,7 +14,6 @@ export default function Conversations() {
   );
   const id = localStorage.getItem('userId');
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const [loading, result] = useUser();
 
@@ -25,10 +23,7 @@ export default function Conversations() {
         dispatch(getConvers(id));
       }
     }
-    else{
-      history.push('/login');
-    }
-  }, [id]);
+  }, []);
 
   if (convers.length && Array.isArray(convers) && result !== 'Unauthorized') {
     return (
