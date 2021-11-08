@@ -68,11 +68,11 @@ export default function PostAPet(props: any) {
       //Las coordenadas estan al revez porque nose pero anda
       setInput({
         ...input,
-        latitude: coordenadas.long,
-        longitude: coordenadas.lat,
+        latitude: coordenadas.lat,
+        longitude: coordenadas.long,
       });
     }
-  }, [coordenadas, input]);
+  }, [coordenadas]);
 
   const handlegenrechange = (e: event) => {
     setGenre(e.target.value);
@@ -157,6 +157,8 @@ export default function PostAPet(props: any) {
     }
     setError(errors);
   }
+
+  // console.log(input)
 
   const maxDate = (): string => {
     const today = new Date();

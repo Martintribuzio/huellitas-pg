@@ -8,8 +8,16 @@ import 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css';
 import LeafletControlGeocoder from './LeafletControlGeocoder';
 import { useDispatch } from 'react-redux';
 import { getCoords } from '../../redux/actions';
+import huella  from "../../assets/home/huella.svg";
+import {Icon} from "leaflet"
+ // import { popoverClasses } from '@mui/material';
 
 const fetcher = (...args) => fetch(...args).then(response => response.json());
+
+const icon = new Icon({
+  iconUrl: huella,
+  iconSize: [25, 25]
+});
 
 let defaultCenter = [-34.6038, -58.3816];
 let defaultZoom = 13;
@@ -67,7 +75,7 @@ export default function LocationMap() {
   const [map, setMap] = useState(null);
 
   //https://huellitas-pg.herokuapp.com/post
-  const url = '';
+  const url = 'https://huellitas-pg.herokuapp.com/post';
   const { data, error } = useSwr(url, fetcher);
   // const posts = data && !error ? data : [];
 
@@ -85,7 +93,7 @@ export default function LocationMap() {
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
         {posts.map(post => (
-          <Marker key={post._id} position={[post.latitude, post.longitude]} />
+          <Marker key={post._id} position={[post.latitude? post.latitude : '', post.longitude? post.longitude : '']} icon={icon}/>
         ))}
         <LeafletControlGeocoder />
       </MapContainer>
