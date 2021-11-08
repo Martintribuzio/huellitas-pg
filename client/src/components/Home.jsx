@@ -3,6 +3,7 @@ import Filters from './Filters';
 import { Modal } from './Modal';
 import PostAPet from './PostAPet';
 import { useModal } from '../hooks/useModal';
+import LocationMap from './LocationMap/LocationMap';
 
 export default function Home() {
   const [isOpen, openModal, closeModal] = useModal();
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <div style={{ minHeight: '71vh', height: 'max-content' }}>
       {/* navBar */}
+      <LocationMap/>
       <button
         style={{
           width: '150px',
