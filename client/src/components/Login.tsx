@@ -32,7 +32,7 @@ export default function LandingPage() {
   }, [dispatch]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Cargando...</div>;
   } else {
     return (
       <Box>
@@ -78,7 +78,7 @@ export default function LandingPage() {
                 Huellitas
               </Typography>
               <Typography variant='h6' color='white'>
-                In order to seek the best for the animals of the world
+                Marcando el camino a casa
               </Typography>
             </Box>
             <Box

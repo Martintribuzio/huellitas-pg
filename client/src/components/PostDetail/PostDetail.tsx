@@ -93,7 +93,7 @@ export default function ImgMediaCard() {
               Estado: {capitalize(detailpost.state)}
             </Typography>
             <Typography gutterBottom variant='h6' component='div'>
-              Genero: {capitalize(detailpost.genre)}
+              Género: {capitalize(detailpost.genre)}
             </Typography>
             {/* <Typography gutterBottom variant='h6' component='div'>
               Fecha de publicacion: {capitalize(detailpost.date)}
@@ -113,6 +113,6 @@ export default function ImgMediaCard() {
       </div>
     );
   } else {
-    return <>Loading...</>;
+    return <>Cargando...</>;
   }
 }
