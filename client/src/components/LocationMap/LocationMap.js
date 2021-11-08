@@ -13,7 +13,7 @@ import {Icon} from "leaflet"
  // import { popoverClasses } from '@mui/material';
 
 let defaultCenter = [-34.6038, -58.3816];
-let defaultZoom = 13;
+let defaultZoom = 4;
 
 ////////////////////////////localizacion//////////////////////////////////////////
 var options = {
