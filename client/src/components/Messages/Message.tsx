@@ -69,25 +69,30 @@ export default function Message() {
   );
 
   const handleSubmit = async (e: any) => {
-    try {
-      e.preventDefault();
-      socket.current.emit('sendMessage', {
-        senderId: idSender,
-        receiverId: receiverId,
-        text: newMessage,
-      });
-      const message = {
-        sender: idSender,
-        content: newMessage,
-        Converseid: ConverseId,
-      };
-      const res = await axios.post('/message', message);
-      if (messages !== undefined) {
-        setMessages([...messages, res.data]);
-        setnewMessage('');
+    if(newMessage){
+      try {
+        e.preventDefault();
+        socket.current.emit('sendMessage', {
+          senderId: idSender,
+          receiverId: receiverId,
+          text: newMessage,
+        });
+        const message = {
+          sender: idSender,
+          content: newMessage,
+          Converseid: ConverseId,
+        };
+        const res = await axios.post('/message', message);
+        if (messages !== undefined) {
+          setMessages([...messages, res.data]);
+          setnewMessage('');
+        }
+      } catch (err: any) {
+        console.log(err.message);
       }
-    } catch (err: any) {
-      console.log(err.message);
+    }
+    else{
+      alert('Please write a message')
     }
   };
 
