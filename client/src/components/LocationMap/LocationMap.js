@@ -103,6 +103,7 @@ export default function LocationMap() {
                 <img src = {post.petImage}></img>
                 <h3>{post.state}</h3>
                 <h3>{post.type}</h3>
+                <h3>{post.genre}</h3> 
               </div>
             </Popup>
           </Marker>
