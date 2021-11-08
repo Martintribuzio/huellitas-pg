@@ -7,7 +7,7 @@ const {
 const moment = require('moment-timezone');
 
 const createPost = async (
-  { name, type, state, genre, description, id },
+  { name, type, state, genre, description, id, latitude, longitude },
   petImage
 ) => {
   const dateARG = moment
@@ -22,7 +22,9 @@ const createPost = async (
       id,
       genre,
       dateARG,
-      petImage
+      petImage,
+      latitude, 
+      longitude 
     );
     return post;
   } catch (error) {
