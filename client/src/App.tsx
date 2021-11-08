@@ -4,10 +4,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './themeConfig';
 import PostAPet from './components/PostAPet';
 import Profile from './components/Profile/Profile';
-import Messenger from './components/Messenger/Messenger';
 import Footer from './components/Footer/Footer';
 import Login from './components/Login';
-import Register from './components/Register/Register';
 import PostDetail from './components/PostDetail/PostDetail';
 import Publicaciones from './components/Home.jsx';
 import { Home } from './pages/Home';
@@ -54,10 +52,10 @@ function App() {
         <Route exact path='/home/messenger'>
           <Conversations />
         </Route>
-        
+
         <Route exact path='/home/messenger/:ConverseId'>
-          <Conversations/>
-          <Message/>
+          <Conversations />
+          <Message />
         </Route>
 
         <Route exact path='/notification'>

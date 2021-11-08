@@ -4,16 +4,14 @@ import { PostType } from '../redux/types/types';
 import styles from '../CSS/PostAPet.module.css';
 import React from 'react';
 import Button from '@mui/material/Button';
-import { TextField } from '@material-ui/core';
-import { useHistory, Redirect } from 'react-router-dom';
 import useUser from '../hooks/useUser';
 import LocationMap from './LocationMap/LocationMap.js';
+import { Redirect } from 'react-router';
 import Swal from 'sweetalert2';
 import { postPet } from '../services/createPost';
 import Switch from './Login/Switch';
 import { useSelector } from 'react-redux';
 import { typeState } from '../redux/reducers';
-import { getCoordenadas } from '../redux/types/actionTypes';
 import { validation } from '../helpers/validationPost';
 
 type event =
@@ -21,9 +19,9 @@ type event =
   | ChangeEvent<HTMLTextAreaElement>
   | ChangeEvent<HTMLSelectElement>;
 
-interface HTMLInputEvent extends Event {
-  target: HTMLInputElement & EventTarget;
-}
+// interface HTMLInputEvent extends Event {
+//   target: HTMLInputElement & EventTarget;
+// }
 
 const initialState = {
   name: '',
@@ -39,15 +37,12 @@ const initialState = {
 
 export default function PostAPet(props: any) {
   const coordenadas = useSelector((state: typeState) => state.coordenadas);
-  const [name, setName] = React.useState('');
   const [state, setState] = React.useState('');
   const [type, setType] = React.useState('');
   const [genre, setGenre] = React.useState('');
   const [description, setDescription] = React.useState('');
-  const [selectedDate, handleDateChange] = useState();
-  const [loading, result, user] = useUser();
+  const [loading, result] = useUser();
   const [step, setStep] = useState(false);
-  const history = useHistory();
   const [input, setInput] = useState<PostType>(initialState);
   const [error, setError] = useState({
     description: '',
@@ -77,7 +72,7 @@ export default function PostAPet(props: any) {
         longitude: coordenadas.lat,
       });
     }
-  }, [coordenadas]);
+  }, [coordenadas, input]);
 
   const handlegenrechange = (e: event) => {
     setGenre(e.target.value);
@@ -140,8 +135,6 @@ export default function PostAPet(props: any) {
     });
   }
 
-  console.log('input', input);
-
   async function handleSubmit(e: any) {
     e.preventDefault();
 
@@ -170,7 +163,6 @@ export default function PostAPet(props: any) {
     const dd = String(today.getDate()).padStart(2, '0');
     const mm = String(today.getMonth() + 1).padStart(2, '0');
     const yyyy = today.getFullYear();
-    console.log(`${yyyy}-${mm}-${dd}`);
     return `${yyyy}-${mm}-${dd}`;
   };
 
@@ -277,7 +269,7 @@ export default function PostAPet(props: any) {
               <input
                 name='date'
                 type='date'
-                value={selectedDate}
+                value={input.date}
                 onChange={e => handleChange(e)}
                 max={maxDate()}
               />
