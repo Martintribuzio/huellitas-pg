@@ -1,4 +1,5 @@
 .mensaje{
+    width:100%;
     position:absolute;
     left:0px;
 }
@@ -8,6 +9,8 @@
     bottom:5px;
     left:5px;
 }
+
+
 
 /* .inputSubmit{
     width:760px;
@@ -96,7 +99,7 @@ mensaje.other{
     color: rgb(44, 141, 197);
 }
 .own {
-    left:1130%;
+    left:0px;
     float: right;
     background-color: rgb(70, 155, 204);
     color: rgba(255, 255, 255);

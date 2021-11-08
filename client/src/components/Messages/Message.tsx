@@ -11,6 +11,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { typeState } from '../../redux/reducers/index';
 import dotenv from 'dotenv';
 dotenv.config();
+
 interface message {
   content: string;
   Converseid: string;
@@ -92,7 +93,7 @@ export default function Message() {
   };
 
   return (
-    <>
+    <div>
     <div className={style.fondoChat}>
      
         <div className={style.mensaje}>
@@ -126,6 +127,6 @@ export default function Message() {
             <SendIcon></SendIcon>
           </div>
         </div>
-    </>
+    </div>
   );
 }
