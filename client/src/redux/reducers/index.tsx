@@ -26,7 +26,7 @@ const initialState: typeState = {
   user: {},
   queryPosts: '',
   conversations: [],
-  coordenadas: { long: '', lat: '' },
+  coordenadas: { lat: '', long: '' },
 };
 
 export default function rootReducer(

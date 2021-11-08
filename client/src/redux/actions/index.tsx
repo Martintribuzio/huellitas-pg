@@ -55,8 +55,8 @@ export function getConvers(ida: string) {
   };
 }
 
-export function getCoords(long: string, lat: string) {
-  return { type: GET_COORDENADAS, payload: { long, lat } };
+export function getCoords(lat: string, long: string) {
+  return { type: GET_COORDENADAS, payload: { lat, long } };
 }
 
 export const filterByState = function (filter: string) {
