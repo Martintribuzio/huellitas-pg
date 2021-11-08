@@ -18,12 +18,12 @@ interface message {
 
 export default function Message() {
   const [messages, setMessages] = useState<message[]>();
-  const [newMessage, setnewMessage] = useState<string>();
+  const [newMessage, setnewMessage] = useState<string>('');
   const [arrivalMessage, setArrivalMessage] = useState<any>();
   const socket: any = useRef();
   const idSender = localStorage.getItem('userId');
   const { ConverseId } = useParams<{ ConverseId: string }>();
-  const scrollRef = useRef();
+  const scrollRef = useRef<any>();
 
   const conversState: any = useSelector(
     (state: typeState) => state.conversations
@@ -67,11 +67,16 @@ export default function Message() {
     socket.current.emit('addUser', idSender);
   }, [idSender]);
 
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView(false,{ behavior: "smooth" });
+  }, [messages]);
+
   const receiverId = convers?.members?.find(
     (member: string) => member !== idSender
   );
 
   const handleSubmit = async (e: any) => {
+    if(newMessage){
     try {
       e.preventDefault();
       socket.current.emit('sendMessage', {
@@ -92,6 +97,7 @@ export default function Message() {
     } catch (err: any) {
       console.log(err.message);
     }
+  }
   };
 
   return (
@@ -104,7 +110,7 @@ export default function Message() {
             alt=''
           />
           {messages?.map(c => (
-            <div className={c.sender !== idSender ? style.other : style.own}>
+            <div ref={scrollRef} className={c.sender !== idSender ? style.other : style.own}>
               <p>{c.content}</p>
             </div>
           ))}
@@ -113,6 +119,7 @@ export default function Message() {
       <div className={style.inputSubmit}>
         <div className={style.inputChat}>
           <Input
+            sx={{width: '100%'}}
             onKeyPress={e => {
               if (e.key === 'Enter') {
                 handleSubmit(e);
