@@ -97,7 +97,7 @@ export default function LocationMap() {
             
             icon={icon}
             >
-            <Popup>
+            <Popup> 
               <div style = {{width: '200px'}}>
                 {post.name? <h1>{`Nombre: ${post.name}`}</h1> : ""}
                 <img style = {{width: '200px'}} src = {process.env.REACT_APP_API + "/" + post.petImage}></img>
