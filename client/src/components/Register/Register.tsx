@@ -22,12 +22,12 @@ type Data = {
 const schema = yup.object().shape({
   name: yup.string().required('Ingresa tu nombre'),
   lastname: yup.string().required('Ingresa tu apellido'),
-  email: yup.string().email().required(),
-  password: yup.string().min(8).max(20).required(),
+  email: yup.string().email().required('Ingresa tu email'),
+  password: yup.string().min(8, 'Tu contraseña debe tener al menos 8 caracteres').max(20,'Tu contraseña debe tener menos de 20 caracteres').required('Ingresa tu contraseña'),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden')
-    .required(),
+    .required('Ingresa nuevamente tu contraseña'),
 });
 
 function Register({ inicio }: any) {
