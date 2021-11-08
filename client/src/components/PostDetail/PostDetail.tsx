@@ -11,7 +11,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import capitalize from '@mui/utils/capitalize';
-import { style } from '@mui/system';
 import axios from 'axios';
 import useUser from '../../hooks/useUser';
 
@@ -94,7 +93,7 @@ export default function ImgMediaCard() {
               Estado: {capitalize(detailpost.state)}
             </Typography>
             <Typography gutterBottom variant='h6' component='div'>
-              Genero: {capitalize(detailpost.genre)}
+              Género: {capitalize(detailpost.genre)}
             </Typography>
             {/* <Typography gutterBottom variant='h6' component='div'>
               Fecha de publicacion: {capitalize(detailpost.date)}
@@ -114,6 +113,6 @@ export default function ImgMediaCard() {
       </div>
     );
   } else {
-    return <>Loading...</>;
+    return <>Cargando...</>;
   }
 }

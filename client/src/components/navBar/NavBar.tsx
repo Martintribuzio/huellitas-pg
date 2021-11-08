@@ -83,7 +83,6 @@ export default function PrimarySearchAppBar(): JSX.Element {
   const [_loading, result] = useUser();
 
 
-
   const logoutService = async () => {
     try {
       const response: any = await axios.get('/user/logout', {
@@ -178,7 +177,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
       {result === 'Unauthorized' ? null : (
         <IconButton
           size='small'
-          edge='end'
+          edge='start'
           aria-label='account of current user'
           aria-controls={menuId}
           aria-haspopup='true'
@@ -236,7 +235,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               <NotificationsIcon />
             </Badge>
           </IconButton>
-          <p>Notifications</p>
+          <p>Notificaciones</p>
         </MenuItem>
       </Link>
       <MenuItem>

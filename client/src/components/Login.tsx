@@ -8,11 +8,9 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import img1 from '../assets/home/pets2.png';
 import SwitchCustom from '../components/Login/Switch';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { IconButton } from '@mui/material';
 import PetsIcon from '@mui/icons-material/Pets';
-import Switch from '@mui/material/Switch';
 import React from 'react';
 import useUser from '../hooks/useUser';
 import background from '../assets/home/background.png';
@@ -25,16 +23,16 @@ export default function LandingPage() {
   const [loading, result] = useUser();
   if (result === 'Success') history.push('/home');
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuth(event.target.checked);
-  };
+  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setAuth(event.target.checked);
+  // };
 
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Cargando...</div>;
   } else {
     return (
       <Box>
@@ -80,7 +78,7 @@ export default function LandingPage() {
                 Huellitas
               </Typography>
               <Typography variant='h6' color='white'>
-                In order to seek the best for the animals of the world
+                Marcando el camino a casa
               </Typography>
             </Box>
             <Box

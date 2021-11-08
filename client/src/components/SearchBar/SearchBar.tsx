@@ -29,7 +29,7 @@ export default function SearchBar() {
           onChange={handleChange}
         /> 
         <button onSubmit={handleSubmit} type='submit'>
-          Search
+          Buscar...
         </button>
       </div>
     </>

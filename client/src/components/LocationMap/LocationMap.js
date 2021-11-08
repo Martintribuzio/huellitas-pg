@@ -37,9 +37,9 @@ function DisplayPosition({ map }) {
   const [position, setPosition] = useState(map.getCenter());
   const dispatch = useDispatch();
   // console.log('POSITION', position);
-  const onClick = useCallback(() => {
-    map.setView(defaultCenter, defaultZoom);
-  }, [map]);
+  // const onClick = useCallback(() => {
+  //   map.setView(defaultCenter, defaultZoom);
+  // }, [map]);
 
   const onMove = useCallback(() => {
     setPosition(map.getCenter());
@@ -69,10 +69,11 @@ export default function LocationMap() {
   //https://huellitas-pg.herokuapp.com/post
   const url = '';
   const { data, error } = useSwr(url, fetcher);
-  const posts = data && !error ? data : [];
+  // const posts = data && !error ? data : [];
 
-  const displayMap = useMemo(
-    () => (
+  const displayMap = useMemo(() => {
+    const posts = data && !error ? data : [];
+    return (
       <MapContainer
         className='mapContainer'
         center={defaultCenter}
@@ -88,9 +89,8 @@ export default function LocationMap() {
         ))}
         <LeafletControlGeocoder />
       </MapContainer>
-    ),
-    []
-  );
+    );
+  }, [data, error]);
 
   return (
     <>

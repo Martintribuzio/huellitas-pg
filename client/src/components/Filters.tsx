@@ -84,7 +84,7 @@ export default function Filters() {
           <MenuItem value='Todos'>Todos</MenuItem>
           <MenuItem value='Perdido'>Perdido</MenuItem>
           <MenuItem value='Encontrado'>Encontrado</MenuItem>
-          <MenuItem value='Adopción'>En adopcion</MenuItem>
+          <MenuItem value='Adopción'>En adopción</MenuItem>
         </Select>
       </FormControl>
 
@@ -113,8 +113,8 @@ export default function Filters() {
           label='estado'
           onChange={e => handleSelectGenres(e)}>
           <MenuItem value='Todos'>Todos</MenuItem>
-          <MenuItem value='Macho'>macho</MenuItem>
-          <MenuItem value='Hembra'>hembra</MenuItem>
+          <MenuItem value='Macho'>Macho</MenuItem>
+          <MenuItem value='Hembra'>Hembra</MenuItem>
         </Select>
       </FormControl>
 

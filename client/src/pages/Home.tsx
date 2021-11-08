@@ -15,9 +15,13 @@ import { Link } from 'react-router-dom';
 import CardChiquita from './CardChiquita';
 
 const data = [
-  'Toda la informacion sobre los pets',
+  /* 'Toda la informacion sobre los pets',
   'Encontra tu perro perdido',
-  'Publica el gato que encontraste',
+  'Publica el gato que encontraste', */
+  '¿Buscas a tu mascota perdida?',
+  'Te encontraste la mascota de alguien más',
+  '¿Tenés animales buscando un hogar?',
+  'Tu ayuda es importante'
 ];
 
 export const Home = () => {
@@ -28,10 +32,7 @@ export const Home = () => {
         <div className='Description' style={{ width: '80%' }}>
           <Textra className='Textra' effect='leftRight' data={data} />
           <Typography>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi
-            dolores consequuntur sequi ab neque quam eum, hic qui doloremque sed
-            laboriosam voluptas, labore voluptatum illo placeat id odio ipsum
-            pariatur.
+            Huellitas es una comunidad formada por personas con el mismo objetivo, ayudar a los animales a encontrar el camino de regreso a su hogar.
           </Typography>
           <Link style={{ textDecoration: 'none' }} to='/login'>
             <Button variant='contained'>Registrate</Button>
@@ -47,13 +48,13 @@ export const Home = () => {
           <div className='Description'>
             <Typography variant='h1'>
               {' '}
-              Services available to the community{' '}
+              ¿Qué puedo hacer en Huellitas?
+              {' '}
             </Typography>
             <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe
-              sapiente consequuntur corporis temporibus provident doloribus ex
-              fugit aut possimus, qui tempora vitae error asperiores omnis,
-              voluptas impedit! Ipsam, asperiores neque?
+              En huellitas podrás recurrir a la ayuda de otros miembros de la comunidad para encontrar a tu mascota perdida,
+              publicar una mascota que encontraste y ayudar a otros a encontrar a una mascota que está buscando un hogar.
+              Contamos con tres categorías para publicar:
             </Typography>
           </div>
         </Fade>
@@ -63,7 +64,7 @@ export const Home = () => {
               type='Encontrado'
               img={post2}
               description={
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi dolores consequuntur sequi ab neque quam eum.'
+                '¿Encontraste la mascota de alguien más? Podes ayudarla a volver con sus dueños.'
               }
             />
           </Fade>
@@ -72,7 +73,7 @@ export const Home = () => {
               type='Perdido'
               img={post3}
               description={
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi dolores consequuntur sequi ab neque quam eum.'
+                '¿Se perdió tu mejor amigo?Acá podrás dar aviso a los miembros de la comunidad cercanos a tu zona para que te ayuden con la búsqueda.'
               }
             />
           </Fade>
@@ -81,7 +82,7 @@ export const Home = () => {
               type='En adopción'
               img={post1}
               description={
-                'Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi dolores consequuntur sequi ab neque quam eum.'
+                'Muchos refugios tienen animales buscando  un hogar. En Huellitas podrás contactarte con ellos para encontrar a tu amigo ideal.'
               }
             />
           </Fade>
@@ -116,13 +117,12 @@ export const Home = () => {
           <div className='Description2'>
             <Typography variant='h1'>
               {' '}
-              In order to seek the best for the animals in the world
+              Si queres formar parte de esta comunidad, podes registrarte y comenzar a publicar.
+              
             </Typography>
             <Typography>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe
-              sapiente consequuntur corporis temporibus provident doloribus ex
-              fugit aut possimus, qui tempora vitae error asperiores omnis,
-              voluptas impedit! Ipsam, asperiores neque?
+            Juntando nuestras "patitas" podemos ayudar 
+              a que todas las mascotas tengan su hogar.
             </Typography>
             <Link style={{ textDecoration: 'none' }} to='/login'>
               <Button variant='contained'>Registrate</Button>

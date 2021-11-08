@@ -3,9 +3,7 @@ import { useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import style from './Message.module.css';
-import Button from '@mui/material/Button';
 import Input from '@mui/material/Input';
-import { CollectionsOutlined } from '@mui/icons-material';
 import { io } from 'socket.io-client';
 import SendIcon from '@mui/icons-material/Send';
 import { typeState } from '../../redux/reducers/index';
@@ -43,6 +41,7 @@ export default function Message() {
     };
     getMessage();
   }, [ConverseId]);
+
   useEffect(() => {
     socket.current = io(`${process.env.REACT_APP_SOCKET_URL}`);
     socket.current.on('getMessage', (data: any) => {
@@ -59,11 +58,11 @@ export default function Message() {
         convers?.members.includes(arrivalMessage.sender) &&
         setMessages((prev: any) => [...prev, arrivalMessage]);
     }
-  }, [arrivalMessage, convers]);
+  }, [arrivalMessage, convers, messages]);
 
   useEffect(() => {
     socket.current.emit('addUser', idSender);
-  }, [localStorage]);
+  }, [idSender]);
 
   const receiverId = convers?.members?.find(
     (member: string) => member !== idSender
@@ -127,6 +126,8 @@ export default function Message() {
             <SendIcon></SendIcon>
           </div>
         </div>
+
     </div>
+
   );
 }

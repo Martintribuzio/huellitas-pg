@@ -13,7 +13,6 @@ import dotenv from 'dotenv';
 // import FacebookLogin from 'react-facebook-login';
 import GoogleLogin from 'react-google-login';
 import Typography from '@mui/material/Typography';
-import Switch from './Switch';
 
 dotenv.config();
 
