@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useMemo } from 'react';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 // import {geosearch} from 'esri-leaflet-geocoder';
 import './LocationMap.css';
 import useSwr from 'swr';
@@ -8,16 +8,9 @@ import 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css';
 import LeafletControlGeocoder from './LeafletControlGeocoder';
 import { useDispatch } from 'react-redux';
 import { getCoords } from '../../redux/actions';
-import huella  from "../../assets/home/huella.svg";
+import huella  from "../../assets/home/huellaMapa.png";
 import {Icon} from "leaflet"
  // import { popoverClasses } from '@mui/material';
-
-const fetcher = (...args) => fetch(...args).then(response => response.json());
-
-const icon = new Icon({
-  iconUrl: huella,
-  iconSize: [25, 25]
-});
 
 let defaultCenter = [-34.6038, -58.3816];
 let defaultZoom = 13;
@@ -44,16 +37,10 @@ navigator.geolocation.getCurrentPosition(success, error, options);
 function DisplayPosition({ map }) {
   const [position, setPosition] = useState(map.getCenter());
   const dispatch = useDispatch();
-  // console.log('POSITION', position);
-  // const onClick = useCallback(() => {
-  //   map.setView(defaultCenter, defaultZoom);
-  // }, [map]);
 
   const onMove = useCallback(() => {
     setPosition(map.getCenter());
   }, [map]);
-
-  // console.log(position.lat.toString())
 
   useEffect(() => {
     map.on('move', onMove);
@@ -72,12 +59,20 @@ function DisplayPosition({ map }) {
 }
 
 export default function LocationMap() {
+
+  const icon = new Icon({
+    iconUrl: huella,
+    iconSize: [25, 25]
+  });
+  const fetcher = (...args) => fetch(...args).then(response => response.json());
   const [map, setMap] = useState(null);
 
   //https://huellitas-pg.herokuapp.com/post
   const url = 'https://huellitas-pg.herokuapp.com/post';
   const { data, error } = useSwr(url, fetcher);
   // const posts = data && !error ? data : [];
+
+  const [actPost, setPost] = useState(null);
 
   const displayMap = useMemo(() => {
     const posts = data && !error ? data : [];
@@ -93,9 +88,28 @@ export default function LocationMap() {
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
         {posts.map(post => (
-          <Marker key={post._id} position={[post.latitude? post.latitude : '', post.longitude? post.longitude : '']} icon={icon}/>
+          <Marker 
+            key={post._id}
+            
+            position={[post.latitude? post.latitude : '', post.longitude? post.longitude : '']} 
+            
+            onClick = {setPost(post)} 
+            
+            icon={icon}
+            >
+            <Popup>
+              <div>
+                {post.name? <h1>{post.name}</h1> : ""}
+                <img src = {post.petImage}></img>
+                <h3>{post.state}</h3>
+                <h3>{post.type}</h3>
+              </div>
+            </Popup>
+          </Marker>
+            
         ))}
         <LeafletControlGeocoder />
+      
       </MapContainer>
     );
   }, [data, error]);
@@ -108,13 +122,4 @@ export default function LocationMap() {
   );
 }
 
-// return(
-//     <MapContainer style={{ height:"400px", backgroundColor:"transparent", marginTop:"80px", marginBottom:'90px'}} center={defaultCenter} zoom={defaultZoom} scrollWheelZoom={false}>
-//         <TileLayer
-//             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-//             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-//         />
-//         {posts.map(post => <Marker key={post._id} position={[post.latitude, post.longitude]}/>)}
-//         <LeafletControlGeocoder/>
-//     </MapContainer>
-// )
+
