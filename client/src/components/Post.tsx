@@ -135,18 +135,18 @@ export default function Post({ post }: { post: PostType }) {
   );
 }
 
-const itemData = [
-  {
-    img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    title: 'Breakfast',
-    author: '@bkristastucchio',
-  },
-  {
-    img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    title: 'Burger',
-    author: '@rollelflex_graphy726',
-  },
-];
+// const itemData = [
+//   {
+//     img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
+//     title: 'Breakfast',
+//     author: '@bkristastucchio',
+//   },
+//   {
+//     img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
+//     title: 'Burger',
+//     author: '@rollelflex_graphy726',
+//   },
+// ];
 // import { PostType } from "../redux/types/types"
 // import styles from '../CSS/Post.module.css'
 

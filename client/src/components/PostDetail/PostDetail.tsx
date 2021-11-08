@@ -11,7 +11,6 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import capitalize from '@mui/utils/capitalize';
-import { style } from '@mui/system';
 import axios from 'axios';
 import useUser from '../../hooks/useUser';
 

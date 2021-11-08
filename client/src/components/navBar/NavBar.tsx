@@ -83,7 +83,6 @@ export default function PrimarySearchAppBar(): JSX.Element {
   const [_loading, result] = useUser();
 
 
-
   const logoutService = async () => {
     try {
       const response: any = await axios.get('/user/logout', {

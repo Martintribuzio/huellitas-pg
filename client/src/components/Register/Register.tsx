@@ -8,7 +8,6 @@ import Box from '@mui/material/Box';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { setUncaughtExceptionCaptureCallback } from 'process';
 
 type Data = {
   name: string;
