@@ -53,9 +53,15 @@ function App() {
           <Conversations />
         </Route>
 
-        <Route exact path='/home/messenger/:ConverseId/:PostId'>
+        <Route exact path='/home/messenger/:ConverseId'>
           <Conversations />
           <Message />
+        </Route>
+
+        <Route exact path='/home/messenger/:ConverseId/:id'>
+          <Conversations />
+          <Message />
+          <PostDetail />
         </Route>
 
         <Route exact path='/notification'>
