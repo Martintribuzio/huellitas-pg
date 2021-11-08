@@ -75,6 +75,6 @@ export default function Conversation(params: any) {
       </Link>
     );
   } else {
-    return <div>Loading...</div>;
+    return <div>Cargando..</div>;
   }
 }

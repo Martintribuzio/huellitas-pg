@@ -34,6 +34,6 @@ export default function Conversations() {
       </div>
     );
   } else {
-    return <p>No conversations</p>;
+    return <p>No has iniciado ninguna conversación</p>;
   }
 }
