@@ -139,7 +139,8 @@
 
   .Secondary3 {
     padding-top: 50px;
-    height: 100vh;
+    min-height: 100vh;
+    height: max-content;
     display: flex;
     flex-direction: row;
     align-items: center;
