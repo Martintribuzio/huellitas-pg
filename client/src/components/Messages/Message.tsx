@@ -22,11 +22,13 @@ export default function Message() {
   const socket: any = useRef();
   const idSender = localStorage.getItem('userId');
   const { ConverseId } = useParams<{ ConverseId: string }>();
+  const scrollRef = useRef();
 
   const convers: any = useSelector(
     (state: typeState) => state.conversations
   ).filter(elem => elem._id === ConverseId)[0];
 
+  
   useEffect(() => {
     const getMessage = async () => {
       try {
@@ -42,7 +44,6 @@ export default function Message() {
   useEffect(() => {
     socket.current = io(`${process.env.REACT_APP_SOCKET_URL}`);
     socket.current.on('getMessage', (data: any) => {
-      console.log('DATA QUE MANDA EL SOCKET', data);
       setArrivalMessage({
         sender: data.senderId,
         content: data.text,
@@ -65,7 +66,6 @@ export default function Message() {
   const receiverId = convers?.members?.find(
     (member: string) => member !== idSender
   );
-  console.log('este es receiverId ', receiverId);
 
   const handleSubmit = async (e: any) => {
     try {
@@ -105,7 +105,9 @@ export default function Message() {
             </div>
           ))}
         </div>
-        <div className={style.inputSubmit}>
+        
+      </div>
+      <div className={style.inputSubmit}>
           <div className={style.inputChat}>
             <Input
               onKeyPress={e => {
@@ -122,7 +124,9 @@ export default function Message() {
             <SendIcon></SendIcon>
           </div>
         </div>
+
       </div>
+
     </>
   );
 }

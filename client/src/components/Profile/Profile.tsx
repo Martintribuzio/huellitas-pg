@@ -27,7 +27,6 @@ export default function Profile() {
 
   if (result === 'Unauthorized') {
     history.push('/login');
-    console.log(loading);
   }
 
   const id = localStorage.getItem('userId');

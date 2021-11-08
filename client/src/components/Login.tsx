@@ -27,7 +27,6 @@ export default function LandingPage() {
   //   setAuth(event.target.checked);
   // };
 
-  console.log(auth);
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
