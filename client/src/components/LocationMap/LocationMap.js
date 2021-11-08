@@ -13,7 +13,7 @@ import {Icon} from "leaflet"
  // import { popoverClasses } from '@mui/material';
 
 let defaultCenter = [-34.6038, -58.3816];
-let defaultZoom = 4;
+let defaultZoom = 13;
 
 ////////////////////////////localizacion//////////////////////////////////////////
 var options = {
@@ -99,11 +99,11 @@ export default function LocationMap() {
             >
             <Popup>
               <div style = {{width: '200px'}}>
-                {post.name? <h1>{post.name}</h1> : ""}
+                {post.name? <h1>{`Nombre: ${post.name}`}</h1> : ""}
                 <img style = {{width: '200px'}} src = {process.env.REACT_APP_API + "/" + post.petImage}></img>
-                <h3>{post.state}</h3>
-                <h3>{post.type}</h3>
-                <h3>{post.genre}</h3> 
+                <h3>{`Estado: ${post.state}`}</h3>
+                <h3>{`Tipo: ${post.type}`}</h3>
+                <h3>{`Genero: ${post.genre}`}</h3> 
               </div>
             </Popup>
           </Marker>
