@@ -53,7 +53,7 @@ function App() {
           <Conversations />
         </Route>
 
-        <Route exact path='/home/messenger/:ConverseId'>
+        <Route exact path='/home/messenger/:ConverseId/:PostId'>
           <Conversations />
           <Message />
         </Route>

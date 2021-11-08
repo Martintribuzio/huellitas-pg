@@ -37,7 +37,7 @@ export default function ImgMediaCard() {
           )
         ).data[0];
         if (conver._id) {
-          history.push(`/home/messenger/${conver._id}`);
+          history.push(`/home/messenger/${conver._id}/${detailpost._id}`);
         } else {
           const newConver: conversation = (
             await axios.post('/conversation', {
@@ -45,7 +45,7 @@ export default function ImgMediaCard() {
               idEnv: idSender,
             })
           ).data;
-          history.push(`/home/messenger/${newConver._id}`);
+          history.push(`/home/messenger/${newConver._id}/${detailpost._id}`);
         }
       }
     }
