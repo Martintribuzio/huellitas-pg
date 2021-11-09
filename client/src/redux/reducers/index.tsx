@@ -122,7 +122,7 @@ export default function rootReducer(
       return {
         ...state,
         conversations: action.payload,
-      };
+      }
     default:
       return state;
   }
