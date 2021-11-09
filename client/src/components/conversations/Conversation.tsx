@@ -4,6 +4,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
+import Badge from '@mui/material/Badge';
 import { Link } from 'react-router-dom';
 
 interface User {
@@ -18,10 +19,12 @@ interface message {
   content: string;
   Converseid: string;
   sender: string;
+  state:string;
 }
 export default function Conversation(params: any) {
   const [user, setUser] = useState<User>();
   const [message, setMessage] = useState<message[]>();
+  const [notification, setNotification] = useState<number>(0);
   const myId = localStorage.getItem('userId');
 
   useEffect(() => {
@@ -38,8 +41,10 @@ export default function Conversation(params: any) {
     };
     const getMessage = async () => {
       try {
-        const res = await axios.get(`/message/${params.conversation._id}`);
-        setMessage(res.data);
+        const res = (await axios.get(`/message/${params.conversation._id}`)).data;
+        const noti = res.reduce((acc:number,m:message) => m.state==='unread' && m.sender!==myId ? acc+1:acc,0);
+        setNotification(noti);
+        setMessage(res);
       } catch (err: any) {
         return err.message;
       }
@@ -65,11 +70,15 @@ export default function Conversation(params: any) {
         )} */}
         <ListItem button>
           <ListItemAvatar>
+            <Badge badgeContent={notification} color='error'>
             <Avatar alt='Profile Picture' src={user.picture} />
+            </Badge>
           </ListItemAvatar>
           <ListItemText
             primary={user.name}
-            secondary={message[message.length - 1]?.content}
+            secondary={message[message.length - 1]?.content.length > 15
+              ? message[message.length - 1]?.content.slice(0, 15) + '...'
+              : message[message.length - 1]?.content}
           />
         </ListItem>
       </Link>

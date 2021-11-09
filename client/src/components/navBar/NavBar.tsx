@@ -19,7 +19,7 @@ import Inbox from '../conversations/Conversations';
 import Stack from '@mui/material/Stack';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { getPostByQuery } from '../../redux/actions';
 import { useHistory } from 'react-router-dom';
@@ -28,6 +28,9 @@ import useUser from '../../hooks/useUser';
 import axios from 'axios';
 import PreviewIcon from '@mui/icons-material/Preview';
 import InfoIcon from '@mui/icons-material/Info';
+import { conversation } from '../../redux/types/types';
+import { typeState } from '../../redux/reducers/index';
+import { message } from '../Messages/Message';
 
 /* const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -81,8 +84,23 @@ export default function PrimarySearchAppBar(): JSX.Element {
   const [search, setSearch] = useState<string>('');
   const history = useHistory();
   const [_loading, result] = useUser();
+  const [notificacion, setNotificacion] = useState<number>(0);
+  const convers: Array<conversation> = useSelector(
+    (state: typeState) => state.conversations
+  );
+  const id = localStorage.getItem('userId');
 
-
+  useEffect(()=>{
+    const getMessages = async () =>{ 
+    let promise = convers.map(c => axios.get(`/message/${c._id}`));
+    let states = (await Promise.all(promise)).map(r => r.data)
+    .map(c => c.reduce((acc:number,m:message) => m.state==='unread' && m.sender!==id ? acc+1:acc,0))
+    .reduce((acc:number,cur:number) => acc+cur,0);
+    setNotificacion(states);
+  }
+  getMessages();
+  },[convers])
+  console.log('COUNT NOTI :',notificacion)
   const logoutService = async () => {
     try {
       const response: any = await axios.get('/user/logout', {
@@ -391,7 +409,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
                   aria-label='show 4 new mails'
                   onClick={handleProfileMenuOpen}
                   color='inherit'>
-                  <Badge badgeContent={0} color='error'>
+                  <Badge badgeContent={notificacion} color='error'>
                     <MailIcon />
                   </Badge>
                 </IconButton>

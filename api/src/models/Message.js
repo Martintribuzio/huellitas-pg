@@ -10,6 +10,11 @@ const messageSchema = new Schema({
     sender: {
       type:String
     },
+    state:{
+      type:String,
+      enun:['read','unread'],
+      default:'unread'
+    }
 },
   {timestamps:true}
 );

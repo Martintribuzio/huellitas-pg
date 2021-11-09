@@ -24,7 +24,18 @@ const findMessagesDB = async (converseid) => {
   }
 }
 
+const findAndUpdateDB = async (idMessage) => {
+  try{
+    const mess = await message.findByIdAndUpdate({_id:idMessage}, {state: 'read'})
+    return mess;
+  }
+  catch(err){
+    return err.message
+  }
+}
+
 module.exports = {
   createMessageDB,
-  findMessagesDB
+  findMessagesDB,
+  findAndUpdateDB
 }
