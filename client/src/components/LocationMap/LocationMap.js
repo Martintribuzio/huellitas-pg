@@ -8,7 +8,10 @@ import 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css';
 import LeafletControlGeocoder from './LeafletControlGeocoder';
 import { useDispatch } from 'react-redux';
 import { getCoords } from '../../redux/actions';
-import huella  from "../../assets/home/huellaMapa.png";
+import huella  from "../../assets/home/pngegg.png";
+import huellaAdopt  from "../../assets/home/elqva.png";
+import signodeex  from "../../assets/home/signodeex.png";
+
 import {Icon} from "leaflet"
  // import { popoverClasses } from '@mui/material';
 
@@ -64,6 +67,16 @@ export default function LocationMap() {
     iconUrl: huella,
     iconSize: [25, 25]
   });
+
+  const icon2 = new Icon({
+    iconUrl: huellaAdopt,
+    iconSize: [30, 30]
+  });
+
+  const icon3 = new Icon({
+    iconUrl: signodeex,
+    iconSize: [25, 25]
+  });
   const fetcher = (...args) => fetch(...args).then(response => response.json());
   const [map, setMap] = useState(null);
 
@@ -88,6 +101,7 @@ export default function LocationMap() {
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
         {posts.map(post => (
+          post.state === 'Perdido' ? 
           <Marker 
             key={post._id}
             
@@ -97,7 +111,7 @@ export default function LocationMap() {
             
             icon={icon}
             >
-            <Popup>
+            <Popup> 
               <div style = {{width: '200px'}}>
                 {post.name? <h1>{`Nombre: ${post.name}`}</h1> : ""}
                 <img style = {{width: '200px'}} src = {process.env.REACT_APP_API + "/" + post.petImage}></img>
@@ -107,10 +121,48 @@ export default function LocationMap() {
               </div>
             </Popup>
           </Marker>
+          : post.state === 'Encontrado' ? 
+          <Marker 
+            key={post._id}
             
+            position={[post.latitude? post.latitude : '', post.longitude? post.longitude : '']} 
+            
+            onClick = {setPost(post)} 
+            
+            icon={icon3}
+            >
+            <Popup> 
+              <div style = {{width: '200px'}}>
+                {post.name? <h1>{`Nombre: ${post.name}`}</h1> : ""}
+                <img style = {{width: '200px'}} src = {process.env.REACT_APP_API + "/" + post.petImage}></img>
+                <h3>{`Estado: ${post.state}`}</h3>
+                <h3>{`Tipo: ${post.type}`}</h3>
+                <h3>{`Genero: ${post.genre}`}</h3> 
+              </div>
+            </Popup>
+          </Marker> 
+          : post.state === 'Adopción' ?
+          <Marker 
+            key={post._id}
+            
+            position={[post.latitude? post.latitude : '', post.longitude? post.longitude : '']} 
+            
+            onClick = {setPost(post)} 
+            
+            icon={icon2}
+            >
+            <Popup> 
+              <div style = {{width: '200px'}}>
+                {post.name? <h1>{`Nombre: ${post.name}`}</h1> : ""}
+                <img style = {{width: '200px'}} src = {process.env.REACT_APP_API + "/" + post.petImage}></img>
+                <h3>{`Estado: ${post.state}`}</h3>
+                <h3>{`Tipo: ${post.type}`}</h3>
+                <h3>{`Genero: ${post.genre}`}</h3> 
+              </div>
+            </Popup>
+          </Marker> : ""
         ))}
         <LeafletControlGeocoder />
-      
       </MapContainer>
     );
   }, [data, error]);
