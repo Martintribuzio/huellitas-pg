@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <div style={{ minHeight: '71vh', height: 'max-content' }}>
       {/* navBar */}
-      <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '10px', justifyContent: 'center'}}>
+      <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '40px', justifyContent: 'center', marginTop: '30px'}}>
         <label><img style={{width: "25px", height: '25px'}} src={huella}></img>Perdido</label>
         <label><img style={{width: "28px", height: '25px'}} src={huellaAdopt}></img>En adopcion</label>
         <label><img style={{width: "28px", height: '25px'}} src={signodeex}></img>Encontrado</label>
