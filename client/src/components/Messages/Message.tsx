@@ -10,10 +10,12 @@ import { typeState } from '../../redux/reducers/index';
 import dotenv from 'dotenv';
 dotenv.config();
 
-interface message {
+export interface message {
   content: string;
   Converseid: string;
   sender: string;
+  state:string;
+  _id: string;
 }
 
 export default function Message() {
@@ -109,11 +111,15 @@ export default function Message() {
             // src="https://images.pexels.com/photos/3686769/pexels-photo-3686769.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
             alt=''
           />
-          {messages?.map(c => (
+          {messages?.map(c => {
+            if(c.state === 'unread' && c.sender !== idSender){
+              axios.put(`/message/${c._id}`);
+            }
+            return(
             <div ref={scrollRef} className={c.sender !== idSender ? style.other : style.own}>
               <p>{c.content}</p>
             </div>
-          ))}
+          )})}
         </div>
       </div>
       <div className={style.inputSubmit}>

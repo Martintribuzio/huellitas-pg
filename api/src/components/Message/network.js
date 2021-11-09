@@ -1,5 +1,5 @@
 const messageNetwork = require('express').Router()
-const {createMess, findMess} = require('./controller')
+const {createMess, findMess,findAndUpdate} = require('./controller')
 
 messageNetwork.post('/', async (req, res) => {
     try{
@@ -17,6 +17,15 @@ messageNetwork.get('/:converseid', async (req, res) => {
     } catch(err){
         res.status(404).json(err.message)
     }
+})
+messageNetwork.put('/:idMessage', async (req,res) => {
+  try{
+    const message = await findAndUpdate(req.params.idMessage)
+    res.send(message)
+  }
+  catch(err){
+    res.status(404).json(err.message)
+  }
 })
 
 module.exports = messageNetwork

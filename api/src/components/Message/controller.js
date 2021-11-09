@@ -1,4 +1,4 @@
-const {createMessageDB, findMessagesDB} = require('./store.js')
+const {createMessageDB, findMessagesDB,findAndUpdateDB} = require('./store.js')
 
 const createMess = async ({content, Converseid, sender}) => {
     try{
@@ -23,4 +23,14 @@ const findMess = async ({converseid}) => {
   }
 }
 
-module.exports = {createMess, findMess}
+const findAndUpdate = async (idMessage) => {
+  try{
+  const mess = await findAndUpdateDB(idMessage)
+  return mess
+}
+catch(err){
+  return err
+}
+}
+
+module.exports = {createMess, findMess,findAndUpdate}

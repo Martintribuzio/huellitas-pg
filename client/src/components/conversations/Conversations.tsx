@@ -4,7 +4,6 @@ import { conversation } from '../../redux/types/types';
 import { typeState } from '../../redux/reducers/index';
 import useUser from '../../hooks/useUser';
 import { useEffect } from 'react';
-import axios from 'axios';
 import { getConvers } from '../../redux/actions';
 import style from '../Messages/Message.module.css';
 
