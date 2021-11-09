@@ -99,8 +99,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
     setNotificacion(states);
   }
   getMessages();
-  },[convers])
-  console.log('COUNT NOTI :',notificacion)
+  },[result,convers,mobileMoreAnchorEl,anchorEl,anchorElProf])
   const logoutService = async () => {
     try {
       const response: any = await axios.get('/user/logout', {
@@ -431,9 +430,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
                   aria-haspopup='true'
                   onClick={handleProfileMenuOpenProf}
                   color='inherit'>
-                  {/* <Link to='/home/profile' style={{ color: 'white' }}> */}
                   <AccountCircle />
-                  {/* </Link> */}
                 </IconButton>
               </Box>
               <Box sx={{ display: { xs: 'flex', md: 'none' } }}>

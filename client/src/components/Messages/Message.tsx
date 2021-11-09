@@ -30,7 +30,6 @@ export default function Message() {
   const conversState: any = useSelector(
     (state: typeState) => state.conversations
   );
-  console.log(conversState);
   const convers = Array.isArray(conversState)
     ? conversState.filter((elem: any) => elem._id === ConverseId)[0]
     : [];
