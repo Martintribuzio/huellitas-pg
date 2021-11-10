@@ -14,20 +14,20 @@ import { ChangeEvent } from 'react';
 import { FormEvent } from 'react';
 
 type Data = {
-  name: string;
-  email: string;
+  name: string | any;
+  email: string | any;
   /* username: string; */
-  password: string;
-  confirmPassword: string;
-  phone: string;
-  address: string;
-  latitude: string;
-  longitude: string;
-  description: string;
-  instagram: string;
-  facebook: string;
-  website: string;
-  profileImage: string;
+  password: string | any;
+  confirmPassword: string | any;
+  phone: string | any;
+  address: string | any;
+  description: string | any;
+  instagram: string | any;
+  facebook: string | any;
+  website: string | any;
+  profileImage: string | any;
+  latitude: string | any;
+  longitude: string | any;
 };
 
 const schema = yup.object().shape({
@@ -66,7 +66,7 @@ function RegisterShelter({ inicio }: any) {
     }
   }
 
-  function handleSubmitForm(data: FormEvent<HTMLFormElement>) {
+  async function handleSubmitForm(data: FormEvent<HTMLFormElement>) {
     data.preventDefault();
 
     const {
@@ -76,30 +76,33 @@ function RegisterShelter({ inicio }: any) {
       confirmPassword,
       phone,
       address,
-      latitude,
-      longitude,
       description,
       instagram,
       facebook,
       website,
-      profileImage,
+
+      latitude,
+      longitude,
     } = data.currentTarget.elements as unknown as Data;
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('password', password);
-    formData.append('confirmPassword', confirmPassword);
-    formData.append('phone', phone);
-    formData.append('address', address);
-    formData.append('latitude', latitude);
-    formData.append('longitude', longitude);
-    formData.append('description', description);
-    formData.append('instagram', instagram);
-    formData.append('facebook', facebook);
-    formData.append('website', website);
-    formData.append('profileImage', profileImage);
+
+    const formData = {
+      name: name['value'],
+      email: email['value'],
+      password: password['value'],
+      confirmPassword: confirmPassword['value'],
+      phone: phone['value'],
+      address: address['value'],
+      description: description['value'],
+      instagram: instagram['value'],
+      facebook: facebook['value'],
+      website: website['value'],
+      profileImage: img,
+      latitude: latitude['value'],
+      longitude: longitude['value'],
+    };
+    console.log(formData);
     axios
-      .post('/shelters/signup', formData)
+      .post('/shelter/signup', formData)
       .then(res => {
         Swal.fire({
           icon: 'success',
@@ -337,6 +340,42 @@ function RegisterShelter({ inicio }: any) {
               alt='img'
             />
           ) : null}
+        </div>
+        <div>
+          <Controller
+            name='latitude'
+            control={control}
+            defaultValue=''
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label='Latitud'
+                variant='outlined'
+                error={!!errors.latitude}
+                helperText={errors.latitude ? errors.latitude.message : ''}
+                fullWidth
+                margin='dense'
+              />
+            )}
+          />
+        </div>
+        <div>
+          <Controller
+            name='longitude'
+            control={control}
+            defaultValue=''
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label='Longitud'
+                variant='outlined'
+                error={!!errors.longitude}
+                helperText={errors.longitude ? errors.longitude.message : ''}
+                fullWidth
+                margin='dense'
+              />
+            )}
+          />
         </div>
 
         <Button
