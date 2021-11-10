@@ -90,16 +90,25 @@ export default function PrimarySearchAppBar(): JSX.Element {
   );
   const id = localStorage.getItem('userId');
 
-  useEffect(()=>{
-    const getMessages = async () =>{ 
-    let promise = convers.map(c => axios.get(`/message/${c._id}`));
-    let states = (await Promise.all(promise)).map(r => r.data)
-    .map(c => c.reduce((acc:number,m:message) => m.state==='unread' && m.sender!==id ? acc+1:acc,0))
-    .reduce((acc:number,cur:number) => acc+cur,0);
-    setNotificacion(states);
-  }
-  getMessages();
-  },[result,convers,mobileMoreAnchorEl,anchorEl,anchorElProf])
+  useEffect(() => {
+    if (Array.isArray(convers)) {
+      const getMessages = async () => {
+        let promise = convers.map(c => axios.get(`/message/${c._id}`));
+        let states = (await Promise.all(promise))
+          .map(r => r.data)
+          .map(c =>
+            c.reduce(
+              (acc: number, m: message) =>
+                m.state === 'unread' && m.sender !== id ? acc + 1 : acc,
+              0
+            )
+          )
+          .reduce((acc: number, cur: number) => acc + cur, 0);
+        setNotificacion(states);
+      };
+      getMessages();
+    }
+  }, [result, convers, mobileMoreAnchorEl, anchorEl, anchorElProf]);
   const logoutService = async () => {
     try {
       const response: any = await axios.get('/user/logout', {
