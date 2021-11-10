@@ -37,7 +37,6 @@ export function deletePost(id: string | undefined) {
 export function getPosts() {
   return async function (dispatch: any) {
     let data = (await axios.get('/post')).data;
-    // console.log(data)
     return dispatch({ type: GET_POSTS, payload: data });
   };
 }
