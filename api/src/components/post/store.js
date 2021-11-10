@@ -10,6 +10,7 @@ const {
   ref,
   uploadBytes,
   getDownloadURL,
+  deleteObject,
 } = require('firebase/storage');
 
 const storage = getStorage(firebase);
@@ -98,12 +99,12 @@ const deletePostDB = async id => {
   try {
     const post = await Post.findById(id);
     if (post !== null) {
-      const path = `./${post.petImage}`;
-      await fs.unlink(path, err => {
-        if (err) {
-          throw new Error(err);
-        }
-      });
+      const image = await Image.findById(post.petImage);
+      const desertRef = ref(storage, image.name);
+      await deleteObject(desertRef)
+        .then(r => console.log(r))
+        .catch(e => console.log(e));
+      await image.remove();
       await post.remove();
       return post;
     }
