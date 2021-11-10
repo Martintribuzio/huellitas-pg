@@ -19,8 +19,6 @@ type Data = {
   confirmPassword: string;
   phone: string;
   address: string;
-  latitude: string;
-  longitude: string;
   description: string;
   instagram: string;
   facebook: string;
@@ -63,8 +61,9 @@ function RegisterShelter({ inicio }: any) {
   }
 
   const onSubmit = handleSubmit(data => {
+    console.log(data)
     axios
-      .post('/user/signup', data)
+      .post('/shelter/signup', data)
       .then(async res => {
         Swal.fire({
           title: 'Success!',
