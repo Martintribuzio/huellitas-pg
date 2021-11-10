@@ -1,6 +1,7 @@
 const { Post } = require('../../models/Post');
 const User = require('../../models/User');
 const fs = require('fs');
+const Shelter = require('../../models/Shelter');
 
 const createPostDB = async (
   name,
@@ -28,10 +29,16 @@ const createPostDB = async (
       longitude
     });
     await post.save();
-    const userById = await User.findById(id);
-    userById.posts.push(post);
-    await userById.save();
-
+    try{
+      const userById = await User.findById(id);
+      userById.posts.push(post);
+      await userById.save();
+    }
+    catch{
+      const shelterId = await Shelter.findById(id);
+      shelterId.posts.push(post);
+      await shelterId.save();
+    }
     return post;
   } catch (e) {
     throw new Error(e.message);
