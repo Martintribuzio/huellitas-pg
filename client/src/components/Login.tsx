@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getPosts } from '../redux/actions';
 import Login from './Login/Login';
-import Register from './Register/Register';
+import RegistersContainer from './Register/RegistersContainer';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import img1 from '../assets/home/pets2.png';
@@ -122,7 +122,7 @@ export default function LandingPage() {
             {/* <label style={{ marginBottom: '10px' }}>
               {auth ? 'Ya tengo cuenta' : '¿Necesitas una cuenta?'}
             </label> */}
-            {auth ? <Register inicio={setAuth} /> : <Login />}
+            {auth ? <RegistersContainer /> : <Login />}
           </Container>
         </Box>
         <Box>
@@ -175,7 +175,7 @@ export default function LandingPage() {
             <Container
               style={{
                 backgroundImage: `url(${background})`,
-                height: '94vh',
+                minHeight: '94vh',
                 borderTopLeftRadius: '5%',
                 borderTopRightRadius: '5%',
                 display: 'flex',
@@ -197,7 +197,7 @@ export default function LandingPage() {
               <label style={{ marginBottom: '10px' }}>
                 {auth ? 'Ya tengo cuenta' : '¿Necesitas una cuenta?'}
               </label> */}
-              {auth ? <Register /> : <Login />}
+              {auth ? <RegistersContainer /> : <Login />}
             </Container>
           </Box>
         </Box>
