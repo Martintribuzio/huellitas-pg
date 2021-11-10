@@ -1,5 +1,5 @@
 const userNetwork = require('express').Router();
-const { confirmation, postsByUser, getUserById } = require('./controller');
+const { confirmation, postsByUser, getUserById, mailCreation} = require('./controller');
 const passport = require('passport');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
@@ -157,7 +157,12 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
               picture: req.user.picture,
               token,
             };
-            res.send({ success: true, user });
+            if(req.user.confirmation === true){
+              res.send({ success: true, user });
+            }else{
+              mailCreation(user._id, user.username)
+              res.status(404).send("esta cuenta no esta confirmada, revise su correo electronico")
+            }        
           }
         });
       },

@@ -39,7 +39,8 @@ function Ingresar() {
 
   const onSubmit = handleSubmit(async data => {
     const response = await loginService(data);
-    if (response.error) {
+    console.log(response)
+    if (response.error?.includes("401")) {
       setValue('email', '');
       setValue('password', '');
       Swal.fire({
@@ -48,7 +49,16 @@ function Ingresar() {
         icon: 'error',
         confirmButtonText: 'Intentar de nuevo',
       });
-    } else {
+    } else if(response.error?.includes("404")) {
+      setValue('email', '');
+      setValue('password', '');
+      Swal.fire({
+        title: 'Error',
+        text: 'La cuenta no ha sido confirmada, revise su correo',
+        icon: 'error',
+        confirmButtonText: 'Intentar de nuevo',
+      });
+    }else{
       history.push('/home/feed'); //aqui
     }
   });

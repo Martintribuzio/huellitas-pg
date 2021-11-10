@@ -41,10 +41,10 @@ function Register({ inicio }: any) {
       .post('/user/signup', data)
       .then(async res => {
         Swal.fire({
-          title: 'Success!',
-          text: 'Fuiste registrado con éxito',
+          title: 'Exito!',
+          text: 'Se ha enviado un mail de confirmacion a su correo electronico',
           icon: 'success',
-          confirmButtonText: 'Ingresá',
+          confirmButtonText: 'Ok',
         });
       })
       .then(() => {
