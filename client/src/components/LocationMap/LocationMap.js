@@ -8,9 +8,9 @@ import 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css';
 import LeafletControlGeocoder from './LeafletControlGeocoder';
 import { useDispatch } from 'react-redux';
 import { getCoords } from '../../redux/actions';
-import huella  from "../../assets/home/pngegg.png";
-import huellaAdopt  from "../../assets/home/elqva.png";
-import signodeex  from "../../assets/home/signodeex.png";
+import huella  from "../../assets/map/huellitasLost.png";
+import huellaAdopt  from "../../assets/map/huellitaAdoption.png";
+import signodeex  from "../../assets/map/huellitasFounded.png";
 
 import {Icon} from "leaflet"
  // import { popoverClasses } from '@mui/material';
