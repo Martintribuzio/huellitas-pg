@@ -160,7 +160,7 @@ export default function PostAPet(props: any) {
     setError(errors);
   }
 
-  // console.log(input)
+  //console.log(input)
 
   const maxDate = (): string => {
     const today = new Date();

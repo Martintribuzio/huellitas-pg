@@ -23,9 +23,7 @@ const postSchema = new Schema({
   },
   date: String,
   user: { type: Schema.Types.ObjectId, ref: 'User' },
-  petImage: {
-    type: String,
-  },
+  petImage: { type: Schema.Types.ObjectId, ref: 'Image' },
   latitude: String,
   longitude: String,
 });

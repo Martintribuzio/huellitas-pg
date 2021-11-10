@@ -92,11 +92,6 @@ export default function Feed(props: any) {
             width: '100%',
           }}>
           {postsToShow.map(item => {
-            if (typeof item.petImage === 'string') {
-              if (item.petImage.search(/\\/)) {
-                item.petImage = item.petImage.replace(/\\/g, '/');
-              }
-            }
             return (
               <Link to={`/home/detail/${item._id}`}>
                 <ImageButton
@@ -109,7 +104,9 @@ export default function Feed(props: any) {
                   sx={{ minHeight: 200, minWidth: 200 }}>
                   <ImageSrc
                     style={{
-                      backgroundImage: `url(${process.env.REACT_APP_API}/${item.petImage})`,
+                      backgroundImage: `url(${item.petImage?.url})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
                     }}
                   />
                   <ImageBackdrop className='MuiImageBackdrop-root' />

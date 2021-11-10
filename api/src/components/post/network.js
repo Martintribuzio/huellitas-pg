@@ -1,21 +1,8 @@
 const postNetwork = require('express').Router();
 const { createPost, findPost, editPost, deletePost } = require('./controller');
 const fs = require('fs');
-const multer = require('multer');
-const uniqid = require('uniqid');
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    if (!fs.existsSync('./uploads')) {
-      console.log('PATH NOT FOUND');
-      fs.mkdirSync('./uploads');
-    }
-    cb(null, './uploads');
-  },
-  filename: function (req, file, cb) {
-    cb(null, uniqid() + '.' + file.mimetype.split('/')[1]);
-  },
-});
+const multer = require('multer');
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png')
@@ -24,7 +11,6 @@ const fileFilter = (req, file, cb) => {
 };
 
 const upload = multer({
-  storage,
   limits: { fileSize: 1024 * 1024 * 3 },
   fileFilter,
 });
@@ -32,7 +18,7 @@ const upload = multer({
 postNetwork.post('/', upload.single('petImage'), async (req, res) => {
   console.log('bodyPost', req.body);
   try {
-    const post = await createPost(req.body, req.file.path);
+    const post = await createPost(req.body, req.file);
     return res.json(post);
   } catch (error) {
     return res.send({ error: error.message });
@@ -42,8 +28,10 @@ postNetwork.post('/', upload.single('petImage'), async (req, res) => {
 postNetwork.get('/', async (req, res) => {
   try {
     const post = await findPost(req.query.id);
+    console.log(post);
     return res.json(post);
   } catch (error) {
+    console.log(error);
     return res.send(error);
   }
 });
