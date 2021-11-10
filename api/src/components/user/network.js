@@ -65,25 +65,12 @@ userNetwork.get('/posts', async (req, res) => {
 userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail 
 
     let transporter = nodemailer.createTransport({
-      // host: "smtp.gmail.com",
-      // port: 587,
-      // secure: false,
-      // auth: {
-      //   user: "huellitas.dom@gmail.com",
-      //   pass: "algomalquenoestabien"
-      // }
       service: "gmail",
       auth: {
         user: "huellitas.dom@gmail.com",
         pass: "algomalquenoestabien"
       }
     })
-    // let mailOptions = {
-    //   from: "huellitas.dom@gmail.com",
-    //   to: req.body.email,
-    //   subject: "Enviado desde Huellitas",
-    //   text: "Aca debería ir la URL redirigiendo"
-    // }
     let mailDetails = {
       from: 'huellitas.dom@gmail.com',
       to: req.body.email,
@@ -98,7 +85,7 @@ userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail
         console.log("Email enviado")
         res.status(200).json(req.body)
       }
-    })
+    }) //Faltaria hacer comprobaciones--
   
   User.register(
     new User({
