@@ -112,7 +112,7 @@ export default function Post({ post }: { post: PostType }) {
         sx={{ minHeight: 200, minWidth: 200 }}>
         <ImageSrc
           style={{
-            backgroundImage: `url(${process.env.REACT_APP_API}/${post.petImage})`,
+            backgroundImage: `url(${post.petImage.url})`,
           }}
         />
         <ImageBackdrop className='MuiImageBackdrop-root' />
