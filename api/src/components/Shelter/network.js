@@ -1,5 +1,5 @@
 const shelterNetwork = require('express').Router();
-
+const {postsByShelter} = require('./controller')
 const fs = require('fs');
 const passport = require('passport');
 const Shelter = require('../../models/Shelter');
@@ -12,7 +12,12 @@ const {
 } = require('../../../authenticate');
 
 
-shelterNetwork.post('/signup',(req,res)=>{
+shelterNetwork.get('/me', verifyUser, (req, res, next) => {
+  res.send(req.shelter);
+});
+
+
+shelterNetwork.post('/signup', (req,res)=>{
     const {name,email,phone,address,website,facebook,instagram,description,profileImage,latitude,longitude} = req.body;
      Shelter.register( 
     new Shelter({
@@ -24,12 +29,11 @@ shelterNetwork.post('/signup',(req,res)=>{
       facebook,
       instagram,
       description,
-      picture :profileImage,
       latitude,
       longitude,
     }),
     req.body.password,
-    (err, shelter) => {
+    async (err, shelter) => {
       if (err) {
         res.statusCode = 500;
         res.send(err);
@@ -38,6 +42,21 @@ shelterNetwork.post('/signup',(req,res)=>{
         const refreshToken = getRefreshToken({ _id: shelter._id });
 
         shelter.refreshToken.push({ refreshToken });
+
+        if (profileImage) {
+          const fileName = uniqid() + path.extname(profileImage.originalname);
+          const fileRef = ref(storage, fileName);
+          await uploadBytes(fileRef, profileImage.buffer);
+    
+          const url = await getDownloadURL(fileRef);
+    
+          const image = new Image({
+            url,
+            name: fileName,
+          });
+          image.save();
+          shelter.profileImage = image;
+        }
 
         shelter.save((err, shelter) => {
           if (err) {
@@ -54,36 +73,39 @@ shelterNetwork.post('/signup',(req,res)=>{
   });
 
 
+
+  shelterNetwork.get('/posts', async (req, res) => {
+    try {
+      const { id } = req.query;
+      const posts = await postsByShelter(id);
+      return res.json(posts);
+    } catch (err) {
+      return res.json(err);
+    }
+  });
+
+
   
   shelterNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
     try {
-      const token = getToken({ _id: req.shelter._id });
-      const refreshToken = getRefreshToken({ _id: req.shelter._id });
-      Shelter.findById(req.shelter._id).then(
-        shelter => {
-          shelter.refreshToken.push({ refreshToken });
-          shelter.save((err, shelter) => {
+      const token = getToken({ _id: req.user._id });
+      const refreshToken = getRefreshToken({ _id: req.user._id });
+      Shelter.findById(req.user._id).then(
+        user => {
+          user.refreshToken.push({ refreshToken });
+          user.save((err, user) => {
             if (err) {
               res.statusCode = 500;
               res.send(err);
             } else {
               res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
-              const shelter = {
-                _id: req.shelter._id,
-                name: req.shelter.name,
-                username: req.shelter.username,
-                phone: req.shelter.phone,
-                address: req.shelter.address,
-                website: req.shelter.website,
-                facebook: req.shelter.facebook,
-                instagram: req.shelter.instagram,
-                description: req.shelter.description,
-                picture: req.shelter.picture,
-                latitude: req.shelter.latitude,
-                longitude: req.shelter.longitude,
+              const user = {
+                _id: req.user._id,
+                name: req.user.name,
+                username: req.user.username,
                 token,
               };
-              res.send({ success: true, shelter });
+              res.send({ success: true, user });
             }
           });
         },

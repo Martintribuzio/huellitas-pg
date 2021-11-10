@@ -37,9 +37,8 @@ const shelterSchema = new Schema({
       type: String,
       required: true,
     },
-    profileImage: {
-      type: String,
-    },
+    profileImage: { type: Schema.Types.ObjectId, ref: 'Image' },
+
     latitude: String,
     longitude: String,
     posts: [{

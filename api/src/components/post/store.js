@@ -1,7 +1,19 @@
 const { Post } = require('../../models/Post');
 const User = require('../../models/User');
+const Image = require('../../models/Images');
 const fs = require('fs');
 const Shelter = require('../../models/Shelter');
+const firebase = require('../../firebase');
+const uniqid = require('uniqid');
+const path = require('path');
+const {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+} = require('firebase/storage');
+
+const storage = getStorage(firebase);
 
 const createPostDB = async (
   name,
@@ -12,7 +24,7 @@ const createPostDB = async (
   genre,
   date,
   petImage,
-  latitude, 
+  latitude,
   longitude
 ) => {
   try {
@@ -24,10 +36,25 @@ const createPostDB = async (
       user: id,
       genre,
       date,
-      petImage,
-      latitude, 
-      longitude
+      latitude,
+      longitude,
     });
+    console.log(petImage);
+    if (petImage) {
+      const fileName = uniqid() + path.extname(petImage.originalname);
+      const fileRef = ref(storage, fileName);
+      await uploadBytes(fileRef, petImage.buffer);
+
+      const url = await getDownloadURL(fileRef);
+
+      const image = new Image({
+        url,
+        name: fileName,
+      });
+      image.save();
+      post.petImage = image;
+    }
+
     await post.save();
     try{
       const userById = await User.findById(id);
@@ -47,7 +74,9 @@ const createPostDB = async (
 
 const findPostDB = async id => {
   try {
-    const post = id ? await Post.findById(id) : await Post.find();
+    const post = id
+      ? await Post.findById(id).populate('petImage')
+      : await Post.find().populate('petImage');
     return post;
   } catch (error) {
     throw new Error(error);

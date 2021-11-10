@@ -26,11 +26,17 @@ const searchUserByIdDB = async id => {
     console.log('entro aca! ');
     throw new Error('Error al buscar el usuario');
   }
-}
+};
 
 const postsByUserDB = async userId => {
   try {
-    const user = await User.findById(userId).populate('posts');
+    const user = await User.findById(userId).populate({
+      path: 'posts',
+      populate: {
+        path: 'petImage',
+      },
+    });
+    console.log(user);
     return user.posts;
   } catch {
     throw new Error('Mensaje');
@@ -41,5 +47,5 @@ module.exports = {
   createUserDB,
   searchUserDB,
   postsByUserDB,
-  searchUserByIdDB
+  searchUserByIdDB,
 };
