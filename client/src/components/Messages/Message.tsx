@@ -10,26 +10,30 @@ import { typeState } from '../../redux/reducers/index';
 import dotenv from 'dotenv';
 dotenv.config();
 
-interface message {
+export interface message {
   content: string;
   Converseid: string;
   sender: string;
+  state:string;
+  _id: string;
 }
 
 export default function Message() {
   const [messages, setMessages] = useState<message[]>();
-  const [newMessage, setnewMessage] = useState<string>();
+  const [newMessage, setnewMessage] = useState<string>('');
   const [arrivalMessage, setArrivalMessage] = useState<any>();
   const socket: any = useRef();
   const idSender = localStorage.getItem('userId');
   const { ConverseId } = useParams<{ ConverseId: string }>();
-  const scrollRef = useRef();
+  const scrollRef = useRef<any>();
 
-  const convers: any = useSelector(
+  const conversState: any = useSelector(
     (state: typeState) => state.conversations
-  ).filter(elem => elem._id === ConverseId)[0];
+  );
+  const convers = Array.isArray(conversState)
+    ? conversState.filter((elem: any) => elem._id === ConverseId)[0]
+    : [];
 
-  
   useEffect(() => {
     const getMessage = async () => {
       try {
@@ -58,17 +62,22 @@ export default function Message() {
         convers?.members.includes(arrivalMessage.sender) &&
         setMessages((prev: any) => [...prev, arrivalMessage]);
     }
-  }, [arrivalMessage, convers, messages]);
+  }, [arrivalMessage, convers]);
 
   useEffect(() => {
     socket.current.emit('addUser', idSender);
   }, [idSender]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView(false,{ behavior: "smooth" });
+  }, [messages]);
 
   const receiverId = convers?.members?.find(
     (member: string) => member !== idSender
   );
 
   const handleSubmit = async (e: any) => {
+    if(newMessage){
     try {
       e.preventDefault();
       socket.current.emit('sendMessage', {
@@ -89,45 +98,47 @@ export default function Message() {
     } catch (err: any) {
       console.log(err.message);
     }
+  }
   };
 
   return (
     <div>
-    <div className={style.fondoChat}>
-     
+      <div className={style.fondoChat}>
         <div className={style.mensaje}>
           <img
             className='messageImg'
             // src="https://images.pexels.com/photos/3686769/pexels-photo-3686769.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
             alt=''
           />
-          {messages?.map(c => (
-            <div className={c.sender !== idSender ? style.other : style.own}>
+          {messages?.map(c => {
+            if(c.state === 'unread' && c.sender !== idSender){
+              axios.put(`/message/${c._id}`);
+            }
+            return(
+            <div ref={scrollRef} className={c.sender !== idSender ? style.other : style.own}>
               <p>{c.content}</p>
             </div>
-          ))}
+          )})}
         </div>
-        
       </div>
       <div className={style.inputSubmit}>
-          <div className={style.inputChat}>
-            <Input
-              onKeyPress={e => {
-                if (e.key === 'Enter') {
-                  handleSubmit(e);
-                }
-              }}
-              placeholder='Escribe un mensaje'
-              onChange={e => setnewMessage(e.target.value)}
-              value={newMessage}
-            />
-          </div>
-          <div onClick={handleSubmit} className={style.boton}>
-            <SendIcon></SendIcon>
-          </div>
+        <div className={style.inputChat}>
+          <Input
+            sx={{width: '100%'}}
+            onKeyPress={e => {
+              if (e.key === 'Enter') {
+                handleSubmit(e);
+              }
+            }}
+            placeholder='Escribe un mensaje'
+            onChange={e => setnewMessage(e.target.value)}
+            value={newMessage}
+          />
         </div>
-
+        <div onClick={handleSubmit} className={style.boton}>
+          <SendIcon></SendIcon>
+        </div>
+      </div>
     </div>
-
   );
 }

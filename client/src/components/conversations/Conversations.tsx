@@ -4,7 +4,6 @@ import { conversation } from '../../redux/types/types';
 import { typeState } from '../../redux/reducers/index';
 import useUser from '../../hooks/useUser';
 import { useEffect } from 'react';
-import axios from 'axios';
 import { getConvers } from '../../redux/actions';
 import style from '../Messages/Message.module.css';
 
@@ -34,6 +33,8 @@ export default function Conversations() {
       </div>
     );
   } else {
-    return <p>No conversations</p>;
+    return <div className={style.noConv}>
+     <p>No has iniciado ninguna conversación</p>
+     </div>
   }
 }

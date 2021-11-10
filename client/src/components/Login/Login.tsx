@@ -49,7 +49,7 @@ function Ingresar() {
         confirmButtonText: 'Intentar de nuevo',
       });
     } else {
-      history.push('/home');
+      history.push('/home/feed'); //aqui
     }
   });
 
@@ -110,7 +110,7 @@ function Ingresar() {
         password: response.profileObj.googleId,
       });
       if (respLogin.success) {
-        history.push('/home');
+        history.push('/home/feed');
       } else {
         registerWithGoogle(response); //Invoco a la funcion para registrar
       }
@@ -136,7 +136,7 @@ function Ingresar() {
           password: response.profileObj.googleId,
         });
         if (respLogin.success) {
-          history.push('/home');
+          history.push('/home/feed');
         }
       }
     } catch (err) {
