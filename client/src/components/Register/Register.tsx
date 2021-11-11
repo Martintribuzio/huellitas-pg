@@ -52,9 +52,9 @@ function Register({ inicio }: any) {
           confirmButtonText: 'Ok',
         });
       })
-      .then(() => {
-        inicio(false);
-      })
+      // .then(() => {
+      //   inicio(false);
+      // })
       .catch(error =>
         Swal.fire({
           title: 'Error',

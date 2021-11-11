@@ -11,6 +11,7 @@ const {
   verifyUser,
 } = require('../../../authenticate');
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const multer = require('multer');
 const uniqid = require('uniqid');
 
@@ -73,6 +74,7 @@ userNetwork.get('/posts', async (req, res) => {
 
 //Registro
 userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail   
+
   User.register(
     new User({
       name: req.body.name,
@@ -80,12 +82,12 @@ userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail
       username: req.body.email,
       postalCode: req.body.postalCode,
       picture: req.body.picture,
+      confirmation: req.body.confirmation || false,
     }),
     req.body.password,
     (err, user) => {
       if (err) {
-        res.statusCode = 500;
-        res.send(err);
+        res.status(500).send("El email ingresado ya existe");
       } else {
         const token = getToken({ _id: user._id });
         const refreshToken = getRefreshToken({ _id: user._id });
@@ -113,10 +115,7 @@ userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail
             res.status(200).json(req.body)
           }
         })
-        //-----------------------------------
-
-
-
+        //--------------------------
         user.refreshToken.push({ refreshToken });
 
         user.save((err, user) => {
