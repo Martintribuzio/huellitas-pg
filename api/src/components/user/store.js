@@ -43,9 +43,22 @@ const postsByUserDB = async userId => {
   }
 };
 
+const confirmationDB = async id => {
+  try {
+    const user = await User.findById(id);
+    user.confirmation = true;
+    await user.save();
+    return user;
+  } 
+  catch (error) {
+    throw new Error(error);
+  }
+}
+
 module.exports = {
   createUserDB,
   searchUserDB,
   postsByUserDB,
   searchUserByIdDB,
+  confirmationDB
 };

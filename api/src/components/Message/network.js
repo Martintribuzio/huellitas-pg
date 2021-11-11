@@ -1,5 +1,5 @@
 const messageNetwork = require('express').Router()
-const {createMess, findMess,findAndUpdate} = require('./controller')
+const {createMess, findMess,findAndUpdate,mailNotification} = require('./controller')
 
 messageNetwork.post('/', async (req, res) => {
     try{
@@ -25,6 +25,15 @@ messageNetwork.put('/:idMessage', async (req,res) => {
   }
   catch(err){
     res.status(404).json(err.message)
+  }
+})
+
+messageNetwork.get('/mailNotification', async (req, res) => {
+  try{
+    let Notification = await mailNotification(req.body.receiverId);
+    res.json(Notification)
+  }catch(err){
+    res.status(400).send(err.message)
   }
 })
 

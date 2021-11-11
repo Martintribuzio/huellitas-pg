@@ -23,7 +23,11 @@ type LogIn = {
 
 const schema = yup.object().shape({
   email: yup.string().email().required('Ingrese su email'),
-  password: yup.string().min(8, 'Su contraseña debe tener al menos 8 caracteres').max(20,'Su contraseña debe tener menos de 20 caracteres').required('Ingrese su contraseña'),
+  password: yup
+    .string()
+    .min(8, 'Su contraseña debe tener al menos 8 caracteres')
+    .max(20, 'Su contraseña debe tener menos de 20 caracteres')
+    .required('Ingrese su contraseña'),
 });
 
 function Ingresar() {
@@ -39,7 +43,8 @@ function Ingresar() {
 
   const onSubmit = handleSubmit(async data => {
     const response = await loginService(data);
-    if (response.error) {
+    console.log(response);
+    if (response.error?.includes('401')) {
       setValue('email', '');
       setValue('password', '');
       Swal.fire({
@@ -48,58 +53,19 @@ function Ingresar() {
         icon: 'error',
         confirmButtonText: 'Intentar de nuevo',
       });
+    } else if (response.error?.includes('404')) {
+      setValue('email', '');
+      setValue('password', '');
+      Swal.fire({
+        title: 'Error',
+        text: 'La cuenta no ha sido confirmada, revise su correo',
+        icon: 'error',
+        confirmButtonText: 'Intentar de nuevo',
+      });
     } else {
       history.push('/home/feed'); //aqui
     }
   });
-
-  //Login Facebook--------------------------------------------------------------
-  // const responseFacebook = async (response: any) => {
-  //   let respLogin;
-  //   console.log(response);
-  //   try {
-  //     respLogin = await loginService({
-  //       email: response.email,
-  //       password: response.id,
-  //     });
-  //     if (respLogin.success) {
-  //       history.push('/home');
-  //     } else {
-  //       registerWithFacebook(response); //Invoco a la funcion para registrar
-  //     }
-  //   } catch (err: any) {
-  //     return { ERROR: err };
-  //   }
-  // };
-
-  // const registerWithFacebook = async (response: any) => {
-  //   let respSignup: any;
-  //   try {
-  //     respSignup = await axios.post('/user/signup', {
-  //       name: response.first_name,
-  //       lastname: response.last_name,
-  //       email: response.email,
-  //       password: response.id,
-  //     });
-  //     if (respSignup.status === 200) {
-  //       let respLogin = await loginService({
-  //         email: response.email,
-  //         password: response.id,
-  //       });
-  //       if (respLogin.success) {
-  //         history.push('/home');
-  //       }
-  //     }
-  //   } catch (err) {
-  //     Swal.fire({
-  //       title: 'Error',
-  //       text: 'No se pudo registrar',
-  //       icon: 'error',
-  //       confirmButtonText: 'Ok',
-  //     });
-  //   }
-  // };
-  //-----------------------------------------------------------------------
 
   //Login Google--------------------------------------------------
   const responseGoogle = async (response: any) => {
@@ -109,7 +75,14 @@ function Ingresar() {
         email: response.profileObj.email,
         password: response.profileObj.googleId,
       });
-      if (respLogin.success) {
+      if (respLogin.error?.includes('404')) {
+        Swal.fire({
+          title: 'Error',
+          text: 'La cuenta no ha sido confirmada, revise su correo',
+          icon: 'error',
+          confirmButtonText: 'Intentar de nuevo',
+        });
+      } else if (respLogin.success) {
         history.push('/home/feed');
       } else {
         registerWithGoogle(response); //Invoco a la funcion para registrar
@@ -128,6 +101,7 @@ function Ingresar() {
         email: response.profileObj.email,
         password: response.profileObj.googleId,
         picture: response.profileObj.imageUrl,
+        confirmation: true,
       });
       // console.log('ok', respSignup.status);
       if (respSignup.status === 200) {
@@ -139,13 +113,22 @@ function Ingresar() {
           history.push('/home/feed');
         }
       }
-    } catch (err) {
-      Swal.fire({
-        title: 'Error',
-        text: 'No se pudo registrar',
-        icon: 'error',
-        confirmButtonText: 'Ok',
-      });
+    } catch (err: any) {
+      if (TypeError(err).toString().includes('500')) {
+        Swal.fire({
+          title: 'Error',
+          text: 'El email ya está registrado',
+          icon: 'error',
+          confirmButtonText: 'Intentar de nuevo',
+        });
+      } else {
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo registrar',
+          icon: 'error',
+          confirmButtonText: 'Ok',
+        });
+      }
     }
   };
   //-----------------------------------------------------------------------
