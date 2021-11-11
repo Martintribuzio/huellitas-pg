@@ -84,12 +84,10 @@ function RegisterShelter({ inicio }: any) {
       instagram,
       facebook,
       website,
-
       latitude,
       longitude,
     } = data.currentTarget.elements as unknown as Data;
-    console.log('name', name['value']);
-    const formData = {
+    const formData:Data = {
       name: name['value'],
       email: email['value'],
       password: password['value'],
@@ -100,13 +98,12 @@ function RegisterShelter({ inicio }: any) {
       instagram: instagram['value'],
       facebook: facebook['value'],
       website: website['value'],
-      profileImage: img,
+      profileImage: '',
       latitude: latitude['value'],
       longitude: longitude['value'],
     };
-    console.log(formData);
     axios
-      .post('/shelter/signup', formData)
+      .post('/user/signup', formData)
       .then(res => {
         Swal.fire({
           icon: 'success',
@@ -126,9 +123,9 @@ function RegisterShelter({ inicio }: any) {
           showConfirmButton: false,
           timer: 1500,
         }); */
-      });
+      // });
   }
-
+      )}
 
   return (
     <Box sx={{ backgroundColor: '#F5F5F5' }}>

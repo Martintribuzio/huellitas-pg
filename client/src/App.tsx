@@ -12,7 +12,7 @@ import { Home } from './pages/Home';
 import { Redirect } from 'react-router';
 import Conversations from './components/conversations/Conversations';
 import Message from './components/Messages/Message';
-
+import About from './components/About/about';
 function App() {
   // const [result, user] = useUser();
 
@@ -42,7 +42,9 @@ function App() {
         <Route path='/home/profile'>
           <Profile />
         </Route>
-
+        <Route path='/home/about'>
+          <About />
+        </Route>
         <Route path='/home/feed'>
           <Publicaciones />
         </Route>

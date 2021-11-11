@@ -1,8 +1,9 @@
 const userNetwork = require('express').Router();
-const { createUser, postsByUser, getUserById } = require('./controller');
+const { confirmation, postsByUser, getUserById, mailCreation} = require('./controller');
 const passport = require('passport');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
+const nodemailer = require("nodemailer")
 const {
   getToken,
   COOKIE_OPTIONS,
@@ -10,6 +11,7 @@ const {
   verifyUser,
 } = require('../../../authenticate');
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const multer = require('multer');
 const uniqid = require('uniqid');
 
@@ -51,6 +53,16 @@ userNetwork.get('/me', verifyUser, (req, res, next) => {
   res.send(req.user);
 });
 
+userNetwork.get("/confirmation", async (req, res, next) => {
+  try {
+    const { id } = req.query;
+    const user = await confirmation(id)
+    return res.send(user);
+  } catch (error) {
+    return res.send(error);
+  }
+})
+
 userNetwork.get('/posts', async (req, res) => {
   try {
     const { id } = req.query;
@@ -62,7 +74,8 @@ userNetwork.get('/posts', async (req, res) => {
 });
 
 //Registro
-userNetwork.post('/signup', (req, res) => {
+userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail   
+  console.log(req.body)
   User.register(
     new User({
       name: req.body.name,
@@ -70,17 +83,49 @@ userNetwork.post('/signup', (req, res) => {
       username: req.body.email,
       postalCode: req.body.postalCode,
       picture: req.body.picture,
+      confirmation: req.body.confirmation || false,
+      website: req.body.website,
+      phone: req.body.phone,
+      Facebook: req.body.Facebook,
+      Instagram: req.body.Instagram,
+      address: req.body.address,
+      latitude: req.body.locatitude,
+      longitude: req.body.longitude,
+      profileImage: req.body.profileImage,
+      description: req.body.description,
     }),
     req.body.password,
     (err, user) => {
       if (err) {
-        console.log(err);
-        res.statusCode = 500;
-        res.send(err);
+        res.status(500).send("El email ingresado ya existe");
       } else {
         const token = getToken({ _id: user._id });
         const refreshToken = getRefreshToken({ _id: user._id });
-
+        //----------------------------        
+        let transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: "huellitas.dom@gmail.com",
+            pass: process.env.NODEMAILER 
+          }
+        })
+        let mailDetails = {
+          from: 'huellitas.dom@gmail.com',
+          to: req.body.email,
+          subject: 'Confirmación de registro',
+          html: `<a href= "https://huellitas-pg.herokuapp.com/user/confirmation?id=${user._id}"> Pulse aquí para confirmar su cuenta</a>` //Guardar url como variable de entorno
+          // html: `<a href= "http://localhost:3001/user/confirmation?id=${user._id}"> Pulse aquí para confirmar su cuenta</a>`
+        };
+        transporter.sendMail(mailDetails, (error, info) => {
+          if (error) {
+            res.status(500).send(error.message)
+          }
+          else {
+            console.log("Email enviado")
+            res.status(200).json(req.body)
+          }
+        })
+        //--------------------------
         user.refreshToken.push({ refreshToken });
 
         user.save((err, user) => {
@@ -121,7 +166,12 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
               picture: req.user.picture,
               token,
             };
-            res.send({ success: true, user });
+            if(req.user.confirmation === true){
+              res.send({ success: true, user });
+            }else{
+              mailCreation(user._id, user.username)
+              res.status(404).send("esta cuenta no esta confirmada, revise su correo electronico")
+            }        
           }
         });
       },
