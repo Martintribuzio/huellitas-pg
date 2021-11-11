@@ -11,6 +11,10 @@ import Typography from '@mui/material/Typography';
 import styles from '../../CSS/Register.module.css';
 import { useState } from 'react';
 
+import { ChangeEvent } from 'react';
+import { FormEvent } from 'react';
+
+
 type Data = {
   name: string;
   email: string;
@@ -51,40 +55,79 @@ function RegisterShelter({ inicio }: any) {
   } = useForm<Data>({ resolver: yupResolver(schema) });
   const [img, setImg] = useState<string | any>(null);
 
-  function handleChangeImg(e: Event | any) {
+
+  function handleChangeImg(e: ChangeEvent<HTMLInputElement>) {
+
     e.preventDefault();
     const target = e.target as HTMLInputElement;
     const file: File | any = (target.files as FileList)[0];
     const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImg(reader.result);
-    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setImg(reader.result);
+      };
+    }
   }
 
-  const onSubmit = handleSubmit(data => {
+  function handleSubmitForm(data: FormEvent<HTMLFormElement>) {
+    data.preventDefault();
+
+    const {
+      name,
+      email,
+      password,
+      confirmPassword,
+      phone,
+      address,
+      latitude,
+      longitude,
+      description,
+      instagram,
+      facebook,
+      website,
+      profileImage,
+    } = data.currentTarget.elements as unknown as Data;
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('confirmPassword', confirmPassword);
+    formData.append('phone', phone);
+    formData.append('address', address);
+    formData.append('latitude', latitude);
+    formData.append('longitude', longitude);
+    formData.append('description', description);
+    formData.append('instagram', instagram);
+    formData.append('facebook', facebook);
+    formData.append('website', website);
+    formData.append('profileImage', profileImage);
     axios
-      .post('/user/signup', data)
-      .then(async res => {
+      .post('/shelters/signup', formData)
+      .then(res => {
         Swal.fire({
-          title: 'Success!',
-          text: 'Fuiste registrado con éxito',
           icon: 'success',
-          confirmButtonText: 'Ingresá',
+          title: 'Registro exitoso',
+          text: 'Ahora puedes iniciar sesión',
+          showConfirmButton: false,
+          timer: 1500,
         });
+        inicio();
       })
-      .then(() => {
-        inicio(false);
-      })
-      .catch(error =>
-        Swal.fire({
-          title: 'Error',
-          text: 'El email ingresado ya pertenece a una cuenta',
+      .catch(err => {
+        console.log(err);
+        /* Swal.fire({
           icon: 'error',
-          confirmButtonText: 'Intentar de nuevo',
-        })
-      );
-  });
+          title: 'Error',
+          text: 'Algo salió mal',
+          showConfirmButton: false,
+          timer: 1500,
+        }); */
+      });
+  }
+
+
   return (
     <Box sx={{ backgroundColor: '#F5F5F5' }}>
       <Typography
@@ -92,7 +135,9 @@ function RegisterShelter({ inicio }: any) {
         style={{ color: '#4A4A4A', marginBottom: '10px' }}>
         Regístrate
       </Typography>
-      <form onSubmit={onSubmit}>
+
+      <form onSubmit={data => handleSubmitForm(data)}>
+
         <div>
           <Controller
             name='name'
