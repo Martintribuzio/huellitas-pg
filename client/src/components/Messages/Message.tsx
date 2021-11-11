@@ -95,9 +95,9 @@ export default function Message() {
         setMessages([...messages, res.data]);
         setnewMessage('');
       }
-      console.log("lalala")
-      let mailNotification = await axios.get('/message/mailNotification', receiverId)
-      
+      console.log("lalala ", receiverId)
+      let mailNotification = await axios.get('/message/mailNotification', {params:{receiverId:receiverId}})
+      console.log(mailNotification.data)
     } catch (err: any) {
       console.log(err.message);
     }

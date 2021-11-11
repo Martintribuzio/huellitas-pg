@@ -58,6 +58,10 @@ const userSchema = new Schema({
   refreshToken: {
     type: [Session],
   },
+  confirmation: {
+    type: Boolean,
+    default: false
+  },
 });
 
 userSchema.set('toJSON', {

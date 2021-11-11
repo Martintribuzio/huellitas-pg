@@ -75,7 +75,6 @@ userNetwork.get('/posts', async (req, res) => {
 
 //Registro
 userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail   
-  console.log(req.body)
   User.register(
     new User({
       name: req.body.name,
