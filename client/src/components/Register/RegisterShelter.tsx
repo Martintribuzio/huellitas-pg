@@ -84,7 +84,7 @@ function RegisterShelter({ inicio }: any) {
       latitude,
       longitude,
     } = data.currentTarget.elements as unknown as Data;
-
+    console.log('name', name['value']);
     const formData = {
       name: name['value'],
       email: email['value'],
