@@ -1,5 +1,5 @@
 const { message } = require('../../models/Message')
-const { User } = require('../../models/User')
+const  User  = require('../../models/User')
 
 const createMessageDB = async (content, Converseid, sender) => {
     try{
