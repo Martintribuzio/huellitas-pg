@@ -41,7 +41,7 @@ const mailNotification = async (id) => {
       service: "gmail",
       auth: {
         user: "huellitas.dom@gmail.com",
-        pass: "algomalquenoestabien" //Falta ponerlo en env
+        pass: process.env.NODEMAILER //Falta ponerlo en env
       }
     })
     let mailDetails = {
