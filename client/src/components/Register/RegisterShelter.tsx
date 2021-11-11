@@ -11,26 +11,30 @@ import Typography from '@mui/material/Typography';
 import styles from '../../CSS/Register.module.css';
 import { useState } from 'react';
 
+import { ChangeEvent } from 'react';
+import { FormEvent } from 'react';
+
+
 type Data = {
-  name: string;
-  email: string;
+  name: string | any;
+  email: string | any;
   /* username: string; */
-  password: string;
-  confirmPassword: string;
-  phone: string;
-  address: string;
-  latitude: string;
-  longitude: string;
-  description: string;
-  instagram: string;
-  facebook: string;
-  website: string;
-  profileImage: string;
+  password: string | any;
+  confirmPassword: string | any;
+  phone: string | any;
+  address: string | any;
+  description: string | any;
+  instagram: string | any;
+  facebook: string | any;
+  website: string | any;
+  profileImage: string | any;
+  latitude: string | any;
+  longitude: string | any;
 };
 
 const schema = yup.object().shape({
   name: yup.string().required('Ingresa tu nombre'),
-  lastname: yup.string().required('Ingresa tu apellido'),
+  description: yup.string().required('Ingresa una descripcion'),
   email: yup.string().email().required('Ingresa tu email'),
   password: yup
     .string()
@@ -51,40 +55,81 @@ function RegisterShelter({ inicio }: any) {
   } = useForm<Data>({ resolver: yupResolver(schema) });
   const [img, setImg] = useState<string | any>(null);
 
-  function handleChangeImg(e: Event | any) {
+
+  function handleChangeImg(e: ChangeEvent<HTMLInputElement>) {
+
     e.preventDefault();
+
     const target = e.target as HTMLInputElement;
-    const file: File | any = (target.files as FileList)[0];
+    const file: File = (target.files as FileList)[0];
+
     const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setImg(reader.result);
-    };
+
+    if (file) {
+      setImg(file);
+    }
   }
 
-  const onSubmit = handleSubmit(data => {
+  async function handleSubmitForm(data: FormEvent<HTMLFormElement>) {
+    data.preventDefault();
+
+    const {
+      name,
+      email,
+      password,
+      confirmPassword,
+      phone,
+      address,
+      description,
+      instagram,
+      facebook,
+      website,
+
+      latitude,
+      longitude,
+    } = data.currentTarget.elements as unknown as Data;
+    console.log('name', name['value']);
+    const formData = {
+      name: name['value'],
+      email: email['value'],
+      password: password['value'],
+      confirmPassword: confirmPassword['value'],
+      phone: phone['value'],
+      address: address['value'],
+      description: description['value'],
+      instagram: instagram['value'],
+      facebook: facebook['value'],
+      website: website['value'],
+      profileImage: img,
+      latitude: latitude['value'],
+      longitude: longitude['value'],
+    };
+    console.log(formData);
     axios
-      .post('/user/signup', data)
-      .then(async res => {
+      .post('/shelter/signup', formData)
+      .then(res => {
         Swal.fire({
-          title: 'Success!',
-          text: 'Fuiste registrado con éxito',
           icon: 'success',
-          confirmButtonText: 'Ingresá',
+          title: 'Registro exitoso',
+          text: 'Ahora puedes iniciar sesión',
+          showConfirmButton: false,
+          timer: 1500,
         });
+        inicio();
       })
-      .then(() => {
-        inicio(false);
-      })
-      .catch(error =>
-        Swal.fire({
-          title: 'Error',
-          text: 'El email ingresado ya pertenece a una cuenta',
+      .catch(err => {
+        console.log(err);
+        /* Swal.fire({
           icon: 'error',
-          confirmButtonText: 'Intentar de nuevo',
-        })
-      );
-  });
+          title: 'Error',
+          text: 'Algo salió mal',
+          showConfirmButton: false,
+          timer: 1500,
+        }); */
+      });
+  }
+
+
   return (
     <Box sx={{ backgroundColor: '#F5F5F5' }}>
       <Typography
@@ -92,7 +137,9 @@ function RegisterShelter({ inicio }: any) {
         style={{ color: '#4A4A4A', marginBottom: '10px' }}>
         Regístrate
       </Typography>
-      <form onSubmit={onSubmit}>
+
+      <form onSubmit={data => handleSubmitForm(data)}>
+
         <div>
           <Controller
             name='name'
@@ -300,6 +347,42 @@ function RegisterShelter({ inicio }: any) {
               alt='img'
             />
           ) : null}
+        </div>
+        <div>
+          <Controller
+            name='latitude'
+            control={control}
+            defaultValue=''
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label='Latitud'
+                variant='outlined'
+                error={!!errors.latitude}
+                helperText={errors.latitude ? errors.latitude.message : ''}
+                fullWidth
+                margin='dense'
+              />
+            )}
+          />
+        </div>
+        <div>
+          <Controller
+            name='longitude'
+            control={control}
+            defaultValue=''
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label='Longitud'
+                variant='outlined'
+                error={!!errors.longitude}
+                helperText={errors.longitude ? errors.longitude.message : ''}
+                fullWidth
+                margin='dense'
+              />
+            )}
+          />
         </div>
 
         <Button
