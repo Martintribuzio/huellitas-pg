@@ -19,19 +19,6 @@ type Data = {
   name: string | any;
   email: string | any;
   /* username: string; */
-<<<<<<< HEAD
-  password: string;
-  confirmPassword: string;
-  phone: string;
-  address: string;
-  description: string;
-  instagram: string;
-  longitude: string;
-  latitude: string;
-  facebook: string;
-  website: string;
-  profileImage: string;
-=======
   password: string | any;
   confirmPassword: string | any;
   phone: string | any;
@@ -43,7 +30,6 @@ type Data = {
   profileImage: string | any;
   latitude: string | any;
   longitude: string | any;
->>>>>>> 548b2a86660cb87b8aeb3f9499a98c47204197a1
 };
 
 const schema = yup.object().shape({
@@ -84,56 +70,6 @@ function RegisterShelter({ inicio }: any) {
     }
   }
 
-<<<<<<< HEAD
-  function handleSubmitForm(data: FormEvent<HTMLFormElement>) {
-    data.preventDefault();
-  
-    // const {
-    //   name,
-    //   email,
-    //   password,
-    //   confirmPassword,
-    //   phone,
-    //   address,
-    //   latitude,
-    //   longitude,
-    //   description,
-    //   instagram,
-    //   facebook,
-    //   website,
-    //   profileImage,
-    // }
-    const tuki = data.currentTarget.elements as unknown as Data;
-    console.log('TUKI',tuki);
-    const formData = new FormData();
-    // formData.append('name', name);
-    // formData.append('email', email);
-    // formData.append('password', password);
-    // formData.append('confirmPassword', confirmPassword);
-    // formData.append('phone', phone);
-    // formData.append('address', address);
-    // formData.append('latitude', latitude);
-    // formData.append('longitude', longitude);
-    // formData.append('description', description);
-    // formData.append('instagram', instagram);
-    // formData.append('facebook', facebook);
-    // formData.append('website', website);
-    // formData.append('profileImage', profileImage);
-    // axios
-    //   .post('/shelters/signup', formData)
-    //   .then(res => {
-    //     Swal.fire({
-    //       icon: 'success',
-    //       title: 'Registro exitoso',
-    //       text: 'Ahora puedes iniciar sesión',
-    //       showConfirmButton: false,
-    //       timer: 1500,
-    //     });
-    //     inicio();
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-=======
   async function handleSubmitForm(data: FormEvent<HTMLFormElement>) {
     data.preventDefault();
 
@@ -183,7 +119,6 @@ function RegisterShelter({ inicio }: any) {
       })
       .catch(err => {
         console.log(err);
->>>>>>> 548b2a86660cb87b8aeb3f9499a98c47204197a1
         /* Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -193,7 +128,7 @@ function RegisterShelter({ inicio }: any) {
         }); */
       // });
   }
-
+      )}
 
   return (
     <Box sx={{ backgroundColor: '#F5F5F5' }}>
