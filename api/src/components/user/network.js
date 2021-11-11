@@ -74,6 +74,7 @@ userNetwork.post('/signup', (req, res) => {
     req.body.password,
     (err, user) => {
       if (err) {
+        console.log(err);
         res.statusCode = 500;
         res.send(err);
       } else {
