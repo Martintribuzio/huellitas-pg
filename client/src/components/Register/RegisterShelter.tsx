@@ -10,8 +10,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import styles from '../../CSS/Register.module.css';
 import { useState } from 'react';
+
 import { ChangeEvent } from 'react';
 import { FormEvent } from 'react';
+
 
 type Data = {
   name: string | any;
@@ -53,15 +55,16 @@ function RegisterShelter({ inicio }: any) {
   } = useForm<Data>({ resolver: yupResolver(schema) });
   const [img, setImg] = useState<string | any>(null);
 
+
   function handleChangeImg(e: ChangeEvent<HTMLInputElement>) {
+
     e.preventDefault();
 
     const target = e.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
 
     const reader = new FileReader();
-    console.log(reader);
-    console.log(file);
+
     if (file) {
       setImg(file);
     }
@@ -126,6 +129,7 @@ function RegisterShelter({ inicio }: any) {
       });
   }
 
+
   return (
     <Box sx={{ backgroundColor: '#F5F5F5' }}>
       <Typography
@@ -133,7 +137,9 @@ function RegisterShelter({ inicio }: any) {
         style={{ color: '#4A4A4A', marginBottom: '10px' }}>
         Regístrate
       </Typography>
+
       <form onSubmit={data => handleSubmitForm(data)}>
+
         <div>
           <Controller
             name='name'
