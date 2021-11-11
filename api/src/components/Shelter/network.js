@@ -16,9 +16,10 @@ shelterNetwork.get('/me', verifyUser, (req, res, next) => {
   res.send(req.shelter);
 });
 
-
+ 
 shelterNetwork.post('/signup', (req,res)=>{
     const {name,email,phone,address,website,facebook,instagram,description,profileImage,latitude,longitude} = req.body;
+    console.log(req.body);
      Shelter.register( 
     new Shelter({
       name,
