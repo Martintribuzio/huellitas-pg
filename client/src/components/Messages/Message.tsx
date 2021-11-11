@@ -75,7 +75,7 @@ export default function Message() {
   const receiverId = convers?.members?.find(
     (member: string) => member !== idSender
   );
-
+    console.log("receiverId",receiverId)
   const handleSubmit = async (e: any) => {
     if(newMessage){
     try {
