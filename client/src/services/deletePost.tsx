@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { deletePost } from '../redux/actions';
+//import { deletePost } from '../redux/actions';
 
 export default async function deletePostService(_id: string | undefined) {
   try {
