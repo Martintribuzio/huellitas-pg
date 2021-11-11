@@ -13,6 +13,7 @@ import Switch from './Login/Switch';
 import { useSelector } from 'react-redux';
 import { typeState } from '../redux/reducers';
 import { validation } from '../helpers/validationPost';
+import { SpinnerCircular } from 'spinners-react';
 
 type event =
   | ChangeEvent<HTMLInputElement>
@@ -41,7 +42,6 @@ const initialError = {
   petImage: '',
   type: '',
   state: '',
-  ubication: '',
 };
 
 export default function PostAPet(props: any) {
@@ -50,15 +50,16 @@ export default function PostAPet(props: any) {
   const [type, setType] = React.useState('');
   const [genre, setGenre] = React.useState('');
   const [description, setDescription] = React.useState('');
-  const [loading, result] = useUser();
+  const [_, result] = useUser();
   const [step, setStep] = useState(false);
   const [input, setInput] = useState<PostType>(initialState);
-
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(initialError);
 
   const handleToggle = () => setStep(!step);
 
   useEffect(() => {
+    setLoading(false);
     if (props.isOpen) {
       setStep(false);
     }
@@ -132,6 +133,7 @@ export default function PostAPet(props: any) {
   }
 
   async function postApet(fd: FormData) {
+    setLoading(true);
     let result: any = await postPet(fd);
     if (result.ERROR) {
       return Swal.fire({
@@ -155,6 +157,7 @@ export default function PostAPet(props: any) {
     const errors = validation(input);
 
     if (Object.values(errors).every(error => error === '')) {
+      console.log('if');
       const id = window.localStorage.getItem('userId');
       const fd = new FormData();
       fd.append('latitude', input.latitude);
@@ -166,14 +169,18 @@ export default function PostAPet(props: any) {
       fd.append('type', input.type);
       fd.append('genre', input.genre);
       id && fd.append('id', id);
-
+      if (!step) {
+        console.log('post');
+        setStep(true);
+        return;
+      }
       postApet(fd);
       e.target.reset();
     }
     setError(errors);
   }
 
-  //console.log(input)
+  console.log(step);
 
   const maxDate = (): string => {
     const today = new Date();
@@ -265,8 +272,8 @@ export default function PostAPet(props: any) {
               {input.petImage ? (
                 <img
                   style={{
-                    width: '80px',
-                    height: '80px',
+                    width: '60px',
+                    height: '60px',
                     borderRadius: '50%',
                   }}
                   alt='pet'
@@ -333,12 +340,21 @@ export default function PostAPet(props: any) {
         ) : (
           <>
             <LocationMap />
-            <small className={styles.error}>{error.ubication}</small>
           </>
         )}
       </div>
-      <Button className={styles.submit} type='submit'>
-        Publicar
+      <Button disabled={loading} className={styles.submit} type='submit'>
+        {loading ? (
+          <SpinnerCircular
+            style={{ alignSelf: 'center' }}
+            size='40'
+            color='white'
+          />
+        ) : !step ? (
+          'Siguiente'
+        ) : (
+          'Publicar'
+        )}
       </Button>
     </form>
   );

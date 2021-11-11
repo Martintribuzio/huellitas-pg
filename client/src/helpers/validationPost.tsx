@@ -6,7 +6,6 @@ export const validation = (input: any, field: any = 'all') => {
     petImage: '',
     type: '',
     state: '',
-    ubication: '',
   };
 
   if (!input.description && field === 'all') {
@@ -44,9 +43,6 @@ export const validation = (input: any, field: any = 'all') => {
   }
   if (!input.state && field === 'all') {
     errors.state = 'El estado es requerido';
-  }
-  if (!input.latitude && !input.longitude && field === 'all') {
-    errors.ubication = 'La ubicación es requerida';
   }
   return errors;
 };
