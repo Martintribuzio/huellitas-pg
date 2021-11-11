@@ -90,32 +90,32 @@ function RegisterShelter({ inicio }: any) {
       instagram: instagram['value'],
       facebook: facebook['value'],
       website: website['value'],
-      // profileImage: img,
+      profileImage: img,
       latitude: latitude['value'],
       longitude: longitude['value'],
       type: 'shelter',
     };
-    axios
-      .post('/user/signup', formData)
-      .then(res => {
+    try{
+      await axios.post('/user/signup/shelter', formData,{
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
         Swal.fire({
           title: 'Exito!',
           text: 'Se ha enviado un mail de confirmacion a su correo electronico',
           icon: 'success',
           confirmButtonText: 'Ok',
-        });
-      })
+      })}
       // .then(() => {
       //   inicio(false);
       // })
-      .catch(error =>
+      catch(error){
         Swal.fire({
           title: 'Error',
           text: 'El email ingresado ya pertenece a una cuenta',
           icon: 'error',
           confirmButtonText: 'Intentar de nuevo',
         })
-      );
+      }
     }
   return (
     <Box sx={{ backgroundColor: '#F5F5F5' }}>

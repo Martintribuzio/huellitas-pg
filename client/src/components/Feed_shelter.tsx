@@ -73,7 +73,7 @@ name: string,
 _id: string,
 description: string,
 username: string,
-profielImage: string,
+profielImage: {url: string,_id: string},
 }
 
 export default function Feed_shelter(props: any) {
@@ -86,8 +86,8 @@ export default function Feed_shelter(props: any) {
         setShelters(res.data);}
     }
   }, [props.isOpen]);
-
-  if (shelters.length || !shelters) {
+if(shelters){
+  if (shelters.length) {
       return (
         <Box
           sx={{
@@ -110,7 +110,7 @@ export default function Feed_shelter(props: any) {
                   sx={{ minHeight: 200, minWidth: 200 }}>
                   <ImageSrc
                     style={{
-                      backgroundImage: `url(${item.petImage?.url})`,
+                      backgroundImage: `url(${item.profielImage.url})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                     }}
@@ -128,7 +128,7 @@ export default function Feed_shelter(props: any) {
                         pt: 2,
                         pb: theme => `calc(${theme.spacing(1)} + 6px)`,
                       }}>
-                      {`${item.state}`}
+                      {`${item.name}`}
                     </Typography>
                   </Image>
                   <Image>
@@ -144,7 +144,7 @@ export default function Feed_shelter(props: any) {
                         pt: 2,
                         pb: theme => `calc(${theme.spacing(1)} + 6px)`,
                       }}>
-                      {item.name ? `Nombre: ${item.name}` : `${item.state}`}
+                      {`Nombre: ${item.username}`}
                     </Typography>
                   </Image>
                 </ImageButton>
@@ -194,4 +194,5 @@ export default function Feed_shelter(props: any) {
       </div>
     );
   }
+}
 }

@@ -17,7 +17,7 @@ export default function Home() {
       </div>
       <LocationMap/>
 
-      {/* <Feed_shelter isOpen={isOpen} /> */}
+      <Feed_shelter isOpen={isOpen} />
     </div>
   );
 }
