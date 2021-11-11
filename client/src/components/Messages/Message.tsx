@@ -97,7 +97,7 @@ export default function Message() {
       }
       console.log("lalala")
       let mailNotification = await axios.get('/message/mailNotification', receiverId)
-      console.log(mailNotification.data)
+      
     } catch (err: any) {
       console.log(err.message);
     }
