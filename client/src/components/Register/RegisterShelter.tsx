@@ -126,9 +126,9 @@ function RegisterShelter({ inicio }: any) {
           showConfirmButton: false,
           timer: 1500,
         }); */
-      });
+      // });
   }
-
+      )}
 
   return (
     <Box sx={{ backgroundColor: '#F5F5F5' }}>
