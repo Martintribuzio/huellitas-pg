@@ -84,6 +84,21 @@ const findPostDB = async id => {
   }
 };
 
+const findReportedP = async id => {
+  try{
+    const post = await Post.findById(id)
+    if(post.reportCounter < 3){
+      post.reportCounter = post.reportCounter + 1
+      await post.save()
+    }else{
+      await post.remove()
+    }
+    return post;
+  }catch(err){
+    throw new Error(err.message)
+  }
+}
+
 const editPostDB = async (_id, name, type, state, description, genre, date) => {
   try {
     const post = await Post.findById(_id);

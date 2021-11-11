@@ -66,6 +66,15 @@ const editPost = async (_id, name, type, state, genre, description) => {
   }
 };
 
+const reportPost = async id => {
+  try{
+    let post = await findReportedP(id)
+    return post
+  }catch(err){
+    throw new Error(err.message)
+  }
+}
+
 const deletePost = async _id => {
   try {
     deletePostDB(_id);

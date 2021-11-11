@@ -46,6 +46,16 @@ postNetwork.put('/', async (req, res) => {
   }
 });
 
+postNetwork.put('/report', async(req, res) => {
+  try{
+    let idRep = req.query.id
+    let post = await reportPost(idRep)
+    return res.send(post)
+  }catch(err){
+    res.send(err.message)
+  }
+})
+
 postNetwork.delete('/', async (req, res) => {
   try {
     const { _id } = req.body;
