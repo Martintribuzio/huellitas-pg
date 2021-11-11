@@ -13,6 +13,7 @@ import { Redirect } from 'react-router';
 import Conversations from './components/conversations/Conversations';
 import Message from './components/Messages/Message';
 import About from './components/About/about';
+import Feed_shelter from './components/Feed_shelter';
 function App() {
   // const [result, user] = useUser();
 
@@ -50,6 +51,9 @@ function App() {
         </Route>
 
         <Route path='/alldogs'>{/* <Alldogs /> */}</Route>
+        <Route path='/home/shelters'>
+          <Feed_shelter/>
+        </Route>
 
         <Route exact path='/home/messenger'>
           <Conversations />

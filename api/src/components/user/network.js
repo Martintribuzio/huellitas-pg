@@ -1,5 +1,5 @@
 const userNetwork = require('express').Router();
-const { confirmation, postsByUser, getUserById, mailCreation} = require('./controller');
+const { confirmation, postsByUser, getUserById, mailCreation,getShelters} = require('./controller');
 const passport = require('passport');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
@@ -93,6 +93,7 @@ userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail
       longitude: req.body.longitude,
       profileImage: req.body.profileImage,
       description: req.body.description,
+      type: req.body.type,
     }),
     req.body.password,
     (err, user) => {
@@ -285,4 +286,13 @@ userNetwork.get('/', async (req, res) => {
   }
 });
 
+userNetwork.get('/shelters', async (req, res) => {
+try{
+  const shelters = await getShelters();
+  res.send(shelters);
+}
+catch(err){
+  res.status(400).send(err.message);
+}
+});
 module.exports = userNetwork;

@@ -14,6 +14,10 @@ const userSchema = new Schema({
     type: String,
     default: '',
   },
+  type: {
+    type: String,
+    enum: ['user', 'shelter'],
+  },
   name: {
     type: String,
     required: true,

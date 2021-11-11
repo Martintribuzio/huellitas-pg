@@ -2,7 +2,6 @@ const { Post } = require('../../models/Post');
 const User = require('../../models/User');
 const Image = require('../../models/Images');
 const fs = require('fs');
-const Shelter = require('../../models/Shelter');
 const firebase = require('../../firebase');
 const uniqid = require('uniqid');
 const path = require('path');
