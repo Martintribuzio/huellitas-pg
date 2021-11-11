@@ -45,6 +45,7 @@ userNetwork.get('/', async(req, res) => {
   catch(err){
     res.status(400).send(err);}
 });
+
 //obtener los detalles del usuario que inició sesión
 userNetwork.get('/me', verifyUser, (req, res, next) => {
   res.send(req.user);

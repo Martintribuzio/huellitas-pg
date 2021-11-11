@@ -23,6 +23,7 @@ const searchUserByIdDB = async id => {
     const user = await User.findById(id);
     return user;
   } catch (error) {
+    console.log('entro aca! ');
     throw new Error('Error al buscar el usuario');
   }
 };
