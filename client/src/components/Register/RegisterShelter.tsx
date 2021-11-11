@@ -56,18 +56,10 @@ function RegisterShelter({ inicio }: any) {
   const [img, setImg] = useState<string | any>(null);
 
 
-  function handleChangeImg(e: ChangeEvent<HTMLInputElement>) {
-
-    e.preventDefault();
-
+  function handleChangeImg(e: ChangeEvent<HTMLInputElement> | Event) {
     const target = e.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
-
-    const reader = new FileReader();
-
-    if (file) {
-      setImg(file);
-    }
+    setImg(file);
   }
 
   async function handleSubmitForm(data: FormEvent<HTMLFormElement>) {
@@ -98,12 +90,14 @@ function RegisterShelter({ inicio }: any) {
       instagram: instagram['value'],
       facebook: facebook['value'],
       website: website['value'],
-      profileImage: '',
+      profileImage: img,
       latitude: latitude['value'],
       longitude: longitude['value'],
     };
     axios
-      .post('/user/signup', formData)
+      .post('/user/signup', formData,{
+        headers: {'Content-Type': 'multipart/form-data'}
+      })
       .then(res => {
         Swal.fire({
           icon: 'success',

@@ -57,16 +57,9 @@ const createPostDB = async (
     }
 
     await post.save();
-    try{
       const userById = await User.findById(id);
       userById.posts.push(post);
       await userById.save();
-    }
-    catch{
-      const shelterId = await Shelter.findById(id);
-      shelterId.posts.push(post);
-      await shelterId.save();
-    }
     return post;
   } catch (e) {
     throw new Error(e.message);
