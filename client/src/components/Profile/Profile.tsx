@@ -9,7 +9,10 @@ import { PostType } from '../../redux/types/types';
 import useUser from '../../hooks/useUser';
 import profile from '../../assets/profile.png';
 import deletePostService from '../../services/deletePost';
+import editPost from '../../services/editPost';
 import Button from '@mui/material/Button';
+import PostAPet from "../PostAPet"
+
 
 interface User {
   name: string;
@@ -22,6 +25,14 @@ export default function Profile() {
   const history = useHistory();
   const [user, setUser] = useState<User>();
   const [posts, setPosts] = useState<PostType[]>([]);
+  // const [isOpen, openModal, closeModal] = useModal();
+  // let [isModal, setIsModal] = useState(false)
+  
+  // const toggleModal = function(){
+  //   setIsModal(isModal = !isModal)
+  // }
+
+  //console.log(isModal)
 
   const [loading, result] = useUser();
 
@@ -79,8 +90,16 @@ export default function Profile() {
               return (
                 <div>
                   <Post post={post}></Post>
+                  {/* <button
+                    onClick= {toggleModal}>
+                    {' '}
+                    editar
+                  </button> */}
+                  {/* <Modal isOpen={isModal} closeModal={closeModal}>
+                    <PostAPet isOpen={isModal} closeModal={closeModal} />
+                  </Modal> */}
                   <Button
-                    variant='contained'
+                    variant='contained' 
                     onClick={() => handleClick(post._id)}>
                     {' '}
                     eliminar
