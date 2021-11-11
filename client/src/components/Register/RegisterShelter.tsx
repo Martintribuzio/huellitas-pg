@@ -32,7 +32,7 @@ type Data = {
 
 const schema = yup.object().shape({
   name: yup.string().required('Ingresa tu nombre'),
-  lastname: yup.string().required('Ingresa tu apellido'),
+  description: yup.string().required('Ingresa una descripcion'),
   email: yup.string().email().required('Ingresa tu email'),
   password: yup
     .string()
@@ -55,14 +55,15 @@ function RegisterShelter({ inicio }: any) {
 
   function handleChangeImg(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
+
     const target = e.target as HTMLInputElement;
-    const file: File | any = (target.files as FileList)[0];
+    const file: File = (target.files as FileList)[0];
+
     const reader = new FileReader();
+    console.log(reader);
+    console.log(file);
     if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setImg(reader.result);
-      };
+      setImg(file);
     }
   }
 
