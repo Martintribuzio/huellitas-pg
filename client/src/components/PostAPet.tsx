@@ -34,6 +34,15 @@ const initialState = {
   latitude: '',
   longitude: '',
 };
+const initialError = {
+  description: '',
+  genre: '',
+  date: '',
+  petImage: '',
+  type: '',
+  state: '',
+  ubication: '',
+};
 
 export default function PostAPet(props: any) {
   const coordenadas = useSelector((state: typeState) => state.coordenadas);
@@ -45,15 +54,7 @@ export default function PostAPet(props: any) {
   const [step, setStep] = useState(false);
   const [input, setInput] = useState<PostType>(initialState);
 
-  const [error, setError] = useState({
-    description: '',
-    genre: '',
-    date: '',
-    petImage: '',
-    type: '',
-    state: '',
-    ubication: '',
-  });
+  const [error, setError] = useState(initialError);
 
   const handleToggle = () => setStep(!step);
 
@@ -61,12 +62,15 @@ export default function PostAPet(props: any) {
     if (props.isOpen) {
       setStep(false);
     }
+    setInput(initialState);
+    setState('');
+    setType('');
+    setGenre('');
+    setError(initialError);
   }, [props.isOpen]);
 
   useEffect(() => {
     if (coordenadas.lat && coordenadas.long) {
-      //Las coordenadas se obtienen de la ubicación del usuario
-      //Las coordenadas estan al revez porque nose pero anda
       setInput({
         ...input,
         latitude: coordenadas.lat,
@@ -112,6 +116,15 @@ export default function PostAPet(props: any) {
     const target = e.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
 
+    const errorImage = validation(
+      {
+        ...input,
+        petImage: file,
+      },
+      'image'
+    );
+
+    setError({ ...error, petImage: errorImage.petImage });
     setInput({
       ...input,
       petImage: file,
@@ -248,24 +261,46 @@ export default function PostAPet(props: any) {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                flexDirection: 'column',
               }}>
-              <label className={styles.file}>
-                Imagen
-                <input
-                  style={{ display: 'none' }}
-                  type='file'
-                  onChange={e => handleChangeImg(e)}
-                  accept='.png, .jpg'
+              {input.petImage ? (
+                <img
+                  style={{
+                    width: '80px',
+                    height: '80px',
+                    borderRadius: '50%',
+                  }}
+                  alt='pet'
+                  src={URL.createObjectURL(input.petImage)}
                 />
-              </label>
-              <small className={error.petImage ? styles.error : ''}>
-                {error.petImage
-                  ? error.petImage
-                  : input.petImage
-                  ? 'Archivo seleccionado'
-                  : ''}
-              </small>
+              ) : null}
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                }}>
+                <label className={styles.file}>
+                  Imagen
+                  <input
+                    style={{ display: 'none' }}
+                    type='file'
+                    onChange={e => handleChangeImg(e)}
+                    accept='.png, .jpg'
+                  />
+                </label>
+                <small
+                  style={{
+                    fontSize: '12px',
+                  }}
+                  className={error.petImage ? styles.error : ''}>
+                  {error.petImage
+                    ? error.petImage
+                    : input.petImage
+                    ? 'Archivo Seleccionado'
+                    : ''}
+                </small>
+              </div>
             </div>
 
             <label>
@@ -303,7 +338,7 @@ export default function PostAPet(props: any) {
         )}
       </div>
       <Button className={styles.submit} type='submit'>
-        Submit
+        Publicar
       </Button>
     </form>
   );

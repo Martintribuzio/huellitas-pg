@@ -23,7 +23,11 @@ type LogIn = {
 
 const schema = yup.object().shape({
   email: yup.string().email().required('Ingrese su email'),
-  password: yup.string().min(8, 'Su contraseña debe tener al menos 8 caracteres').max(20,'Su contraseña debe tener menos de 20 caracteres').required('Ingrese su contraseña'),
+  password: yup
+    .string()
+    .min(8, 'Su contraseña debe tener al menos 8 caracteres')
+    .max(20, 'Su contraseña debe tener menos de 20 caracteres')
+    .required('Ingrese su contraseña'),
 });
 
 function Ingresar() {
@@ -38,6 +42,7 @@ function Ingresar() {
   } = useForm<LogIn>({ resolver: yupResolver(schema) });
 
   const onSubmit = handleSubmit(async data => {
+    console.log(data);
     const response = await loginService(data);
     if (response.error) {
       setValue('email', '');
