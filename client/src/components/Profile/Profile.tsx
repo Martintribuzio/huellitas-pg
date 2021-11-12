@@ -59,13 +59,14 @@ export default function Profile() {
 
       const user = {
         name: name ? name : '',
-        lastname: lastname ? lastname : '',
+        lastname: lastname ? lastname !=="undefined" ? lastname : '' : '',
         username: username ? username : '',
         image: image ? image : profile,
       };
       setUser(user);
     }
   }, [id]);
+  console.log('USER',user)
   return result === 'Unauthorized' ? (
     <Redirect to='/login' />
   ) : (

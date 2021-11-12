@@ -9,10 +9,14 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import styles from '../../CSS/Register.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ChangeEvent } from 'react';
 import { FormEvent } from 'react';
+import { Menu} from '@mui/material';
+import LocationMapShelter from '../LocationMap/LocationMapShelter';
+import { useSelector } from 'react-redux';
+import { typeState } from '../../redux/reducers';
 
 
 type Data = {
@@ -32,6 +36,7 @@ type Data = {
   longitude: string | any;
 };
 
+
 const schema = yup.object().shape({
   name: yup.string().required('Ingresa tu nombre'),
   description: yup.string().required('Ingresa una descripcion'),
@@ -47,7 +52,14 @@ const schema = yup.object().shape({
     .required('Ingresa nuevamente tu contraseña'),
 });
 
+
+
 function RegisterShelter({ inicio }: any) {
+  const coordenadas = useSelector((state: typeState) => state.coordenadas);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [input, setInput] = useState({latitude:'',
+    longitude: ''});
   const {
     handleSubmit,
     control,
@@ -56,19 +68,38 @@ function RegisterShelter({ inicio }: any) {
   const [img, setImg] = useState<string | any>(null);
 
 
-  function handleChangeImg(e: ChangeEvent<HTMLInputElement>) {
-
-    e.preventDefault();
-
+  function handleChangeImg(e: ChangeEvent<HTMLInputElement> | Event) {
     const target = e.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
-
-    const reader = new FileReader();
-
-    if (file) {
-      setImg(file);
-    }
+    setImg(file);
   }
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+  const handleMobileMenuOpen = (event: any) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+  const menuId = 'primary-search-account-menu';
+  const renderMap = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      id={menuId}
+      keepMounted
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}>
+        <div style={{width:'500px'}}>
+        <LocationMapShelter />
+        </div>
+    </Menu>
+  );
+  useEffect(() => {
+    if (coordenadas.lat && coordenadas.long) {
+      setInput({
+        latitude: coordenadas.lat,
+        longitude: coordenadas.long,
+      });
+    }
+  }, [coordenadas]);
 
   async function handleSubmitForm(data: FormEvent<HTMLFormElement>) {
     data.preventDefault();
@@ -84,52 +115,44 @@ function RegisterShelter({ inicio }: any) {
       instagram,
       facebook,
       website,
-
-      latitude,
-      longitude,
     } = data.currentTarget.elements as unknown as Data;
-    console.log('name', name['value']);
-    const formData = {
-      name: name['value'],
-      email: email['value'],
-      password: password['value'],
-      confirmPassword: confirmPassword['value'],
-      phone: phone['value'],
-      address: address['value'],
-      description: description['value'],
-      instagram: instagram['value'],
-      facebook: facebook['value'],
-      website: website['value'],
-      profileImage: img,
-      latitude: latitude['value'],
-      longitude: longitude['value'],
-    };
-    console.log(formData);
-    axios
-      .post('/shelter/signup', formData)
-      .then(res => {
+    const fd = new FormData();
+    fd.append('name', name.value);
+    fd.append('email', email.value);
+    fd.append('password', password.value);
+    fd.append('confirmPassword', confirmPassword.value);
+    fd.append('phone', phone.value);
+    fd.append('address', address.value);
+    fd.append('description', description.value);
+    fd.append('instagram', instagram.value);
+    fd.append('facebook', facebook.value);
+    fd.append('website', website.value);
+    fd.append('latitude', input.latitude);
+    fd.append('longitude', input.longitude);
+    fd.append('profileImage', img);
+    fd.append('type','shelter')
+    try{
+      await axios.post('/user/signup/shelter', fd,{
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
         Swal.fire({
+          title: 'Exito!',
+          text: 'Se ha enviado un mail de confirmacion a su correo electronico',
           icon: 'success',
-          title: 'Registro exitoso',
-          text: 'Ahora puedes iniciar sesión',
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        inicio();
-      })
-      .catch(err => {
-        console.log(err);
-        /* Swal.fire({
-          icon: 'error',
+          confirmButtonText: 'Ok',
+      })}
+      // .then(() => {
+      //   inicio(false);
+      // })
+      catch(error){
+        Swal.fire({
           title: 'Error',
-          text: 'Algo salió mal',
-          showConfirmButton: false,
-          timer: 1500,
-        }); */
-      // });
-  }
-      )}
-
+          text: 'El email ingresado ya pertenece a una cuenta',
+          icon: 'error',
+          confirmButtonText: 'Intentar de nuevo',
+        })
+      }
+    }
   return (
     <Box sx={{ backgroundColor: '#F5F5F5' }}>
       <Typography
@@ -348,43 +371,20 @@ function RegisterShelter({ inicio }: any) {
             />
           ) : null}
         </div>
-        <div>
-          <Controller
-            name='latitude'
-            control={control}
-            defaultValue=''
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label='Latitud'
-                variant='outlined'
-                error={!!errors.latitude}
-                helperText={errors.latitude ? errors.latitude.message : ''}
-                fullWidth
-                margin='dense'
-              />
-            )}
-          />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'row',
+          }}>
+          <label className={styles.loc}>
+            <input
+              style={{ display: 'none' }}
+              onClick={handleMobileMenuOpen}
+            />
+          </label>
         </div>
-        <div>
-          <Controller
-            name='longitude'
-            control={control}
-            defaultValue=''
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label='Longitud'
-                variant='outlined'
-                error={!!errors.longitude}
-                helperText={errors.longitude ? errors.longitude.message : ''}
-                fullWidth
-                margin='dense'
-              />
-            )}
-          />
-        </div>
-
         <Button
           style={{ marginTop: '20px', width: '300px', marginBottom: '20px' }}
           variant='contained'
@@ -392,6 +392,7 @@ function RegisterShelter({ inicio }: any) {
           Registrar
         </Button>
       </form>
+      {renderMap}
     </Box>
   );
 }

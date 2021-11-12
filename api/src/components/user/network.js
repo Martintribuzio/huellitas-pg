@@ -1,28 +1,33 @@
 const userNetwork = require('express').Router();
-const { confirmation, postsByUser, getUserById, mailCreation} = require('./controller');
+
+const { confirmation, postsByUser, getUserById, mailCreation,getShelters} = require('./controller');
 const passport = require('passport');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
+const path = require('path');
 const nodemailer = require("nodemailer")
+const Image = require('../../models/Images');
+
 const {
   getToken,
   COOKIE_OPTIONS,
   getRefreshToken,
   verifyUser,
 } = require('../../../authenticate');
+const firebase = require('../../firebase');
+const {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} = require('firebase/storage');
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+const storage = getStorage(firebase);
+
 const multer = require('multer');
 const uniqid = require('uniqid');
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './uploads');
-  },
-  filename: function (req, file, cb) {
-    cb(null, uniqid('', file.originalname.split(' ').join('')));
-  },
-});
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png')
@@ -31,7 +36,6 @@ const fileFilter = (req, file, cb) => {
 };
 
 const upload = multer({
-  storage,
   limits: { fileSize: 1024 * 1024 * 3 },
   fileFilter,
 });
@@ -40,12 +44,14 @@ const upload = multer({
 userNetwork.get('/', async(req, res) => {
   try{
     const user = await getUserById(req.query.id);
-    if(user){
-      res.status(200).json(user)}
-    else{res.status(404).send("usuario no encontradooooo")}
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).send('usuario no encontradooooo');
+    }
+  } catch (err) {
+    res.status(400).send(err);
   }
-  catch(err){
-    res.status(400).send(err);}
 });
 
 //obtener los detalles del usuario que inició sesión
@@ -53,15 +59,15 @@ userNetwork.get('/me', verifyUser, (req, res, next) => {
   res.send(req.user);
 });
 
-userNetwork.get("/confirmation", async (req, res, next) => {
+userNetwork.get('/confirmation', async (req, res, next) => {
   try {
     const { id } = req.query;
-    const user = await confirmation(id)
+    const user = await confirmation(id);
     return res.send(user);
   } catch (error) {
     return res.send(error);
   }
-})
+});
 
 userNetwork.get('/posts', async (req, res) => {
   try {
@@ -75,6 +81,7 @@ userNetwork.get('/posts', async (req, res) => {
 
 //Registro
 userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail   
+  console.log(req.body);
 
   User.register(
     new User({
@@ -84,10 +91,81 @@ userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail
       postalCode: req.body.postalCode,
       picture: req.body.picture,
       confirmation: req.body.confirmation || false,
+      type: req.body.type,
     }),
     req.body.password,
     (err, user) => {
       if (err) {
+        console.log(err);
+        res.status(500).send("El email ingresado ya existe");
+      } else {
+        const token = getToken({ _id: user._id });
+        const refreshToken = getRefreshToken({ _id: user._id });
+        //----------------------------
+        let transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'huellitas.dom@gmail.com',
+            pass: process.env.NODEMAILER,
+          },
+        });
+        let mailDetails = {
+          from: 'huellitas.dom@gmail.com',
+          to: req.body.email,
+          subject: 'Confirmación de registro',
+          html: `<a href= "https://huellitas-pg.herokuapp.com/user/confirmation?id=${user._id}"> Pulse aquí para confirmar su cuenta</a>`, //Guardar url como variable de entorno
+          // html: `<a href= "http://localhost:3001/user/confirmation?id=${user._id}"> Pulse aquí para confirmar su cuenta</a>`
+        };
+        transporter.sendMail(mailDetails, (error, info) => {
+          if (error) {
+            res.status(500).send(error.message);
+          } else {
+            console.log('Email enviado');
+            res.status(200).json(req.body);
+          }
+        });
+        //--------------------------
+        user.refreshToken.push({ refreshToken });
+
+        user.save((err, user) => {
+          if (err) {
+            console.log(err);
+            res.statusCode = 500;
+            res.send(err);
+          } else {
+            res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS);
+            res.send({ success: true, token });
+          }
+        });
+      }
+    }
+  );
+});
+
+userNetwork.post('/signup/shelter',upload.single('profileImage') ,(req, res) => { //Aca podriamos enviar el mail   
+  console.log(req.body);
+  User.register(
+    new User({
+      name: req.body.name,
+      lastname: req.body.lastname,
+      username: req.body.email,
+      postalCode: req.body.postalCode,
+      picture: req.body.picture,
+      confirmation: req.body.confirmation || false,
+      website: req.body.website,
+      phone: req.body.phone,
+      Facebook: req.body.Facebook,
+      Instagram: req.body.Instagram,
+      address: req.body.address,
+      latitude: req.body.latitude,
+      longitude: req.body.longitude,
+      description: req.body.description,
+      type: req.body.type,
+    }),
+    req.body.password,
+    async (err, user) => {
+      if (err) {
+        console.log(err);
         res.status(500).send("El email ingresado ya existe");
       } else {
         const token = getToken({ _id: user._id });
@@ -113,11 +191,23 @@ userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail
           }
           else {
             console.log("Email enviado")
-            res.status(200).json(req.body)
           }
         })
         //--------------------------
         user.refreshToken.push({ refreshToken });
+      const profileImage =  req.file
+      const fileName = uniqid() + path.extname(profileImage.originalname);
+      const fileRef = ref(storage, fileName);
+      await uploadBytes(fileRef, profileImage.buffer);
+
+      const url = await getDownloadURL(fileRef);
+
+      const image = new Image({
+        url,
+        name: fileName,
+      });
+      image.save();
+      user.profileImage = image;
 
         user.save((err, user) => {
           if (err) {
@@ -132,7 +222,6 @@ userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail
     }
   );
 });
-
 //Login
 
 userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
@@ -157,12 +246,16 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
               picture: req.user.picture,
               token,
             };
-            if(req.user.confirmation === true){
+            if (req.user.confirmation === true) {
               res.send({ success: true, user });
-            }else{
-              mailCreation(user._id, user.username)
-              res.status(404).send("esta cuenta no esta confirmada, revise su correo electronico")
-            }        
+            } else {
+              mailCreation(user._id, user.username);
+              res
+                .status(404)
+                .send(
+                  'esta cuenta no esta confirmada, revise su correo electronico'
+                );
+            }
           }
         });
       },
@@ -275,4 +368,13 @@ userNetwork.get('/', async (req, res) => {
   }
 });
 
+userNetwork.get('/shelters', async (req, res) => {
+try{
+  const shelters = await getShelters();
+  res.send(shelters);
+}
+catch(err){
+  res.status(400).send(err.message);
+}
+});
 module.exports = userNetwork;

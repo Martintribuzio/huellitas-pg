@@ -1,7 +1,7 @@
 #root {
   height: 100%;
 }
-.divCon{
+.divCon {
   display: flex;
   flex-direction: row;
 }

@@ -54,11 +54,19 @@ const confirmationDB = async id => {
     throw new Error(error);
   }
 }
-
+const getSheltersDB = async () => {
+  try {
+    const shelters = await User.find({type:'shelter'}).populate('profileImage');
+    return shelters;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
 module.exports = {
   createUserDB,
   searchUserDB,
   postsByUserDB,
   searchUserByIdDB,
-  confirmationDB
+  confirmationDB,
+  getSheltersDB
 };
