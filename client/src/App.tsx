@@ -11,7 +11,7 @@ import Publicaciones from './components/Home.jsx';
 import { Home } from './pages/Home';
 import { Redirect } from 'react-router';
 import Conversations from './components/conversations/Conversations';
-import Message from './components/Messages/Message';
+import Message, { Messenger } from './components/Messages/Message';
 
 function App() {
   // const [result, user] = useUser();
@@ -49,13 +49,12 @@ function App() {
 
         <Route path='/alldogs'>{/* <Alldogs /> */}</Route>
 
-        <Route exact path='/home/messenger'>
-          <Conversations />
-        </Route>
+        <Route path='/home/messenger/:ConversId' component={Messenger} />
+        {/* <Message />
+        </Route> */}
 
-        <Route exact path='/home/messenger/:ConverseId'>
-          <Conversations />
-          <Message />
+        <Route exact path='/home/messenger'>
+          <Messenger />
         </Route>
 
         <Route exact path='/notification'>

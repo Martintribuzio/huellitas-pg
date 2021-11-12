@@ -5,8 +5,8 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
-import { Link } from 'react-router-dom';
-
+import { Link, useParams } from 'react-router-dom';
+import { SpinnerRoundFilled } from 'spinners-react';
 interface User {
   name: string;
   lastname: string;
@@ -19,13 +19,14 @@ interface message {
   content: string;
   Converseid: string;
   sender: string;
-  state:string;
+  state: string;
 }
 export default function Conversation(params: any) {
   const [user, setUser] = useState<User>();
   const [message, setMessage] = useState<message[]>();
   const [notification, setNotification] = useState<number>(0);
   const myId = localStorage.getItem('userId');
+  const { ConversId } = useParams<any>();
 
   useEffect(() => {
     const friendId = params.conversation.members.find(
@@ -41,8 +42,13 @@ export default function Conversation(params: any) {
     };
     const getMessage = async () => {
       try {
-        const res = (await axios.get(`/message/${params.conversation._id}`)).data;
-        const noti = res.reduce((acc:number,m:message) => m.state==='unread' && m.sender!==myId ? acc+1:acc,0);
+        const res = (await axios.get(`/message/${params.conversation._id}`))
+          .data;
+        const noti = res.reduce(
+          (acc: number, m: message) =>
+            m.state === 'unread' && m.sender !== myId ? acc + 1 : acc,
+          0
+        );
         setNotification(noti);
         setMessage(res);
       } catch (err: any) {
@@ -53,12 +59,15 @@ export default function Conversation(params: any) {
     getMessage();
   }, [params, myId]);
 
-  if (user && message) {
-    return (
-      <Link
-        style={{ textDecoration: 'none' }}
-        to={`/home/messenger/${params.conversation._id}`}>
-        {/* {id === 1 && (
+  const bgColor =
+    params.conversation._id === ConversId ? '#73A7CB' : 'transparent';
+  const fontColor = params.conversation._id === ConversId ? '#fff' : '#000';
+
+  return (
+    <Link
+      style={{ textDecoration: 'none', color: 'black' }}
+      to={`/home/messenger/${params.conversation._id}`}>
+      {/* {id === 1 && (
             <ListSubheader sx={{ bgcolor: 'background.paper' }}>
             Hoy
           </ListSubheader>
@@ -68,22 +77,40 @@ export default function Conversation(params: any) {
             Este mes
           </ListSubheader>
         )} */}
-        <ListItem button>
-          <ListItemAvatar>
-            <Badge badgeContent={notification} color='error'>
-            <Avatar alt='Profile Picture' src={user.picture} />
-            </Badge>
-          </ListItemAvatar>
-          <ListItemText
-            primary={user.name}
-            secondary={message[message.length - 1]?.content.length > 15
-              ? message[message.length - 1]?.content.slice(0, 15) + '...'
-              : message[message.length - 1]?.content}
+      <ListItem
+        style={{
+          width: '97%',
+          border: '1px solid rgba(128, 128, 128, 0.507)',
+          height: '73px',
+          borderRadius: '5px',
+          margin: '10px 5px',
+          backgroundColor: bgColor,
+          color: fontColor,
+        }}
+        button>
+        {user && message ? (
+          <>
+            <ListItemAvatar>
+              <Badge badgeContent={notification} color='error'>
+                <Avatar alt='Profile Picture' src={user.picture} />
+              </Badge>
+            </ListItemAvatar>
+            <ListItemText
+              primary={user.name}
+              secondary={
+                message[message.length - 1]?.content.length > 15
+                  ? message[message.length - 1]?.content.slice(0, 15) + '...'
+                  : message[message.length - 1]?.content
+              }
+            />
+          </>
+        ) : (
+          <SpinnerRoundFilled
+            color='#ffff'
+            style={{ alignSelf: 'center', justifySelf: 'center' }}
           />
-        </ListItem>
-      </Link>
-    );
-  } else {
-    return <div>Cargando..</div>;
-  }
+        )}
+      </ListItem>
+    </Link>
+  );
 }
