@@ -334,43 +334,6 @@ function RegisterShelter({ inicio }: any) {
             />
           ) : null}
         </div>
-        <div>
-          <Controller
-            name='latitude'
-            control={control}
-            defaultValue=''
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label='Latitud'
-                variant='outlined'
-                error={!!errors.latitude}
-                helperText={errors.latitude ? errors.latitude.message : ''}
-                fullWidth
-                margin='dense'
-              />
-            )}
-          />
-        </div>
-        <div>
-          <Controller
-            name='longitude'
-            control={control}
-            defaultValue=''
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label='Longitud'
-                variant='outlined'
-                error={!!errors.longitude}
-                helperText={errors.longitude ? errors.longitude.message : ''}
-                fullWidth
-                margin='dense'
-              />
-            )}
-          />
-        </div>
-
         <Button
           style={{ marginTop: '20px', width: '300px', marginBottom: '20px' }}
           variant='contained'
