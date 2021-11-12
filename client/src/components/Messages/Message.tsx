@@ -110,52 +110,53 @@ export default function Message(props: any) {
       }
     }
   };
-  if(convers?.members?.includes(idSender)){
-  return (
-    <div className={style.Chat}>
-      <div className={style.Chat__header}>
-        <Link to={`/home/messenger`}>
-          <img src={back} alt='' />
-        </Link>
-      </div>
-      <div className={style.mensaje}>
-        {messages?.map(c => {
-          if (c.state === 'unread' && c.sender !== idSender) {
-            axios.put(`/message/${c._id}`);
-          }
-          return (
-            <div
-              ref={scrollRef}
-              className={c.sender !== idSender ? style.other : style.own}>
-              <p>{c.content}</p>
-            </div>
-          );
-        })}
-      </div>
-      <div className={style.inputChat}>
-        <Input
-          sx={{ width: '100%', height: '100%', borderBottom: 'none' }}
-          className={style.inputMU}
-          onKeyPress={e => {
-            if (e.key === 'Enter') {
-              handleSubmit(e);
+
+  if (convers?.members?.includes(idSender)) {
+    return (
+      <div className={style.Chat}>
+        <div className={style.Chat__header}>
+          <Link to={`/home/messenger`}>
+            <img src={back} alt='' />
+          </Link>
+        </div>
+        <div className={style.mensaje}>
+          {messages?.map(c => {
+            if (c.state === 'unread' && c.sender !== idSender) {
+              axios.put(`/message/${c._id}`);
             }
-          }}
-          placeholder='Escribe un mensaje'
-          onChange={e => setnewMessage(e.target.value)}
-          value={newMessage}
-        />
-        <button onClick={handleSubmit} className={style.boton}>
-          <SendIcon></SendIcon>
-        </button>
+            return (
+              <div
+                ref={scrollRef}
+                className={c.sender !== idSender ? style.other : style.own}>
+                <p>{c.content}</p>
+              </div>
+            );
+          })}
+        </div>
+        <div className={style.inputChat}>
+          <Input
+            sx={{ width: '100%', height: '100%', borderBottom: 'none' }}
+            className={style.inputMU}
+            onKeyPress={e => {
+              if (e.key === 'Enter') {
+                handleSubmit(e);
+              }
+            }}
+            placeholder='Escribe un mensaje'
+            onChange={e => setnewMessage(e.target.value)}
+            value={newMessage}
+          />
+          <button onClick={handleSubmit} className={style.boton}>
+            <SendIcon></SendIcon>
+          </button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else {
+    return <Redirect to='/home/messenger' />;
+  }
 }
-else{
-  return (<Redirect to="/home" />)
-}
-}
+
 {
   /* <div className={style.inputSubmit}>
         
