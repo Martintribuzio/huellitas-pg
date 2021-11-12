@@ -133,7 +133,8 @@ export default function Message(props: any) {
       </div>
       <div className={style.inputChat}>
         <Input
-          sx={{ width: '100%', height: '100%' }}
+          sx={{ width: '100%', height: '100%', borderBottom: 'none' }}
+          className={style.inputMU}
           onKeyPress={e => {
             if (e.key === 'Enter') {
               handleSubmit(e);

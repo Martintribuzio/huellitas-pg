@@ -74,9 +74,7 @@ function App() {
 
         <Route path='/adoption'>{/* <Adoption /> */}</Route>
 
-        <Route path='/home'>
-          <Footer />
-        </Route>
+        <Route path='/home' component={Footer} />
 
         <Route exact path='/'>
           <Redirect to='/home' />
