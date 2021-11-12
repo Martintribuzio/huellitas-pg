@@ -2,6 +2,7 @@ const { Post } = require('../../models/Post');
 const User = require('../../models/User');
 const Image = require('../../models/Images');
 const fs = require('fs');
+const Shelter = require('../../models/Shelter');
 const firebase = require('../../firebase');
 const uniqid = require('uniqid');
 const path = require('path');
@@ -56,11 +57,16 @@ const createPostDB = async (
     }
 
     await post.save();
-
-    const userById = await User.findById(id);
-    userById.posts.push(post);
-    await userById.save();
-
+    try{
+      const userById = await User.findById(id);
+      userById.posts.push(post);
+      await userById.save();
+    }
+    catch{
+      const shelterId = await Shelter.findById(id);
+      shelterId.posts.push(post);
+      await shelterId.save();
+    }
     return post;
   } catch (e) {
     throw new Error(e.message);

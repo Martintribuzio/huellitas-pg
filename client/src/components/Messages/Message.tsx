@@ -82,6 +82,7 @@ export default function Message(props: any) {
   const receiverId = convers?.members?.find(
     (member: string) => member !== idSender
   );
+
   const handleSubmit = async (e: any) => {
     if (newMessage) {
       try {
@@ -101,6 +102,9 @@ export default function Message(props: any) {
           setMessages([...messages, res.data]);
           setnewMessage('');
         }
+        await axios.get('/message/mailNotification', {
+          params: { receiverId: receiverId },
+        });
       } catch (err: any) {
         console.log(err.message);
       }

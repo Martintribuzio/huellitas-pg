@@ -1,4 +1,5 @@
 const { message } = require('../../models/Message')
+const  User  = require('../../models/User')
 
 const createMessageDB = async (content, Converseid, sender) => {
     try{
@@ -34,8 +35,18 @@ const findAndUpdateDB = async (idMessage) => {
   }
 }
 
+const mailNotificator = async (ReceiverId) => {
+  try{
+    let user = await User.findById({_id:ReceiverId})
+    return user
+  }catch(err){
+    return err.message
+  }
+}
+
 module.exports = {
   createMessageDB,
   findMessagesDB,
-  findAndUpdateDB
+  findAndUpdateDB,
+  mailNotificator
 }

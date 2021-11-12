@@ -1,0 +1,114 @@
+
+@media (max-width: 900px) {
+    .cards{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .card{
+        width: 100%;
+        height: 100%;
+        
+    }
+    .icons{
+        display: flex;
+        flex-direction: column;
+        justify-content: right ;
+        margin-left: 80px;
+        width: 75%;
+        margin-top: -10vh;
+        z-index: 1;
+        
+    }
+    .name{
+        font-size: 0.5vw;
+    }
+
+
+}
+@media (min-width: 350px) {
+
+    .icons{
+        display: flex;
+        flex-direction: column;
+        justify-content: right ;
+        width: 130%;
+        margin-top: -10vh;
+        z-index: 1;
+        
+    }
+    .cards{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .card{
+        width: 100%;
+        height: 100%;
+        
+    }
+    
+   
+
+    
+}
+.icons{
+    color: #e9e9e9;
+    margin-top: -10vh;
+    margin-left: 16vw;
+}
+
+
+.about{
+    text-shadow: 3px 3px 4px rgba(2, 35, 54, 0.507);
+
+}
+.card{
+    /* margin:3vh; */
+    background-color: #73a7cb;
+  /*   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    align-items: center;
+    display: flex; 
+    flex-direction: row;
+    flex-flow: row wrap; */
+    color: #e9e9e9;
+    
+    
+}
+
+.jurox{
+height: 450px;
+}
+.aliasJurox{
+margin-top: -60px;
+}
+.Fade {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 8s ease-in-out;
+  }
+  
+
+.cards{
+    display: flex;
+    flex-direction: row;
+    flex-flow: row wrap;
+    margin-top:15px;
+    margin-left: 5vw;
+}
+.button{
+    background-color: #73a7cb;
+    color: #e9e9e9;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    
+    margin: 2px 1px;
+    cursor: pointer;
+    
+    
+}
