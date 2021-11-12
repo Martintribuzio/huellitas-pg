@@ -77,7 +77,7 @@ username: string,
 profileImage: {url: string,_id: string},
 }
 
-export default function Feed_shelter(props: any) {
+export default function Feed_shelter() {
   const [shelters, setShelters] = useState<shelter[]>();
 
   useEffect(() => {

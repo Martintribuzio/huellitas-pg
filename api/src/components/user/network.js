@@ -153,7 +153,7 @@ userNetwork.post('/signup/shelter',upload.single('profileImage') ,(req, res) => 
       Facebook: req.body.Facebook,
       Instagram: req.body.Instagram,
       address: req.body.address,
-      latitude: req.body.locatitude,
+      latitude: req.body.latitude,
       longitude: req.body.longitude,
       description: req.body.description,
       type: req.body.type,
