@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { PostType, conversation } from '../../redux/types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { typeState } from '../../redux/reducers/index';
@@ -13,6 +13,9 @@ import Typography from '@mui/material/Typography';
 import capitalize from '@mui/utils/capitalize';
 import axios from 'axios';
 import useUser from '../../hooks/useUser';
+import { Modal } from '../Modal';
+import { useModal } from '../../hooks/useModal';
+import EditPost from '../../components/EditPost';
 
 export default function ImgMediaCard() {
   const { id } = useParams<{ id?: string }>();
@@ -22,6 +25,15 @@ export default function ImgMediaCard() {
   const history = useHistory();
   const [loading, result] = useUser();
   const idSender = localStorage.getItem('userId');
+
+  let [isModal, setIsModal] = useState(false);
+  const [isOpen, openModal, closeModal] = useModal();
+
+  const toggleModal = function () {
+    setIsModal((isModal = !isModal));
+  };
+
+  //console.log(isModal)
 
   useEffect(() => {
     dispatch(getPosts());
@@ -76,6 +88,10 @@ export default function ImgMediaCard() {
             }}
             image={`${detailpost.petImage.url}`}
           />
+          <button onClick={toggleModal}>editar</button>
+          <Modal isOpen={isModal} closeModal={toggleModal}>
+            <EditPost />
+          </Modal>
           <CardContent>
             {detailpost.name ? (
               <Typography

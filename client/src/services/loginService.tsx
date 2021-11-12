@@ -12,7 +12,7 @@ const loginService = async (data: data) => {
       username: email,
       password: password,
     });
-
+    console.log(response);
     window.localStorage.setItem('name', response.data.user.name);
     window.localStorage.setItem('lastname', response.data.user.lastname);
     window.localStorage.setItem('email', response.data.user.username);
