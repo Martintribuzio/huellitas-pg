@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router';
+import { Redirect, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import style from './Message.module.css';
@@ -110,6 +110,7 @@ export default function Message(props: any) {
       }
     }
   };
+  if(convers?.members?.includes(idSender)){
   return (
     <div className={style.Chat}>
       <div className={style.Chat__header}>
@@ -150,6 +151,10 @@ export default function Message(props: any) {
     </div>
   );
 }
+else{
+  return (<Redirect to="/home" />)
+}
+}
 {
   /* <div className={style.inputSubmit}>
         
@@ -165,6 +170,7 @@ export const Messenger = ({ match }: any) => {
   const params = useParams();
   const mobile = width && width < 900;
   console.log(params);
+
   if (!mobile) {
     return (
       <div ref={ref} className={style.messengerContainer}>
