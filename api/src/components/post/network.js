@@ -26,7 +26,6 @@ postNetwork.post('/', upload.single('petImage'), async (req, res) => {
 });
 
 postNetwork.get('/', async (req, res) => {
-  throw new Error('Error3');
   try {
     const post = await findPost(req.query.id);
     console.log(post);

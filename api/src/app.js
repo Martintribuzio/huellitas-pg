@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 });
 
 app.use(cookieParser(process.env.COOKIE_SECRET));
-// SENTRY ERROR TRACKING
+// // SENTRY ERROR TRACKING
 // app.use(Sentry.Handlers.requestHandler());
 // // TracingHandler creates a trace for every incoming request
 // app.use(Sentry.Handlers.tracingHandler());
