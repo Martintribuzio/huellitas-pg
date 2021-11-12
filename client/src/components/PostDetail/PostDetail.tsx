@@ -44,13 +44,13 @@ export default function ImgMediaCard() {
 
   const handleCounter = async function(){
     let counter:any = await axios.put(`/post/report?id=${id}`)
-    console.log(counter.data.reportCounter)
-    if(counter.data.reportCounter === 3){
-      alert("esta publicacion fue reportada varias veces, por eso fue eliminada")
+    // console.log(counter.data.reportCounter)
+    if(counter.data.reportCounter >= 5 ){
+      alert("esta publicacion fue reportada varias veces, será revisada por nuestros superiores maestros del kung fu")
       history.push('/home/feed')
     }
     else{
-      setReport(report + 1)
+      setReport(counter.data.reportCounter)
       //santi aca mete un iconito rojo porque fue reportado menos de 3 veces pero mas de una
     }
   }
