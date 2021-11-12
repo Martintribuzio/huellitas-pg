@@ -13,6 +13,7 @@ import Switch from './Login/Switch';
 import { useSelector } from 'react-redux';
 import { typeState } from '../redux/reducers';
 import { validation } from '../helpers/validationPost';
+import { SpinnerCircular } from 'spinners-react';
 
 type event =
   | ChangeEvent<HTMLInputElement>
@@ -34,6 +35,14 @@ const initialState = {
   latitude: '',
   longitude: '',
 };
+const initialError = {
+  description: '',
+  genre: '',
+  date: '',
+  petImage: '',
+  type: '',
+  state: '',
+};
 
 export default function PostAPet(props: any) {
   const coordenadas = useSelector((state: typeState) => state.coordenadas);
@@ -41,32 +50,28 @@ export default function PostAPet(props: any) {
   const [type, setType] = React.useState('');
   const [genre, setGenre] = React.useState('');
   const [description, setDescription] = React.useState('');
-  const [loading, result] = useUser();
+  const [_, result] = useUser();
   const [step, setStep] = useState(false);
   const [input, setInput] = useState<PostType>(initialState);
-
-  const [error, setError] = useState({
-    description: '',
-    genre: '',
-    date: '',
-    petImage: '',
-    type: '',
-    state: '',
-    ubication: '',
-  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(initialError);
 
   const handleToggle = () => setStep(!step);
 
   useEffect(() => {
+    setLoading(false);
     if (props.isOpen) {
       setStep(false);
     }
+    setInput(initialState);
+    setState('');
+    setType('');
+    setGenre('');
+    setError(initialError);
   }, [props.isOpen]);
 
   useEffect(() => {
     if (coordenadas.lat && coordenadas.long) {
-      //Las coordenadas se obtienen de la ubicación del usuario
-      //Las coordenadas estan al revez porque nose pero anda
       setInput({
         ...input,
         latitude: coordenadas.lat,
@@ -112,6 +117,15 @@ export default function PostAPet(props: any) {
     const target = e.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
 
+    const errorImage = validation(
+      {
+        ...input,
+        petImage: file,
+      },
+      'image'
+    );
+
+    setError({ ...error, petImage: errorImage.petImage });
     setInput({
       ...input,
       petImage: file,
@@ -119,6 +133,7 @@ export default function PostAPet(props: any) {
   }
 
   async function postApet(fd: FormData) {
+    setLoading(true);
     let result: any = await postPet(fd);
     if (result.ERROR) {
       return Swal.fire({
@@ -142,6 +157,7 @@ export default function PostAPet(props: any) {
     const errors = validation(input);
 
     if (Object.values(errors).every(error => error === '')) {
+      console.log('if');
       const id = window.localStorage.getItem('userId');
       const fd = new FormData();
       fd.append('latitude', input.latitude);
@@ -153,14 +169,18 @@ export default function PostAPet(props: any) {
       fd.append('type', input.type);
       fd.append('genre', input.genre);
       id && fd.append('id', id);
-
+      if (!step) {
+        console.log('post');
+        setStep(true);
+        return;
+      }
       postApet(fd);
       e.target.reset();
     }
     setError(errors);
   }
 
-  //console.log(input)
+  console.log(step);
 
   const maxDate = (): string => {
     const today = new Date();
@@ -248,24 +268,46 @@ export default function PostAPet(props: any) {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                flexDirection: 'column',
               }}>
-              <label className={styles.file}>
-                Imagen
-                <input
-                  style={{ display: 'none' }}
-                  type='file'
-                  onChange={e => handleChangeImg(e)}
-                  accept='.png, .jpg'
+              {input.petImage ? (
+                <img
+                  style={{
+                    width: '60px',
+                    height: '60px',
+                    borderRadius: '50%',
+                  }}
+                  alt='pet'
+                  src={URL.createObjectURL(input.petImage)}
                 />
-              </label>
-              <small className={error.petImage ? styles.error : ''}>
-                {error.petImage
-                  ? error.petImage
-                  : input.petImage
-                  ? 'Archivo seleccionado'
-                  : ''}
-              </small>
+              ) : null}
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                }}>
+                <label className={styles.file}>
+                  Imagen
+                  <input
+                    style={{ display: 'none' }}
+                    type='file'
+                    onChange={e => handleChangeImg(e)}
+                    accept='.png, .jpg'
+                  />
+                </label>
+                <small
+                  style={{
+                    fontSize: '12px',
+                  }}
+                  className={error.petImage ? styles.error : ''}>
+                  {error.petImage
+                    ? error.petImage
+                    : input.petImage
+                    ? 'Archivo Seleccionado'
+                    : ''}
+                </small>
+              </div>
             </div>
 
             <label>
@@ -298,12 +340,21 @@ export default function PostAPet(props: any) {
         ) : (
           <>
             <LocationMap />
-            <small className={styles.error}>{error.ubication}</small>
           </>
         )}
       </div>
-      <Button className={styles.submit} type='submit'>
-        Submit
+      <Button disabled={loading} className={styles.submit} type='submit'>
+        {loading ? (
+          <SpinnerCircular
+            style={{ alignSelf: 'center' }}
+            size='40'
+            color='white'
+          />
+        ) : !step ? (
+          'Siguiente'
+        ) : (
+          'Publicar'
+        )}
       </Button>
     </form>
   );
