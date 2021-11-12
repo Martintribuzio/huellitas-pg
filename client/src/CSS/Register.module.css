@@ -38,3 +38,28 @@ input {
   transition: 0.3s;
   cursor: pointer;
 }
+.loc {
+  display: flex;
+  justify-content: flex-start;
+  order: 0;
+  width: 150px;
+  position: relative;
+  transition: 0.4s;
+}
+.loc::before {
+  background-color: #73a6cbf1;
+  order: 1;
+  display: flex;
+  margin-top: 5px;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  content: 'Ubicación';
+  width: 150px;
+  border: 1px solid black;
+  border-radius: 5px;
+  height: 40px;
+  bottom: 0;
+  transition: 0.3s;
+  cursor: pointer;
+}

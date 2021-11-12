@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getPosts } from '../redux/actions';
@@ -8,6 +8,8 @@ import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 import dotenv from 'dotenv';
+import axios from 'axios';
+
 dotenv.config();
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
@@ -28,6 +30,7 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
     },
     '& .name': {
       display: 'block',
+      textShadow: '0 0 10px black',
     },
   },
 }));
@@ -65,23 +68,28 @@ const ImageBackdrop = styled('span')(({ theme }) => ({
   transition: theme.transitions.create('opacity'),
 }));
 
-export default function Feed(props: any) {
-  const dispatch = useDispatch();
-  let allPosts = useSelector((state: typeState) => state.filteredPosts);
-  let queryPost = useSelector((state: typeState) => state.queryPosts);
 
-  let postsToShow = queryPost
-    ? allPosts.filter(elem =>
-        elem.name?.toLowerCase().includes(queryPost.toLowerCase())
-      )
-    : allPosts;
+interface shelter{
+name: string,
+_id: string,
+description: string,
+username: string,
+profileImage: {url: string,_id: string},
+}
+
+export default function Feed_shelter() {
+  const [shelters, setShelters] = useState<shelter[]>();
 
   useEffect(() => {
-    if (!props.isOpen) dispatch(getPosts());
-  }, [dispatch, props.isOpen]);
+      const getShelters = async () => {
+        const res = await axios.get(`${process.env.REACT_APP_API}user/shelters`);
+        setShelters(res.data);}
+    getShelters();
+  },[]);
 
-  if (allPosts.length) {
-    if (postsToShow.length) {
+if(shelters){
+  if (shelters.length) {
+    console.log(shelters);
       return (
         <Box
           sx={{
@@ -91,9 +99,9 @@ export default function Feed(props: any) {
             minWidth: 300,
             width: '100%',
           }}>
-          {postsToShow.map(item => {
+          {shelters.map(item => {
             return (
-              <Link key={item._id} to={`/home/detail/${item._id}`}>
+            //   <Link to={`/home/detail/${item._id}`}>
                 <ImageButton
                   focusRipple
                   key={item.description}
@@ -104,7 +112,7 @@ export default function Feed(props: any) {
                   sx={{ minHeight: 200, minWidth: 200 }}>
                   <ImageSrc
                     style={{
-                      backgroundImage: `url(${item.petImage?.url})`,
+                      backgroundImage: `url(${item.profileImage.url})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                     }}
@@ -122,7 +130,7 @@ export default function Feed(props: any) {
                         pt: 2,
                         pb: theme => `calc(${theme.spacing(1)} + 6px)`,
                       }}>
-                      {`${item.state}`}
+                      {`${item.name}`}
                     </Typography>
                   </Image>
                   <Image>
@@ -138,18 +146,15 @@ export default function Feed(props: any) {
                         pt: 2,
                         pb: theme => `calc(${theme.spacing(1)} + 6px)`,
                       }}>
-                      {item.name ? `Nombre: ${item.name}` : `${item.state}`}
+                      {`Nombre: ${item.username}`}
                     </Typography>
                   </Image>
                 </ImageButton>
-              </Link>
+            //   </Link>
             );
           })}
         </Box>
       );
-    } else {
-      return <h1>No hay publicaciones</h1>;
-    }
   } else {
     return (
       <div
@@ -191,4 +196,10 @@ export default function Feed(props: any) {
       </div>
     );
   }
+}
+else{
+  return (
+    <div>No refugios</div>
+  )
+}
 }
