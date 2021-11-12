@@ -12,7 +12,16 @@ const {
   getRefreshToken,
   verifyUser,
 } = require('../../../authenticate');
+const firebase = require('../../firebase');
+const {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} = require('firebase/storage');
 
+const storage = getStorage(firebase);
 
 const multer = require('multer');
 const uniqid = require('uniqid');
@@ -195,7 +204,7 @@ userNetwork.post('/signup/shelter',upload.single('profileImage') ,(req, res) => 
         name: fileName,
       });
       image.save();
-      user.petImage = image;
+      user.profileImage = image;
 
         user.save((err, user) => {
           if (err) {

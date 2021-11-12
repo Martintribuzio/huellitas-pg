@@ -79,24 +79,23 @@ function RegisterShelter({ inicio }: any) {
       latitude,
       longitude,
     } = data.currentTarget.elements as unknown as Data;
-    const formData= {
-      name: name['value'],
-      email: email['value'],
-      password: password['value'],
-      confirmPassword: confirmPassword['value'],
-      phone: phone['value'],
-      address: address['value'],
-      description: description['value'],
-      instagram: instagram['value'],
-      facebook: facebook['value'],
-      website: website['value'],
-      profileImage: img,
-      latitude: latitude['value'],
-      longitude: longitude['value'],
-      type: 'shelter',
-    };
+    const fd = new FormData();
+    fd.append('name', name.value);
+    fd.append('email', email.value);
+    fd.append('password', password.value);
+    fd.append('confirmPassword', confirmPassword.value);
+    fd.append('phone', phone.value);
+    fd.append('address', address.value);
+    fd.append('description', description.value);
+    fd.append('instagram', instagram.value);
+    fd.append('facebook', facebook.value);
+    fd.append('website', website.value);
+    fd.append('latitude', latitude.value);
+    fd.append('longitude', longitude.value);
+    fd.append('profileImage', img);
+    fd.append('type','shelter')
     try{
-      await axios.post('/user/signup/shelter', formData,{
+      await axios.post('/user/signup/shelter', fd,{
         headers: { 'Content-Type': 'multipart/form-data' },
       });
         Swal.fire({
