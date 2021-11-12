@@ -1,6 +1,6 @@
 import {useSelector, useDispatch} from 'react-redux';
 import { PostType, conversation } from '../redux/types/types';
-import { useEffect, useState} from 'react';
+import { useEffect, useState, ChangeEvent} from 'react';
 import { typeState } from '../redux/reducers/index';
 import { getPosts } from '../redux/actions';
 import { useHistory, useParams } from 'react-router';
@@ -16,8 +16,14 @@ import useUser from '../hooks/useUser';
 import { MenuItem, TextField } from '@mui/material';
 import { Select } from '@mui/material';
 import { AnyMessageParams } from 'yup/lib/types';
+import editPost from '../services/editPost';
 
 export default function EditPost(){
+
+    type event =
+    | ChangeEvent<HTMLInputElement>
+    | ChangeEvent<HTMLTextAreaElement>
+    | ChangeEvent<HTMLSelectElement>;
     
     const { id } = useParams<{ id?: string }>();
     let allPosts = useSelector((state: typeState) => state.filteredPosts);
@@ -25,10 +31,6 @@ export default function EditPost(){
     const history = useHistory();
     const [loading, result] = useUser();
     const idSender = localStorage.getItem('userId');
-
-    function handleChangeFoto(){
-    
-    }
 
     useEffect(() => {
         dispatch(getPosts());
@@ -49,11 +51,48 @@ export default function EditPost(){
         longitude: detailpost?.longitude, 
     };
     
-
     const [input, setInput] = useState<any>(initialState);
 
-    //console.log(input)
-    
+    //funciones handle////////////////////////////////////////////////////////////
+
+    function handleChangeFoto(e: Event | event){
+      const target = e.target as HTMLInputElement;
+      const file: File = (target.files as FileList)[0];
+      setInput({
+        ...input, 
+        petImage: file
+      })
+      editPost(input._id, input.name, input.type, input.state, input.genre, input.description)
+    }
+
+    const handlegenrechange =  (e: event) => {
+      setInput({ ...input, genre: e.target.value });
+      editPost(input._id, input.name, input.type, input.state, input.genre, input.description)
+    };
+
+    const handlerdescritionchange = (event: string) => {
+      setInput({
+        ...input,
+        description: event,
+      });
+      editPost(input._id, input.name, input.type, input.state, input.genre, input.description);
+    };
+
+    const handletypechange = (e: event) => {
+      setInput({ ...input, type: e.target.value });
+      editPost(input._id, input.name, input.type, input.state, input.genre, input.description);
+    };
+
+    function handleChange(e: event) {
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      });
+      editPost(input._id, input.name, input.type, input.state, input.genre, input.description);
+    }
+
+    console.log(input)
+    ///////////////////////////////////////////////////////////////////
       const contact = async () => {
         if (result !== 'Unauthorized') {
           if (detailpost) {
@@ -94,7 +133,15 @@ export default function EditPost(){
                 marginTop: 45,
                 marginBottom: 54,
               }}>
-            <Button onClick = {handleChangeFoto}>editar foto</Button>
+            <label>
+                editar foto
+                <input
+                  style={{ display: 'none' }}
+                  type='file'
+                  onChange={e =>handleChangeFoto(e)}
+                  accept='.png, .jpg'
+                />
+              </label>
               <CardMedia
                 component='img'
                 alt={detailpost.type}
@@ -107,7 +154,7 @@ export default function EditPost(){
               <CardContent>
                 {detailpost.name ? (
                 <Typography gutterBottom variant='h6' component='div'> Nombre: 
-                <TextField defaultValue = {detailpost.name}>
+                <input  name="name" defaultValue = {detailpost.name} onChange = {handleChange}>
                   {/* <Typography
                     sx={{ textAlign: 'center' }}
                     gutterBottom
@@ -115,12 +162,12 @@ export default function EditPost(){
                     component='div'>
                     {detailpost.name}
                   </Typography> */}
-                </TextField>
+                </input>
                 </Typography>
                 ) : null}
                 
                 <Typography gutterBottom variant='h5' component='div'>
-                  Tipo: <select>
+                  Tipo: <select onChange = {handletypechange}>
                       <option hidden selected>{detailpost.type}</option>
                       <option value="Perro">perro</option>
                       <option value="Gato">gato</option>
@@ -129,7 +176,7 @@ export default function EditPost(){
                 </Typography>
 
                 <Typography gutterBottom variant='h6' component='div'>
-                  Estado: <select>
+                  Estado: <select onChange = {handleChange} name='state'>
                       <option hidden selected>{detailpost.state}</option>
                       <option value='Perdido'>Perdido</option>
                       <option value='Encontrado'>Encontrado</option>
@@ -138,7 +185,7 @@ export default function EditPost(){
                 </Typography>
                 
                 <Typography gutterBottom variant='h6' component='div'>
-                  Género: <select>
+                  Género: <select onChange = {handlegenrechange}>
                       <option hidden selected>{detailpost.genre}</option>
                       <option value='Macho'> Macho </option>
                       <option value='Hembra'> Hembra </option>
@@ -154,7 +201,7 @@ export default function EditPost(){
                 </Typography> */}
 
                 <Typography gutterBottom variant='h6' component='div'> Descripcion: 
-                <TextField defaultValue = {detailpost.description}>
+                <textarea defaultValue = {detailpost.description} onChange = {(e)=>handlerdescritionchange(e.target.value)}>
                   {/* <Typography
                     sx={{ textAlign: 'center' }}
                     gutterBottom
@@ -162,10 +209,10 @@ export default function EditPost(){
                     component='div'>
                     {detailpost.name}
                   </Typography> */}
-                </TextField>
+                </textarea>
                 </Typography>
 
-                <Button>Guardar</Button>
+                {/* <Button>Guardar</Button> */}
 
               </CardContent>
               {/* {detailpost.user !== idSender ? (
