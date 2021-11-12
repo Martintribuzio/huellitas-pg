@@ -3,9 +3,19 @@ import LocationMapShelter from './LocationMap/LocationMapShelter';
 import huella  from "../assets/map/huellitasLost.png";
 import huellaAdopt  from "../assets/map/huellitaAdoption.png";
 import signodeex  from "../assets/map/huellitasFounded.png";
+import useUser from '../hooks/useUser';
+import { useEffect } from 'react';
+import { useHistory } from 'react-router';
 
 export default function Home() {
+const [loading,result] = useUser();
+const historty = useHistory();
 
+useEffect(() => {
+    if(result === 'Unauthorized'){
+        historty.push('/login');
+    }
+},[result])
 
   return (
     <div style={{ minHeight: '71vh', height: 'max-content' }}>

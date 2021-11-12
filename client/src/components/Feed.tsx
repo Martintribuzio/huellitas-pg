@@ -92,7 +92,6 @@ export default function Feed(props: any) {
             width: '100%',
           }}>
           {postsToShow.map(item => {
-            console.log(item);
             return (
               <Link key={item._id} to={`/home/detail/${item._id}`}>
                 <ImageButton
