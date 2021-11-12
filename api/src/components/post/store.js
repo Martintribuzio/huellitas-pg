@@ -139,4 +139,5 @@ module.exports = {
   findPostDB,
   editPostDB,
   deletePostDB,
+  findReportedP,
 };

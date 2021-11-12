@@ -1,5 +1,5 @@
 const postNetwork = require('express').Router();
-const { createPost, findPost, editPost, deletePost } = require('./controller');
+const { createPost, findPost, editPost, deletePost, reportPost } = require('./controller');
 const fs = require('fs');
 
 const multer = require('multer');
@@ -48,6 +48,7 @@ postNetwork.put('/', async (req, res) => {
 
 postNetwork.put('/report', async(req, res) => {
   try{
+    console.log("etiqueta para saber que es", req.query)
     let idRep = req.query.id
     let post = await reportPost(idRep)
     return res.send(post)

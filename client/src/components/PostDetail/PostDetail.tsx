@@ -16,6 +16,9 @@ import useUser from '../../hooks/useUser';
 import { Modal } from '../Modal';
 import { useModal } from '../../hooks/useModal';
 import EditPost from '../../components/EditPost';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
 
 export default function ImgMediaCard() {
   const { id } = useParams<{ id?: string }>();
@@ -25,7 +28,7 @@ export default function ImgMediaCard() {
   const history = useHistory();
   const [loading, result] = useUser();
   const idSender = localStorage.getItem('userId');
-  
+  const [report,setReport] = useState<number>(0)
   let [isModal, setIsModal] = useState(false)
   const [isOpen, openModal, closeModal] = useModal();
   
@@ -38,6 +41,19 @@ export default function ImgMediaCard() {
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
+
+  const handleCounter = async function(){
+    console.log(id)
+    let counter:any = await axios.put(`/post/report?id=${id}`)
+    if(counter.reportCounter >= 3){
+      alert("esta publicacion fue reportada varias veces, por eso fue eliminada")
+      history.push('/home/feed')
+    }
+    else{
+      setReport(report + 1)
+      //santi aca mete un iconito rojo porque fue reportado menos de 3 veces pero mas de una
+    }
+  }
 
   let detailpost = allPosts.find((elem: PostType) => elem._id === id);
   const contact = async () => {
@@ -72,6 +88,7 @@ export default function ImgMediaCard() {
           alignItems: 'center',
           maxHeight: '85vh',
         }}>
+        {report > 0 ? <span>Reportado CHAN CHAN CHAN</span> : null}
         <Card
           elevation={5}
           sx={{
@@ -125,6 +142,18 @@ export default function ImgMediaCard() {
               </Button>
             </CardActions>
           ) : null}
+        <FormControl sx={{ m: 1, minWidth: '12vw' }}>
+          <Select
+            labelId='demo-simple-select-helper-label'
+            id='demo-simple-select-helper'
+            value='reportar'
+            label='reportar'
+            onChange={handleCounter}
+            >
+            <MenuItem value='Spam'>Spam</MenuItem>
+            <MenuItem value='Contenido Inapropiado'>Contenido Inapropiado</MenuItem>
+          </Select>
+        </FormControl>
         </Card>
       </div>
     );

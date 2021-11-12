@@ -3,6 +3,7 @@ const {
   findPostDB,
   editPostDB,
   deletePostDB,
+  findReportedP
 } = require('./store');
 const moment = require('moment-timezone');
 
@@ -84,4 +85,4 @@ const deletePost = async _id => {
   }
 };
 
-module.exports = { createPost, findPost, editPost, deletePost };
+module.exports = { createPost, findPost, editPost, deletePost, reportPost };
