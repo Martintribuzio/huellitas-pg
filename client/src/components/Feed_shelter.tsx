@@ -30,6 +30,7 @@ const ImageButton = styled(ButtonBase)(({ theme }) => ({
     },
     '& .name': {
       display: 'block',
+      textShadow: '0 0 10px black',
     },
   },
 }));
@@ -73,21 +74,22 @@ name: string,
 _id: string,
 description: string,
 username: string,
-profielImage: {url: string,_id: string},
+profileImage: {url: string,_id: string},
 }
 
 export default function Feed_shelter(props: any) {
   const [shelters, setShelters] = useState<shelter[]>();
 
   useEffect(() => {
-      const getUser = async () => {
-    if (!props.isOpen){
-        const res = await axios.get(`${process.env.REACT_APP_API}/user/shelters`);
+      const getShelters = async () => {
+        const res = await axios.get(`${process.env.REACT_APP_API}user/shelters`);
         setShelters(res.data);}
-    }
-  }, [props.isOpen]);
+    getShelters();
+  },[]);
+
 if(shelters){
   if (shelters.length) {
+    console.log(shelters);
       return (
         <Box
           sx={{
@@ -110,7 +112,7 @@ if(shelters){
                   sx={{ minHeight: 200, minWidth: 200 }}>
                   <ImageSrc
                     style={{
-                      backgroundImage: `url(${item.profielImage.url})`,
+                      backgroundImage: `url(${item.profileImage.url})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                     }}
@@ -194,5 +196,10 @@ if(shelters){
       </div>
     );
   }
+}
+else{
+  return (
+    <div>No refugios</div>
+  )
 }
 }

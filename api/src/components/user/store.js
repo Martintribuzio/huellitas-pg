@@ -56,7 +56,7 @@ const confirmationDB = async id => {
 }
 const getSheltersDB = async () => {
   try {
-    const shelters = await User.find({type:'shelter'});
+    const shelters = await User.find({type:'shelter'}).populate('profileImage');
     return shelters;
   } catch (error) {
     throw new Error(error);
