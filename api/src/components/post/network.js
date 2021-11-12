@@ -16,7 +16,7 @@ const upload = multer({
 });
 
 postNetwork.post('/', upload.single('petImage'), async (req, res) => {
-  console.log('bodyPost', req.body);
+  // console.log('bodyPost', req.body);
   try {
     const post = await createPost(req.body, req.file);
     return res.json(post);
@@ -28,7 +28,7 @@ postNetwork.post('/', upload.single('petImage'), async (req, res) => {
 postNetwork.get('/', async (req, res) => {
   try {
     const post = await findPost(req.query.id);
-    console.log(post);
+    // console.log(post);
     return res.json(post);
   } catch (error) {
     console.log(error);

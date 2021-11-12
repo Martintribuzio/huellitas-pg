@@ -13,6 +13,7 @@ const {
   getDownloadURL,
   deleteObject,
 } = require('firebase/storage');
+const { mailReport } = require('./controller');
 
 const storage = getStorage(firebase);
 
@@ -40,7 +41,7 @@ const createPostDB = async (
       latitude,
       longitude,
     });
-    console.log(petImage);
+    // console.log(petImage);
     if (petImage) {
       const fileName = uniqid() + path.extname(petImage.originalname);
       const fileRef = ref(storage, fileName);
@@ -91,7 +92,8 @@ const findReportedP = async id => {
       post.reportCounter = post.reportCounter + 1
       await post.save()
     }else{
-      await post.remove()
+      // console.log("id del usuario que quiere el mono ",post.user.toString())
+      await mailReport(post.user.toString())
     }
     return post;
   }catch(err){
