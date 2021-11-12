@@ -9,10 +9,14 @@ import axios from 'axios';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import styles from '../../CSS/Register.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ChangeEvent } from 'react';
 import { FormEvent } from 'react';
+import { Menu} from '@mui/material';
+import LocationMapShelter from '../LocationMap/LocationMapShelter';
+import { useSelector } from 'react-redux';
+import { typeState } from '../../redux/reducers';
 
 
 type Data = {
@@ -32,6 +36,7 @@ type Data = {
   longitude: string | any;
 };
 
+
 const schema = yup.object().shape({
   name: yup.string().required('Ingresa tu nombre'),
   description: yup.string().required('Ingresa una descripcion'),
@@ -47,7 +52,14 @@ const schema = yup.object().shape({
     .required('Ingresa nuevamente tu contraseña'),
 });
 
+
+
 function RegisterShelter({ inicio }: any) {
+  const coordenadas = useSelector((state: typeState) => state.coordenadas);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [input, setInput] = useState({latitude:'',
+    longitude: ''});
   const {
     handleSubmit,
     control,
@@ -61,6 +73,33 @@ function RegisterShelter({ inicio }: any) {
     const file: File = (target.files as FileList)[0];
     setImg(file);
   }
+  const handleMobileMenuClose = () => {
+    setMobileMoreAnchorEl(null);
+  };
+  const handleMobileMenuOpen = (event: any) => {
+    setMobileMoreAnchorEl(event.currentTarget);
+  };
+  const menuId = 'primary-search-account-menu';
+  const renderMap = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      id={menuId}
+      keepMounted
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}>
+        <div style={{width:'500px'}}>
+        <LocationMapShelter />
+        </div>
+    </Menu>
+  );
+  useEffect(() => {
+    if (coordenadas.lat && coordenadas.long) {
+      setInput({
+        latitude: coordenadas.lat,
+        longitude: coordenadas.long,
+      });
+    }
+  }, [coordenadas]);
 
   async function handleSubmitForm(data: FormEvent<HTMLFormElement>) {
     data.preventDefault();
@@ -76,8 +115,6 @@ function RegisterShelter({ inicio }: any) {
       instagram,
       facebook,
       website,
-      latitude,
-      longitude,
     } = data.currentTarget.elements as unknown as Data;
     const fd = new FormData();
     fd.append('name', name.value);
@@ -90,8 +127,8 @@ function RegisterShelter({ inicio }: any) {
     fd.append('instagram', instagram.value);
     fd.append('facebook', facebook.value);
     fd.append('website', website.value);
-    fd.append('latitude', latitude.value);
-    fd.append('longitude', longitude.value);
+    fd.append('latitude', input.latitude);
+    fd.append('longitude', input.longitude);
     fd.append('profileImage', img);
     fd.append('type','shelter')
     try{
@@ -334,6 +371,20 @@ function RegisterShelter({ inicio }: any) {
             />
           ) : null}
         </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'row',
+          }}>
+          <label className={styles.loc}>
+            <input
+              style={{ display: 'none' }}
+              onClick={handleMobileMenuOpen}
+            />
+          </label>
+        </div>
         <Button
           style={{ marginTop: '20px', width: '300px', marginBottom: '20px' }}
           variant='contained'
@@ -341,6 +392,7 @@ function RegisterShelter({ inicio }: any) {
           Registrar
         </Button>
       </form>
+      {renderMap}
     </Box>
   );
 }

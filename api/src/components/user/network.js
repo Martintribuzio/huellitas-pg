@@ -190,7 +190,6 @@ userNetwork.post('/signup/shelter',upload.single('profileImage') ,(req, res) => 
           }
           else {
             console.log("Email enviado")
-            res.status(200).json(req.body)
           }
         })
         //--------------------------

@@ -62,7 +62,7 @@ function DisplayPosition({ map }) {
   );
 }
 
-export default async function LocationMap() {
+export default function LocationMapShelter() {
 
     const [url, setUrl] = useState([]);
 
@@ -88,6 +88,7 @@ export default async function LocationMap() {
   // const posts = data && !error ? data : [];
 
 //   const [actPost, setPost] = useState(null);
+const displayMap = useMemo(() => {
     const shelters = data && !error ? data : [];
     return (
       <MapContainer
@@ -121,13 +122,14 @@ export default async function LocationMap() {
         <LeafletControlGeocoder />
       </MapContainer>
     );
+  }, [data, error]);
 
-//   return (
-//     <>
-//       {map ? <DisplayPosition map={map} /> : null}
-//       {displayMap}
-//     </>
-//   );
+  return (
+    <>
+      {map ? <DisplayPosition map={map} /> : null}
+      {displayMap}
+    </>
+  );
 }
 
 
