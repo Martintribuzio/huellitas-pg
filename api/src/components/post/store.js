@@ -87,7 +87,7 @@ const findPostDB = async id => {
 const findReportedP = async id => {
   try{
     const post = await Post.findById(id)
-    if(post.reportCounter < 3){
+    if(post.reportCounter <= 3){
       post.reportCounter = post.reportCounter + 1
       await post.save()
     }else{

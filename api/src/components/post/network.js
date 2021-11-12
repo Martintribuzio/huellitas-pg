@@ -48,10 +48,9 @@ postNetwork.put('/', async (req, res) => {
 
 postNetwork.put('/report', async(req, res) => {
   try{
-    console.log("etiqueta para saber que es", req.query)
     let idRep = req.query.id
     let post = await reportPost(idRep)
-    return res.send(post)
+    res.json(post)
   }catch(err){
     res.send(err.message)
   }

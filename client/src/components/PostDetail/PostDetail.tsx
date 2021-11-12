@@ -43,9 +43,9 @@ export default function ImgMediaCard() {
   }, [dispatch]);
 
   const handleCounter = async function(){
-    console.log(id)
     let counter:any = await axios.put(`/post/report?id=${id}`)
-    if(counter.reportCounter >= 3){
+    console.log(counter.data.reportCounter)
+    if(counter.data.reportCounter === 3){
       alert("esta publicacion fue reportada varias veces, por eso fue eliminada")
       history.push('/home/feed')
     }
