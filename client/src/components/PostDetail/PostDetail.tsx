@@ -44,15 +44,10 @@ export default function ImgMediaCard() {
 
   const handleCounter = async function(){
     let counter:any = await axios.put(`/post/report?id=${id}`)
-    // console.log(counter.data.reportCounter)
-    if(counter.data.reportCounter >= 5 ){
-      alert("esta publicacion fue reportada varias veces, será revisada por nuestros superiores maestros del kung fu")
-      history.push('/home/feed')
-    }
-    else{
-      setReport(counter.data.reportCounter)
-      //santi aca mete un iconito rojo porque fue reportado menos de 3 veces pero mas de una
-    }
+    console.log(counter.data.reportCounter)
+    setReport(counter.data.reportCounter)
+    alert("esta publicacion fue reportada varias veces, será revisada por nuestros superiores maestros del kung fu")
+    history.push('/home/feed')//santi ponele estilos
   }
 
   let detailpost = allPosts.find((elem: PostType) => elem._id === id);
