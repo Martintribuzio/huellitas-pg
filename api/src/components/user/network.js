@@ -11,41 +11,22 @@ const {
   verifyUser,
 } = require('../../../authenticate');
 
+
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-const multer = require('multer');
-const uniqid = require('uniqid');
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './uploads');
-  },
-  filename: function (req, file, cb) {
-    cb(null, uniqid('', file.originalname.split(' ').join('')));
-  },
-});
-
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png')
-    cb(null, true);
-  else cb(new Error('File must be a image (jpg,png)'), false);
-};
-
-const upload = multer({
-  storage,
-  limits: { fileSize: 1024 * 1024 * 3 },
-  fileFilter,
-});
 
 
 userNetwork.get('/', async(req, res) => {
   try{
+
     const user = await getUserById(req.query.id);
-    if(user){
-      res.status(200).json(user)}
-    else{res.status(404).send("usuario no encontradooooo")}
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).send('usuario no encontradooooo');
+    }
+  } catch (err) {
+    res.status(400).send(err);
   }
-  catch(err){
-    res.status(400).send(err);}
 });
 
 //obtener los detalles del usuario que inició sesión

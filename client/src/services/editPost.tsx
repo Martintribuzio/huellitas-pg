@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export default async function editPost(_id: string | undefined, name: string | undefined, type: string, state: string, genre: string, description: string) {
   try {
-    const post = await axios.put(`/post`, { data: { _id,  name, type, state, genre, description} });
+    const post = await axios.put(`/post`, { _id,  name, type, state, genre, description} );
     //console.log(post);
     return 'succes';
   } catch (error) {  

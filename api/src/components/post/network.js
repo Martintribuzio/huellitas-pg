@@ -37,6 +37,7 @@ postNetwork.get('/', async (req, res) => {
 });
 
 postNetwork.put('/', async (req, res) => {
+  console.log(req.body)
   try {
     const { _id, name, type, state, genre, description } = req.body;
     editPost(_id, name, type, state, genre, description);

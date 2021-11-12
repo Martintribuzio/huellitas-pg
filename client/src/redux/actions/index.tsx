@@ -9,7 +9,7 @@ import {
   APPLY_FILTERS,
   GET_CONVERSATIONS,
   GET_COORDENADAS,
-  EDIT_POST,
+  // EDIT_POST,
   DELETE_POST,
 } from '../types/actionTypes';
 import axios from 'axios';
@@ -106,3 +106,10 @@ export const setUser = function (user: string) {
     payload: user,
   };
 };
+
+// export const editPostReducer = function(b: boolean){
+//   return {
+//     type: EDIT_POST,
+//     payload: b
+//   }
+// }

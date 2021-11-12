@@ -1,6 +1,6 @@
-import {useSelector, useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { PostType, conversation } from '../redux/types/types';
-import { useEffect, useState, ChangeEvent} from 'react';
+import { useEffect, useState, ChangeEvent, MouseEvent} from 'react';
 import { typeState } from '../redux/reducers/index';
 import { getPosts } from '../redux/actions';
 import { useHistory, useParams } from 'react-router';
@@ -10,20 +10,24 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import capitalize from '@mui/utils/capitalize'; 
+import capitalize from '@mui/utils/capitalize';
 import axios from 'axios';
 import useUser from '../hooks/useUser';
 import { MenuItem, TextField } from '@mui/material';
 import { Select } from '@mui/material';
 import { AnyMessageParams } from 'yup/lib/types';
+// import { editPostReducer } from '../redux/actions';
+import getPostsUser from '../services/getPostsUser';
 import editPost from '../services/editPost';
-
+ 
 export default function EditPost(){
 
     type event =
     | ChangeEvent<HTMLInputElement>
     | ChangeEvent<HTMLTextAreaElement>
     | ChangeEvent<HTMLSelectElement>;
+
+    type mouseEvent =  MouseEvent<HTMLButtonElement>;
     
     const { id } = useParams<{ id?: string }>();
     let allPosts = useSelector((state: typeState) => state.filteredPosts);
@@ -32,14 +36,10 @@ export default function EditPost(){
     const [loading, result] = useUser();
     const idSender = localStorage.getItem('userId');
 
-    useEffect(() => {
-        dispatch(getPosts());
-      }, [dispatch]);
-
     let detailpost = allPosts.find((elem: PostType) => elem._id === id);
 
-    
     const initialState = {
+        _id: detailpost?._id,
         name: detailpost?.name,
         description: detailpost?.description,
         genre: detailpost?.genre,
@@ -53,6 +53,14 @@ export default function EditPost(){
     
     const [input, setInput] = useState<any>(initialState);
 
+
+
+    useEffect(() => {
+      dispatch(getPosts());
+    }, [dispatch]);
+
+
+
     //funciones handle////////////////////////////////////////////////////////////
 
     function handleChangeFoto(e: Event | event){
@@ -62,12 +70,10 @@ export default function EditPost(){
         ...input, 
         petImage: file
       })
-      editPost(input._id, input.name, input.type, input.state, input.genre, input.description)
     }
 
     const handlegenrechange =  (e: event) => {
       setInput({ ...input, genre: e.target.value });
-      editPost(input._id, input.name, input.type, input.state, input.genre, input.description)
     };
 
     const handlerdescritionchange = (event: string) => {
@@ -75,12 +81,17 @@ export default function EditPost(){
         ...input,
         description: event,
       });
-      editPost(input._id, input.name, input.type, input.state, input.genre, input.description);
     };
 
     const handletypechange = (e: event) => {
       setInput({ ...input, type: e.target.value });
-      editPost(input._id, input.name, input.type, input.state, input.genre, input.description);
+    };
+
+    const handleSelectEstado = (e: event) => {
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value as string,
+      });
     };
 
     function handleChange(e: event) {
@@ -88,10 +99,15 @@ export default function EditPost(){
         ...input,
         [e.target.name]: e.target.value,
       });
-      editPost(input._id, input.name, input.type, input.state, input.genre, input.description);
     }
 
-    console.log(input)
+    function handleSubmit(e: mouseEvent){
+      editPost(input._id, input.name, input.type, input.state, input.genre, input.description);
+      // history.push('/home/profile');
+      // dispatch(editPostReducer(true)); 
+    }
+
+    //console.log(input)
     ///////////////////////////////////////////////////////////////////
       const contact = async () => {
         if (result !== 'Unauthorized') {
@@ -176,7 +192,7 @@ export default function EditPost(){
                 </Typography>
 
                 <Typography gutterBottom variant='h6' component='div'>
-                  Estado: <select onChange = {handleChange} name='state'>
+                  Estado: <select onChange = {handleSelectEstado} name='state'>
                       <option hidden selected>{detailpost.state}</option>
                       <option value='Perdido'>Perdido</option>
                       <option value='Encontrado'>Encontrado</option>
@@ -195,8 +211,8 @@ export default function EditPost(){
                 {/* <Typography gutterBottom variant='h6' component='div'>
                   Fecha de publicacion: {capitalize(detailpost.date)}
                 </Typography> */}
-                
-                {/* <Typography variant='body1' color='text.secondary'>
+
+            {/* <Typography variant='body1' color='text.secondary'>
                   {detailpost.description}
                 </Typography> */}
 
@@ -212,7 +228,7 @@ export default function EditPost(){
                 </textarea>
                 </Typography>
 
-                {/* <Button>Guardar</Button> */}
+                <button onClick = {handleSubmit}>Guardar</button>
 
               </CardContent>
               {/* {detailpost.user !== idSender ? (
@@ -222,10 +238,10 @@ export default function EditPost(){
                   </Button>
                 </CardActions>
               ) : null} */}
-            </Card>
-          </div>
-        );
-      } else {
-        return <>Cargando...</>;
-      }
+        </Card>
+      </div>
+    );
+  } else {
+    return <>Cargando...</>;
+  }
 }

@@ -12,6 +12,8 @@ import deletePostService from '../../services/deletePost';
 import editPost from '../../services/editPost';
 import Button from '@mui/material/Button';
 import PostAPet from "../PostAPet"
+import { useSelector, useDispatch } from 'react-redux';
+import { typeState } from '../../redux/reducers';
 
 
 interface User {
@@ -47,6 +49,8 @@ export default function Profile() {
     setPosts(posts.filter(post => post._id !== id));
   };
 
+  // let refresh = useSelector((state: typeState) => state.editPost);
+
   useEffect(() => {
     if (id) {
       getPostsUser(id).then(post => {
@@ -66,6 +70,7 @@ export default function Profile() {
       setUser(user);
     }
   }, [id]);
+
   return result === 'Unauthorized' ? (
     <Redirect to='/login' />
   ) : (

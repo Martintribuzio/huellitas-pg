@@ -7,6 +7,7 @@ import {
   GET_POST_QUERY,
   GET_CONVERSATIONS,
   GET_COORDENADAS,
+  // EDIT_POST,
 } from '../types/actionTypes';
 import { FiltersActionTypes } from '../types/actionTypes';
 import { PostType, conversation } from '../types/types';
@@ -18,6 +19,7 @@ export interface typeState {
   user: Object;
   conversations: Array<conversation>;
   coordenadas: { long: string; lat: string };
+  // editPost: boolean;
 }
 
 const initialState: typeState = {
@@ -27,6 +29,7 @@ const initialState: typeState = {
   queryPosts: '',
   conversations: [],
   coordenadas: { lat: '', long: '' },
+  // editPost: false
 };
 
 export default function rootReducer(
@@ -39,6 +42,11 @@ export default function rootReducer(
         ...state,
         queryPosts: action.payload,
       };
+    // case EDIT_POST:
+    //   return{
+    //     ...state, 
+    //     editPost: action.payload
+    //   }
     case GET_POSTS:
       return {
         ...state,

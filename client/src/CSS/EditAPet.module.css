@@ -1,16 +1,5 @@
-/* .conteiner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 71vh;
-  width: 90vw;
-  background-color: #e9e9e9;
-  background-image: url('../assets/home/background.png');
-} */
-
 .form {
   align-self: center;
-  padding: 30px;
   font-family: 'Poppins';
   display: flex;
   justify-content: center;
@@ -108,7 +97,7 @@ input {
   background-color: #73a6cb80;
   border: 0;
   border: 1px solid black;
-  color: white;
+  color: black;
   border-radius: 10px;
   display: inline-block;
   overflow: hidden;
@@ -183,7 +172,7 @@ input {
   justify-content: center;
 }
 
-@media screen and (max-width: 900px) {
+/* @media screen and (max-width: 900px) {
   .form .formContainer {
     flex-direction: column;
   }
@@ -195,4 +184,4 @@ input {
   .form .file::before {
     height: max-content;
   }
-}
+} */
