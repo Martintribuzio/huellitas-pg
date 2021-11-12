@@ -1,4 +1,5 @@
 const userNetwork = require('express').Router();
+
 const { confirmation, postsByUser, getUserById, mailCreation,getShelters} = require('./controller');
 const passport = require('passport');
 const User = require('../../models/User');
@@ -6,6 +7,7 @@ const jwt = require('jsonwebtoken');
 const path = require('path');
 const nodemailer = require("nodemailer")
 const Image = require('../../models/Images');
+
 const {
   getToken,
   COOKIE_OPTIONS,
@@ -41,7 +43,6 @@ const upload = multer({
 
 userNetwork.get('/', async(req, res) => {
   try{
-
     const user = await getUserById(req.query.id);
     if (user) {
       res.status(200).json(user);
@@ -58,15 +59,15 @@ userNetwork.get('/me', verifyUser, (req, res, next) => {
   res.send(req.user);
 });
 
-userNetwork.get("/confirmation", async (req, res, next) => {
+userNetwork.get('/confirmation', async (req, res, next) => {
   try {
     const { id } = req.query;
-    const user = await confirmation(id)
+    const user = await confirmation(id);
     return res.send(user);
   } catch (error) {
     return res.send(error);
   }
-})
+});
 
 userNetwork.get('/posts', async (req, res) => {
   try {
@@ -81,6 +82,7 @@ userNetwork.get('/posts', async (req, res) => {
 //Registro
 userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail   
   console.log(req.body);
+
   User.register(
     new User({
       name: req.body.name,
@@ -99,30 +101,29 @@ userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail
       } else {
         const token = getToken({ _id: user._id });
         const refreshToken = getRefreshToken({ _id: user._id });
-        //----------------------------        
+        //----------------------------
         let transporter = nodemailer.createTransport({
-          service: "gmail",
+          service: 'gmail',
           auth: {
-            user: "huellitas.dom@gmail.com",
-            pass: process.env.NODEMAILER 
-          }
-        })
+            user: 'huellitas.dom@gmail.com',
+            pass: process.env.NODEMAILER,
+          },
+        });
         let mailDetails = {
           from: 'huellitas.dom@gmail.com',
           to: req.body.email,
           subject: 'Confirmación de registro',
-          html: `<a href= "https://huellitas-pg.herokuapp.com/user/confirmation?id=${user._id}"> Pulse aquí para confirmar su cuenta</a>` //Guardar url como variable de entorno
+          html: `<a href= "https://huellitas-pg.herokuapp.com/user/confirmation?id=${user._id}"> Pulse aquí para confirmar su cuenta</a>`, //Guardar url como variable de entorno
           // html: `<a href= "http://localhost:3001/user/confirmation?id=${user._id}"> Pulse aquí para confirmar su cuenta</a>`
         };
         transporter.sendMail(mailDetails, (error, info) => {
           if (error) {
-            res.status(500).send(error.message)
+            res.status(500).send(error.message);
+          } else {
+            console.log('Email enviado');
+            res.status(200).json(req.body);
           }
-          else {
-            console.log("Email enviado")
-            res.status(200).json(req.body)
-          }
-        })
+        });
         //--------------------------
         user.refreshToken.push({ refreshToken });
 
@@ -245,12 +246,16 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
               picture: req.user.picture,
               token,
             };
-            if(req.user.confirmation === true){
+            if (req.user.confirmation === true) {
               res.send({ success: true, user });
-            }else{
-              mailCreation(user._id, user.username)
-              res.status(404).send("esta cuenta no esta confirmada, revise su correo electronico")
-            }        
+            } else {
+              mailCreation(user._id, user.username);
+              res
+                .status(404)
+                .send(
+                  'esta cuenta no esta confirmada, revise su correo electronico'
+                );
+            }
           }
         });
       },
