@@ -1,4 +1,4 @@
-import { useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 import { PostType, conversation } from '../../redux/types/types';
 import { useDispatch, useSelector } from 'react-redux';
 import { typeState } from '../../redux/reducers/index';
@@ -25,13 +25,13 @@ export default function ImgMediaCard() {
   const history = useHistory();
   const [loading, result] = useUser();
   const idSender = localStorage.getItem('userId');
-  
-  let [isModal, setIsModal] = useState(false)
+
+  let [isModal, setIsModal] = useState(false);
   const [isOpen, openModal, closeModal] = useModal();
-  
-  const toggleModal = function(){
-    setIsModal(isModal = !isModal)
-  }
+
+  const toggleModal = function () {
+    setIsModal((isModal = !isModal));
+  };
 
   //console.log(isModal)
 
@@ -88,10 +88,10 @@ export default function ImgMediaCard() {
             }}
             image={`${detailpost.petImage.url}`}
           />
-          <button onClick= {toggleModal}>editar</button>
+          <button onClick={toggleModal}>editar</button>
           <Modal isOpen={isModal} closeModal={toggleModal}>
-            <EditPost/>
-          </Modal> 
+            <EditPost />
+          </Modal>
           <CardContent>
             {detailpost.name ? (
               <Typography
