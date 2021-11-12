@@ -16,7 +16,7 @@ const {
   verifyUser,
 } = require('../../../authenticate');
 
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
 userNetwork.get('/', async (req, res) => {
   try {
