@@ -5,7 +5,7 @@ import { useEffect, useState, ChangeEvent, MouseEvent} from 'react';
 
 import { typeState } from '../redux/reducers/index';
 import { getPosts } from '../redux/actions';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
