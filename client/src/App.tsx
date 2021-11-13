@@ -13,6 +13,7 @@ import { Redirect } from 'react-router';
 import { Messenger } from './components/Messages/Message';
 import About from './components/About/about';
 import HomeShelter from './components/home_shelter';
+import MercadoPago from './components/mercadoPago/mercadoPago.jsx';
 
 function App() {
 
@@ -77,6 +78,8 @@ function App() {
         <Route path='/adoption'>{/* <Adoption /> */}</Route>
 
         <Route path='/home' component={Footer} />
+
+        <Route path='/home/donate' component={MercadoPago} />
 
         <Route exact path='/'>
           <Redirect to='/home' />
