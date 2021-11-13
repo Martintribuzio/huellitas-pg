@@ -40,7 +40,7 @@ export default function rootReducer(
     case GET_CONVMEMBERS:
       return {
         ...state,
-        convMembers: [...state.convMembers, ...action.payload],
+        convMembers: [...state.convMembers, action.payload],
       };
     case GET_POST_QUERY:
       return {

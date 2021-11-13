@@ -19,7 +19,7 @@ export const GET_CONVMEMBERS = 'GET_CONVMEMBERS';
 
 export interface getConvMembers {
   type: typeof GET_CONVMEMBERS;
-  payload: Array<ConvMembers>;
+  payload: ConvMembers;
 }
 export interface getConversation {
   type: typeof GET_CONVERSATIONS;

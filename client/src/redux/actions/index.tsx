@@ -30,7 +30,7 @@ export function getConvMembers(id: string) {
     console.log('PAYLOADDDDDDDDD', payload);
     dispatch({
       type: GET_CONVMEMBERS,
-      payload: [payload],
+      payload: payload,
     });
   };
 }
