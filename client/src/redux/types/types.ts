@@ -26,3 +26,10 @@ export interface Filters {
   type: string;
   genre: string;
 }
+
+export interface ConvMembers {
+  id?: string | undefined;
+  picture?: string | undefined;
+  name?: string | undefined;
+  lastname?: string | undefined;
+}

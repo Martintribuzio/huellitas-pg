@@ -7,9 +7,10 @@ import {
   GET_POST_QUERY,
   GET_CONVERSATIONS,
   GET_COORDENADAS,
+  GET_CONVMEMBERS,
 } from '../types/actionTypes';
 import { FiltersActionTypes } from '../types/actionTypes';
-import { PostType, conversation } from '../types/types';
+import { PostType, conversation, ConvMembers } from '../types/types';
 
 export interface typeState {
   allPosts: Array<PostType>;
@@ -18,6 +19,7 @@ export interface typeState {
   user: Object;
   conversations: Array<conversation>;
   coordenadas: { long: string; lat: string };
+  convMembers: Array<ConvMembers>;
 }
 
 const initialState: typeState = {
@@ -27,6 +29,7 @@ const initialState: typeState = {
   queryPosts: '',
   conversations: [],
   coordenadas: { lat: '', long: '' },
+  convMembers: [],
 };
 
 export default function rootReducer(
@@ -34,6 +37,11 @@ export default function rootReducer(
   action: FiltersActionTypes
 ) {
   switch (action.type) {
+    case GET_CONVMEMBERS:
+      return {
+        ...state,
+        convMembers: [...state.convMembers, ...action.payload],
+      };
     case GET_POST_QUERY:
       return {
         ...state,
@@ -123,6 +131,7 @@ export default function rootReducer(
         ...state,
         conversations: action.payload,
       };
+
     default:
       return state;
   }

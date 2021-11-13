@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
@@ -7,7 +8,10 @@ import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
 import { Link, useParams } from 'react-router-dom';
 import { SpinnerRoundFilled } from 'spinners-react';
-interface User {
+import { getConvMembers } from '../../redux/actions';
+import { typeState } from '../../redux/reducers';
+
+export interface User {
   name: string;
   lastname: string;
   _id: string;
@@ -22,24 +26,39 @@ interface message {
   state: string;
 }
 export default function Conversation(params: any) {
-  const [user, setUser] = useState<User>();
+  const user = useSelector((state: typeState) => state.convMembers);
+  // const [user, setUser] = useState<User>();
+  // const[contact,setContact]=useState<User>();
   const [message, setMessage] = useState<message[]>();
   const [notification, setNotification] = useState<number>(0);
   const myId = localStorage.getItem('userId');
   const { ConversId } = useParams<any>();
 
+  const dispatch = useDispatch();
+  console.log('USER', user);
   useEffect(() => {
     const friendId = params.conversation.members.find(
       (elem: string) => elem !== myId
     );
-    const getUser = async (friendId: string) => {
-      try {
-        const res = await axios.get(`/user?id=${friendId}`);
-        setUser(res.data);
-      } catch (err: any) {
-        return err.message;
-      }
-    };
+    dispatch(getConvMembers(friendId));
+  }, [dispatch]);
+  useEffect(() => {
+    // const friendId = params.conversation.members.find(
+    //   (elem: string) => elem !== myId
+    // );
+    // const getUser = async (friendId: string) => {
+    // dispatch(getConvMembers(friendId));
+
+    // try {
+    //   const res = await axios.get(`/user?id=${friendId}`);
+    //   setUser(res.data);
+    //   setContact(res.data);
+
+    // } catch (err: any) {
+    //   return err.message;
+    // }
+    // };
+
     const getMessage = async () => {
       try {
         const res = (await axios.get(`/message/${params.conversation._id}`))
@@ -55,7 +74,7 @@ export default function Conversation(params: any) {
         return err.message;
       }
     };
-    getUser(friendId);
+    // getUser(friendId);
     getMessage();
   }, [params, myId]);
 
@@ -88,15 +107,15 @@ export default function Conversation(params: any) {
           color: fontColor,
         }}
         button>
-        {user && message ? (
+        {user.length && message ? (
           <>
             <ListItemAvatar>
               <Badge badgeContent={notification} color='error'>
-                <Avatar alt='Profile Picture' src={user.picture} />
+                <Avatar alt='Profile Picture' src={user[0].picture} />
               </Badge>
             </ListItemAvatar>
             <ListItemText
-              primary={user.name}
+              primary={user[0].name}
               secondary={
                 message[message.length - 1]?.content.length > 15
                   ? message[message.length - 1]?.content.slice(0, 15) + '...'
