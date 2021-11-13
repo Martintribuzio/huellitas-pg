@@ -38,7 +38,8 @@ export default function ImgMediaCard() {
 
   useEffect(() => {
     dispatch(getPosts());
-  }, [dispatch]);
+  }, [dispatch, isModal]);
+
 
   const handleCounter = async function(){
     let counter:any = await axios.put(`/post/report?id=${id}`)

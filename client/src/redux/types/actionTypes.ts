@@ -1,3 +1,4 @@
+import editPost from '../../services/editPost';
 import { conversation, PostType } from './types';
 
 export const FILTER_STATE = 'FILTER_STATE';
@@ -15,6 +16,11 @@ export const GET_CONVERSATIONS = 'GET_CONVERSATIONS';
 export const GET_COORDENADAS = 'GET_COORDENADAS';
 export const EDIT_POST = 'EDIT_POST';
 export const DELETE_POST = 'DELETE_POST';
+
+// export interface editPostReducer {
+//   type: typeof EDIT_POST;
+//   payload: boolean;
+// }
 
 export interface getConversation {
   type: typeof GET_CONVERSATIONS;
@@ -92,3 +98,4 @@ export type FiltersActionTypes =
   | getConversation
   | deletePost
   | getCoordenadas;
+  // | editPostReducer;
