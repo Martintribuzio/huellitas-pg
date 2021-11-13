@@ -1,15 +1,17 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { PostType, conversation } from '../redux/types/types';
-import { useEffect, useState, ChangeEvent, MouseEvent} from 'react';
+
+import { PostType } from '../redux/types/types';
+import { useEffect } from 'react';
+
 import { typeState } from '../redux/reducers/index';
 import { getPosts } from '../redux/actions';
-import { useHistory, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+
 import capitalize from '@mui/utils/capitalize';
 import axios from 'axios';
 import useUser from '../hooks/useUser';
@@ -238,6 +240,7 @@ export default function EditPost(){
                   </Button>
                 </CardActions>
               ) : null} */}
+
         </Card>
       </div>
     );

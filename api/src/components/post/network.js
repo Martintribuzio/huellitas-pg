@@ -1,5 +1,5 @@
 const postNetwork = require('express').Router();
-const { createPost, findPost, editPost, deletePost } = require('./controller');
+const { createPost, findPost, editPost, deletePost, reportPost } = require('./controller');
 const fs = require('fs');
 
 const multer = require('multer');
@@ -16,7 +16,7 @@ const upload = multer({
 });
 
 postNetwork.post('/', upload.single('petImage'), async (req, res) => {
-  console.log('bodyPost', req.body);
+  // console.log('bodyPost', req.body);
   try {
     const post = await createPost(req.body, req.file);
     return res.json(post);
@@ -28,7 +28,7 @@ postNetwork.post('/', upload.single('petImage'), async (req, res) => {
 postNetwork.get('/', async (req, res) => {
   try {
     const post = await findPost(req.query.id);
-    console.log(post);
+    // console.log(post);
     return res.json(post);
   } catch (error) {
     console.log(error);
@@ -46,6 +46,16 @@ postNetwork.put('/', async (req, res) => {
     return res.send(error);
   }
 });
+
+postNetwork.put('/report', async(req, res) => {
+  try{
+    let idRep = req.query.id
+    let post = await reportPost(idRep)
+    res.json(post)
+  }catch(err){
+    res.send(err.message)
+  }
+})
 
 postNetwork.delete('/', async (req, res) => {
   try {

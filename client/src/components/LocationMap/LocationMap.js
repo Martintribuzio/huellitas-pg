@@ -83,9 +83,6 @@ export default function LocationMap() {
   //https://huellitas-pg.herokuapp.com/post
   const url = 'https://huellitas-pg.herokuapp.com/post';
   const { data, error } = useSwr(url, fetcher);
-  // const posts = data && !error ? data : [];
-
-  const [actPost, setPost] = useState(null);
 
   const displayMap = useMemo(() => {
     const posts = data && !error ? data : [];
@@ -107,14 +104,12 @@ export default function LocationMap() {
             
             position={[post.latitude? post.latitude : '', post.longitude? post.longitude : '']} 
             
-            onClick = {setPost(post)} 
-            
             icon={icon}
             >
             <Popup> 
               <div style = {{width: '200px'}}>
                 {post.name? <h1>{`Nombre: ${post.name}`}</h1> : ""}
-                <img style = {{width: '200px'}} src = {post.petImage.url}></img>
+                <img style = {{width: '200px'}} src = {post.petImage.url} alt=""></img>
                 <h3>{`Estado: ${post.state}`}</h3>
                 <h3>{`Tipo: ${post.type}`}</h3>
                 <h3>{`Genero: ${post.genre}`}</h3> 
@@ -127,14 +122,12 @@ export default function LocationMap() {
             
             position={[post.latitude? post.latitude : '', post.longitude? post.longitude : '']} 
             
-            onClick = {setPost(post)} 
-            
             icon={icon3}
             >
             <Popup> 
               <div style = {{width: '200px'}}>
                 {post.name? <h1>{`Nombre: ${post.name}`}</h1> : ""}
-                <img style = {{width: '200px'}} src = {post.petImage.url}></img>
+                <img style = {{width: '200px'}} src = {post.petImage.url} alt=""></img>
                 <h3>{`Estado: ${post.state}`}</h3>
                 <h3>{`Tipo: ${post.type}`}</h3>
                 <h3>{`Genero: ${post.genre}`}</h3> 
@@ -147,14 +140,12 @@ export default function LocationMap() {
             
             position={[post.latitude? post.latitude : '', post.longitude? post.longitude : '']} 
             
-            onClick = {setPost(post)} 
-            
             icon={icon2}
             >
             <Popup> 
               <div style = {{width: '200px'}}>
                 {post.name? <h1>{`Nombre: ${post.name}`}</h1> : ""}
-                <img style = {{width: '200px'}} src = {process.env.REACT_APP_API + "/" + post.petImage}></img>
+                <img style = {{width: '200px'}} src = {process.env.REACT_APP_API + "/" + post.petImage} alt=""></img>
                 <h3>{`Estado: ${post.state}`}</h3>
                 <h3>{`Tipo: ${post.type}`}</h3>
                 <h3>{`Genero: ${post.genre}`}</h3> 
@@ -165,7 +156,7 @@ export default function LocationMap() {
         <LeafletControlGeocoder />
       </MapContainer>
     );
-  }, [data, error]);
+  }, [data, error, icon, icon2, icon3]);
 
   return (
     <>

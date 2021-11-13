@@ -17,11 +17,8 @@ import s from './NavBar.module.css';
 import Button from '@mui/material/Button';
 import Inbox from '../conversations/Conversations';
 import Stack from '@mui/material/Stack';
-import { styled, alpha } from '@mui/material/styles';
-import InputBase from '@mui/material/InputBase';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { getPostByQuery } from '../../redux/actions';
 import { useHistory } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import useUser from '../../hooks/useUser';
@@ -32,45 +29,6 @@ import { conversation } from '../../redux/types/types';
 import { typeState } from '../../redux/reducers/index';
 import { message } from '../Messages/Message';
 
-/* const Search = styled('div')(({ theme }) => ({
-  position: 'relative',
-  borderRadius: theme.shape.borderRadius,
-  backgroundColor: alpha(theme.palette.common.white, 0.15),
-  '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
-  },
-  marginRight: theme.spacing(2),
-  marginLeft: 0,
-  width: '100%',
-  [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
-    width: 'auto',
-  },
-}));
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: 'inherit',
-  '& .MuiInputBase-input': {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: '20ch',
-    },
-  },
-})); */
-
 export default function PrimarySearchAppBar(): JSX.Element {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -80,16 +38,14 @@ export default function PrimarySearchAppBar(): JSX.Element {
   const isMenuOpen = Boolean(anchorEl);
   const isMenuOpenProf = Boolean(anchorElProf);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  const dispatch = useDispatch();
-  const [search, setSearch] = useState<string>('');
   const history = useHistory();
-  const [_loading, result] = useUser();
+  const [ result] = useUser();
   const [notificacion, setNotificacion] = useState<number>(0);
   const convers: Array<conversation> = useSelector(
     (state: typeState) => state.conversations
   );
   const id = localStorage.getItem('userId');
-
+  
   useEffect(() => {
     if (Array.isArray(convers)) {
       const getMessages = async () => {
@@ -108,7 +64,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
       };
       getMessages();
     }
-  }, [result, convers, mobileMoreAnchorEl, anchorEl, anchorElProf]);
+  }, [result, convers, mobileMoreAnchorEl, anchorEl, anchorElProf,id]);
   const logoutService = async () => {
     try {
       const response: any = await axios.get('/user/logout', {
@@ -281,18 +237,6 @@ export default function PrimarySearchAppBar(): JSX.Element {
       </MenuItem>
     </Menu>
   );
-  useEffect(() => {
-    dispatch(getPostByQuery(search));
-  }, [dispatch, search]);
-
-  /*   function handleChange(e: any) {
-    e.preventDefault();
-    setSearch(e.target.value);
-  }
-
-  function handleSubmit() {
-    setSearch('');
-  } */
 
   return (
     <Box className={s.box} sx={{ flexGrow: 1 }}>
@@ -319,40 +263,6 @@ export default function PrimarySearchAppBar(): JSX.Element {
             }}>
             Huellitas
           </Typography>
-          {/* <Search>
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              onSubmit={handleSubmit}
-              onChange={handleChange}
-              placeholder='Search…'
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </Search>
-          <Box
-            sx={{
-              display: {
-                xs: 'none',
-                md: 'flex',
-              },
-            }}>
-            <Link className={s.link} to='/home/createPost'>
-              {/* <Button
-                style={{
-                  margin: '5px',
-                  width: '100%',
-                  minWidth: '135px',
-                  maxWidth: '150px',
-                }}
-                size='small'
-                color='secondary'
-                variant='contained'>
-                <AddCircleIcon />
-                Crear Post
-              </Button> */}
-          {/* </Link> */}
-          {/* </Box> */}
 
           <Box
             sx={{
@@ -380,13 +290,13 @@ export default function PrimarySearchAppBar(): JSX.Element {
               <Button className={s.btnNav} color='inherit'>
                 Publicaciones
               </Button>
+            </Link>
             <Link
               style={{ textDecoration: 'none', color: 'white' }}
               to='/home/shelters'>
               <Button className={s.btnNav} color='inherit'>
                 Refugios
               </Button>
-            </Link>
             </Link>
             <Link
               style={{ textDecoration: 'none', color: 'white' }}
@@ -396,7 +306,6 @@ export default function PrimarySearchAppBar(): JSX.Element {
               </Button>
             </Link>
           </Box>
-
 
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <Link

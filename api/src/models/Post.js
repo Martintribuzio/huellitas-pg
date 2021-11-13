@@ -21,6 +21,10 @@ const postSchema = new Schema({
     type: String,
     required: true,
   },
+  reportCounter: {
+    type: Number,
+    default: 0,
+  },
   date: String,
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   petImage: { type: Schema.Types.ObjectId, ref: 'Image' },
