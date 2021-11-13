@@ -61,7 +61,6 @@ function RegisterShelter({ inicio }: any) {
   const [input, setInput] = useState({latitude:'',
     longitude: ''});
   const {
-    handleSubmit,
     control,
     formState: { errors },
   } = useForm<Data>({ resolver: yupResolver(schema) });

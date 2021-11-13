@@ -1,8 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { getPosts } from '../redux/actions';
-import { typeState } from '../redux/reducers/index';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
@@ -77,7 +73,7 @@ username: string,
 profileImage: {url: string,_id: string},
 }
 
-export default function Feed_shelter() {
+export default function FeedShelter() {
   const [shelters, setShelters] = useState<shelter[]>();
 
   useEffect(() => {
@@ -89,7 +85,6 @@ export default function Feed_shelter() {
 
 if(shelters){
   if (shelters.length) {
-    console.log(shelters);
       return (
         <Box
           sx={{
@@ -192,7 +187,6 @@ if(shelters){
           }}
         />
 
-        {/* <img src={dogloading}/>; */}
       </div>
     );
   }

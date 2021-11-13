@@ -15,9 +15,9 @@ export default function Home() {
     <div style={{ minHeight: '71vh', height: 'max-content' }}>
       {/* navBar */}
       <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '40px', justifyContent: 'center', marginTop: '30px'}}>
-        <label><img style={{width: "30px", height: '30px'}} src={huella}></img>Perdido</label>
-        <label><img style={{width: "30px", height: '30px'}} src={huellaAdopt}></img>En adopcion</label>
-        <label><img style={{width: "30px", height: '30px'}} src={signodeex}></img>Encontrado</label>
+        <label><img style={{width: "30px", height: '30px'}} src={huella} alt=""></img>Perdido</label>
+        <label><img style={{width: "30px", height: '30px'}} src={huellaAdopt} alt=""></img>En adopcion</label>
+        <label><img style={{width: "30px", height: '30px'}} src={signodeex} alt=""></img>Encontrado</label>
       </div>
       <LocationMap/>
       <button

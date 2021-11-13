@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { conversation } from '../../redux/types/types';
 import { typeState } from '../../redux/reducers/index';
 import useUser from '../../hooks/useUser';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getConvers } from '../../redux/actions';
 import style from '../Messages/Message.module.css';
 import { SpinnerCircular } from 'spinners-react';
@@ -14,10 +14,9 @@ export default function Conversations(props: any) {
   );
   const id = localStorage.getItem('userId');
   const dispatch = useDispatch();
-  console.log(props.mobile);
-  const [loading, result] = useUser();
+  const [result, loading] = useUser();
 
-  const [visibility, setVisibility] = useState(true);
+  const visibility = true;
 
   useEffect(() => {
     if (result !== 'Unauthorized') {
@@ -25,7 +24,7 @@ export default function Conversations(props: any) {
         dispatch(getConvers(id));
       }
     }
-  }, []);
+  }, [dispatch, id, result]);
   if (loading) {
     return (
       <div
@@ -49,14 +48,8 @@ export default function Conversations(props: any) {
       }}
       className={style.conv}>
       {convers.length && Array.isArray(convers) && result !== 'Unauthorized'
-        ? convers.map((c: any) => <Conversation conversation={c} />)
+        ? convers.map((c: any, index:number) => <Conversation key={index} conversation={c} />)
         : null}
     </div>
   );
-
-  // return (
-  //   <div className={style.noConv}>
-  //     <p>No has iniciado ninguna conversación</p>
-  //   </div>
-  // );
 }

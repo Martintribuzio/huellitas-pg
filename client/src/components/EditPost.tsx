@@ -1,30 +1,21 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { PostType, conversation } from '../redux/types/types';
-import { useEffect, useState } from 'react';
+import { PostType } from '../redux/types/types';
+import { useEffect } from 'react';
 import { typeState } from '../redux/reducers/index';
 import { getPosts } from '../redux/actions';
-import { useHistory, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import capitalize from '@mui/utils/capitalize';
-import axios from 'axios';
-import useUser from '../hooks/useUser';
-import { MenuItem, TextField } from '@mui/material';
-import { Select } from '@mui/material';
-import { AnyMessageParams } from 'yup/lib/types';
+import { TextField } from '@mui/material';
 import styles from '../CSS/EditAPet.module.css';
 
 export default function EditPost() {
   const { id } = useParams<{ id?: string }>();
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
   const dispatch = useDispatch();
-  const history = useHistory();
-  const [loading, result] = useUser();
-  const idSender = localStorage.getItem('userId');
 
   function handleChangeFoto() {}
 
@@ -33,45 +24,6 @@ export default function EditPost() {
   }, [dispatch]);
 
   let detailpost = allPosts.find((elem: PostType) => elem._id === id);
-
-  const initialState = {
-    name: detailpost?.name,
-    description: detailpost?.description,
-    genre: detailpost?.genre,
-    date: detailpost?.date,
-    petImage: detailpost?.petImage,
-    type: detailpost?.type,
-    state: detailpost?.state,
-    latitude: detailpost?.latitude,
-    longitude: detailpost?.longitude,
-  };
-
-  const [input, setInput] = useState<any>(initialState);
-
-  //console.log(input)
-
-  const contact = async () => {
-    if (result !== 'Unauthorized') {
-      if (detailpost) {
-        const conver: conversation = (
-          await axios.get(
-            `/conversation?ida=${idSender}&idb=${detailpost.user}`
-          )
-        ).data[0];
-        if (conver._id) {
-          history.push(`/home/messenger/${conver._id}`);
-        } else {
-          const newConver: conversation = (
-            await axios.post('/conversation', {
-              idRec: detailpost.user,
-              idEnv: idSender,
-            })
-          ).data;
-          history.push(`/home/messenger/${newConver._id}`);
-        }
-      }
-    }
-  };
 
   if (detailpost !== undefined) {
     return (
@@ -106,13 +58,6 @@ export default function EditPost() {
                 {' '}
                 Nombre:
                 <TextField defaultValue={detailpost.name}>
-                  {/* <Typography
-                    sx={{ textAlign: 'center' }}
-                    gutterBottom
-                    variant='h4'
-                    component='div'>
-                    {detailpost.name}
-                  </Typography> */}
                 </TextField>
               </Typography>
             ) : null}
@@ -151,38 +96,15 @@ export default function EditPost() {
                 <option value='Hembra'> Hembra </option>
               </select>
             </Typography>
-
-            {/* <Typography gutterBottom variant='h6' component='div'>
-                  Fecha de publicacion: {capitalize(detailpost.date)}
-                </Typography> */}
-
-            {/* <Typography variant='body1' color='text.secondary'>
-                  {detailpost.description}
-                </Typography> */}
-
             <Typography gutterBottom variant='h6' component='div'>
               {' '}
               Descripcion:
               <TextField defaultValue={detailpost.description}>
-                {/* <Typography
-                    sx={{ textAlign: 'center' }}
-                    gutterBottom
-                    variant='h4'
-                    component='div'>
-                    {detailpost.name}
-                  </Typography> */}
               </TextField>
             </Typography>
 
             <Button>Guardar</Button>
           </CardContent>
-          {/* {detailpost.user !== idSender ? (
-                <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
-                  <Button onClick={contact} size='small'>
-                    Contactar
-                  </Button>
-                </CardActions>
-              ) : null} */}
         </Card>
       </div>
     );

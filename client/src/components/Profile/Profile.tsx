@@ -9,9 +9,7 @@ import { PostType } from '../../redux/types/types';
 import useUser from '../../hooks/useUser';
 import profile from '../../assets/profile.png';
 import deletePostService from '../../services/deletePost';
-import editPost from '../../services/editPost';
 import Button from '@mui/material/Button';
-import PostAPet from "../PostAPet"
 
 
 interface User {
@@ -34,7 +32,7 @@ export default function Profile() {
 
   //console.log(isModal)
 
-  const [loading, result] = useUser();
+  const [result] = useUser();
 
   if (result === 'Unauthorized') {
     history.push('/login');
@@ -66,7 +64,6 @@ export default function Profile() {
       setUser(user);
     }
   }, [id]);
-  console.log('USER',user)
   return result === 'Unauthorized' ? (
     <Redirect to='/login' />
   ) : (

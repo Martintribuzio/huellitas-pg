@@ -10,13 +10,11 @@ import PostDetail from './components/PostDetail/PostDetail';
 import Publicaciones from './components/Home.jsx';
 import { Home } from './pages/Home';
 import { Redirect } from 'react-router';
-import Conversations from './components/conversations/Conversations';
-import Message, { Messenger } from './components/Messages/Message';
+import { Messenger } from './components/Messages/Message';
 import About from './components/About/about';
-import Home_shelter from './components/home_shelter';
+import HomeShelter from './components/home_shelter';
 
 function App() {
-  // const [result, user] = useUser();
 
   return (
     <ThemeProvider theme={theme}>
@@ -53,7 +51,7 @@ function App() {
 
         <Route path='/alldogs'>{/* <Alldogs /> */}</Route>
         <Route path='/home/shelters'>
-          <Home_shelter />
+          <HomeShelter />
         </Route>
 
         <Route path='/home/messenger/:ConversId' component={Messenger} />

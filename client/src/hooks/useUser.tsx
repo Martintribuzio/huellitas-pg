@@ -58,7 +58,7 @@ const useUser = () => {
     verify();
   }, [token]);
 
-  return [loading, result, user];
+  return [result, loading, user];
 };
 
 export default useUser;
