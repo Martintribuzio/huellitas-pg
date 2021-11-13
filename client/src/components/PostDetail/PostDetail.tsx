@@ -16,6 +16,9 @@ import useUser from '../../hooks/useUser';
 import { Modal } from '../Modal';
 import { useModal } from '../../hooks/useModal';
 import EditPost from '../../components/EditPost';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
 
 export default function ImgMediaCard() {
   const { id } = useParams<{ id?: string }>();
@@ -26,7 +29,9 @@ export default function ImgMediaCard() {
   const [loading, result] = useUser();
   const idSender = localStorage.getItem('userId');
 
-  let [isModal, setIsModal] = useState(false);
+  const [report,setReport] = useState<number>(0)
+  let [isModal, setIsModal] = useState(false)
+
   const [isOpen, openModal, closeModal] = useModal();
 
   const toggleModal = function () {
@@ -38,6 +43,14 @@ export default function ImgMediaCard() {
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
+
+  const handleCounter = async function(){
+    let counter:any = await axios.put(`/post/report?id=${id}`)
+    console.log(counter.data.reportCounter)
+    setReport(counter.data.reportCounter)
+    alert("esta publicacion fue reportada varias veces, será revisada por nuestros superiores maestros del kung fu")
+    history.push('/home/feed')//santi ponele estilos
+  }
 
   let detailpost = allPosts.find((elem: PostType) => elem._id === id);
   const contact = async () => {
@@ -72,6 +85,7 @@ export default function ImgMediaCard() {
           alignItems: 'center',
           maxHeight: '85vh',
         }}>
+        {report > 0 ? <span>Reportado CHAN CHAN CHAN</span> : null}
         <Card
           elevation={5}
           sx={{
@@ -125,6 +139,18 @@ export default function ImgMediaCard() {
               </Button>
             </CardActions>
           ) : null}
+        <FormControl sx={{ m: 1, minWidth: '12vw' }}>
+          <Select
+            labelId='demo-simple-select-helper-label'
+            id='demo-simple-select-helper'
+            value='reportar'
+            label='reportar'
+            onChange={handleCounter}
+            >
+            <MenuItem value='Spam'>Spam</MenuItem>
+            <MenuItem value='Contenido Inapropiado'>Contenido Inapropiado</MenuItem>
+          </Select>
+        </FormControl>
         </Card>
       </div>
     );

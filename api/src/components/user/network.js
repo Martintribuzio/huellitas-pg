@@ -352,7 +352,7 @@ userNetwork.post('/refreshToken', (req, res, next) => {
 userNetwork.get('/', async (req, res) => {
   try {
     const user = await getUserById(req.query.id);
-    console.log('user', user);
+    // console.log('user', user);
     if (user) {
       console.log('el martoooo');
       res.status(200).json({

@@ -36,7 +36,7 @@ const postsByUserDB = async userId => {
         path: 'petImage',
       },
     });
-    console.log(user);
+    // console.log(user);
     return user.posts;
   } catch {
     throw new Error('Mensaje');

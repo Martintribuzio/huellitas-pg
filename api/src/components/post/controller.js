@@ -3,8 +3,11 @@ const {
   findPostDB,
   editPostDB,
   deletePostDB,
+  findReportedP,
 } = require('./store');
+const User = require('../../models/User');
 const moment = require('moment-timezone');
+const nodemailer = require('nodemailer');
 
 const createPost = async (
   { name, type, state, genre, description, id, latitude, longitude },
@@ -23,8 +26,8 @@ const createPost = async (
       genre,
       dateARG,
       petImage,
-      latitude, 
-      longitude 
+      latitude,
+      longitude
     );
     return post;
   } catch (error) {
@@ -66,6 +69,51 @@ const editPost = async (_id, name, type, state, genre, description) => {
   }
 };
 
+const reportPost = async id => {
+  try {
+    let post = await findReportedP(id);
+    console.log(post.reportCounter);
+    if (post.reportCounter <= 2) {
+      post.reportCounter = post.reportCounter + 1;
+      await post.save();
+    } else {
+      let id = post.user.toString();
+      let usuario = await User.findById(id);
+      await post.remove();
+      try {
+        console.log('mAIL ES ', usuario.username);
+        let transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'huellitas.dom@gmail.com',
+            pass: process.env.NODEMAILER, //Falta ponerlo en env
+          },
+        });
+        console.log('ENV', process.env.NODEMAILER);
+        let mailDetails = {
+          from: 'huellitas.dom@gmail.com',
+          to: usuario.username,
+          subject: 'Has recibido un mensaje!',
+          text: 'Tu publicacion fue eliminado por no cumplir con las reglas del dominio',
+        };
+        transporter.sendMail(mailDetails, (error, info) => {
+          if (error) {
+            return 'Su mail no pudo ser enviado';
+          } else {
+            console.log('Email enviado');
+            return 'Email enviado';
+          }
+        });
+      } catch (err) {
+        throw new Error(err.message);
+      }
+    }
+    return post;
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
 const deletePost = async _id => {
   try {
     deletePostDB(_id);
@@ -75,4 +123,4 @@ const deletePost = async _id => {
   }
 };
 
-module.exports = { createPost, findPost, editPost, deletePost };
+module.exports = { createPost, findPost, editPost, deletePost, reportPost };
