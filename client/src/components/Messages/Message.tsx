@@ -18,7 +18,9 @@ export interface message {
   _id: string;
 }
 
+
 export default function Message() {
+  
   const [messages, setMessages] = useState<message[]>();
   const [newMessage, setnewMessage] = useState<string>('');
   const [arrivalMessage, setArrivalMessage] = useState<any>();
@@ -26,6 +28,8 @@ export default function Message() {
   const idSender = localStorage.getItem('userId');
   const { ConverseId } = useParams<{ ConverseId: string }>();
   const scrollRef = useRef<any>();
+  
+
 
   const conversState: any = useSelector(
     (state: typeState) => state.conversations
@@ -74,6 +78,7 @@ export default function Message() {
 
   const receiverId = convers?.members?.find(
     (member: string) => member !== idSender
+    
   );
     console.log("receiverId",receiverId)
   const handleSubmit = async (e: any) => {
@@ -118,6 +123,7 @@ export default function Message() {
               axios.put(`/message/${c._id}`);
             }
             return(
+              
             <div ref={scrollRef} className={c.sender !== idSender ? style.other : style.own}>
               <p>{c.content}</p>
             </div>

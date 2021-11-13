@@ -11,11 +11,26 @@ import {
   GET_COORDENADAS,
   EDIT_POST,
   DELETE_POST,
+  GET_CONVMEMBERS,
 } from '../types/actionTypes';
 import axios from 'axios';
 import { Filters } from '../types/types';
 import dotenv from 'dotenv';
 dotenv.config();
+
+export function getConvMembers(id: string) {
+  return async (dispatch: any) => {
+    const res = await axios.get(
+      `/user?id=${id}`
+    );
+    // console.log(res.data);
+    dispatch({
+      type: GET_CONVMEMBERS,
+      payload: res.data,
+    });
+  };
+  
+}
 
 export function deletePost(id: string | undefined) {
   return async (dispatch: any) => {
