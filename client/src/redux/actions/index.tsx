@@ -9,7 +9,6 @@ import {
   APPLY_FILTERS,
   GET_CONVERSATIONS,
   GET_COORDENADAS,
-  EDIT_POST,
   DELETE_POST,
 } from '../types/actionTypes';
 import axios from 'axios';

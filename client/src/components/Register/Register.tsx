@@ -8,7 +8,6 @@ import Box from '@mui/material/Box';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Switch } from '@mui/material';
 
 type Data = {
   name: string;

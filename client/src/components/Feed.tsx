@@ -186,8 +186,6 @@ export default function Feed(props: any) {
             width: '15vw',
           }}
         />
-
-        {/* <img src={dogloading}/>; */}
       </div>
     );
   }

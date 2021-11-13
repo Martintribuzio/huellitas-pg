@@ -7,7 +7,6 @@ import post3 from '../assets/home/post3.svg';
 import post4 from '../assets/home/iconoDeAbajo.svg';
 import post5 from '../assets/home/iconoDeAbajo2.svg';
 import post6 from '../assets/home/iconoDeAbajo3.svg';
-import { useState, useEffect } from 'react';
 import Card from './Card';
 import Textra from 'react-textra';
 import { Button, Typography } from '@mui/material';

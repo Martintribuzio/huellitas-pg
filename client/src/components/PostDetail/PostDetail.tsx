@@ -14,7 +14,6 @@ import capitalize from '@mui/utils/capitalize';
 import axios from 'axios';
 import useUser from '../../hooks/useUser';
 import { Modal } from '../Modal';
-import { useModal } from '../../hooks/useModal';
 import EditPost from '../../components/EditPost';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
@@ -26,19 +25,16 @@ export default function ImgMediaCard() {
   const dispatch = useDispatch();
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
   const history = useHistory();
-  const [loading, result] = useUser();
+  const [result] = useUser();
   const idSender = localStorage.getItem('userId');
 
   const [report,setReport] = useState<number>(0)
-  let [isModal, setIsModal] = useState(false)
-
-  const [isOpen, openModal, closeModal] = useModal();
+  let [isModal, setIsModal] = useState(false);
 
   const toggleModal = function () {
     setIsModal((isModal = !isModal));
   };
 
-  //console.log(isModal)
 
   useEffect(() => {
     dispatch(getPosts());
