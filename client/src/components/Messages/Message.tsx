@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
@@ -35,9 +35,12 @@ export default function Message(props: any) {
   const conversState: any = useSelector(
     (state: typeState) => state.conversations
   );
-  const convers = Array.isArray(conversState)
+
+  const convers = useMemo(()=>{
+    return Array.isArray(conversState)
     ? conversState.filter((elem: any) => elem._id === ConverseId)[0]
     : [];
+  },[]);
 
   useEffect(() => {
     const getMessage = async () => {

@@ -55,15 +55,18 @@ export default function PostAPet(props: any) {
 
   useEffect(() => {
     setLoading(false);
-    if (props.isOpen) {
-      setStep(false);
-    }
     setInput(initialState);
     setState('');
     setType('');
     setGenre('');
     setError(initialError);
   }, []);
+
+  useEffect(() => {
+    if (props.isOpen) {
+      setStep(false);
+    }
+  }, [props.isOpen]);
 
   useEffect(() => {
     if (coordenadas.lat && coordenadas.long) {
@@ -73,7 +76,7 @@ export default function PostAPet(props: any) {
         longitude: coordenadas.long,
       });
     }
-  }, [coordenadas, input]);
+  }, [coordenadas]);
 
   const handlegenrechange = (e: event) => {
     setGenre(e.target.value);
@@ -203,7 +206,7 @@ export default function PostAPet(props: any) {
                 name='state'
                 value={state}
                 onChange={e => handleSelectEstado(e)}>
-                <option defaultValue="Estado" hidden>
+                <option defaultValue='Estado' hidden>
                   Estado
                 </option>
                 <option value='Perdido'>Perdido</option>
@@ -231,7 +234,7 @@ export default function PostAPet(props: any) {
                 name='type'
                 value={type}
                 onChange={e => handletypechange(e)}>
-                <option defaultValue="Tipo" hidden >
+                <option defaultValue='Tipo' hidden>
                   Tipo
                 </option>
                 <option value='perro'> Perro </option>
@@ -247,7 +250,7 @@ export default function PostAPet(props: any) {
                 name='genero'
                 value={genre}
                 onChange={e => handlegenrechange(e)}>
-                <option defaultValue="Género" hidden >
+                <option defaultValue='Género' hidden>
                   Género
                 </option>
                 <option value='Macho'> Macho </option>

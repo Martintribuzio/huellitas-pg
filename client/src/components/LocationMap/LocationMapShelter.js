@@ -71,10 +71,13 @@ export default function LocationMapShelter() {
       getShelters();
     },[]);
     
-  const icon = new Icon({
+  const icon = useMemo(()=>{
+    return new Icon({
     iconUrl: huella,
     iconSize: [25, 25]
   });
+  },[]);
+
   const fetcher = (...args) => fetch(...args).then(response => response.json());
   
   const [map, setMap] = useState(null);
