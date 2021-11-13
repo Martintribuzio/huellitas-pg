@@ -43,8 +43,8 @@ function Register({ inicio }: any) {
 
   const onSubmit = handleSubmit(data => {
     axios
-      .post('/user/signup', data)
-      .then(async res => {
+      .post('/user/signup', {...data,type:'user'})
+      .then(res => {
         Swal.fire({
           title: 'Exito!',
           text: 'Se ha enviado un mail de confirmacion a su correo electronico',

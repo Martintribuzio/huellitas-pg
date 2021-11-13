@@ -21,18 +21,19 @@ const data = [
   '¿Buscas a tu mascota perdida?',
   'Te encontraste la mascota de alguien más',
   '¿Tenés animales buscando un hogar?',
-  'Tu ayuda es importante'
+  'Tu ayuda es importante',
 ];
 
 export const Home = () => {
-
   return (
     <div className='Home__container'>
       <section className='Primary'>
         <div className='Description' style={{ width: '80%' }}>
           <Textra className='Textra' effect='leftRight' data={data} />
           <Typography>
-            Huellitas es una comunidad formada por personas con el mismo objetivo, ayudar a los animales a encontrar el camino de regreso a su hogar.
+            Huellitas es una comunidad formada por personas con el mismo
+            objetivo, ayudar a los animales a encontrar el camino de regreso a
+            su hogar.
           </Typography>
           <Link style={{ textDecoration: 'none' }} to='/login'>
             <Button variant='contained'>Registrate</Button>
@@ -46,15 +47,16 @@ export const Home = () => {
       <section className='Secondary'>
         <Fade>
           <div className='Description'>
-            <Typography variant='h1'>
+            <Typography variant='h4'>
               {' '}
-              ¿Qué puedo hacer en Huellitas?
-              {' '}
+              ¿Qué puedo hacer en Huellitas?{' '}
             </Typography>
             <Typography>
-              En huellitas podrás recurrir a la ayuda de otros miembros de la comunidad para encontrar a tu mascota perdida,
-              publicar una mascota que encontraste y ayudar a otros a encontrar a una mascota que está buscando un hogar.
-              Contamos con tres categorías para publicar:
+              En huellitas podrás recurrir a la ayuda de otros miembros de la
+              comunidad para encontrar a tu mascota perdida, publicar una
+              mascota que encontraste y ayudar a otros a encontrar a una mascota
+              que está buscando un hogar. Contamos con tres categorías para
+              publicar:
             </Typography>
           </div>
         </Fade>
@@ -115,14 +117,13 @@ export const Home = () => {
             </Fade>
           </div>
           <div className='Description2'>
-            <Typography variant='h1'>
-              {' '}
-              Si queres formar parte de esta comunidad, podes registrarte y comenzar a publicar.
-              
+            <Typography variant='h4'>
+              Si queres formar parte de esta comunidad, podes registrarte y
+              comenzar a publicar.
             </Typography>
             <Typography>
-            Juntando nuestras "patitas" podemos ayudar 
-              a que todas las mascotas tengan su hogar.
+              Juntando nuestras "patitas" podemos ayudar a que todas las
+              mascotas tengan su hogar.
             </Typography>
             <Link style={{ textDecoration: 'none' }} to='/login'>
               <Button variant='contained'>Registrate</Button>

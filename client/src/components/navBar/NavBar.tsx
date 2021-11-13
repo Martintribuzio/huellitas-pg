@@ -380,6 +380,13 @@ export default function PrimarySearchAppBar(): JSX.Element {
               <Button className={s.btnNav} color='inherit'>
                 Publicaciones
               </Button>
+            <Link
+              style={{ textDecoration: 'none', color: 'white' }}
+              to='/home/shelters'>
+              <Button className={s.btnNav} color='inherit'>
+                Refugios
+              </Button>
+            </Link>
             </Link>
             <Link
               style={{ textDecoration: 'none', color: 'white' }}
@@ -389,6 +396,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               </Button>
             </Link>
           </Box>
+
 
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <Link

@@ -1,4 +1,4 @@
-const { createUserDB, postsByUserDB,searchUserByIdDB, confirmationDB } = require('./store');
+const { createUserDB, postsByUserDB,searchUserByIdDB, confirmationDB,getSheltersDB } = require('./store');
 const nodemailer = require('nodemailer')
 
 const createUser = async ({ name, email, password, postalCode }) => {
@@ -60,11 +60,20 @@ const mailCreation = async (id, Email) => {
     }
   })
 }
-
+const getShelters = async () => {
+  try{
+    const shelters = await getSheltersDB();
+    return shelters;
+  }
+  catch(e){
+    return e.message;
+  }
+}
 module.exports = {
   createUser,
   postsByUser,
   getUserById,
   confirmation,
-  mailCreation
+  mailCreation,
+  getShelters
 };
