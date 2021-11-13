@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 
-import { PostType } from '../redux/types/types';
+import { PostType, conversation } from '../redux/types/types';
 import { useEffect, useState, ChangeEvent, MouseEvent} from 'react';
 
 import { typeState } from '../redux/reducers/index';
