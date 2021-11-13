@@ -63,20 +63,27 @@ function DisplayPosition({ map }) {
 
 export default function LocationMap() {
 
-  const icon = new Icon({
+  const icon = useMemo(() => {
+    return new Icon({
     iconUrl: huella,
     iconSize: [25, 25]
   });
-
-  const icon2 = new Icon({
+  },[]);
+ 
+  const icon2 = useMemo(()=>{
+    return new Icon({
     iconUrl: huellaAdopt,
     iconSize: [30, 30]
   });
+  },[]) ;
 
-  const icon3 = new Icon({
+  const icon3 = useMemo(()=>{
+    return new Icon({
     iconUrl: signodeex,
     iconSize: [25, 25]
   });
+  },[]) ;
+  
   const fetcher = (...args) => fetch(...args).then(response => response.json());
   const [map, setMap] = useState(null);
 
