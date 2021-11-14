@@ -9,10 +9,10 @@ mePaNetwork.post('/donate',(req , res) => {
     let preference = {
 		items: [
 			{
-				title: req.body.title,
+				title: 'donate',
 				unit_price: Number(req.body.price),
                 currency_id: 'ARS',
-				quantity: Number(req.body.quantity),
+				quantity: 1,
 			}
 		],
 		back_urls: {
@@ -25,8 +25,10 @@ mePaNetwork.post('/donate',(req , res) => {
 
     mercadopago.preferences.create(preference)
 		.then(function (response) {
+			console.log(response);
 			res.json({
-				id: response.body.id
+				id: response.body.id,
+				url: response.body.init_point
 			});
 		}).catch(function (error) {
 			console.log(error);
