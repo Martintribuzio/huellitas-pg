@@ -28,26 +28,26 @@ export default function ImgMediaCard() {
   const [result] = useUser();
   const idSender = localStorage.getItem('userId');
 
-  const [report,setReport] = useState<number>(0)
+  const [report, setReport] = useState<number>(0);
   let [isModal, setIsModal] = useState(false);
 
   const toggleModal = function () {
     setIsModal((isModal = !isModal));
   };
 
-
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch, isModal]);
 
-
-  const handleCounter = async function(){
-    let counter:any = await axios.put(`/post/report?id=${id}`)
-    console.log(counter.data.reportCounter)
-    setReport(counter.data.reportCounter)
-    alert("esta publicacion fue reportada varias veces, será revisada por nuestros superiores maestros del kung fu")
-    history.push('/home/feed')//santi ponele estilos
-  }
+  const handleCounter = async function () {
+    let counter: any = await axios.put(`/post/report?id=${id}`);
+    console.log(counter.data.reportCounter);
+    setReport(counter.data.reportCounter);
+    alert(
+      'esta publicacion fue reportada varias veces, será revisada por nuestros superiores maestros del kung fu'
+    );
+    history.push('/home/feed'); //santi ponele estilos
+  };
 
   let detailpost = allPosts.find((elem: PostType) => elem._id === id);
   const contact = async () => {
@@ -99,10 +99,7 @@ export default function ImgMediaCard() {
             }}
             image={`${detailpost.petImage.url}`}
           />
-          <button onClick={toggleModal}>editar</button>
-          <Modal isOpen={isModal} closeModal={toggleModal}>
-            <EditPost />
-          </Modal>
+
           <CardContent>
             {detailpost.name ? (
               <Typography
@@ -135,19 +132,27 @@ export default function ImgMediaCard() {
                 Contactar
               </Button>
             </CardActions>
-          ) : null}
-        <FormControl sx={{ m: 1, minWidth: '12vw' }}>
-          <Select
-            labelId='demo-simple-select-helper-label'
-            id='demo-simple-select-helper'
-            value='reportar'
-            label='reportar'
-            onChange={handleCounter}
-            >
-            <MenuItem value='Spam'>Spam</MenuItem>
-            <MenuItem value='Contenido Inapropiado'>Contenido Inapropiado</MenuItem>
-          </Select>
-        </FormControl>
+          ) : (
+            <div>
+              <button onClick={toggleModal}>editar</button>
+              <Modal isOpen={isModal} closeModal={toggleModal}>
+                <EditPost />
+              </Modal>
+            </div>
+          )}
+          <FormControl sx={{ m: 1, minWidth: '12vw' }}>
+            <Select
+              labelId='demo-simple-select-helper-label'
+              id='demo-simple-select-helper'
+              value='reportar'
+              label='reportar'
+              onChange={handleCounter}>
+              <MenuItem value='Spam'>Spam</MenuItem>
+              <MenuItem value='Contenido Inapropiado'>
+                Contenido Inapropiado
+              </MenuItem>
+            </Select>
+          </FormControl>
         </Card>
       </div>
     );
