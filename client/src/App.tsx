@@ -14,9 +14,9 @@ import { Messenger } from './components/Messages/Message';
 import About from './components/About/about';
 import HomeShelter from './components/home_shelter';
 import MercadoPago from './components/mercadoPago/mercadoPago.jsx';
+import ShelterProfile from './components/shelterProfile/ShelterProfile';
 
 function App() {
-
   return (
     <ThemeProvider theme={theme}>
       <div className='App'>
@@ -34,6 +34,10 @@ function App() {
 
         <Route exact path='/home/detail/:id'>
           <PostDetail />
+        </Route>
+
+        <Route exact path='/home/shelter/:id'>
+          <ShelterProfile />
         </Route>
 
         <Route path='/home/createPost'>
