@@ -1,3 +1,4 @@
+import { get } from 'http';
 import editPost from '../../services/editPost';
 import { conversation, PostType } from './types';
 
@@ -16,6 +17,7 @@ export const GET_CONVERSATIONS = 'GET_CONVERSATIONS';
 export const GET_COORDENADAS = 'GET_COORDENADAS';
 export const EDIT_POST = 'EDIT_POST';
 export const DELETE_POST = 'DELETE_POST';
+export const GET_USER_ID = 'GET_USER_ID';
 
 // export interface editPostReducer {
 //   type: typeof EDIT_POST;
@@ -83,6 +85,10 @@ export interface getCoordenadas {
   type: typeof GET_COORDENADAS;
   payload: { long: string; lat: string };
 }
+export interface getUserId {
+  type: typeof GET_USER_ID;
+  payload: string;
+}
 
 export type FiltersActionTypes =
   | filterByState
@@ -97,5 +103,6 @@ export type FiltersActionTypes =
   | catchErrors
   | getConversation
   | deletePost
-  | getCoordenadas;
+  | getCoordenadas
+  | getUserId;
   // | editPostReducer;

@@ -72,54 +72,59 @@ export default function Filters() {
 
   return (
     <div className={style.div}>
-      <FormControl sx={{ m: 1, minWidth: '12vw' }}>
-        <InputLabel id='demo-simple-select-helper-label'>Estado</InputLabel>
-        <Select
-          labelId='demo-simple-select-helper-label'
-          id='demo-simple-select-helper'
-          value={state}
-          // name = 'state'
-          label='estado'
-          onChange={e => handleSelectState(e)}>
-          <MenuItem value='Todos'>Todos</MenuItem>
-          <MenuItem value='Perdido'>Perdido</MenuItem>
-          <MenuItem value='Encontrado'>Encontrado</MenuItem>
-          <MenuItem value='Adopción'>En adopción</MenuItem>
-        </Select>
-      </FormControl>
+      <div className={style.div}>
+        <FormControl sx={{ m: 1, minWidth: '12vw' }}>
+          <InputLabel id='demo-simple-select-helper-label'>Estado</InputLabel>
+          <Select
+            labelId='demo-simple-select-helper-label'
+            id='demo-simple-select-helper'
+            value={state}
+            // name = 'state'
+            label='estado'
+            onChange={e => handleSelectState(e)}>
+            <MenuItem value='Todos'>Todos</MenuItem>
+            <MenuItem value='Perdido'>Perdido</MenuItem>
+            <MenuItem value='Encontrado'>Encontrado</MenuItem>
+            <MenuItem value='Adopción'>En adopción</MenuItem>
+          </Select>
+        </FormControl>
 
-      <FormControl sx={{ m: 1, minWidth: '12vw' }}>
-        <InputLabel id='demo-simple-select-helper-label'>Especie</InputLabel>
-        <Select
-          labelId='demo-simple-select-helper-label'
-          id='demo-simple-select-helper'
-          value={type}
-          // name = 'type'
-          label='estado'
-          onChange={e => handleSelectType(e)}>
-          <MenuItem value='Todos'>Todos</MenuItem>
-          <MenuItem value='perro'>Perro</MenuItem>
-          <MenuItem value='gato'>Gato</MenuItem>
-          <MenuItem value='otro'>Otros</MenuItem>
-        </Select>
-      </FormControl>
-      <FormControl sx={{ m: 1, minWidth: '12vw' }}>
-        <InputLabel id='demo-simple-select-helper-label'>Género</InputLabel>
-        <Select
-          labelId='demo-simple-select-helper-label'
-          id='demo-simple-select-helper'
-          value={genre}
-          // name = 'genre'
-          label='estado'
-          onChange={e => handleSelectGenres(e)}>
-          <MenuItem value='Todos'>Todos</MenuItem>
-          <MenuItem value='Macho'>Macho</MenuItem>
-          <MenuItem value='Hembra'>Hembra</MenuItem>
-        </Select>
-      </FormControl>
+        <FormControl sx={{ m: 1, minWidth: '12vw' }}>
+          <InputLabel id='demo-simple-select-helper-label'>Especie</InputLabel>
+          <Select
+            labelId='demo-simple-select-helper-label'
+            id='demo-simple-select-helper'
+            value={type}
+            // name = 'type'
+            label='estado'
+            onChange={e => handleSelectType(e)}>
+            <MenuItem value='Todos'>Todos</MenuItem>
+            <MenuItem value='perro'>Perro</MenuItem>
+            <MenuItem value='gato'>Gato</MenuItem>
+            <MenuItem value='otro'>Otros</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl sx={{ m: 1, minWidth: '12vw' }}>
+          <InputLabel id='demo-simple-select-helper-label'>Género</InputLabel>
+          <Select
+            labelId='demo-simple-select-helper-label'
+            id='demo-simple-select-helper'
+            value={genre}
+            // name = 'genre'
+            label='estado'
+            onChange={e => handleSelectGenres(e)}>
+            <MenuItem value='Todos'>Todos</MenuItem>
+            <MenuItem value='Macho'>Macho</MenuItem>
+            <MenuItem value='Hembra'>Hembra</MenuItem>
+          </Select>
+        </FormControl>
+      </div>
 
       <Button
         className={style.button}
+        sx={{
+          minWidth: '300px',
+        }}
         variant='outlined'
         value='mas recientes'
         onClick={() => handleClick('mas recientes')}>
@@ -127,6 +132,9 @@ export default function Filters() {
       </Button>
       <Button
         className={style.button}
+        sx={{
+          minWidth: '300px',
+        }}
         variant='outlined'
         value='mas antiguos'
         onClick={() => handleClick('mas antiguos')}>
