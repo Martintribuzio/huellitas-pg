@@ -1,24 +1,16 @@
 import axios from 'axios';
 import { useState } from 'react';
-import { useEffect} from 'react';	
+import { useEffect} from 'react';
+import MercadoPago from 'mercadopago';
+import { Redirect,useHistory } from 'react-router';
+
+// const mp = new window.MercadoPago(process.env.PUBLIC_TOKEN_MEPA,{
+//     locale: 'es-AR'
+// });
 
 
-function MercadoPago() {
-    const [payment, setPayment] = useState(null);
-
-    if(payment){
-    const mp = new MercadoPago(process.env.PUBLIC_TOKEN_MEPA,{
-        locate: 'es_AR'
-    });
-
-    mp.checkout({
-        preference: {
-            id: payment
-        },
-      });
-    }
-    
-
+function MePa() {
+    const [url,setUrl] = useState('');
     const [price, setPrice] = useState(0);
     const change = (e) => {
         setPrice(e.target.value);
@@ -31,17 +23,20 @@ function MercadoPago() {
         price:price,
         quantity:1,
     });
-    setPayment(res.data.id);
-    
+    setUrl(res.data.url);
+
 }
 
   return (
+      <div>
     <form onSubmit={submit}>
         <label>DONAR</label>
-        <input type="number" name="email" min='0' placeholder="monto a donar" value={price} onChange={change} />
+        <input type="number" name="price" min='0' placeholder="monto a donar" value={price} onChange={change} />
         <button type="submit">Donar</button>
     </form>
+    <a href={url}>PAGAR</a>
+    </div>
   )
 }
 
-export default MercadoPago;
+export default MePa;
