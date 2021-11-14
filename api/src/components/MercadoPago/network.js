@@ -6,6 +6,9 @@ mercadopago.configure({
 });
 
 mePaNetwork.post('/donate',(req , res) => {
+	console.log("holas")
+	try {
+	console.log(req.body);
     let preference = {
 		items: [
 			{
@@ -33,6 +36,9 @@ mePaNetwork.post('/donate',(req , res) => {
 		}).catch(function (error) {
 			console.log(error);
 		});
+	} catch (error) {
+		console.log(error);
+	}	
 })
 
 

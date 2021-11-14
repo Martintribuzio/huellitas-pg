@@ -36,7 +36,7 @@ function App() {
           <PostDetail />
         </Route>
 
-        <Route exact path='/home/shelter/:id'>
+        <Route exact path='/home/shelter/details/:id'>
           <ShelterProfile />
         </Route>
 
@@ -55,7 +55,7 @@ function App() {
         </Route>
 
         <Route path='/alldogs'>{/* <Alldogs /> */}</Route>
-        <Route path='/home/shelters'>
+        <Route exact path='/home/shelters'>
           <HomeShelter />
         </Route>
 

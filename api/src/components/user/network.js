@@ -43,7 +43,7 @@ const upload = multer({
 
 userNetwork.get('/', async(req, res) => {
   try{
-    console.log(req.query);
+    console.log(req.query.id);
     const user = await getUserById(req.query.id);
     if (user) {
       res.status(200).json(user);

@@ -97,7 +97,7 @@ export default function FeedShelter() {
           }}>
           {shelters.map(item => {
             return (
-              <Link to={`/home/shelters/${item._id}`}>
+              <Link to={`/home/shelters/details/${item._id}`}>
                 <ImageButton
                   focusRipple
                   key={item.description}

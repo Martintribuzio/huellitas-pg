@@ -19,13 +19,13 @@ import { Filters } from '../types/types';
 import dotenv from 'dotenv';
 dotenv.config();
 
-export function getUser() {
+export function getUser(id: string) {
   return async (dispatch: any) => {
-    const res = await axios.get(`${process.env.REACT_APP_API_URL}/user`);
-    console.log(res.data);
-    dispatch({
+    let data = (await axios.get('/user?id=' + id)).data;
+    console.log('data');
+    return dispatch({
       type: GET_USER_ID,
-      payload: res.data,
+      payload: data,
     });
   };
 }
