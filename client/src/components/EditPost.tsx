@@ -11,7 +11,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
+import Swal from 'sweetalert2';
 import capitalize from '@mui/utils/capitalize';
 import axios from 'axios';
 import useUser from '../hooks/useUser';
@@ -110,6 +110,12 @@ export default function EditPost() {
     );
     // history.push('/home/profile');
     // dispatch(editPostReducer(true));
+    return Swal.fire({
+      title: 'Guardado!',
+      text: 'Publicacion editada con exito!',
+      icon: 'success',
+      confirmButtonText: 'Ok',
+    });
   }
 
   //console.log(input)
