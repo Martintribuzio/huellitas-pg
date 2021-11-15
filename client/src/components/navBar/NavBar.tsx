@@ -373,12 +373,13 @@ export default function PrimarySearchAppBar(): JSX.Element {
             </Box>
           ) : (
             <Link style={{ textDecoration: 'none' }} to='/login'>
-              <Button
+              {/* <Button
                 color='secondary'
                 variant='contained'
                 sx={{ color: '#73A7CB' }}>
                 Registrate
-              </Button>
+              </Button> */}
+              <Button variant='contained' color='secondary' style = {{width: '7vw', minWidth: '90px', color: '#73A7CB'}}>Empezar</Button>
             </Link>
           )}
           {/* <button onClick={logoutService}>logout</button> */}
