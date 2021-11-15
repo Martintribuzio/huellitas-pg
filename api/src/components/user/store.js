@@ -62,11 +62,22 @@ const getSheltersDB = async () => {
     throw new Error(error);
   }
 }
+
+const getShelterDetDB = async (id) => {
+  try {
+    const shelter = await User.findById(id)
+    return shelter;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 module.exports = {
   createUserDB,
   searchUserDB,
   postsByUserDB,
   searchUserByIdDB,
   confirmationDB,
-  getSheltersDB
+  getSheltersDB,
+  getShelterDetDB
 };

@@ -78,7 +78,7 @@ export default function FeedShelter() {
 
   useEffect(() => {
     const getShelters = async () => {
-      const res = await axios.get(`${process.env.REACT_APP_API}user/shelters`);
+      const res = await axios.get(`${process.env.REACT_APP_API}/user/shelters`);
       setShelters(res.data);
     };
     getShelters();
@@ -97,7 +97,7 @@ export default function FeedShelter() {
           }}>
           {shelters.map(item => {
             return (
-              <Link to={`/home/shelters/details/${item._id}`}>
+              <Link to={`/home/shelter/details/${item._id}`}>
                 <ImageButton
                   focusRipple
                   key={item.description}
@@ -142,7 +142,7 @@ export default function FeedShelter() {
                         pt: 2,
                         pb: theme => `calc(${theme.spacing(1)} + 6px)`,
                       }}>
-                      {`Nombre: ${item.username}`}
+                      {`Email: ${item.username}`}
                     </Typography>
                   </Image>
                 </ImageButton>
