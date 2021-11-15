@@ -70,7 +70,7 @@ export default function Message(props: any) {
         convers?.members.includes(arrivalMessage.sender) &&
         setMessages((prev: any) => [...prev, arrivalMessage])
     }
-  }, [arrivalMessage, convers])
+  }, [arrivalMessage, convers]) // NO AGREGAR MESSAGES COMO DEPENDENCIA
 
   useEffect(() => {
     socket.current.emit('addUser', idSender)
