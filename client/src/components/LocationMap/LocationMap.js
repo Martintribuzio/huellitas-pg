@@ -94,6 +94,7 @@ export default function LocationMap() {
   const displayMap = useMemo(() => {
     const posts = data && !error ? data : [];
     return (
+      
       <MapContainer
         className='mapContainer'
         center={defaultCenter}
@@ -167,6 +168,7 @@ export default function LocationMap() {
 
   return (
     <>
+      
       {map ? <DisplayPosition map={map} /> : null}
       {displayMap}
     </>

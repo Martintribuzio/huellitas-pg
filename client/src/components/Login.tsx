@@ -16,7 +16,7 @@ import useUser from '../hooks/useUser';
 import background from '../assets/home/background.png';
 
 export default function LandingPage() {
-  const [auth, setAuth] = React.useState(false);
+  const [auth, setAuth] = React.useState(true);
   const dispatch = useDispatch();
   const history = useHistory();
 
