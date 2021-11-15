@@ -10,14 +10,13 @@ import PostDetail from './components/PostDetail/PostDetail';
 import Publicaciones from './components/Home.jsx';
 import { Home } from './pages/Home';
 import { Redirect } from 'react-router';
-import Conversations from './components/conversations/Conversations';
-import Message, { Messenger } from './components/Messages/Message';
+import { Messenger } from './components/Messages/Message';
 import About from './components/About/about';
-import Home_shelter from './components/home_shelter';
+import HomeShelter from './components/home_shelter';
+import MercadoPago from './components/mercadoPago/mercadoPago.jsx';
+import ShelterProfile from './components/shelterProfile/ShelterProfile';
 
 function App() {
-  // const [result, user] = useUser();
-
   return (
     <ThemeProvider theme={theme}>
       <div className='App'>
@@ -37,6 +36,10 @@ function App() {
           <PostDetail />
         </Route>
 
+        <Route exact path='/home/shelter/details/:id'>
+          <ShelterProfile />
+        </Route>
+
         <Route path='/home/createPost'>
           <PostAPet />
         </Route>
@@ -52,8 +55,8 @@ function App() {
         </Route>
 
         <Route path='/alldogs'>{/* <Alldogs /> */}</Route>
-        <Route path='/home/shelters'>
-          <Home_shelter />
+        <Route exact path='/home/shelters'>
+          <HomeShelter />
         </Route>
 
         <Route path='/home/messenger/:ConversId' component={Messenger} />
@@ -79,6 +82,8 @@ function App() {
         <Route path='/adoption'>{/* <Adoption /> */}</Route>
 
         <Route path='/home' component={Footer} />
+
+        <Route path='/home/donate' component={MercadoPago} />
 
         <Route exact path='/'>
           <Redirect to='/home' />

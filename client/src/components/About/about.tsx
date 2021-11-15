@@ -1,4 +1,3 @@
-import Jurox from './fotos/Jurox.jpg';
 import Juan from './fotos/Juan.png';
 import Cris from './fotos/Cris.jpg';
 import Guada from './fotos/Guada.jpg';
@@ -12,12 +11,9 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import { margin } from '@mui/system';
 import LinkedIn from '@mui/icons-material/LinkedIn';
 import Github from '@mui/icons-material/GitHub';
 import Email from '@mui/icons-material/Email';
-import { Link } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import { Fade } from 'react-awesome-reveal';
 export default function About() {

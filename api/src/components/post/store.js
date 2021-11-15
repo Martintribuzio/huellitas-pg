@@ -13,6 +13,9 @@ const {
   deleteObject,
 } = require('firebase/storage');
 
+const nodemailer = require('nodemailer');
+
+
 const storage = getStorage(firebase);
 
 const createPostDB = async (
@@ -39,7 +42,7 @@ const createPostDB = async (
       latitude,
       longitude,
     });
-    console.log(petImage);
+    // console.log(petImage);
     if (petImage) {
       const fileName = uniqid() + path.extname(petImage.originalname);
       const fileRef = ref(storage, fileName);
@@ -75,6 +78,15 @@ const findPostDB = async id => {
     throw new Error(error);
   }
 };
+
+const findReportedP = async id => {
+  try{
+    const post = await Post.findById(id)
+    return post;
+  }catch(err){
+    throw new Error(err.message)
+  }
+}
 
 const editPostDB = async (_id, name, type, state, description, genre, date) => {
   try {
@@ -116,4 +128,5 @@ module.exports = {
   findPostDB,
   editPostDB,
   deletePostDB,
+  findReportedP,
 };

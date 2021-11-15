@@ -4,6 +4,7 @@ const userNetwork = require('../components/user/network');
 const postNetwork = require('../components/post/network');
 const conversationNetwork = require('../components/Conversation/network');
 const messageNetwork = require('../components/Message/network');
+const mePaNetwork = require('../components/MercadoPago/network');
 const fs = require('fs');
 const path = require('path');
 
@@ -37,5 +38,6 @@ router.use('/user', userNetwork);
 router.use('/post', postNetwork);
 router.use('/conversation', conversationNetwork);
 router.use('/message', messageNetwork);
+router.use('/mePa', mePaNetwork);
 
 module.exports = router;

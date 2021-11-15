@@ -131,6 +131,11 @@ export default function Post({ post }: { post: PostType }) {
           </Typography>
         </Image>
       </ImageButton>
+      <select>
+        <option>Contenido inapropiado</option>
+        <option>Spam</option>
+        <option>No puso suficiente informacion</option>
+      </select>
     </Link>
   );
 }

@@ -20,12 +20,8 @@ export default function LandingPage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const [loading, result] = useUser();
+  const [result, loading] = useUser();
   if (result === 'Success') history.push('/home/feed');
-
-  // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setAuth(event.target.checked);
-  // };
 
   useEffect(() => {
     dispatch(getPosts());

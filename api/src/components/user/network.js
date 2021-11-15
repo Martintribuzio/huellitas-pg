@@ -43,6 +43,7 @@ const upload = multer({
 
 userNetwork.get('/', async(req, res) => {
   try{
+    console.log(req.query.id);
     const user = await getUserById(req.query.id);
     if (user) {
       res.status(200).json(user);
@@ -50,6 +51,7 @@ userNetwork.get('/', async(req, res) => {
       res.status(404).send('usuario no encontradooooo');
     }
   } catch (err) {
+    console.log(err);
     res.status(400).send(err);
   }
 });
@@ -352,7 +354,7 @@ userNetwork.post('/refreshToken', (req, res, next) => {
 userNetwork.get('/', async (req, res) => {
   try {
     const user = await getUserById(req.query.id);
-    console.log('user', user);
+    // console.log('user', user);
     if (user) {
       console.log('el martoooo');
       res.status(200).json({

@@ -1,5 +1,4 @@
-import Feed_shelter from './Feed_shelter'
-import LocationMapShelter from './LocationMap/LocationMapShelter';
+import FeedShelter from './Feed_shelter'
 import huella  from "../assets/map/huellitasLost.png";
 import huellaAdopt  from "../assets/map/huellitaAdoption.png";
 import signodeex  from "../assets/map/huellitasFounded.png";
@@ -8,25 +7,25 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router';
 
 export default function Home() {
-const [loading,result] = useUser();
-const historty = useHistory();
+const [result] = useUser();
+const history = useHistory();
 
 useEffect(() => {
     if(result === 'Unauthorized'){
-        historty.push('/login');
+        history.push('/login');
     }
-},[result])
+},[result,history ])
 
   return (
     <div style={{ minHeight: '71vh', height: 'max-content' }}>
       <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '40px', justifyContent: 'center', marginTop: '30px'}}>
-        <label><img style={{width: "30px", height: '30px'}} src={huella}></img>Perdido</label>
-        <label><img style={{width: "30px", height: '30px'}} src={huellaAdopt}></img>En adopcion</label>
-        <label><img style={{width: "30px", height: '30px'}} src={signodeex}></img>Encontrado</label>
+        <label><img style={{width: "30px", height: '30px'}} src={huella} alt=""></img>Perdido</label>
+        <label><img style={{width: "30px", height: '30px'}} src={huellaAdopt} alt=""></img>En adopcion</label>
+        <label><img style={{width: "30px", height: '30px'}} src={signodeex} alt=""></img>Encontrado</label>
       </div>
       {/* <LocationMapShelter /> */}
 
-      <Feed_shelter />
+      <FeedShelter />
     </div>
   );
 }

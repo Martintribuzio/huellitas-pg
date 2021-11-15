@@ -29,7 +29,7 @@ export default function BottomAppBar() {
     const [arrivalMessage,setArrivalMessage] = useState<any>();
     const [messages,setMessages] = useState<message[]>()
     const id = localStorage.getItem('userId');
-    const [loading, result] = useUser();
+    const [ result] = useUser();
     const { ConverseId } = useParams<{ConverseId?:string}>()
     const dispatch = useDispatch();
     const socket:any = useRef()
@@ -69,16 +69,6 @@ export default function BottomAppBar() {
       }
     }
   }, [result]);
-  
-  // useEffect(() => {
-  //   socket.current = io("ws://localhost:3002")
-  //   socket.current.on("getMessage", (data:message) => {
-  //     setArrivalMessage({
-  //       sender: data.sender,
-  //       content: data.content
-  //     })
-  //   })
-  // },[])
   
   useEffect(() => {
     if(messages !== undefined){
@@ -131,11 +121,6 @@ export default function BottomAppBar() {
     return (
 
       <div className={style.container}>
-          {/* <CssBaseline /> */}
-          {/* <Paper square sx={{ pb: '50px',marginTop:3}}> */}
-            {/* <Typography variant="h5" gutterBottom component="div" sx={{ p: 2, pb: 0 }}>
-              Mensajes
-            </Typography> */}
             <div className={style.conv}>
             
             <List  >
@@ -143,11 +128,6 @@ export default function BottomAppBar() {
               <Conversations/>
             </List>
             </div>
-             {/* <div className={ConverseId?style.fondoChat:style.none}>
-               <div>
-                  <Message />
-               </div>
-             </div> */}
       <div className={ConverseId?style.fondoChat:style.none}>
         <div className={styles.mensaje} >
           {messages?.map((c) => (

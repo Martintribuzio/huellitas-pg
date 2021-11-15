@@ -10,8 +10,6 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { getCoords } from '../../redux/actions';
 import huella  from "../../assets/map/huellitasLost.png";
-import huellaAdopt  from "../../assets/map/huellitaAdoption.png";
-import signodeex  from "../../assets/map/huellitasFounded.png";
 
 import {Icon} from "leaflet"
  // import { popoverClasses } from '@mui/material';
@@ -73,17 +71,20 @@ export default function LocationMapShelter() {
       getShelters();
     },[]);
     
-  const icon = new Icon({
+  const icon = useMemo(()=>{
+    return new Icon({
     iconUrl: huella,
     iconSize: [25, 25]
   });
+  },[]);
+
   const fetcher = (...args) => fetch(...args).then(response => response.json());
   
   const [map, setMap] = useState(null);
 
   //https://huellitas-pg.herokuapp.com/post
 //   const url = (await axios.get(`${process.env.REACT_APP_API}user/shelters`)).data;
-  console.log(url);
+ 
   const { data, error } = useSwr(url, fetcher);
   // const posts = data && !error ? data : [];
 
@@ -114,7 +115,7 @@ const displayMap = useMemo(() => {
             <Popup> 
               <div style = {{width: '200px'}}>
                 {shelter.name? <h1>{`Nombre: ${shelter.name}`}</h1> : ""}
-                <img style = {{width: '200px'}} src = {shelter.profileImage.url}></img>
+                <img style = {{width: '200px'}} src = {shelter.profileImage.url} alt=""></img>
               </div>
             </Popup>
           </Marker>
@@ -122,7 +123,7 @@ const displayMap = useMemo(() => {
         <LeafletControlGeocoder />
       </MapContainer>
     );
-  }, [data, error]);
+  }, [data, error, icon]);
 
   return (
     <>

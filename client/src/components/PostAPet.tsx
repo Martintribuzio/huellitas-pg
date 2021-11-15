@@ -20,10 +20,6 @@ type event =
   | ChangeEvent<HTMLTextAreaElement>
   | ChangeEvent<HTMLSelectElement>;
 
-// interface HTMLInputEvent extends Event {
-//   target: HTMLInputElement & EventTarget;
-// }
-
 const initialState = {
   name: '',
   description: '',
@@ -49,8 +45,7 @@ export default function PostAPet(props: any) {
   const [state, setState] = React.useState('');
   const [type, setType] = React.useState('');
   const [genre, setGenre] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [_, result] = useUser();
+  const [result] = useUser();
   const [step, setStep] = useState(false);
   const [input, setInput] = useState<PostType>(initialState);
   const [loading, setLoading] = useState(false);
@@ -60,14 +55,17 @@ export default function PostAPet(props: any) {
 
   useEffect(() => {
     setLoading(false);
-    if (props.isOpen) {
-      setStep(false);
-    }
     setInput(initialState);
     setState('');
     setType('');
     setGenre('');
     setError(initialError);
+  }, []);
+
+  useEffect(() => {
+    if (props.isOpen) {
+      setStep(false);
+    }
   }, [props.isOpen]);
 
   useEffect(() => {
@@ -86,7 +84,6 @@ export default function PostAPet(props: any) {
   };
 
   const handlerdescritionchange = (event: string) => {
-    setDescription(event);
     setInput({
       ...input,
       description: event,
@@ -180,8 +177,6 @@ export default function PostAPet(props: any) {
     setError(errors);
   }
 
-  console.log(step);
-
   const maxDate = (): string => {
     const today = new Date();
     const dd = String(today.getDate()).padStart(2, '0');
@@ -211,7 +206,7 @@ export default function PostAPet(props: any) {
                 name='state'
                 value={state}
                 onChange={e => handleSelectEstado(e)}>
-                <option hidden selected>
+                <option defaultValue='Estado' hidden>
                   Estado
                 </option>
                 <option value='Perdido'>Perdido</option>
@@ -239,7 +234,7 @@ export default function PostAPet(props: any) {
                 name='type'
                 value={type}
                 onChange={e => handletypechange(e)}>
-                <option hidden selected>
+                <option defaultValue='Tipo' hidden>
                   Tipo
                 </option>
                 <option value='perro'> Perro </option>
@@ -255,7 +250,7 @@ export default function PostAPet(props: any) {
                 name='genero'
                 value={genre}
                 onChange={e => handlegenrechange(e)}>
-                <option hidden selected>
+                <option defaultValue='Género' hidden>
                   Género
                 </option>
                 <option value='Macho'> Macho </option>

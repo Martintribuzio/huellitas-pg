@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Redirect, useParams } from 'react-router';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
@@ -10,7 +10,6 @@ import { typeState } from '../../redux/reducers/index';
 import dotenv from 'dotenv';
 import Conversations from '../conversations/Conversations';
 import { Link } from 'react-router-dom';
-import { doesNotMatch } from 'assert';
 import { useResizeDetector } from 'react-resize-detector';
 import back from '../../assets/back.png';
 dotenv.config();
@@ -36,10 +35,12 @@ export default function Message(props: any) {
   const conversState: any = useSelector(
     (state: typeState) => state.conversations
   );
-  console.log(props.mobile);
-  const convers = Array.isArray(conversState)
+
+  const convers = useMemo(()=>{
+    return Array.isArray(conversState)
     ? conversState.filter((elem: any) => elem._id === ConverseId)[0]
     : [];
+  },[]);
 
   useEffect(() => {
     const getMessage = async () => {
@@ -69,7 +70,7 @@ export default function Message(props: any) {
         convers?.members.includes(arrivalMessage.sender) &&
         setMessages((prev: any) => [...prev, arrivalMessage]);
     }
-  }, [arrivalMessage, convers]);
+  }, [arrivalMessage, convers, messages]);
 
   useEffect(() => {
     socket.current.emit('addUser', idSender);
@@ -120,12 +121,13 @@ export default function Message(props: any) {
           </Link>
         </div>
         <div className={style.mensaje}>
-          {messages?.map(c => {
+          {messages?.map((c, index) => {
             if (c.state === 'unread' && c.sender !== idSender) {
               axios.put(`/message/${c._id}`);
             }
             return (
               <div
+                key={index}
                 ref={scrollRef}
                 className={c.sender !== idSender ? style.other : style.own}>
                 <p>{c.content}</p>
@@ -157,21 +159,10 @@ export default function Message(props: any) {
   }
 }
 
-{
-  /* <div className={style.inputSubmit}>
-        
-        <div onClick={handleSubmit} className={style.boton}>
-          <SendIcon></SendIcon>
-        </div>
-      </div> */
-}
-
 export const Messenger = ({ match }: any) => {
-  const { width, height, ref } = useResizeDetector();
-  const [toggle, setToggle] = useState<boolean>(false);
+  const { width, ref } = useResizeDetector();
   const params = useParams();
   const mobile = width && width < 900;
-  console.log(params);
 
   if (!mobile) {
     return (
