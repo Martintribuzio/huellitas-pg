@@ -130,8 +130,8 @@ export default function rootReducer(
       console.log('asicnjINACSV',action.payload[0].updatedAt,action.payload[1].updatedAt,action.payload[0].updatedAt < action.payload[1].updatedAt);
       return {
         ...state,
-        conversations: action.payload
-        .sort((a:conversation,b:conversation) => {
+        conversations: Array.isArray(action.payload) ?
+        action.payload.sort((a:conversation,b:conversation) => {
           if(a.updatedAt < b.updatedAt){
             return 1
           }
@@ -141,7 +141,7 @@ export default function rootReducer(
           else{
             return 0
           }
-        }),
+        }): action.payload
       };
     default:
       return state;
