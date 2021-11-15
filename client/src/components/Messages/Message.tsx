@@ -37,7 +37,7 @@ export default function Message(props: any) {
   const scrollRef = useRef<any>()
   const ConverseId = props.match ? props.match.params.ConversId : ''
   const convers: any = useSelector(
-    (state: typeState) => state.conversations.find((convers: any) => convers._id === ConverseId)
+    (state: typeState) => Array.isArray(state.conversations)? state.conversations.find((convers: any) => convers._id === ConverseId) : []
   )
 
   // useEffect(() => {
