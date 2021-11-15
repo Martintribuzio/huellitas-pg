@@ -127,32 +127,39 @@ export default function ImgMediaCard() {
             </Typography>
           </CardContent>
           {detailpost.user !== idSender ? (
-            <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Button onClick={contact} size='small'>
-                Contactar
-              </Button>
-            </CardActions>
+            <>
+              <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Button onClick={contact} size='small'>
+                  Contactar
+                </Button>
+              </CardActions>
+              <FormControl sx={{ m: 1, minWidth: '12vw' }}>
+                <Select
+                  labelId='demo-simple-select-helper-label'
+                  id='demo-simple-select-helper'
+                  value='reportar'
+                  label='reportar'
+                  onChange={handleCounter}>
+                  <MenuItem value='Spam'>Spam</MenuItem>
+                  <MenuItem value='Contenido Inapropiado'>
+                    Contenido Inapropiado
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </>
           ) : (
             <div>
-              <button onClick={toggleModal}>editar</button>
+              <Button
+                sx={{ marginBottom: '10px' }}
+                variant='contained'
+                onClick={toggleModal}>
+                editar
+              </Button>
               <Modal isOpen={isModal} closeModal={toggleModal}>
                 <EditPost />
               </Modal>
             </div>
           )}
-          <FormControl sx={{ m: 1, minWidth: '12vw' }}>
-            <Select
-              labelId='demo-simple-select-helper-label'
-              id='demo-simple-select-helper'
-              value='reportar'
-              label='reportar'
-              onChange={handleCounter}>
-              <MenuItem value='Spam'>Spam</MenuItem>
-              <MenuItem value='Contenido Inapropiado'>
-                Contenido Inapropiado
-              </MenuItem>
-            </Select>
-          </FormControl>
         </Card>
       </div>
     );
