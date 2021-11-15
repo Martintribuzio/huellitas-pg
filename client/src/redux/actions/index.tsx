@@ -9,15 +9,26 @@ import {
   APPLY_FILTERS,
   GET_CONVERSATIONS,
   GET_COORDENADAS,
+  GET_USER_ID,
 
   // EDIT_POST,
-
   DELETE_POST,
 } from '../types/actionTypes';
 import axios from 'axios';
 import { Filters } from '../types/types';
 import dotenv from 'dotenv';
 dotenv.config();
+
+export function getUser(id: string) {
+  return async (dispatch: any) => {
+    let data = (await axios.get('/user?id=' + id)).data;
+    console.log('data');
+    return dispatch({
+      type: GET_USER_ID,
+      payload: data,
+    });
+  };
+}
 
 export function deletePost(id: string | undefined) {
   return async (dispatch: any) => {

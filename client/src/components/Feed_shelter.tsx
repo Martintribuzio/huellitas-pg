@@ -5,6 +5,7 @@ import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 import dotenv from 'dotenv';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 dotenv.config();
 
@@ -64,27 +65,27 @@ const ImageBackdrop = styled('span')(({ theme }) => ({
   transition: theme.transitions.create('opacity'),
 }));
 
-
-interface shelter{
-name: string,
-_id: string,
-description: string,
-username: string,
-profileImage: {url: string,_id: string},
+interface shelter {
+  name: string;
+  _id: string;
+  description: string;
+  username: string;
+  profileImage: { url: string; _id: string };
 }
 
 export default function FeedShelter() {
   const [shelters, setShelters] = useState<shelter[]>();
 
   useEffect(() => {
-      const getShelters = async () => {
-        const res = await axios.get(`${process.env.REACT_APP_API}user/shelters`);
-        setShelters(res.data);}
+    const getShelters = async () => {
+      const res = await axios.get(`${process.env.REACT_APP_API}user/shelters`);
+      setShelters(res.data);
+    };
     getShelters();
-  },[]);
+  }, []);
 
-if(shelters){
-  if (shelters.length) {
+  if (shelters) {
+    if (shelters.length) {
       return (
         <Box
           sx={{
@@ -96,7 +97,7 @@ if(shelters){
           }}>
           {shelters.map(item => {
             return (
-            //   <Link to={`/home/detail/${item._id}`}>
+              <Link to={`/home/shelters/details/${item._id}`}>
                 <ImageButton
                   focusRipple
                   key={item.description}
@@ -145,55 +146,51 @@ if(shelters){
                     </Typography>
                   </Image>
                 </ImageButton>
-            //   </Link>
+              </Link>
             );
           })}
         </Box>
       );
+    } else {
+      return (
+        <div
+          className='loading'
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <img
+            src='https://themebeyond.com/html/petco/img/preloader.gif'
+            alt='cargando'
+            draggable='false'
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '15vh',
+              width: '15vw',
+            }}
+          />
+          <br />
+          <h2 style={{ color: '#8CCDFE', userSelect: 'none' }}>Cargando...</h2>
+          <br />
+          <img
+            src='https://themebeyond.com/html/petco/img/preloader.gif'
+            alt='Cargando...'
+            draggable='false'
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: '15vh',
+              width: '15vw',
+            }}
+          />
+        </div>
+      );
+    }
   } else {
-    return (
-      <div
-        className='loading'
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <img
-          src='https://themebeyond.com/html/petco/img/preloader.gif'
-          alt='cargando'
-          draggable='false'
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '15vh',
-            width: '15vw',
-          }}
-        />
-        <br />
-        <h2 style={{ color: '#8CCDFE', userSelect: 'none' }}>Cargando...</h2>
-        <br />
-        <img
-          src='https://themebeyond.com/html/petco/img/preloader.gif'
-          alt='Cargando...'
-          draggable='false'
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '15vh',
-            width: '15vw',
-          }}
-        />
-
-      </div>
-    );
+    return <div>No refugios</div>;
   }
-}
-else{
-  return (
-    <div>No refugios</div>
-  )
-}
 }
