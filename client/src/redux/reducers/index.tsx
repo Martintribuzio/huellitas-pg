@@ -127,9 +127,21 @@ export default function rootReducer(
     //     filteredPosts: filtradosFunc(state.allPosts, action.payload.state, action.payload.type, action.payload.genre)
     //   }
     case GET_CONVERSATIONS:
+      console.log('asicnjINACSV',action.payload[0].updatedAt,action.payload[1].updatedAt,action.payload[0].updatedAt < action.payload[1].updatedAt);
       return {
         ...state,
-        conversations: action.payload,
+        conversations: action.payload
+        .sort((a:conversation,b:conversation) => {
+          if(a.updatedAt < b.updatedAt){
+            return 1
+          }
+          else if(a.updatedAt > b.updatedAt){
+            return -1
+          }
+          else{
+            return 0
+          }
+        }),
       };
     default:
       return state;

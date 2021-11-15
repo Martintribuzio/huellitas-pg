@@ -58,7 +58,7 @@ export default function ImgMediaCard() {
             `/conversation?ida=${idSender}&idb=${detailpost.user}`
           )
         ).data[0];
-        if (conver._id) {
+        if (typeof conver !== 'string') {
           history.push(`/home/messenger/${conver._id}`);
         } else {
           const newConver: conversation = (
