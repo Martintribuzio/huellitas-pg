@@ -6,7 +6,6 @@ const conversationNetwork = require('../components/Conversation/network');
 const messageNetwork = require('../components/Message/network');
 const fs = require('fs');
 const path = require('path');
-const shelterNetwork = require('../components/Shelter/network');
 
 const router = Router();
 
@@ -38,6 +37,5 @@ router.use('/user', userNetwork);
 router.use('/post', postNetwork);
 router.use('/conversation', conversationNetwork);
 router.use('/message', messageNetwork);
-router.use('/shelter',shelterNetwork)
 
 module.exports = router;
