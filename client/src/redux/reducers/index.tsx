@@ -129,7 +129,18 @@ export default function rootReducer(
     case GET_CONVERSATIONS:
       return {
         ...state,
-        conversations: action.payload,
+        conversations: action.payload
+        // .sort((a:conversation,b:conversation) => {
+        //   if(a.updatedAt > b.updatedAt){
+        //     return -1
+        //   }
+        //   else if(a.updatedAt < b.updatedAt){
+        //     return 1
+        //   }
+        //   else{
+        //     return 0
+        //   }
+        // }),
       };
     default:
       return state;

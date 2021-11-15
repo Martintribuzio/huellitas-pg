@@ -41,7 +41,6 @@ export default function Message(props: any) {
     ? conversState.filter((elem: any) => elem._id === ConverseId)[0]
     : [];
   },[]);
-
   useEffect(() => {
     const getMessage = async () => {
       try {
@@ -113,6 +112,7 @@ export default function Message(props: any) {
   };
 
   if (convers?.members?.includes(idSender)) {
+    console.log('ASIFNHVCOASHUIASBC:: ',convers?.messages)
     return (
       <div className={style.Chat}>
         <div className={style.Chat__header}>

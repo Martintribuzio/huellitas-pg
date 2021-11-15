@@ -16,6 +16,7 @@ export interface PostType {
 export interface conversation {
   members: string[];
   _id: string;
+  updatedAt:string;
 }
 export interface detailProps {
   id: string;

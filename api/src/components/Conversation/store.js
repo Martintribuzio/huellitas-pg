@@ -13,7 +13,7 @@ const createConversationDB = async (idRec,idEnv) => {
 }
 const getConversationDB = async (ida,idb) => {
   try{
-    const converse = await conversation.find({members: {$all:[ida,idb]}})
+    const converse = await conversation.find({members: {$all:[ida,idb]}}).populate({path:'messages'})
     if(converse.length === 0){
       return 'Conversación no encontrada'
     }else{
@@ -26,7 +26,8 @@ const getConversationDB = async (ida,idb) => {
 
 const getConversationAloneDB = async (id) => {
   try{
-    const converse = await conversation.find({members: {$in:[id]}})
+    const converse = await conversation.find({members: {$in:[id]}}).populate({path:'messages'})
+    console.log(converse)
     if(Object.keys(converse).length === 0){
       throw new Error('No hay conversaciones')
     }else{
