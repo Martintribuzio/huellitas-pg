@@ -104,7 +104,7 @@ export default function Conversation(params: any) {
             <ListItemText
               primary={user.name}
               secondary={
-                params.conversation?.messages[params.conversation.messages.length - 1]?.content.length > 15
+                params.conversation?.messages[params.conversation.messages.length - 1]?.content?.length > 15
                   ? params.conversation?.messages[params.conversation.messages.length - 1]?.content.slice(0, 15) + '...'
                   : params.conversation?.messages[params.conversation.messages.length - 1]?.content
               }
