@@ -27,7 +27,6 @@ const getConversationDB = async (ida,idb) => {
 const getConversationAloneDB = async (id) => {
   try{
     const converse = await conversation.find({members: {$in:[id]}}).populate({path:'messages'})
-    console.log(converse)
     if(Object.keys(converse).length === 0){
       throw new Error('No hay conversaciones')
     }else{

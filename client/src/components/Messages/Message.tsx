@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Redirect, useParams } from 'react-router'
-import { useSelector } from 'react-redux'
+import { useSelector,useDispatch } from 'react-redux'
 import axios from 'axios'
 import style from './Message.module.css'
 import Input from '@mui/material/Input'
@@ -12,6 +12,7 @@ import Conversations from '../conversations/Conversations'
 import { Link } from 'react-router-dom'
 import { useResizeDetector } from 'react-resize-detector'
 import back from '../../assets/back.png'
+import {getConvers} from '../../redux/actions/index'
 dotenv.config()
 
 export interface message {
@@ -27,32 +28,35 @@ export default function Message(props: any) {
   const [messages, setMessages] = useState<message[]>()
   const [newMessage, setnewMessage] = useState<string>('')
   const [arrivalMessage, setArrivalMessage] = useState<any>()
+  // const [convers,setConver] = useState<any>()
+  const dispatch = useDispatch()
   const socket: any = useRef()
   const idSender = localStorage.getItem('userId')
   // const { ConverseId } = useParams<{ ConverseId: string }>();
   const scrollRef = useRef<any>()
   const ConverseId = props.match ? props.match.params.ConversId : ''
-  const conversState: any = useSelector(
-    (state: typeState) => state.conversations
+  const convers: any = useSelector(
+    (state: typeState) => state.conversations.find((convers: any) => convers._id === ConverseId)
   )
 
-  const convers = useMemo(() => {
-    return Array.isArray(conversState)
-      ? conversState.filter((elem: any) => elem._id === ConverseId)[0]
-      : []
-  }, [])
+  // useEffect(() => {
+  //   setConver(Array.isArray(conversState)
+  //       ? conversState.filter((elem: any) => elem._id === ConverseId)[0]
+  //       : [])
+  // },[])
 
-  useEffect(() => {
-    const getMessage = async () => {
-      try {
-        const res = await axios.get(`/message/${ConverseId}`)
-        setMessages(res.data)
-      } catch (err: any) {
-        return err.message
-      }
-    }
-    getMessage()
-  }, [ConverseId])
+
+  // useEffect(() => {
+  //   const getMessage = async () => {
+  //     try {
+  //       const res = await axios.get(`/message/${ConverseId}`)
+  //       setMessages(res.data)
+  //     } catch (err: any) {
+  //       return err.message
+  //     }
+  //   }
+  //   getMessage()
+  // }, [ConverseId])
 
   useEffect(() => {
     socket.current = io(`${process.env.REACT_APP_SOCKET_URL}`)
@@ -63,7 +67,7 @@ export default function Message(props: any) {
       })
     })
   }, [])
-
+ 
   useEffect(() => {
     if (messages !== undefined) {
       arrivalMessage &&
@@ -73,12 +77,16 @@ export default function Message(props: any) {
   }, [arrivalMessage, convers]) // NO AGREGAR MESSAGES COMO DEPENDENCIA
 
   useEffect(() => {
+    setMessages(convers.messages)
+  }, [ConverseId])
+
+  useEffect(() => {
     socket.current.emit('addUser', idSender)
   }, [idSender])
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView(false, { behavior: 'smooth' })
-  }, [messages])
+  }, [convers, idSender])
 
   const receiverId = convers?.members?.find(
     (member: string) => member !== idSender
@@ -99,9 +107,10 @@ export default function Message(props: any) {
           Converseid: ConverseId,
         }
         const res = await axios.post('/message', message)
-        if (messages !== undefined) {
-          setMessages([...messages, res.data])
-          setnewMessage('')
+        setMessages((prev: any) => [...prev, res.data])
+        setnewMessage('')
+        if(idSender){
+          dispatch(getConvers(idSender))
         }
         await axios.get('/message/mailNotification', {
           params: { receiverId: receiverId },
@@ -113,7 +122,7 @@ export default function Message(props: any) {
   }
 
   if (convers?.members?.includes(idSender)) {
-    console.log('ASIFNHVCOASHUIASBC:: ',convers?.messages)
+    console.log(messages)
     return (
       <div className={style.Chat}>
         <div className={style.Chat__header}>
@@ -122,7 +131,7 @@ export default function Message(props: any) {
           </Link>
         </div>
         <div className={style.mensaje}>
-          {messages?.map((c, index) => {
+          {messages?.map((c:message, index:number) => {
             if (c.state === 'unread' && c.sender !== idSender) {
               axios.put(`/message/${c._id}`)
             }
@@ -156,7 +165,7 @@ export default function Message(props: any) {
       </div>
     )
   } else {
-    return <Redirect to='/home/messenger' />
+    return <Redirect to='/home' />
   }
 }
 
