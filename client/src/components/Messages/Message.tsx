@@ -22,6 +22,7 @@ export interface message {
   state: string
   _id: string
   createdAt: string
+  updatedAt: string
 }
 
 export default function Message(props: any) {
@@ -77,8 +78,8 @@ export default function Message(props: any) {
   }, [arrivalMessage, convers]) // NO AGREGAR MESSAGES COMO DEPENDENCIA
 
   useEffect(() => {
-    setMessages(convers.messages)
-  }, [ConverseId])
+    setMessages(convers?.messages)
+  }, [ConverseId, convers])
 
   useEffect(() => {
     socket.current.emit('addUser', idSender)

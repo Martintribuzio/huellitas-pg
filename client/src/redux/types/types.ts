@@ -1,3 +1,5 @@
+import { message } from "../../components/Messages/Message";
+
 export interface PostType {
   name?: string;
   description: string;
@@ -16,6 +18,7 @@ export interface PostType {
 export interface conversation {
   members: string[];
   _id: string;
+  messages: message[];
   updatedAt:string;
 }
 export interface detailProps {
