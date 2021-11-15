@@ -128,6 +128,7 @@ export default function Post({ post }: { post: PostType }) {
               pb: theme => `calc(${theme.spacing(1)} + 6px)`,
             }}>
             {post.name}
+            
           </Typography>
         </Image>
       </ImageButton>
