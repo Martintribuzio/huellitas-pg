@@ -28,6 +28,10 @@ function App() {
           <Login />
         </Route>
 
+        <Route exact path='/register'>
+          <Login />
+        </Route>
+
         <Route exact path='/home'>
           <Home />
         </Route>

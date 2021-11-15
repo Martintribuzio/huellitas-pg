@@ -11,7 +11,6 @@ import { getCoords } from '../../redux/actions';
 import huella  from "../../assets/map/huellitasLost.png";
 import huellaAdopt  from "../../assets/map/huellitaAdoption.png";
 import signodeex  from "../../assets/map/huellitasFounded.png";
-
 import {Icon} from "leaflet"
  // import { popoverClasses } from '@mui/material';
 
@@ -52,7 +51,7 @@ function DisplayPosition({ map }) {
       dispatch(getCoords(position.lat.toString(), position.lng.toString()));
     };
   }, [map, onMove, position, dispatch]);
-
+  
   return (
     <>
       {/* latitude: {position.lat.toFixed(4)}, longitude: {position.lng.toFixed(4)}{' '}
@@ -97,7 +96,7 @@ export default function LocationMap() {
       
       <MapContainer
         className='mapContainer'
-        center={defaultCenter}
+        center={defaultCenter} 
         zoom={defaultZoom}
         scrollWheelZoom={false}
         whenCreated={setMap}>
