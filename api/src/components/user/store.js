@@ -65,7 +65,12 @@ const getSheltersDB = async () => {
 
 const getShelterDetDB = async (id) => {
   try {
-    const shelter = await User.findById(id).populate('profileImage');
+    const shelter = await User.findById(id).populate('profileImage').populate({
+      path: 'posts',
+      populate: {
+        path: 'petImage',
+      },
+    });
     return shelter;
   } catch (error) {
     throw new Error(error);
