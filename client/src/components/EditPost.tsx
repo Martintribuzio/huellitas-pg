@@ -233,7 +233,9 @@ export default function EditPost() {
                 }></textarea>
             </Typography>
 
-            <button onClick={handleSubmit}>Guardar</button>
+            <Button variant='contained' onClick={handleSubmit}>
+              Guardar
+            </Button>
           </CardContent>
         </Card>
       </div>
