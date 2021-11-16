@@ -1,118 +1,129 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { Redirect, useParams } from 'react-router';
-import { useSelector } from 'react-redux';
-import axios from 'axios';
-import style from './Message.module.css';
-import Input from '@mui/material/Input';
-import { io } from 'socket.io-client';
-import SendIcon from '@mui/icons-material/Send';
-import { typeState } from '../../redux/reducers/index';
-import dotenv from 'dotenv';
-import Conversations from '../conversations/Conversations';
-import { Link } from 'react-router-dom';
-import { useResizeDetector } from 'react-resize-detector';
-import back from '../../assets/back.png';
-dotenv.config();
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { Redirect, useParams } from 'react-router'
+import { useSelector,useDispatch } from 'react-redux'
+import axios from 'axios'
+import style from './Message.module.css'
+import Input from '@mui/material/Input'
+import { io } from 'socket.io-client'
+import SendIcon from '@mui/icons-material/Send'
+import { typeState } from '../../redux/reducers/index'
+import dotenv from 'dotenv'
+import Conversations from '../conversations/Conversations'
+import { Link } from 'react-router-dom'
+import { useResizeDetector } from 'react-resize-detector'
+import back from '../../assets/back.png'
+import {getConvers} from '../../redux/actions/index'
+dotenv.config()
 
 export interface message {
-  content: string;
-  Converseid: string;
-  sender: string;
-  state: string;
-  _id: string;
-  createdAt: string;
+  content: string
+  Converseid: string
+  sender: string
+  state: string
+  _id: string
+  createdAt: string
+  updatedAt: string
 }
 
 export default function Message(props: any) {
-  const [messages, setMessages] = useState<message[]>();
-  const [newMessage, setnewMessage] = useState<string>('');
-  const [arrivalMessage, setArrivalMessage] = useState<any>();
-  const socket: any = useRef();
-  const idSender = localStorage.getItem('userId');
+  const [messages, setMessages] = useState<message[]>()
+  const [newMessage, setnewMessage] = useState<string>('')
+  const [arrivalMessage, setArrivalMessage] = useState<any>()
+  // const [convers,setConver] = useState<any>()
+  const dispatch = useDispatch()
+  const socket: any = useRef()
+  const idSender = localStorage.getItem('userId')
   // const { ConverseId } = useParams<{ ConverseId: string }>();
-  const scrollRef = useRef<any>();
-  const ConverseId = props.match ? props.match.params.ConversId : '';
-  const conversState: any = useSelector(
-    (state: typeState) => state.conversations
-  );
+  const scrollRef = useRef<any>()
+  const ConverseId = props.match ? props.match.params.ConversId : ''
+  const convers: any = useSelector(
+    (state: typeState) => Array.isArray(state.conversations)? state.conversations.find((convers: any) => convers._id === ConverseId) : []
+  )
 
-  const convers = useMemo(()=>{
-    return Array.isArray(conversState)
-    ? conversState.filter((elem: any) => elem._id === ConverseId)[0]
-    : [];
-  },[]);
+  // useEffect(() => {
+  //   setConver(Array.isArray(conversState)
+  //       ? conversState.filter((elem: any) => elem._id === ConverseId)[0]
+  //       : [])
+  // },[])
+
+
+  // useEffect(() => {
+  //   const getMessage = async () => {
+  //     try {
+  //       const res = await axios.get(`/message/${ConverseId}`)
+  //       setMessages(res.data)
+  //     } catch (err: any) {
+  //       return err.message
+  //     }
+  //   }
+  //   getMessage()
+  // }, [ConverseId])
 
   useEffect(() => {
-    const getMessage = async () => {
-      try {
-        const res = await axios.get(`/message/${ConverseId}`);
-        setMessages(res.data);
-      } catch (err: any) {
-        return err.message;
-      }
-    };
-    getMessage();
-  }, [ConverseId]);
-
-  useEffect(() => {
-    socket.current = io(`${process.env.REACT_APP_SOCKET_URL}`);
+    socket.current = io(`${process.env.REACT_APP_SOCKET_URL}`)
     socket.current.on('getMessage', (data: any) => {
       setArrivalMessage({
         sender: data.senderId,
         content: data.text,
-      });
-    });
-  }, []);
-
+      })
+    })
+  }, [])
+ 
   useEffect(() => {
     if (messages !== undefined) {
       arrivalMessage &&
         convers?.members.includes(arrivalMessage.sender) &&
-        setMessages((prev: any) => [...prev, arrivalMessage]);
+        setMessages((prev: any) => [...prev, arrivalMessage])
     }
-  }, [arrivalMessage, convers, messages]);
+  }, [arrivalMessage, convers]) // NO AGREGAR MESSAGES COMO DEPENDENCIA
 
   useEffect(() => {
-    socket.current.emit('addUser', idSender);
-  }, [idSender]);
+    setMessages(convers?.messages)
+  }, [ConverseId, convers])
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView(false, { behavior: 'smooth' });
-  }, [messages]);
+    socket.current.emit('addUser', idSender)
+  }, [idSender])
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView(false, { behavior: 'smooth' })
+  }, [convers, idSender])
 
   const receiverId = convers?.members?.find(
     (member: string) => member !== idSender
-  );
+  )
 
   const handleSubmit = async (e: any) => {
     if (newMessage) {
       try {
-        e.preventDefault();
+        e.preventDefault()
         socket.current.emit('sendMessage', {
           senderId: idSender,
           receiverId: receiverId,
           text: newMessage,
-        });
+        })
         const message = {
           sender: idSender,
           content: newMessage,
           Converseid: ConverseId,
-        };
-        const res = await axios.post('/message', message);
-        if (messages !== undefined) {
-          setMessages([...messages, res.data]);
-          setnewMessage('');
+        }
+        const res = await axios.post('/message', message)
+        setMessages((prev: any) => [...prev, res.data])
+        setnewMessage('')
+        if(idSender){
+          dispatch(getConvers(idSender))
         }
         await axios.get('/message/mailNotification', {
           params: { receiverId: receiverId },
-        });
+        })
       } catch (err: any) {
-        console.log(err.message);
+        console.log(err.message)
       }
     }
-  };
+  }
 
   if (convers?.members?.includes(idSender)) {
+    console.log(messages)
     return (
       <div className={style.Chat}>
         <div className={style.Chat__header}>
@@ -121,9 +132,9 @@ export default function Message(props: any) {
           </Link>
         </div>
         <div className={style.mensaje}>
-          {messages?.map((c, index) => {
+          {messages?.map((c:message, index:number) => {
             if (c.state === 'unread' && c.sender !== idSender) {
-              axios.put(`/message/${c._id}`);
+              axios.put(`/message/${c._id}`)
             }
             return (
               <div
@@ -132,7 +143,7 @@ export default function Message(props: any) {
                 className={c.sender !== idSender ? style.other : style.own}>
                 <p>{c.content}</p>
               </div>
-            );
+            )
           })}
         </div>
         <div className={style.inputChat}>
@@ -141,7 +152,7 @@ export default function Message(props: any) {
             className={style.inputMU}
             onKeyPress={e => {
               if (e.key === 'Enter') {
-                handleSubmit(e);
+                handleSubmit(e)
               }
             }}
             placeholder='Escribe un mensaje'
@@ -153,16 +164,16 @@ export default function Message(props: any) {
           </button>
         </div>
       </div>
-    );
+    )
   } else {
-    return <Redirect to='/home/messenger' />;
+    return <Redirect to='/home' />
   }
 }
 
 export const Messenger = ({ match }: any) => {
-  const { width, ref } = useResizeDetector();
-  const params = useParams();
-  const mobile = width && width < 900;
+  const { width, ref } = useResizeDetector()
+  const params = useParams()
+  const mobile = width && width < 900
 
   if (!mobile) {
     return (
@@ -170,7 +181,7 @@ export const Messenger = ({ match }: any) => {
         <Conversations />
         <Message match={match} />
       </div>
-    );
+    )
   } else {
     return Object.keys(params).length && mobile ? (
       <div ref={ref} className={style.messengerContainer}>
@@ -180,6 +191,6 @@ export const Messenger = ({ match }: any) => {
       <div ref={ref} className={style.messengerContainer}>
         <Conversations />
       </div>
-    );
+    )
   }
-};
+}

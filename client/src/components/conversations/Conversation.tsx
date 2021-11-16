@@ -23,7 +23,7 @@ interface message {
 }
 export default function Conversation(params: any) {
   const [user, setUser] = useState<User>();
-  const [message, setMessage] = useState<message[]>();
+  // const [message, setMessage] = useState<message[]>();
   const [notification, setNotification] = useState<number>(0);
   const myId = localStorage.getItem('userId');
   const { ConversId } = useParams<any>();
@@ -40,23 +40,29 @@ export default function Conversation(params: any) {
         return err.message;
       }
     };
-    const getMessage = async () => {
-      try {
-        const res = (await axios.get(`/message/${params.conversation._id}`))
-          .data;
-        const noti = res.reduce(
-          (acc: number, m: message) =>
-            m.state === 'unread' && m.sender !== myId ? acc + 1 : acc,
-          0
-        );
-        setNotification(noti);
-        setMessage(res);
-      } catch (err: any) {
-        return err.message;
-      }
-    };
+    // const getMessage = async () => {
+    //   try {
+    //     const res = (await axios.get(`/message/${params.conversation._id}`))
+    //       .data;
+    //     const noti = res.reduce(
+    //       (acc: number, m: message) =>
+    //         m.state === 'unread' && m.sender !== myId ? acc + 1 : acc,
+    //       0
+    //     );
+    //     setNotification(noti);
+    //     setMessage(res);
+    //   } catch (err: any) {
+    //     return err.message;
+    //   }
+    // };
+    const noti = params.conversation.messages.reduce(
+            (acc: number, m: message) =>
+              m.state === 'unread' && m.sender !== myId ? acc + 1 : acc,
+            0
+          );
+    setNotification(noti);
     getUser(friendId);
-    getMessage();
+    // getMessage();
   }, [params, myId]);
 
   const bgColor =
@@ -88,7 +94,7 @@ export default function Conversation(params: any) {
           color: fontColor,
         }}
         button>
-        {user && message ? (
+        {user ? (
           <>
             <ListItemAvatar>
               <Badge badgeContent={notification} color='error'>
@@ -98,9 +104,9 @@ export default function Conversation(params: any) {
             <ListItemText
               primary={user.name}
               secondary={
-                message[message.length - 1]?.content.length > 15
-                  ? message[message.length - 1]?.content.slice(0, 15) + '...'
-                  : message[message.length - 1]?.content
+                params.conversation?.messages[params.conversation.messages.length - 1]?.content?.length > 15
+                  ? params.conversation?.messages[params.conversation.messages.length - 1]?.content.slice(0, 15) + '...'
+                  : params.conversation?.messages[params.conversation.messages.length - 1]?.content
               }
             />
           </>

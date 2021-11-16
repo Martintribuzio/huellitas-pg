@@ -22,13 +22,13 @@ import { InputLabel } from '@mui/material';
 
 export default function ImgMediaCard() {
   const { id } = useParams<{ id?: string }>();
-
+  
   const dispatch = useDispatch();
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
   const history = useHistory();
   const [result] = useUser();
   const idSender = localStorage.getItem('userId');
-
+  //console.log(allPosts)
   const [report, setReport] = useState<number>(0);
   let [isModal, setIsModal] = useState(false);
 
@@ -42,7 +42,7 @@ export default function ImgMediaCard() {
 
   const handleCounter = async function () {
     let counter: any = await axios.put(`/post/report?id=${id}`);
-    console.log(counter.data.reportCounter);
+    //console.log(counter.data.reportCounter);
     setReport(counter.data.reportCounter);
     alert(
       'esta publicacion fue reportada varias veces, será revisada por nuestros superiores maestros del kung fu'
@@ -59,7 +59,7 @@ export default function ImgMediaCard() {
             `/conversation?ida=${idSender}&idb=${detailpost.user}`
           )
         ).data[0];
-        if (conver._id) {
+        if (typeof conver !== 'string') {
           history.push(`/home/messenger/${conver._id}`);
         } else {
           const newConver: conversation = (

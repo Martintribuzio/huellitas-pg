@@ -55,7 +55,7 @@ export default function About() {
         component='div'>
         <span>Alias:<i>"El padre de familia"</i></span>
       </Typography>
-      <Typography sx={{ textAlign: 'left' }}>
+      <Typography sx={{ textAlign: 'right' }}>
       <div className={style.icons} >
         <IconButton className={style.button} href='https://github.com/cdwenz'>
           <Github />
@@ -103,7 +103,7 @@ export default function About() {
         component='div'>
           <span>Alias:<i>"Justiciero"</i></span>
       </Typography>
-      <Typography sx={{ textAlign: 'left' }}>
+      <Typography sx={{ textAlign: 'right' }}>
       <div className={style.icons} >
         <IconButton className={style.button} href='https://github.com/JustBecerra'>
           <Github />
@@ -149,7 +149,7 @@ export default function About() {
         component='div'>
           <span>Alias: <i> "Lucho"</i></span>
       </Typography>
-      <Typography sx={{ textAlign: 'left' }}>
+      <Typography sx={{ textAlign: 'right' }}>
       <div className={style.icons} >
         <IconButton className={style.button} href='https://github.com/luchobifa'>
           <Github />
@@ -195,7 +195,7 @@ export default function About() {
         component='div'>
         <span> Alias:<i>"Martoo"</i></span>
       </Typography>
-      <Typography sx={{ textAlign: 'left' }}>
+      <Typography sx={{ textAlign: 'right' }}>
       <div className={style.icons} >
         <IconButton className={style.button} href='https://github.com/Martintribuzio'>
           <Github />
@@ -243,7 +243,7 @@ export default function About() {
         component='div'>
         <span>Alias:<i> "Mono"</i></span>
       </Typography>
-      <Typography sx={{ textAlign: 'left' }}>
+      <Typography sx={{ textAlign: 'right' }}>
       <div className={style.icons} >
         <IconButton className={style.button} href='https://github.com/benjaaracil'>
           <Github />
@@ -292,7 +292,7 @@ export default function About() {
           
         <span>Alias:<i> "Jurox"</i></span>
       </Typography>
-      <Typography sx={{ textAlign: 'left' }}>
+      <Typography sx={{ textAlign: 'right' }}>
       <div className={style.icons} >
         <IconButton className={style.button} href='https://github.com/JuanDedossi'>
           <Github />
@@ -339,7 +339,7 @@ export default function About() {
         component='div'>
           <span>Alias: <i> "El modelo"</i> </span>
       </Typography>
-      <Typography sx={{ textAlign: 'left' }}>
+      <Typography sx={{ textAlign: 'right' }}>
       <div className={style.icons} >
         <IconButton className={style.button} href='https://github.com/santipk'>
           <Github />
@@ -384,7 +384,7 @@ export default function About() {
         component='div'>
        <span>Alias: <i> "Guadinha"</i></span>
       </Typography>
-      <Typography sx={{ textAlign: 'left' }}>
+      <Typography sx={{ textAlign: 'right' }}>
       <div className={style.icons} >
         <IconButton className={style.button} href='https://github.com/maria-guadalupe-cervera'>
           <Github />

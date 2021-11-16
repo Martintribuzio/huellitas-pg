@@ -44,7 +44,7 @@ const findPost = async id => {
   }
 };
 
-const editPost = async (_id, name, type, state, genre, description) => {
+const editPost = async (_id, name, type, state, genre, description, petImage) => {
   try {
     const post = await findPostDB(_id);
     if (post.error) {
@@ -60,9 +60,9 @@ const editPost = async (_id, name, type, state, genre, description) => {
       state,
       description,
       genre,
-      date
+      date, 
+      petImage
     );
-
     return editPost;
   } catch (error) {
     return { error: error.message };

@@ -9,7 +9,7 @@ import LeafletControlGeocoder from './LeafletControlGeocoder';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { getCoords } from '../../redux/actions';
-import huella  from "../../assets/map/huellitasLost.png";
+import shelterImg  from "../../assets/shelter.png";
 
 import {Icon} from "leaflet"
  // import { popoverClasses } from '@mui/material';
@@ -61,19 +61,10 @@ function DisplayPosition({ map }) {
 }
 
 export default function LocationMapShelter() {
-
-    const [url, setUrl] = useState([]);
-
-    useEffect(() => {
-        const getShelters = async () => {
-          const res = await axios.get(`${process.env.REACT_APP_API}user/shelters`);
-          setUrl(res.data);}
-      getShelters();
-    },[]);
     
   const icon = useMemo(()=>{
     return new Icon({
-    iconUrl: huella,
+    iconUrl: shelterImg,
     iconSize: [25, 25]
   });
   },[]);
@@ -82,11 +73,9 @@ export default function LocationMapShelter() {
   
   const [map, setMap] = useState(null);
 
-  //https://huellitas-pg.herokuapp.com/post
-//   const url = (await axios.get(`${process.env.REACT_APP_API}user/shelters`)).data;
- 
+  //https://huellitaspg.herokuapp.com/user/shelters
+  const url = "https://huellitaspg.herokuapp.com/user/shelters"
   const { data, error } = useSwr(url, fetcher);
-  // const posts = data && !error ? data : [];
 
 //   const [actPost, setPost] = useState(null);
 const displayMap = useMemo(() => {
