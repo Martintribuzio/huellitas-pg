@@ -12,6 +12,7 @@ import Textra from 'react-textra';
 import { Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CardChiquita from './CardChiquita';
+import useUser from '../hooks/useUser';
 
 const data = [
   /* 'Toda la informacion sobre los pets',
@@ -24,6 +25,8 @@ const data = [
 ];
 
 export const Home = () => {
+  const [user] = useUser();
+
   return (
     <div className='Home__container'>
       <section className='Primary'>
@@ -34,13 +37,33 @@ export const Home = () => {
             objetivo, ayudar a los animales a encontrar el camino de regreso a
             su hogar.
           </Typography>
-          <div style = {{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center',gap: '30px', minWidth: "200px"}}>
-          <Link style={{ textDecoration: 'none' }} to='/login'>
-            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Iniciar Sesion</Button>
-          </Link>
-          <Link style={{ textDecoration: 'none' }} to='/register'>
-            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Registrate</Button>
-          </Link>
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '30px',
+              minWidth: '200px',
+            }}>
+            {user !== 'Success' ? (
+              <>
+                <Link style={{ textDecoration: 'none' }} to='/login'>
+                  <Button
+                    variant='contained'
+                    style={{ width: '6vw', minWidth: '200px' }}>
+                    Iniciar Sesion
+                  </Button>
+                </Link>
+                <Link style={{ textDecoration: 'none' }} to='/register'>
+                  <Button
+                    variant='contained'
+                    style={{ width: '6vw', minWidth: '200px' }}>
+                    Registrate
+                  </Button>
+                </Link>
+              </>
+            ) : null}
           </div>
         </div>
         <div className='Images'>
@@ -129,14 +152,34 @@ export const Home = () => {
               Juntando nuestras "patitas" podemos ayudar a que todas las
               mascotas tengan su hogar.
             </Typography>
-            <div style = {{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center',gap: '30px', minWidth: "200px"}}>
-          <Link style={{ textDecoration: 'none' }} to='/login'>
-            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Iniciar Sesion</Button>
-          </Link>
-          <Link style={{ textDecoration: 'none' }} to='/register'>
-            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Registrate</Button>
-          </Link>
-          </div>
+            <div
+              style={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '30px',
+                minWidth: '200px',
+              }}>
+              {user !== 'Success' ? (
+                <>
+                  <Link style={{ textDecoration: 'none' }} to='/login'>
+                    <Button
+                      variant='contained'
+                      style={{ width: '6vw', minWidth: '200px' }}>
+                      Iniciar Sesion
+                    </Button>
+                  </Link>
+                  <Link style={{ textDecoration: 'none' }} to='/register'>
+                    <Button
+                      variant='contained'
+                      style={{ width: '6vw', minWidth: '200px' }}>
+                      Registrate
+                    </Button>
+                  </Link>
+                </>
+              ) : null}
+            </div>
           </div>
         </section>
       </Fade>

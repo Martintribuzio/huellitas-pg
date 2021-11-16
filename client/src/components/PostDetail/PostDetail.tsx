@@ -18,6 +18,7 @@ import EditPost from '../../components/EditPost';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import { InputLabel } from '@mui/material';
 
 export default function ImgMediaCard() {
   const { id } = useParams<{ id?: string }>();
@@ -134,12 +135,8 @@ export default function ImgMediaCard() {
                 </Button>
               </CardActions>
               <FormControl sx={{ m: 1, minWidth: '12vw' }}>
-                <Select
-                  labelId='demo-simple-select-helper-label'
-                  id='demo-simple-select-helper'
-                  value='reportar'
-                  label='reportar'
-                  onChange={handleCounter}>
+                <InputLabel>Reportar</InputLabel>
+                <Select label='Reportar' onChange={handleCounter}>
                   <MenuItem value='Spam'>Spam</MenuItem>
                   <MenuItem value='Contenido Inapropiado'>
                     Contenido Inapropiado
