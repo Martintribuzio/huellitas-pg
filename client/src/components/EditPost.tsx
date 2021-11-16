@@ -37,7 +37,7 @@ export default function EditPost() {
     genre: detailpost?.genre,
     date: detailpost?.date,
     petImage: "",
-    oldPetImage: detailpost?.petImage,
+    oldPetImage: detailpost?.petImage.url,
     type: detailpost?.type,
     state: detailpost?.state,
     latitude: detailpost?.latitude,
@@ -46,7 +46,7 @@ export default function EditPost() {
 
   const [input, setInput] = useState<any>(initialState);
 
-  //console.log(input)
+  console.log(input.oldPetImage)
 
   // useEffect(() => {
   //   dispatch(getPosts());
@@ -170,7 +170,14 @@ export default function EditPost() {
               maxHeight: 300,
             }}
             image = {URL.createObjectURL(input.petImage)}
-          />: null}
+          />: input.oldPetImage ? <CardMedia
+          component='img'
+          alt={detailpost.type}
+          sx={{
+            maxHeight: 300,
+          }}
+          image = {input.oldPetImage}
+          /> :  null}
           
           <CardContent>
             {detailpost.name ? (
