@@ -10,12 +10,12 @@ import useUser from '../../hooks/useUser';
 import profile from '../../assets/profile.png';
 import deletePostService from '../../services/deletePost';
 import Button from '@mui/material/Button';
+import { Modal } from '../Modal';
+import { useModal } from '../../hooks/useModal';
 
 import PostAPet from "../PostAPet"
 import { useSelector, useDispatch } from 'react-redux';
 import { typeState } from '../../redux/reducers';
-
-
 
 interface User {
   name: string;
@@ -28,7 +28,7 @@ export default function Profile() {
   const history = useHistory();
   const [user, setUser] = useState<User>();
   const [posts, setPosts] = useState<PostType[]>([]);
-  // const [isOpen, openModal, closeModal] = useModal();
+  const [isOpen, openModal, closeModal] = useModal();
   // let [isModal, setIsModal] = useState(false)
   
   // const toggleModal = function(){
@@ -86,6 +86,11 @@ export default function Profile() {
         padding: '20px 0 ',
         minHeight: '71vh',
       }}>
+      {/* <Button onClick={openModal}> Editar Perfil </Button> */}
+
+      <Modal isOpen={isOpen} closeModal={closeModal}>
+        <PostAPet isOpen={isOpen} closeModal={closeModal} />
+      </Modal>
       {user ? (
         <>
           <Avatar sx={{ width: '96px', height: '96px' }} src={user.image} />
