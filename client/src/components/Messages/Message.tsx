@@ -123,7 +123,6 @@ export default function Message(props: any) {
   }
 
   if (convers?.members?.includes(idSender)) {
-    console.log(messages)
     return (
       <div className={style.Chat}>
         <div className={style.Chat__header}>
