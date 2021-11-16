@@ -1,25 +1,15 @@
-import { useSelector, useDispatch } from 'react-redux';
-
+import { useSelector } from 'react-redux';
 import { PostType, conversation } from '../redux/types/types';
-import { useEffect, useState, ChangeEvent, MouseEvent } from 'react';
-
+import {useState, ChangeEvent, MouseEvent } from 'react';
 import { typeState } from '../redux/reducers/index';
-import { getPosts } from '../redux/actions';
 import { useHistory, useParams } from 'react-router';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Swal from 'sweetalert2';
-import capitalize from '@mui/utils/capitalize';
 import axios from 'axios';
 import useUser from '../hooks/useUser';
-import { MenuItem, TextField } from '@mui/material';
-import { Select } from '@mui/material';
-import { AnyMessageParams } from 'yup/lib/types';
-// import { editPostReducer } from '../redux/actions';
-import getPostsUser from '../services/getPostsUser';
 import editPost from '../services/editPost';
 import style from '../CSS/EditAPet.module.css';
 
@@ -46,7 +36,8 @@ export default function EditPost() {
     description: detailpost?.description,
     genre: detailpost?.genre,
     date: detailpost?.date,
-    petImage: detailpost?.petImage,
+    petImage: "",
+    oldPetImage: detailpost?.petImage,
     type: detailpost?.type,
     state: detailpost?.state,
     latitude: detailpost?.latitude,
@@ -171,15 +162,16 @@ export default function EditPost() {
               accept='.png, .jpg'
             />
           </label>
-          <CardMedia
+           
+        {input.petImage ? <CardMedia
             component='img'
             alt={detailpost.type}
             sx={{
               maxHeight: 300,
             }}
-            // src={URL.createObjectURL(input.petImage)}
-          />
-
+            image = {URL.createObjectURL(input.petImage)}
+          />: null}
+          
           <CardContent>
             {detailpost.name ? (
               <Typography gutterBottom variant='h6' component='div'>
