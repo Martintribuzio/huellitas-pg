@@ -77,7 +77,7 @@ export default function Post({ post }: { post: PostType }) {
       post.petImage = post.petImage.replace(/\\/g, '/');
     }
   }
-  console.log(post)
+  // console.log(post)
   return (
     <Link to={`/home/detail/${post._id}`}>
       <ImageButton

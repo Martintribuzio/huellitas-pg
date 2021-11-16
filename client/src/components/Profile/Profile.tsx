@@ -29,7 +29,7 @@ interface USE {
   closeModal: () => void;
 }
 
-export default async function Profile() {
+export default function Profile() {
   const history = useHistory();
   const [user, setUser] = useState<User>();
   const [posts, setPosts] = useState<PostType[]>([]);
@@ -48,10 +48,10 @@ export default async function Profile() {
   const id = localStorage.getItem('userId');
 
   useEffect(() => {
-    const getUsuario = (async() => {
+    const getUsuario = async() => {
       let usuario = await axios.get(`/user?id=${id}`)
-    console.log(usuario)
-    })
+      console.log("mono hombre ",usuario.data)
+    }
     getUsuario()
   }, [])
   
@@ -84,7 +84,7 @@ export default async function Profile() {
   }, [id]);
 
 
-  console.log('USER',user)
+  // console.log('USER',user)
 
   return result === 'Unauthorized' ? (
     <Redirect to='/login' />
