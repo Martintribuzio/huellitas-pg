@@ -12,6 +12,7 @@ import axios from 'axios';
 import useUser from '../hooks/useUser';
 import editPost from '../services/editPost';
 import style from '../CSS/EditAPet.module.css';
+import { Button } from '@mui/material';
 
 export default function EditPost() {
   type event =
