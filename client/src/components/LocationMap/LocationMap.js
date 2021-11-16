@@ -6,13 +6,13 @@ import useSwr from 'swr';
 import 'leaflet/dist/leaflet.css';
 import 'esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css';
 import LeafletControlGeocoder from './LeafletControlGeocoder';
-import { useDispatch } from 'react-redux';
-import { getCoords } from '../../redux/actions';
+import { useDispatch, useSelector} from 'react-redux';
+import { getCoords, getPosts } from '../../redux/actions';
 import huella  from "../../assets/map/huellitasLost.png";
 import huellaAdopt  from "../../assets/map/huellitaAdoption.png";
 import signodeex  from "../../assets/map/huellitasFounded.png";
 import {Icon} from "leaflet"
- // import { popoverClasses } from '@mui/material';
+import { typeState } from '../../redux/reducers/index';
 
 let defaultCenter = [-34.6038, -58.3816];
 let defaultZoom = 13;
@@ -85,13 +85,20 @@ export default function LocationMap() {
   
   const fetcher = (...args) => fetch(...args).then(response => response.json());
   const [map, setMap] = useState(null);
+  const dispatch = useDispatch();
+  let allPosts = useSelector((state) => state.filteredPosts);
 
   //https://huellitaspg.herokuapp.com/post
-  const url = 'https://huellitaspg.herokuapp.com/post';
-  const { data, error } = useSwr(url, fetcher);
+  // const url = 'https://huellitaspg.herokuapp.com/post';
+  // const { data, error } = useSwr(url, fetcher);
+
+
+  useEffect(() => {
+    dispatch(getPosts())
+  }, [dispatch]);
 
   const displayMap = useMemo(() => {
-    const posts = data && !error ? data : [];
+    const posts = allPosts ? allPosts : [];
     return (
       
       <MapContainer
@@ -163,7 +170,7 @@ export default function LocationMap() {
         <LeafletControlGeocoder />
       </MapContainer>
     );
-  }, [data, error, icon, icon2, icon3]);
+  }, [allPosts, error, icon, icon2, icon3]);
 
   return (
     <>
