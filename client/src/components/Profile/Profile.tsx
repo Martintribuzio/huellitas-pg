@@ -12,10 +12,9 @@ import deletePostService from '../../services/deletePost';
 import Button from '@mui/material/Button';
 import { Modal } from '../Modal';
 import { useModal } from '../../hooks/useModal';
-
-import EditProfile from "../editProfile/EditProfile"
+import EditProfile from '../editProfile/EditProfile';
+import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
-import { typeState } from '../../redux/reducers';
 
 interface User {
   name: string;
@@ -30,18 +29,15 @@ interface USE {
   closeModal: () => void;
 }
 
-export default function Profile() {
+export default async function Profile() {
   const history = useHistory();
   const [user, setUser] = useState<User>();
   const [posts, setPosts] = useState<PostType[]>([]);
-  const [isOpen, openModal, closeModal] = useModal();
-  // let [isModal, setIsModal] = useState(false)
+  let [isModal, setIsModal] = useState(false)
   
-  // const toggleModal = function(){
-  //   setIsModal(isModal = !isModal)
-  // }
-
-  //console.log(isModal)
+  const toggleModal = function(){
+    setIsModal(isModal = !isModal)
+  }
 
   const [result] = useUser();
 
@@ -50,6 +46,15 @@ export default function Profile() {
   }
 
   const id = localStorage.getItem('userId');
+
+  useEffect(() => {
+    const getUsuario = (async() => {
+      let usuario = await axios.get(`/user?id=${id}`)
+    console.log(usuario)
+    })
+    getUsuario()
+  }, [])
+  
 
   const handleClick = (id: string | undefined) => {
     deletePostService(id);
@@ -92,10 +97,10 @@ export default function Profile() {
         padding: '20px 0 ',
         minHeight: '71vh',
       }}>
-      <button onClick={openModal}> Editar Perfil </button>
+      <Button onClick={toggleModal}> Editar Perfil </Button>
 
-      <Modal isOpen={isOpen} closeModal={closeModal}>
-        <EditProfile isOpen={isOpen} closeModal={closeModal} />
+      <Modal isOpen={isModal} closeModal={toggleModal}>
+        <EditProfile />
       </Modal>
       {user ? (
         <>

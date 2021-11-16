@@ -25,49 +25,33 @@ export default function EditProfile(props: any){
       <Typography
         variant='h4'
         style={{ color: '#4A4A4A', marginBottom: '10px' }}>
-        Regístrate
+        Editar
       </Typography>
 
       <form>
-
         <div>
-          <input>Nombre</input>
+          <input placeholder="Nombre"/>
         </div>
         <div>
-          {/* <Controller
-            name='password'
-            defaultValue=''
-          /> */}
+          <input placeholder="Contraseña"/>
         </div>
         <div>
-          {/* <Controller
-            name='confirmPassword'
-            defaultValue=''
-          /> */}
+          <input placeholder="Confirmar contraseña"/>
         </div>
         <div>
-          {/* <Controller
-            name='phone'
-            defaultValue=''
-          /> */}
+          <input placeholder="Numero de telefono"/>
         </div>
         <div>
-          {/* <Controller
-            name='address'
-            defaultValue=''
-          /> */}
+          <input placeholder="Direccion"/>
         </div>
         <div>
-          {/* <Controller
-            name='description'
-            defaultValue=''
-          /> */}
+          <input placeholder="Descripcion"/>
         </div>
         <Button
           style={{ marginTop: '20px', width: '300px', marginBottom: '20px' }}
           variant='contained'
           type='submit'>
-          Registrar
+          Confirmar
         </Button>
       </form>
     </Box>
