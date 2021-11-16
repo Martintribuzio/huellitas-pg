@@ -1,6 +1,6 @@
 const userNetwork = require('express').Router();
 
-const { confirmation, postsByUser, getUserById, mailCreation,getShelters, getShelterDet} = require('./controller');
+const { confirmation, postsByUser, getUserById, mailCreation,getShelters, getShelterDet, editProfile} = require('./controller');
 const passport = require('passport');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
@@ -369,6 +369,15 @@ userNetwork.get('/', async (req, res) => {
     res.status(400).send(err.message);
   }
 });
+
+userNetwork.put('/profile', async(req, res) => {
+  try{
+    let profile = await editProfile(req.body)
+    res.send(profile)
+  }catch(err){
+    res.status(400).send(err.message)
+  }
+})
 
 userNetwork.get('/shelter', async (req, res) => {
   try{

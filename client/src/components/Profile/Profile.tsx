@@ -23,16 +23,21 @@ interface User {
   image: string;
 }
 
-interface USE {
-  isOpen: boolean;
-  openModal: () => void;
-  closeModal: () => void;
+export interface Shelter {
+  name: string;
+  lastname: string;
+  username: string;
+  image: string;
+  address: string;
+  phone: string;
+  description: string;
 }
 
 export default function Profile() {
   const history = useHistory();
   const [user, setUser] = useState<User>();
   const [posts, setPosts] = useState<PostType[]>([]);
+  const [ownUser,setownUser] = useState<Shelter>()
   let [isModal, setIsModal] = useState(false)
   
   const toggleModal = function(){
@@ -50,7 +55,8 @@ export default function Profile() {
   useEffect(() => {
     const getUsuario = async() => {
       let usuario = await axios.get(`/user?id=${id}`)
-      console.log("mono hombre ",usuario.data)
+      setownUser(usuario.data)
+      // console.log("mono hombre ",usuario.data)
     }
     getUsuario()
   }, [])
@@ -62,7 +68,7 @@ export default function Profile() {
   };
 
   // let refresh = useSelector((state: typeState) => state.editPost);
-
+  // console.log("soy yo ",ownUser)
   useEffect(() => {
     if (id) {
       getPostsUser(id).then(post => {
@@ -100,7 +106,9 @@ export default function Profile() {
       <Button onClick={toggleModal}> Editar Perfil </Button>
 
       <Modal isOpen={isModal} closeModal={toggleModal}>
-        <EditProfile />
+        {ownUser !== undefined ? 
+         <EditProfile ownUser={ownUser}/> : null
+        }
       </Modal>
       {user ? (
         <>

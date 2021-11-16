@@ -1,25 +1,42 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { Controller, useForm } from 'react-hook-form';
+import {Shelter} from '../Profile/Profile'
+import editProfile from '../../services/editProfile'
 
-type Data = {
-    name: string | any;
-    lastname: string | any;
-    type: string | any;
-    password: string | any;
-    confirmPassword: string | any;
-    phone: string | any;
-    address: string | any;
-    description: string | any;
-    profileImage: string | any;
-};
+export default function EditProfile(props: {ownUser: Shelter}){
+  const initialState = {
+    name: props.ownUser.name,
+    lastname: props.ownUser.lastname,
+    username: props.ownUser.username,
+    image: props.ownUser.image,
+    address: props.ownUser.address,
+    phone: props.ownUser.phone,
+    description: props.ownUser?.description,
+  };
+  const[input,setInput] = useState<Shelter>(initialState)
 
-export default function EditProfile(props: any){
-    
-  const[usuario,setUsuario] = useState()
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    });
+  };
   
+  function handleSubmit(e: any) {
+    e.preventDefault()
+    console.log("Cristian")
+    editProfile(
+      input.name,
+      input.lastname,
+      input.username,
+      input.address,
+      input.phone,
+      input.description,
+    )
+  }
+  // console.log(input)
   return(
     <Box sx={{ backgroundColor: '#F5F5F5' }}>
       <Typography
@@ -30,27 +47,32 @@ export default function EditProfile(props: any){
 
       <form>
         <div>
-          <input placeholder="Nombre"/>
+          <input name='name' type='text' defaultValue={props.ownUser.name} onChange={(e) => handleChange(e)}/>
+        </div>
+        {/* <div>
+          <input type='password' placeholder="Contraseña actual"/>
         </div>
         <div>
-          <input placeholder="Contraseña"/>
+          <input type='password' placeholder="Nueva contraseña"/>
         </div>
         <div>
-          <input placeholder="Confirmar contraseña"/>
+          <input type='password' placeholder="Confirmar contraseña"/>
+        </div> */}
+        <div>
+          <input name='phone' type='text' defaultValue={props.ownUser.phone} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
-          <input placeholder="Numero de telefono"/>
+          <input name='address' type='text' defaultValue={props.ownUser.address} onChange={(e) => handleChange(e)}/>
         </div>
         <div>
-          <input placeholder="Direccion"/>
-        </div>
-        <div>
-          <input placeholder="Descripcion"/>
+          <input name='description' type='text' defaultValue={props.ownUser.description} onChange={(e) => handleChange(e)}/>
         </div>
         <Button
           style={{ marginTop: '20px', width: '300px', marginBottom: '20px' }}
           variant='contained'
-          type='submit'>
+          type='submit'
+          onClick={(e) => handleSubmit(e)}
+        >
           Confirmar
         </Button>
       </form>
