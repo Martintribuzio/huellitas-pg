@@ -11,8 +11,32 @@ import { Link, useLocation } from 'react-router-dom'
 import back from '../../assets/back.png'
 import { getConvers } from '../../redux/actions/index'
 import { useParams } from 'react-router-dom'
+import { Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
 dotenv.config()
 
+const fadeLeft: Variants = {
+  initial: {
+    x: '100%',
+    opacity: 1,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      ease: 'easeInOut',
+    },
+  },
+  exit: {
+    x: '-100%',
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      ease: 'easeInOut',
+    },
+  },
+}
 export interface message {
   content: string
   Converseid: string
@@ -103,7 +127,11 @@ export default function Message(props: any) {
   }
 
   return (
-    <div className={style.Chat}>
+    <motion.div
+      variants={fadeLeft}
+      initial='initial'
+      animate='animate'
+      className={style.Chat}>
       {convers ? (
         <>
           <div className={style.Chat__header}>
@@ -147,6 +175,6 @@ export default function Message(props: any) {
       ) : (
         <h1>No hay conversaciones seleccionadas</h1>
       )}
-    </div>
+    </motion.div>
   )
 }
