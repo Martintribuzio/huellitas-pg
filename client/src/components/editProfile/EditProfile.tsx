@@ -16,7 +16,7 @@ type Data = {
     profileImage: string | any;
 };
 
-export default function EditProfile(){
+export default function EditProfile(props: any){
     
   const[usuario,setUsuario] = useState()
   

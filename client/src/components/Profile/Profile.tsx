@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import { Modal } from '../Modal';
 import { useModal } from '../../hooks/useModal';
 
-import PostAPet from "../PostAPet"
+import EditProfile from "../editProfile/EditProfile"
 import { useSelector, useDispatch } from 'react-redux';
 import { typeState } from '../../redux/reducers';
 
@@ -22,6 +22,12 @@ interface User {
   lastname: string;
   username: string;
   image: string;
+}
+
+interface USE {
+  isOpen: boolean;
+  openModal: () => void;
+  closeModal: () => void;
 }
 
 export default function Profile() {
@@ -86,10 +92,10 @@ export default function Profile() {
         padding: '20px 0 ',
         minHeight: '71vh',
       }}>
-      {/* <Button onClick={openModal}> Editar Perfil </Button> */}
+      <button onClick={openModal}> Editar Perfil </button>
 
       <Modal isOpen={isOpen} closeModal={closeModal}>
-        <PostAPet isOpen={isOpen} closeModal={closeModal} />
+        <EditProfile isOpen={isOpen} closeModal={closeModal} />
       </Modal>
       {user ? (
         <>
