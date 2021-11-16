@@ -33,7 +33,7 @@ export default function EditPost() {
 
   const { id } = useParams<{ id?: string }>();
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const history = useHistory();
   const [loading, result] = useUser();
   const idSender = localStorage.getItem('userId');
@@ -55,9 +55,11 @@ export default function EditPost() {
 
   const [input, setInput] = useState<any>(initialState);
 
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [dispatch]);
+  //console.log(input)
+
+  // useEffect(() => {
+  //   dispatch(getPosts());
+  // }, [dispatch]);
 
   //funciones handle////////////////////////////////////////////////////////////
 
@@ -100,16 +102,17 @@ export default function EditPost() {
   }
 
   function handleSubmit(e: mouseEvent) {
-    editPost(
-      input._id,
-      input.name,
-      input.type,
-      input.state,
-      input.genre,
-      input.description
-    );
-    // history.push('/home/profile');
-    // dispatch(editPostReducer(true));
+    const fd = new FormData();
+    fd.append('state', input.state);
+    fd.append('description', input.description);
+    fd.append('type', input.type);
+    fd.append('genre', input.genre);
+    fd.append('_id', input._id);
+    input.name && fd.append('name', input.name);
+    input.petImage && fd.append('petImage', input.petImage);
+    
+    editPost(fd);
+
     return Swal.fire({
       title: 'Guardado!',
       text: 'Publicacion editada con exito!',
@@ -117,7 +120,6 @@ export default function EditPost() {
       confirmButtonText: 'Ok',
     });
   }
-
   //console.log(input)
   ///////////////////////////////////////////////////////////////////
   const contact = async () => {
@@ -175,7 +177,7 @@ export default function EditPost() {
             sx={{
               maxHeight: 300,
             }}
-            image={`${detailpost.petImage.url}`}
+            // src={URL.createObjectURL(input.petImage)}
           />
 
           <CardContent>

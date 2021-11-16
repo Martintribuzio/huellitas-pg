@@ -86,8 +86,8 @@ export default function LocationMap() {
   const fetcher = (...args) => fetch(...args).then(response => response.json());
   const [map, setMap] = useState(null);
 
-  //https://huellitas-pg.herokuapp.com/post
-  const url = 'https://huellitas-pg.herokuapp.com/post';
+  //https://huellitaspg.herokuapp.com/post
+  const url = 'https://huellitaspg.herokuapp.com/post';
   const { data, error } = useSwr(url, fetcher);
 
   const displayMap = useMemo(() => {
