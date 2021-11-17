@@ -69,7 +69,7 @@ export default function LandingPage() {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <IconButton size='large' color='inherit' sx={{ ml: 2 }}>
+                <IconButton size='large' color='inherit' sx={{ ml: 2 }}>
                 <Link
                   to='/home'
                   style={{
@@ -90,7 +90,7 @@ export default function LandingPage() {
                     Huellitas
                   </Typography>
                 </Link>
-              </IconButton>
+                </IconButton>
               <Typography variant='h6' color='white'>
                 Marcando el camino a casa
               </Typography>
