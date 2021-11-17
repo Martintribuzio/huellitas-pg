@@ -229,15 +229,14 @@ export default function PrimarySearchAppBar(): JSX.Element {
         position='static'
         sx={{ height: '9vh', display: 'flex', justifyContent: 'center' }}>
         <Toolbar>
+          <Link className={s.link} to='/home' style={{ color: 'white' }}>
           <IconButton
             size='large'
             edge='start'
             color='inherit'
             aria-label='open drawer'
             sx={{ mr: 2 }}>
-            <Link className={s.link} to='/home' style={{ color: 'white' }}>
               <PetsIcon />
-            </Link>
             <Typography
               variant='h6'
               noWrap
@@ -253,6 +252,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               Huellitas
             </Typography>
           </IconButton>
+                </Link>
 
           <Box
             sx={{
@@ -269,11 +269,11 @@ export default function PrimarySearchAppBar(): JSX.Element {
           </Box>
 
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <Link style={{ textDecoration: 'none', color: 'white' }} to='/home'>
+            {/* <Link style={{ textDecoration: 'none', color: 'white' }} to='/home'>
               <Button className={s.btnNav} color='inherit'>
                 Inicio
               </Button>
-            </Link>
+            </Link> */}
             <Link
               style={{ textDecoration: 'none', color: 'white' }}
               to='/home/feed'>

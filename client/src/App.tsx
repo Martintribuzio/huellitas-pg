@@ -13,7 +13,7 @@ import { Redirect } from 'react-router';
 import { Messenger } from './components/Messages/Message';
 import About from './components/About/about';
 import HomeShelter from './components/home_shelter';
-import MercadoPago from './components/mercadoPago/mercadoPago.jsx';
+import MercadoPago from './components/mercadoPago/mercadoPago';
 import ShelterProfile from './components/shelterProfile/ShelterProfile';
 
 function App() {
@@ -59,35 +59,24 @@ function App() {
         </Route>
 
         <Route path='/alldogs'>{/* <Alldogs /> */}</Route>
+
         <Route exact path='/home/shelters'>
           <HomeShelter />
         </Route>
 
         <Route path='/home/messenger/:ConversId' component={Messenger} />
-        {/* <Message />
-        </Route> */}
+
+        <Route path='/home/donate' >
+          <MercadoPago />
+          </Route>
 
         <Route exact path='/home/messenger'>
           <Messenger />
         </Route>
 
-        <Route exact path='/notification'>
-          {/* <Notification /> */}
-        </Route>
-
-        {/* <Route path='/register'>
-          <Register />
-        </Route> */}
-
-        <Route path='/found'>{/* <Found/> */}</Route>
-
-        <Route path='/lost'>{/* <Lost/> */}</Route>
-
-        <Route path='/adoption'>{/* <Adoption /> */}</Route>
 
         <Route path='/home' component={Footer} />
 
-        <Route path='/home/donate' component={MercadoPago} />
 
         <Route exact path='/'>
           <Redirect to='/home' />
