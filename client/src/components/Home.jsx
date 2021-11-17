@@ -25,11 +25,12 @@ export default function Home() {
           width: '150px',
           height: '50px',
           border: '1px solid gray',
-          backgroundColor: 'white',
+          backgroundColor: 'transparent',
           color: 'gray',
+          cursor: 'pointer',
         }}
         onClick={openModal}>
-        CREAR POST
+        CREAR PUBLICACION
       </button>
 
       <Modal isOpen={isOpen} closeModal={closeModal}>

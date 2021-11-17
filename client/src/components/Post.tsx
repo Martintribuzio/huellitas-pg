@@ -71,35 +71,13 @@ const ImageBackdrop = styled('span')(({ theme }) => ({
 }));
 
 export default function Post({ post }: { post: PostType }) {
-  // return (
-  //   <>
-  //     {typeof props.petImage === 'string' && props.petImage ? (
-  //       <img src={`http://localhost:3001/${props.petImage}`}></img>
-  //     ) : (
-  //       ''
-  //     )}
-  //     <img
-  //       className={styles.img}
-  //       alt={''}
-  //       src={`http://localhost:3001/${props.petImage}`}
-  //     />
-  //     <p>
-  //       {props.name !== undefined
-  //         ? `Nombre: ${props.name}`
-  //         : 'nombre desconocido'}
-  //     </p>
-  //     <p>{`Descripcion: ${props.description}`}</p>
-  //     <p>{`Fecha: ${props.date}`}</p>
-  //     <p>{`Genero: ${props.genre}`}</p>
-  //     <p>{`Animal: ${props.type}`}</p>
-  //     <p>{`Estado: ${props.state}`}</p>
-  //   </>
-  // );
+  
   if (typeof post.petImage === 'string') {
     if (post.petImage.search(/\\/)) {
       post.petImage = post.petImage.replace(/\\/g, '/');
     }
   }
+  // console.log(post)
   return (
     <Link to={`/home/detail/${post._id}`}>
       <ImageButton
@@ -128,14 +106,10 @@ export default function Post({ post }: { post: PostType }) {
               pb: theme => `calc(${theme.spacing(1)} + 6px)`,
             }}>
             {post.name}
+            
           </Typography>
         </Image>
       </ImageButton>
-      <select>
-        <option>Contenido inapropiado</option>
-        <option>Spam</option>
-        <option>No puso suficiente informacion</option>
-      </select>
     </Link>
   );
 }

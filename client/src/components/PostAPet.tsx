@@ -167,7 +167,7 @@ export default function PostAPet(props: any) {
       fd.append('genre', input.genre);
       id && fd.append('id', id);
       if (!step) {
-        console.log('post');
+        //console.log('post');
         setStep(true);
         return;
       }
@@ -185,7 +185,7 @@ export default function PostAPet(props: any) {
     return `${yyyy}-${mm}-${dd}`;
   };
 
-  if (result === 'Unauthorized') {
+  if (props.isOpen && result === 'Unauthorized') {
     return <Redirect to='/login' />;
   }
   return (

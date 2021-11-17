@@ -1,21 +1,22 @@
-import { Route } from 'react-router-dom';
-import Navbar from './components/navBar/NavBar';
-import { ThemeProvider } from '@mui/material/styles';
-import theme from './themeConfig';
-import PostAPet from './components/PostAPet';
-import Profile from './components/Profile/Profile';
-import Footer from './components/Footer/Footer';
-import Login from './components/Login';
-import PostDetail from './components/PostDetail/PostDetail';
-import Publicaciones from './components/Home.jsx';
-import { Home } from './pages/Home';
-import { Redirect } from 'react-router';
-import { Messenger } from './components/Messages/Message';
-import About from './components/About/about';
-import HomeShelter from './components/home_shelter';
+import { Route } from 'react-router-dom'
+import Navbar from './components/navBar/NavBar'
+import { ThemeProvider } from '@mui/material/styles'
+import theme from './themeConfig'
+import PostAPet from './components/PostAPet'
+import Profile from './components/Profile/Profile'
+import Footer from './components/Footer/Footer'
+import Login from './components/Login'
+import PostDetail from './components/PostDetail/PostDetail'
+import Publicaciones from './components/Home.jsx'
+import { Home } from './pages/Home'
+import { Redirect } from 'react-router'
+import { Messenger } from './components/Messenger/Messenger'
+import About from './components/About/about'
+import HomeShelter from './components/home_shelter'
+import MercadoPago from './components/mercadoPago/mercadoPago.jsx'
+import ShelterProfile from './components/shelterProfile/ShelterProfile'
 
 function App() {
-
   return (
     <ThemeProvider theme={theme}>
       <div className='App'>
@@ -27,12 +28,20 @@ function App() {
           <Login />
         </Route>
 
+        <Route exact path='/register'>
+          <Login />
+        </Route>
+
         <Route exact path='/home'>
           <Home />
         </Route>
 
         <Route exact path='/home/detail/:id'>
           <PostDetail />
+        </Route>
+
+        <Route exact path='/home/shelter/details/:id'>
+          <ShelterProfile />
         </Route>
 
         <Route path='/home/createPost'>
@@ -49,16 +58,11 @@ function App() {
           <Publicaciones />
         </Route>
 
-        <Route path='/alldogs'>{/* <Alldogs /> */}</Route>
-        <Route path='/home/shelters'>
+        <Route exact path='/home/shelters'>
           <HomeShelter />
         </Route>
 
-        <Route path='/home/messenger/:ConversId' component={Messenger} />
-        {/* <Message />
-        </Route> */}
-
-        <Route exact path='/home/messenger'>
+        <Route path='/home/messenger'>
           <Messenger />
         </Route>
 
@@ -78,12 +82,14 @@ function App() {
 
         <Route path='/home' component={Footer} />
 
+        <Route path='/home/donate' component={MercadoPago} />
+
         <Route exact path='/'>
           <Redirect to='/home' />
         </Route>
       </div>
     </ThemeProvider>
-  );
+  )
 }
 
-export default App;
+export default App

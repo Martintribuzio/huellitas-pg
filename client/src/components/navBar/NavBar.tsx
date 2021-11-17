@@ -23,11 +23,12 @@ import { useHistory } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
 import useUser from '../../hooks/useUser';
 import axios from 'axios';
-import PreviewIcon from '@mui/icons-material/Preview';
 import InfoIcon from '@mui/icons-material/Info';
 import { conversation } from '../../redux/types/types';
 import { typeState } from '../../redux/reducers/index';
 import { message } from '../Messages/Message';
+import HomeIcon from '@mui/icons-material/Home';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 export default function PrimarySearchAppBar(): JSX.Element {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -39,13 +40,13 @@ export default function PrimarySearchAppBar(): JSX.Element {
   const isMenuOpenProf = Boolean(anchorElProf);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const history = useHistory();
-  const [ result] = useUser();
+  const [result] = useUser();
   const [notificacion, setNotificacion] = useState<number>(0);
   const convers: Array<conversation> = useSelector(
     (state: typeState) => state.conversations
   );
   const id = localStorage.getItem('userId');
-  
+
   useEffect(() => {
     if (Array.isArray(convers)) {
       const getMessages = async () => {
@@ -64,7 +65,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
       };
       getMessages();
     }
-  }, [result, convers, mobileMoreAnchorEl, anchorEl, anchorElProf,id]);
+  }, [result, convers, mobileMoreAnchorEl, anchorEl, anchorElProf, id]);
   const logoutService = async () => {
     try {
       const response: any = await axios.get('/user/logout', {
@@ -253,16 +254,21 @@ export default function PrimarySearchAppBar(): JSX.Element {
             <Link className={s.link} to='/home' style={{ color: 'white' }}>
               <PetsIcon />
             </Link>
+            <Typography
+              variant='h6'
+              noWrap
+              component='div'
+              sx={{
+                display: {
+                  overflow: 'inherit',
+                  xs: 'none',
+                  sm: 'block',
+                  marginLeft: '10px',
+                },
+              }}>
+              Huellitas
+            </Typography>
           </IconButton>
-          <Typography
-            variant='h6'
-            noWrap
-            component='div'
-            sx={{
-              display: { overflow: 'inherit', xs: 'none', sm: 'block' },
-            }}>
-            Huellitas
-          </Typography>
 
           <Box
             sx={{
@@ -278,7 +284,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
             </IconButton>
           </Box>
 
-          <Box sx={{ display: { xs: 'none', md: 'flex' }, marginLeft: '25px' }}>
+          <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <Link style={{ textDecoration: 'none', color: 'white' }} to='/home'>
               <Button className={s.btnNav} color='inherit'>
                 Inicio
@@ -312,7 +318,14 @@ export default function PrimarySearchAppBar(): JSX.Element {
               style={{ textDecoration: 'none', color: 'white' }}
               to='/home/feed'>
               <IconButton sx={{ mr: 2 }} color='inherit'>
-                <PreviewIcon />
+                <FavoriteBorderIcon />
+              </IconButton>
+            </Link>
+            <Link
+              style={{ textDecoration: 'none', color: 'white' }}
+              to='/home/shelters'>
+              <IconButton sx={{ mr: 2 }} color='inherit'>
+                <HomeIcon />
               </IconButton>
             </Link>
             <Link
@@ -373,11 +386,17 @@ export default function PrimarySearchAppBar(): JSX.Element {
             </Box>
           ) : (
             <Link style={{ textDecoration: 'none' }} to='/login'>
-              <Button
+              {/* <Button
                 color='secondary'
                 variant='contained'
                 sx={{ color: '#73A7CB' }}>
                 Registrate
+              </Button> */}
+              <Button
+                variant='contained'
+                color='secondary'
+                style={{ width: '7vw', minWidth: '90px', color: '#73A7CB' }}>
+                Empezar
               </Button>
             </Link>
           )}

@@ -21,13 +21,13 @@ import FormControl from '@mui/material/FormControl';
 
 export default function ImgMediaCard() {
   const { id } = useParams<{ id?: string }>();
-
+  
   const dispatch = useDispatch();
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
   const history = useHistory();
   const [result] = useUser();
   const idSender = localStorage.getItem('userId');
-
+  //console.log(allPosts)
   const [report, setReport] = useState<number>(0);
   let [isModal, setIsModal] = useState(false);
 
@@ -41,7 +41,7 @@ export default function ImgMediaCard() {
 
   const handleCounter = async function () {
     let counter: any = await axios.put(`/post/report?id=${id}`);
-    console.log(counter.data.reportCounter);
+    //console.log(counter.data.reportCounter);
     setReport(counter.data.reportCounter);
     alert(
       'esta publicacion fue reportada varias veces, será revisada por nuestros superiores maestros del kung fu'
@@ -58,7 +58,7 @@ export default function ImgMediaCard() {
             `/conversation?ida=${idSender}&idb=${detailpost.user}`
           )
         ).data[0];
-        if (conver._id) {
+        if (typeof conver !== 'string') {
           history.push(`/home/messenger/${conver._id}`);
         } else {
           const newConver: conversation = (
@@ -122,37 +122,44 @@ export default function ImgMediaCard() {
             {/* <Typography gutterBottom variant='h6' component='div'>
               Fecha de publicacion: {capitalize(detailpost.date)}
             </Typography> */}
-            <Typography variant='body1' color='text.secondary'>
+            <Typography variant='body1' color='text.secondary' sx={{width: "100", display: "flex", alignItems: "center", justifyContent: "center"}}>
               {detailpost.description}
             </Typography>
           </CardContent>
           {detailpost.user !== idSender ? (
-            <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Button onClick={contact} size='small'>
-                Contactar
-              </Button>
-            </CardActions>
+            <>
+              <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Button onClick={contact} size='small'>
+                  Contactar
+                </Button>
+              </CardActions>
+              <FormControl sx={{ m: 1, minWidth: '12vw' }}>
+                <Select
+                  labelId='demo-simple-select-helper-label'
+                  id='demo-simple-select-helper'
+                  value='reportar'
+                  label='reportar'
+                  onChange={handleCounter}>
+                  <MenuItem value='Spam'>Spam</MenuItem>
+                  <MenuItem value='Contenido Inapropiado'>
+                    Contenido Inapropiado
+                  </MenuItem>
+                </Select>
+              </FormControl>
+            </>
           ) : (
             <div>
-              <button onClick={toggleModal}>editar</button>
+              <Button
+                sx={{ marginBottom: '10px' }}
+                variant='contained'
+                onClick={toggleModal}>
+                editar
+              </Button>
               <Modal isOpen={isModal} closeModal={toggleModal}>
                 <EditPost />
               </Modal>
             </div>
           )}
-          <FormControl sx={{ m: 1, minWidth: '12vw' }}>
-            <Select
-              labelId='demo-simple-select-helper-label'
-              id='demo-simple-select-helper'
-              value='reportar'
-              label='reportar'
-              onChange={handleCounter}>
-              <MenuItem value='Spam'>Spam</MenuItem>
-              <MenuItem value='Contenido Inapropiado'>
-                Contenido Inapropiado
-              </MenuItem>
-            </Select>
-          </FormControl>
         </Card>
       </div>
     );

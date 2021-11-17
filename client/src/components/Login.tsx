@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation} from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { getPosts } from '../redux/actions';
 import Login from './Login/Login';
@@ -15,10 +15,14 @@ import React from 'react';
 import useUser from '../hooks/useUser';
 import background from '../assets/home/background.png';
 
+
 export default function LandingPage() {
   const [auth, setAuth] = React.useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
+  const location = useLocation();
+
+  console.log(location)
 
   const [result, loading] = useUser();
   if (result === 'Success') history.push('/home/feed');
@@ -26,6 +30,14 @@ export default function LandingPage() {
   useEffect(() => {
     dispatch(getPosts());
   }, [dispatch]);
+
+  useEffect(() => {
+    if(location.pathname === "/login"){
+      setAuth(false);
+    }else{
+      setAuth(true);
+    }
+  }, []);
 
   if (loading) {
     return <div>Cargando...</div>;

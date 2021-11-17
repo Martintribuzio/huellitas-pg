@@ -1,33 +1,62 @@
-import Conversation from './Conversation';
-import { useDispatch, useSelector } from 'react-redux';
-import { conversation } from '../../redux/types/types';
-import { typeState } from '../../redux/reducers/index';
-import useUser from '../../hooks/useUser';
-import { useEffect, useRef} from 'react';
-import { getConvers } from '../../redux/actions';
-import style from '../Messages/Message.module.css';
-import { SpinnerCircular } from 'spinners-react';
+import Conversation from './Conversation'
+import { useDispatch, useSelector } from 'react-redux'
+import { conversation } from '../../redux/types/types'
+import { typeState } from '../../redux/reducers/index'
+import useUser from '../../hooks/useUser'
+import { useEffect } from 'react'
+import { getConvers } from '../../redux/actions'
+import style from '../Messages/Message.module.css'
+import { SpinnerCircular } from 'spinners-react'
+import { Variants } from 'framer-motion'
+import { motion } from 'framer-motion'
+
+const fadeRigth: Variants = {
+  initial: {
+    x: '-100%',
+    opacity: 1,
+  },
+  animate: {
+    x: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      ease: 'easeInOut',
+    },
+  },
+  exit: {
+    x: '100%',
+    opacity: 1,
+    transition: {
+      duration: 0.5,
+      ease: 'easeInOut',
+    },
+  },
+}
 
 export default function Conversations(props: any) {
   const convers: Array<conversation> = useSelector(
     (state: typeState) => state.conversations
-  );
-  const id = localStorage.getItem('userId');
-  const dispatch = useDispatch();
-  const [result, loading] = useUser();
+  )
+  const id = localStorage.getItem('userId')
+  const dispatch = useDispatch()
+  const [result, loading] = useUser()
 
-  const visibility = true;
+  const visibility = true
 
   useEffect(() => {
     if (result !== 'Unauthorized') {
       if (id) {
-        dispatch(getConvers(id));
+        dispatch(getConvers(id))
       }
     }
-  }, [dispatch, id, result]);
+  }, [dispatch, id, result])
+
   if (loading) {
     return (
-      <div
+      <motion.div
+        variants={fadeRigth}
+        initial='initial'
+        animate='animate'
         style={{
           display: 'flex',
           justifyContent: 'center',
@@ -35,21 +64,26 @@ export default function Conversations(props: any) {
         }}
         className={style.conv}>
         <SpinnerCircular color='#ffff' />
-      </div>
-    );
+      </motion.div>
+    )
   }
 
-  const display = props.mobile && visibility ? 'none' : 'block';
+  const display = props.mobile && visibility ? 'none' : 'block'
 
   return (
-    <div
+    <motion.div
+      variants={fadeRigth}
+      initial='initial'
+      animate='animate'
       style={{
         display: display,
       }}
       className={style.conv}>
       {convers.length && Array.isArray(convers) && result !== 'Unauthorized'
-        ? convers.map((c: any, index:number) => <Conversation key={index} conversation={c} />)
+        ? convers.map((c: any, index: number) => (
+            <Conversation key={index} conversation={c} />
+          ))
         : null}
-    </div>
-  );
+    </motion.div>
+  )
 }

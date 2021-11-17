@@ -34,9 +34,14 @@ export const Home = () => {
             objetivo, ayudar a los animales a encontrar el camino de regreso a
             su hogar.
           </Typography>
+          <div style = {{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center',gap: '30px', minWidth: "200px"}}>
           <Link style={{ textDecoration: 'none' }} to='/login'>
-            <Button variant='contained'>Registrate</Button>
+            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Iniciar Sesion</Button>
           </Link>
+          <Link style={{ textDecoration: 'none' }} to='/register'>
+            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Registrate</Button>
+          </Link>
+          </div>
         </div>
         <div className='Images'>
           <img src={pets} alt='' />
@@ -124,9 +129,14 @@ export const Home = () => {
               Juntando nuestras "patitas" podemos ayudar a que todas las
               mascotas tengan su hogar.
             </Typography>
-            <Link style={{ textDecoration: 'none' }} to='/login'>
-              <Button variant='contained'>Registrate</Button>
-            </Link>
+            <div style = {{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center',gap: '30px', minWidth: "200px"}}>
+          <Link style={{ textDecoration: 'none' }} to='/login'>
+            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Iniciar Sesion</Button>
+          </Link>
+          <Link style={{ textDecoration: 'none' }} to='/register'>
+            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Registrate</Button>
+          </Link>
+          </div>
           </div>
         </section>
       </Fade>
