@@ -78,8 +78,8 @@ export default function FeedShelter() {
 
   useEffect(() => {
     const getShelters = async () => {
-      const res = await axios.get(`${process.env.REACT_APP_API}/user/shelters`);
-      console.log('REFUGIOS',res.data)
+
+      const res = await axios.get('user/shelters');
       setShelters(res.data);
     };
     getShelters();

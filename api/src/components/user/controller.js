@@ -1,4 +1,4 @@
-const { createUserDB, postsByUserDB,searchUserByIdDB, confirmationDB,getSheltersDB, getShelterDetDB } = require('./store');
+const { createUserDB, postsByUserDB,searchUserByIdDB, confirmationDB,getSheltersDB, getShelterDetDB, editProfileDB } = require('./store');
 const nodemailer = require('nodemailer')
 
 const createUser = async ({ name, email, password, postalCode }) => {
@@ -18,6 +18,7 @@ const postsByUser = async id => {
     return { e: e.message };
   }
 };
+
 const getUserById = async (id) => {
   try {
     const user = await searchUserByIdDB(id);
@@ -81,6 +82,21 @@ const getShelterDet = async (id) => {
   }
 }
 
+const editProfile = async (body) => {
+  try{
+    let profile = await editProfileDB(body.username)
+    profile.name = body.name
+    profile.lastname = body.lastname
+    profile.address = body.address
+    profile.phone = body.phone
+    profile.description = body.description
+    await profile.save();
+    return profile
+  }catch(e){
+    return e.message
+  }
+}
+
 module.exports = {
   createUser,
   postsByUser,
@@ -88,5 +104,6 @@ module.exports = {
   confirmation,
   mailCreation,
   getShelters,
-  getShelterDet
+  getShelterDet,
+  editProfile
 };
