@@ -11,7 +11,7 @@ mePaNetwork.post('/donate',(req , res) => {
     let preference = {
 		items: [
 			{
-				title: 'donate',
+				title: req.body.title,
 				unit_price: Number(req.body.price),
                 currency_id: 'ARS',
 				quantity: 1,

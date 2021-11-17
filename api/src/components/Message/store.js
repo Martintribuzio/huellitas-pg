@@ -1,10 +1,15 @@
 const { message } = require('../../models/Message')
 const  User  = require('../../models/User')
+const {conversation} = require('../../models/Conversation')
 
 const createMessageDB = async (content, Converseid, sender) => {
     try{
-      const mensaje = new message({content, Converseid, sender})
+      const mensaje = new message({content, Converseid, sender, conver:Converseid})
       await mensaje.save()
+      const conver = await conversation.findById(Converseid);
+      console.log('CONVER',mensaje)
+      conver.messages.push(mensaje)
+      await conver.save()
       return mensaje
     }catch(err){
       throw new Error(err.message)

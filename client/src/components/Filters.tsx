@@ -123,7 +123,7 @@ export default function Filters() {
       <Button
         className={style.button}
         sx={{
-          minWidth: '300px',
+          minWidth: '200px',
         }}
         variant='outlined'
         value='mas recientes'
@@ -133,7 +133,7 @@ export default function Filters() {
       <Button
         className={style.button}
         sx={{
-          minWidth: '300px',
+          minWidth: '200px',
         }}
         variant='outlined'
         value='mas antiguos'

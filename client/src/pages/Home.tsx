@@ -12,6 +12,10 @@ import Textra from 'react-textra';
 import { Button, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import CardChiquita from './CardChiquita';
+import useUser from '../hooks/useUser';
+
+import { useEffect, useState } from 'react';
+
 
 const data = [
   /* 'Toda la informacion sobre los pets',
@@ -24,6 +28,16 @@ const data = [
 ];
 
 export const Home = () => {
+
+  const [user] = useUser();
+
+
+  const [result] = useUser();
+  const [conexion, setConexion] = useState(result);
+  useEffect(() => {
+    setConexion(result);
+  } ,[result]);
+
   return (
     <div className='Home__container'>
       <section className='Primary'>
@@ -34,9 +48,17 @@ export const Home = () => {
             objetivo, ayudar a los animales a encontrar el camino de regreso a
             su hogar.
           </Typography>
-          <Link style={{ textDecoration: 'none' }} to='/login'>
-            <Button variant='contained'>Registrate</Button>
+
+          {conexion === 'Unauthorized' ? 
+          <div style = {{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center',gap: '30px', minWidth: "200px"}}>
+         <Link style={{ textDecoration: 'none' }} to='/login'>
+            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Iniciar Sesion</Button>
           </Link>
+          <Link style={{ textDecoration: 'none' }} to='/register'>
+            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Registrate</Button>
+          </Link>
+          </div> : null}
+
         </div>
         <div className='Images'>
           <img src={pets} alt='' />
@@ -115,6 +137,7 @@ export const Home = () => {
               />
             </Fade>
           </div>
+          {conexion === 'Unauthorized' ? 
           <div className='Description2'>
             <Typography variant='h4'>
               Si queres formar parte de esta comunidad, podes registrarte y
@@ -124,12 +147,28 @@ export const Home = () => {
               Juntando nuestras "patitas" podemos ayudar a que todas las
               mascotas tengan su hogar.
             </Typography>
-            <Link style={{ textDecoration: 'none' }} to='/login'>
-              <Button variant='contained'>Registrate</Button>
-            </Link>
-          </div>
-        </section>
-      </Fade>
+              
+            
+          <div style = {{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center',gap: '30px', minWidth: "200px"}}>
+         <Link style={{ textDecoration: 'none' }} to='/login'>
+            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Iniciar Sesion</Button>
+          </Link>
+          <Link style={{ textDecoration: 'none' }} to='/register'>
+            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Registrate</Button>
+          </Link>
+          </div> 
+          </div>: <div className='Description2'>
+            <Typography variant='h4'>
+              Gracias por ser parte de nuestra comunidad. Ya podes empezar a 
+              publicar.
+            </Typography>
+            <Typography>
+              Juntando nuestras "patitas" podemos ayudar a que todas las
+              mascotas tengan su hogar.
+            </Typography> 
+
+        </div>}
+      </section>
+    </Fade>
     </div>
-  );
-};
+  );}

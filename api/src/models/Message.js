@@ -14,7 +14,8 @@ const messageSchema = new Schema({
       type:String,
       enun:['read','unread'],
       default:'unread'
-    }
+    },
+    conver:{ type: Schema.Types.ObjectId, ref: 'Conversation' }
 },
   {timestamps:true}
 );

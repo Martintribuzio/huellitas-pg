@@ -39,5 +39,22 @@ export default function LeafletControlGeocoder() {
       .addTo(map);
   }, [map]);
 
+
+ map.locate({setView: true, maxZoom: 16});
+
+function onLocationFound(e) {
+ var radius = e.accuracy / 2;
+
+// L.marker(e.latlng).addTo(map)
+//  .bindPopup("Tu estas aqui, con " + radius + " metros de aproximacion").openPopup();
+
+// L.circle(e.latlng, radius).addTo(map);
+ }
+ function onLocationError(e) {
+ alert(e.message);
+}
+ map.on('locationfound', onLocationFound);
+ map.on('locationerror', onLocationError);
+
   return null;
 }

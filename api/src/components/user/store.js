@@ -28,6 +28,16 @@ const searchUserByIdDB = async id => {
   }
 };
 
+const editProfileDB = async username => {
+  try{
+    const profile = await User.findOne({username:username})
+    // console.log("encontrame el perfil ",profile)
+    return profile
+  }catch(err) {
+    console.log(err.message)
+  }
+}
+
 const postsByUserDB = async userId => {
   try {
     const user = await User.findById(userId).populate({
@@ -62,11 +72,28 @@ const getSheltersDB = async () => {
     throw new Error(error);
   }
 }
+
+const getShelterDetDB = async (id) => {
+  try {
+    const shelter = await User.findById(id).populate('profileImage').populate({
+      path: 'posts',
+      populate: {
+        path: 'petImage',
+      },
+    });
+    return shelter;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 module.exports = {
   createUserDB,
   searchUserDB,
   postsByUserDB,
   searchUserByIdDB,
   confirmationDB,
-  getSheltersDB
+  getSheltersDB,
+  getShelterDetDB,
+  editProfileDB
 };
