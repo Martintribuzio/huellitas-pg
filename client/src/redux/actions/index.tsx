@@ -63,6 +63,7 @@ export function getPostDetail(id: String) {
 export function getConvers(ida: string) {
   return async function (dispatch: any) {
     let data = (await axios.get(`/conversation?ida=${ida}`)).data;
+    console.log(data)
     return dispatch({ type: GET_CONVERSATIONS, payload: data });
   };
 }

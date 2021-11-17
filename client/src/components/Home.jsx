@@ -30,7 +30,7 @@ export default function Home() {
           cursor: 'pointer',
         }}
         onClick={openModal}>
-        CREAR POST
+        CREAR PUBLICACION
       </button>
 
       <Modal isOpen={isOpen} closeModal={closeModal}>
