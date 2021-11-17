@@ -147,7 +147,7 @@ export const Home = () => {
               Juntando nuestras "patitas" podemos ayudar a que todas las
               mascotas tengan su hogar.
             </Typography>
-
+              
             
           <div style = {{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center',gap: '30px', minWidth: "200px"}}>
          <Link style={{ textDecoration: 'none' }} to='/login'>
@@ -167,8 +167,8 @@ export const Home = () => {
               mascotas tengan su hogar.
             </Typography> 
 
-        </section>
-      </Fade>
+        </div>}
+      </section>
+    </Fade>
     </div>
-  );
-};
+  );}
