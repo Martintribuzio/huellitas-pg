@@ -1,4 +1,4 @@
-const { createUserDB, postsByUserDB,searchUserByIdDB, confirmationDB,getSheltersDB } = require('./store');
+const { createUserDB, postsByUserDB,searchUserByIdDB, confirmationDB,getSheltersDB, getShelterDetDB } = require('./store');
 const nodemailer = require('nodemailer')
 
 const createUser = async ({ name, email, password, postalCode }) => {
@@ -19,7 +19,6 @@ const postsByUser = async id => {
   }
 };
 const getUserById = async (id) => {
-
   try {
     const user = await searchUserByIdDB(id);
     return user;
@@ -27,6 +26,7 @@ const getUserById = async (id) => {
     return e.message;
   }
 }
+
 const confirmation = async (id) => {
   try {
     const user = await confirmationDB(id);
@@ -48,8 +48,8 @@ const mailCreation = async (id, Email) => {
     from: 'huellitas.dom@gmail.com',
     to: Email,
     subject: 'Confirmación de registro',
-    html: `<a href= "https://huellitas-pg.herokuapp.com/user/confirmation?id=${user._id}"> Pulse aquí para confirmar su cuenta</a>` //Guardar url como variable de entorno
-    // html: `<a href= "http://localhost:3001/user/confirmation?id=${id}"> Pulse aquí para confirmar su cuenta</a>`
+    // html: `<a href= "https://huellitas-pg.herokuapp.com/user/confirmation?id=${id}"> Pulse aquí para confirmar su cuenta</a>` //Guardar url como variable de entorno
+    html: `<a href= "http://localhost:3001/user/confirmation?id=${id}"> Pulse aquí para confirmar su cuenta</a>`
   };
   transporter.sendMail(mailDetails, (error, info) => {
     if (error) {
@@ -60,6 +60,7 @@ const mailCreation = async (id, Email) => {
     }
   })
 }
+
 const getShelters = async () => {
   try{
     const shelters = await getSheltersDB();
@@ -69,11 +70,23 @@ const getShelters = async () => {
     return e.message;
   }
 }
+
+const getShelterDet = async (id) => {
+  try{
+    const shelter = await getShelterDetDB(id);
+    return shelter;
+  }
+  catch(e){
+    return e.message;
+  }
+}
+
 module.exports = {
   createUser,
   postsByUser,
   getUserById,
   confirmation,
   mailCreation,
-  getShelters
+  getShelters,
+  getShelterDet
 };
