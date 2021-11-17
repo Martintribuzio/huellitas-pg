@@ -157,7 +157,7 @@ export default function Profile() {
         <>
           <Avatar sx={{ width: '96px', height: '96px' }} src={user.image} />
           <Typography variant='h4'>
-            {user.name} {user.lastname}
+            {user.name} 
           </Typography>
           <Typography variant='h6'>{user.username}</Typography>
           <Typography>Mis posts!</Typography>
