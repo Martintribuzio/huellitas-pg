@@ -19,10 +19,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { typeState } from '../../redux/reducers';
 import Swal from 'sweetalert2';
 
-
-
-
-interface User {
+export interface User {
   name: string;
   lastname: string;
   username: string;
@@ -37,6 +34,7 @@ export interface Shelter {
   address: string;
   phone: string;
   description: string;
+  type:string;
 }
 
 export default function Profile() {
@@ -120,12 +118,14 @@ export default function Profile() {
       let lastname = localStorage.getItem('lastname');
       let username = localStorage.getItem('email');
       let image = localStorage.getItem('image');
+      // let type = localStorage.getItem('type')
 
       const user = {
         name: name ? name : '',
         lastname: lastname ? lastname !=="undefined" ? lastname : '' : '',
         username: username ? username : '',
         image: image ? image : profile,
+        // type: type ? 'user' : '',
       };
       setUser(user);
       // console.log("despues ",isModal)
@@ -134,7 +134,7 @@ export default function Profile() {
 
 
   // console.log('USER',user)
-
+  if(ownUser?.type === 'shelter'){
   return result === 'Unauthorized' ? (
     <Redirect to='/login' />
   ) : (
@@ -192,4 +192,68 @@ export default function Profile() {
       )}
     </Box>
   );
+ }else{
+  return result === 'Unauthorized' ? (
+    <Redirect to='/login' />
+  ) : (
+    <Box
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: '20px 0 ',
+        minHeight: '71vh',
+      }}>
+      <Button onClick={toggleModal}> Editar Perfil </Button>
+
+      <Modal isOpen={isModal} closeModal={toggleModal}>
+        {ownUser !== undefined ? 
+         <EditProfile modal={toggleModal} ownUser={user}/> : null
+        }
+      </Modal>
+      {user ? (
+        <>
+          <Avatar sx={{ width: '96px', height: '96px' }} src={user.image} />
+          <Typography variant='h4'>
+            {user.name} {user.lastname}
+          </Typography>
+          <Typography variant='h6'>{user.username}</Typography>
+          <Typography>Mis posts!</Typography>
+          {Array.isArray(posts) ? (
+            posts.map(post => {
+              return (
+                <div>
+                  <Post post={post}></Post>
+                  {/* <button
+                    onClick= {toggleModal}>
+                    {' '}
+                    editar
+                  </button> */}
+                  {/* <Modal isOpen={isModal} closeModal={closeModal}>
+                    <PostAPet isOpen={isModal} closeModal={closeModal} />
+                  </Modal> */}
+                  <Button
+                    variant='contained' 
+                    onClick={() => handleClick(post._id)}>
+                    {' '}
+                    eliminar
+                  </Button>
+                </div>
+              );
+            })
+          ) : (
+            <Typography>No hay posts</Typography>
+          )}
+        </>
+      ) : (
+        ''
+      )}
+    </Box>
+  );
+ }
+//  else{
+//    return(
+//      <div></div>
+//    )
+//  }
 }
