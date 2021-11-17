@@ -10,7 +10,7 @@ import PostDetail from './components/PostDetail/PostDetail';
 import Publicaciones from './components/Home.jsx';
 import { Home } from './pages/Home';
 import { Redirect } from 'react-router';
-import { Messenger } from './components/Messages/Message';
+import { Messenger } from './components/Messenger/Messenger';
 import About from './components/About/about';
 import HomeShelter from './components/home_shelter';
 import MercadoPago from './components/mercadoPago/mercadoPago';
@@ -58,8 +58,6 @@ function App() {
           <Publicaciones />
         </Route>
 
-        <Route path='/alldogs'>{/* <Alldogs /> */}</Route>
-
         <Route exact path='/home/shelters'>
           <HomeShelter />
         </Route>
@@ -83,7 +81,7 @@ function App() {
         </Route>
       </div>
     </ThemeProvider>
-  );
+  )
 }
 
-export default App;
+export default App
