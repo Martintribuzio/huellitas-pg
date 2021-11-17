@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { conversation } from '../../redux/types/types';
 import { typeState } from '../../redux/reducers/index';
 import useUser from '../../hooks/useUser';
-import { useEffect } from 'react';
+import { useEffect, useRef} from 'react';
 import { getConvers } from '../../redux/actions';
 import style from '../Messages/Message.module.css';
 import { SpinnerCircular } from 'spinners-react';
