@@ -205,22 +205,6 @@ export default function PrimarySearchAppBar(): JSX.Element {
           <p>Mensajes</p>
         </MenuItem>
       </Link>
-      <Link
-        to='/home/notification'
-        className={s.link}
-        style={{ color: 'black' }}>
-        <MenuItem>
-          <IconButton
-            size='large'
-            aria-label='show 17 new notifications'
-            color='inherit'>
-            <Badge badgeContent={0} color='error'>
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <p>Notificaciones</p>
-        </MenuItem>
-      </Link>
       <MenuItem>
         <Link
           style={{ display: 'flex', color: 'black', textDecoration: 'none' }}
@@ -245,15 +229,14 @@ export default function PrimarySearchAppBar(): JSX.Element {
         position='static'
         sx={{ height: '9vh', display: 'flex', justifyContent: 'center' }}>
         <Toolbar>
+          <Link className={s.link} to='/home' style={{ color: 'white' }}>
           <IconButton
             size='large'
             edge='start'
             color='inherit'
             aria-label='open drawer'
             sx={{ mr: 2 }}>
-            <Link className={s.link} to='/home' style={{ color: 'white' }}>
               <PetsIcon />
-            </Link>
             <Typography
               variant='h6'
               noWrap
@@ -269,6 +252,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
               Huellitas
             </Typography>
           </IconButton>
+                </Link>
 
           <Box
             sx={{
@@ -285,11 +269,11 @@ export default function PrimarySearchAppBar(): JSX.Element {
           </Box>
 
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <Link style={{ textDecoration: 'none', color: 'white' }} to='/home'>
+            {/* <Link style={{ textDecoration: 'none', color: 'white' }} to='/home'>
               <Button className={s.btnNav} color='inherit'>
                 Inicio
               </Button>
-            </Link>
+            </Link> */}
             <Link
               style={{ textDecoration: 'none', color: 'white' }}
               to='/home/feed'>
@@ -349,16 +333,6 @@ export default function PrimarySearchAppBar(): JSX.Element {
                   color='inherit'>
                   <Badge badgeContent={notificacion} color='error'>
                     <MailIcon />
-                  </Badge>
-                </IconButton>
-                <IconButton
-                  size='large'
-                  aria-label='show 17 new notifications'
-                  color='inherit'>
-                  <Badge badgeContent={0} color='error'>
-                    <Link to='/home/notification' style={{ color: 'white' }}>
-                      <NotificationsIcon />
-                    </Link>
                   </Badge>
                 </IconButton>
                 <IconButton
