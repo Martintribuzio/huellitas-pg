@@ -5,7 +5,8 @@ import Box from '@mui/material/Box';
 import {Shelter} from '../Profile/Profile'
 import editProfile from '../../services/editProfile'
 
-export default function EditProfile(props: {ownUser: Shelter}){
+
+export default function EditProfile(props: {modal:Function,ownUser: Shelter}){
   const initialState = {
     name: props.ownUser.name,
     lastname: props.ownUser.lastname,
@@ -24,10 +25,10 @@ export default function EditProfile(props: {ownUser: Shelter}){
     });
   };
   
-  function handleSubmit(e: any) {
+  async function handleSubmit(e: any) {
     e.preventDefault()
-    console.log("Cristian")
-    editProfile(
+    // console.log("Cristian")
+    await editProfile(
       input.name,
       input.lastname,
       input.username,
@@ -35,6 +36,8 @@ export default function EditProfile(props: {ownUser: Shelter}){
       input.phone,
       input.description,
     )
+    await props.modal()
+    // console.log("despues ", props.modal())
   }
   // console.log(input)
   return(
@@ -45,7 +48,7 @@ export default function EditProfile(props: {ownUser: Shelter}){
         Editar
       </Typography>
 
-      <form>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div>
           <input name='name' type='text' defaultValue={props.ownUser.name} onChange={(e) => handleChange(e)}/>
         </div>
@@ -71,7 +74,7 @@ export default function EditProfile(props: {ownUser: Shelter}){
           style={{ marginTop: '20px', width: '300px', marginBottom: '20px' }}
           variant='contained'
           type='submit'
-          onClick={(e) => handleSubmit(e)}
+          // onClick={() => props.modal()}
         >
           Confirmar
         </Button>

@@ -41,7 +41,9 @@ export default function Profile() {
   let [isModal, setIsModal] = useState(false)
   
   const toggleModal = function(){
+    console.log("antes ",isModal)
     setIsModal(isModal = !isModal)
+    console.log("despues ",isModal)
   }
 
   const [result] = useUser();
@@ -86,8 +88,9 @@ export default function Profile() {
         image: image ? image : profile,
       };
       setUser(user);
+      // console.log("despues ",isModal)
     }
-  }, [id]);
+  }, [id,isModal]);
 
 
   // console.log('USER',user)
@@ -107,7 +110,7 @@ export default function Profile() {
 
       <Modal isOpen={isModal} closeModal={toggleModal}>
         {ownUser !== undefined ? 
-         <EditProfile ownUser={ownUser}/> : null
+         <EditProfile modal={toggleModal} ownUser={ownUser}/> : null
         }
       </Modal>
       {user ? (
