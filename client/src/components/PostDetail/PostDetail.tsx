@@ -167,7 +167,7 @@ export default function ImgMediaCard() {
             {/* <Typography gutterBottom variant='h6' component='div'>
               Fecha de publicacion: {capitalize(detailpost.date)}
             </Typography> */}
-            <Typography variant='body1' color='text.secondary'>
+            <Typography variant='body1' color='text.secondary' sx={{width: "100", display: "flex", alignItems: "center", justifyContent: "center"}}>
               {detailpost.description}
             </Typography>
           </CardContent>

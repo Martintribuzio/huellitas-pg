@@ -10,11 +10,15 @@ import useUser from '../../hooks/useUser';
 import profile from '../../assets/profile.png';
 import deletePostService from '../../services/deletePost';
 import Button from '@mui/material/Button';
-
-import PostAPet from "../PostAPet"
+import { Modal } from '../Modal';
+import { useModal } from '../../hooks/useModal';
+import EditProfile from '../editProfile/EditProfile';
+import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
+
 import { typeState } from '../../redux/reducers';
 import Swal from 'sweetalert2';
+
 
 
 
@@ -25,18 +29,28 @@ interface User {
   image: string;
 }
 
+export interface Shelter {
+  name: string;
+  lastname: string;
+  username: string;
+  image: string;
+  address: string;
+  phone: string;
+  description: string;
+}
+
 export default function Profile() {
   const history = useHistory();
   const [user, setUser] = useState<User>();
   const [posts, setPosts] = useState<PostType[]>([]);
-  // const [isOpen, openModal, closeModal] = useModal();
-  // let [isModal, setIsModal] = useState(false)
+  const [ownUser,setownUser] = useState<Shelter>()
+  let [isModal, setIsModal] = useState(false)
   
-  // const toggleModal = function(){
-  //   setIsModal(isModal = !isModal)
-  // }
-
-  //console.log(isModal)
+  const toggleModal = function(){
+    console.log("antes ",isModal)
+    setIsModal(isModal = !isModal)
+    console.log("despues ",isModal)
+  }
 
   const [result] = useUser();
 
@@ -45,6 +59,16 @@ export default function Profile() {
   }
 
   const id = localStorage.getItem('userId');
+
+  useEffect(() => {
+    const getUsuario = async() => {
+      let usuario = await axios.get(`/user?id=${id}`)
+      setownUser(usuario.data)
+      // console.log("mono hombre ",usuario.data)
+    }
+    getUsuario()
+  }, [])
+  
 
   const handleClick = (id: string | undefined) => {
     const swalWithBootstrapButtons = Swal.mixin({
@@ -86,7 +110,7 @@ export default function Profile() {
   };
 
   // let refresh = useSelector((state: typeState) => state.editPost);
-
+  // console.log("soy yo ",ownUser)
   useEffect(() => {
     if (id) {
       getPostsUser(id).then(post => {
@@ -104,11 +128,12 @@ export default function Profile() {
         image: image ? image : profile,
       };
       setUser(user);
+      // console.log("despues ",isModal)
     }
-  }, [id]);
+  }, [id,isModal]);
 
 
-  console.log('USER',user)
+  // console.log('USER',user)
 
   return result === 'Unauthorized' ? (
     <Redirect to='/login' />
@@ -121,6 +146,13 @@ export default function Profile() {
         padding: '20px 0 ',
         minHeight: '71vh',
       }}>
+      <Button onClick={toggleModal}> Editar Perfil </Button>
+
+      <Modal isOpen={isModal} closeModal={toggleModal}>
+        {ownUser !== undefined ? 
+         <EditProfile modal={toggleModal} ownUser={ownUser}/> : null
+        }
+      </Modal>
       {user ? (
         <>
           <Avatar sx={{ width: '96px', height: '96px' }} src={user.image} />
