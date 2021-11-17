@@ -18,9 +18,9 @@ mePaNetwork.post('/donate',(req , res) => {
 			}
 		],
 		back_urls: {
-			"success": "http://localhost:3000/home/donate/success",
-			"failure": "https://huellitas.vercel.app/home",
-			"pending": "https://huellitas.vercel.app/home"
+			"success": "https://huellitas.vercel.app/home/donate/success",
+			"failure": "https://huellitas.vercel.app/home/donate/fail",
+			"pending": "https://huellitas.vercel.app/home/donate/success"
 		},
 		auto_return: "approved",
 	};
