@@ -1,55 +1,96 @@
-import { useEffect, useState } from 'react';
-import { PostType, conversation } from '../../redux/types/types';
-import { useDispatch, useSelector } from 'react-redux';
-import { typeState } from '../../redux/reducers/index';
-import { getPosts } from '../../redux/actions';
-import { useHistory, useParams } from 'react-router';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import capitalize from '@mui/utils/capitalize';
-import axios from 'axios';
-import useUser from '../../hooks/useUser';
-import { Modal } from '../Modal';
-import EditPost from '../../components/EditPost';
-import Select from '@mui/material/Select';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
+import { useEffect, useState } from 'react'
+import { PostType, conversation } from '../../redux/types/types'
+import { useDispatch, useSelector } from 'react-redux'
+import { typeState } from '../../redux/reducers/index'
+import { getPosts } from '../../redux/actions'
+import { useHistory, useParams } from 'react-router'
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import CardMedia from '@mui/material/CardMedia'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import capitalize from '@mui/utils/capitalize'
+import axios from 'axios'
+import useUser from '../../hooks/useUser'
+import { Modal } from '../Modal'
+import EditPost from '../../components/EditPost'
+import Select from '@mui/material/Select'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import { Hidden, InputLabel } from '@mui/material'
+import Swal from 'sweetalert2'
 
 export default function ImgMediaCard() {
-  const { id } = useParams<{ id?: string }>();
-  
-  const dispatch = useDispatch();
-  let allPosts = useSelector((state: typeState) => state.filteredPosts);
-  const history = useHistory();
-  const [result] = useUser();
-  const idSender = localStorage.getItem('userId');
+  const { id } = useParams<{ id?: string }>()
+
+  const dispatch = useDispatch()
+  let allPosts = useSelector((state: typeState) => state.filteredPosts)
+  const history = useHistory()
+  const [result] = useUser()
+  const idSender = localStorage.getItem('userId')
   //console.log(allPosts)
-  const [report, setReport] = useState<number>(0);
-  let [isModal, setIsModal] = useState(false);
+  const [report, setReport] = useState<number>(0)
+  let [isModal, setIsModal] = useState(false)
 
   const toggleModal = function () {
-    setIsModal((isModal = !isModal));
-  };
+    setIsModal((isModal = !isModal))
+  }
 
   useEffect(() => {
-    dispatch(getPosts());
-  }, [dispatch, isModal]);
+    dispatch(getPosts())
+  }, [dispatch, isModal])
 
   const handleCounter = async function () {
-    let counter: any = await axios.put(`/post/report?id=${id}`);
-    //console.log(counter.data.reportCounter);
-    setReport(counter.data.reportCounter);
-    alert(
-      'esta publicacion fue reportada varias veces, será revisada por nuestros superiores maestros del kung fu'
-    );
-    history.push('/home/feed'); //santi ponele estilos
-  };
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger',
+      },
+      buttonsStyling: true,
+    })
 
-  let detailpost = allPosts.find((elem: PostType) => elem._id === id);
+    async function report() {
+      let counter: any = await axios.put(`/post/report?id=${id}`)
+      //console.log(counter.data.reportCounter);
+      setReport(counter.data.reportCounter)
+    }
+
+    swalWithBootstrapButtons
+      .fire({
+        title: 'estas seguro?',
+        text: 'si denuncias esta publicacion probablemente sea borrada',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'si, reportarla!',
+        cancelButtonText: 'No, cambie de opinion!',
+        reverseButtons: true,
+      })
+      .then(result => {
+        if (result.isConfirmed) {
+          swalWithBootstrapButtons.fire(
+            'bien!',
+            'el post fue denunciado correctamente',
+            'success'
+          )
+          report()
+
+          history.push('/home/feed') //santi ponele estilos
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire(
+            'bien',
+            'esta publicacion seguira estando',
+            'error'
+          )
+        }
+      })
+    setReport(0)
+  }
+
+  let detailpost = allPosts.find((elem: PostType) => elem._id === id)
   const contact = async () => {
     if (result !== 'Unauthorized') {
       if (detailpost) {
@@ -57,21 +98,21 @@ export default function ImgMediaCard() {
           await axios.get(
             `/conversation?ida=${idSender}&idb=${detailpost.user}`
           )
-        ).data[0];
+        ).data[0]
         if (typeof conver !== 'string') {
-          history.push(`/home/messenger/${conver._id}`);
+          history.push(`/home/messenger/${conver._id}`)
         } else {
           const newConver: conversation = (
             await axios.post('/conversation', {
               idRec: detailpost.user,
               idEnv: idSender,
             })
-          ).data;
-          history.push(`/home/messenger/${newConver._id}`);
+          ).data
+          history.push(`/home/messenger/${newConver._id}`)
         }
       }
     }
-  };
+  }
 
   if (detailpost !== undefined) {
     return (
@@ -82,7 +123,11 @@ export default function ImgMediaCard() {
           alignItems: 'center',
           maxHeight: '85vh',
         }}>
-        {report > 0 ? <span>Reportado CHAN CHAN CHAN</span> : null}
+        {report ? (
+          report > 0 ? (
+            <span>Reportado CHAN CHAN CHAN</span>
+          ) : null
+        ) : null}
         <Card
           elevation={5}
           sx={{
@@ -134,12 +179,8 @@ export default function ImgMediaCard() {
                 </Button>
               </CardActions>
               <FormControl sx={{ m: 1, minWidth: '12vw' }}>
-                <Select
-                  labelId='demo-simple-select-helper-label'
-                  id='demo-simple-select-helper'
-                  value='reportar'
-                  label='reportar'
-                  onChange={handleCounter}>
+                <InputLabel>Reportar</InputLabel>
+                <Select label='Reportar' onChange={handleCounter}>
                   <MenuItem value='Spam'>Spam</MenuItem>
                   <MenuItem value='Contenido Inapropiado'>
                     Contenido Inapropiado
@@ -162,8 +203,8 @@ export default function ImgMediaCard() {
           )}
         </Card>
       </div>
-    );
+    )
   } else {
-    return <>Cargando...</>;
+    return <>Cargando...</>
   }
 }
