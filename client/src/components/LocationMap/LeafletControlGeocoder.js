@@ -56,5 +56,16 @@ function onLocationFound(e) {
  map.on('locationfound', onLocationFound);
  map.on('locationerror', onLocationError);
 
+ map.once('focus', function() { map.scrollWheelZoom.enable(); });
+//  map.on('click', function() {
+//   if (map.scrollWheelZoom.enabled()) {
+//     map.scrollWheelZoom.disable();
+//     }
+//     else {
+//     map.scrollWheelZoom.enable();
+//     }
+//   });
+
+
   return null;
 }
