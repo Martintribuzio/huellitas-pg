@@ -126,38 +126,6 @@ export default function Message(props: any) {
     }
   }
 
-<<<<<<< HEAD
-  if (convers?.members?.includes(idSender)) {
-    return (
-      <div className={style.Chat}>
-        <div className={style.Chat__header}>
-          <Link to={`/home/messenger`}>
-            <img src={back} alt='' />
-          </Link>
-        </div>
-        <div className={style.mensaje}>
-          {messages?.map((c:message, index:number) => {
-            if (c.state === 'unread' && c.sender !== idSender) {
-              axios.put(`/message/${c._id}`)
-            }
-            return (
-              <div
-                key={index}
-                ref={scrollRef}
-                className={c.sender !== idSender ? style.other : style.own}>
-                <p>{c.content}</p>
-              </div>
-            )
-          })}
-        </div>
-        <div className={style.inputChat}>
-          <Input
-            sx={{ width: '100%', height: '100%', borderBottom: 'none' }}
-            className={style.inputMU}
-            onKeyPress={e => {
-              if (e.key === 'Enter') {
-                handleSubmit(e)
-=======
   return (
     <motion.div
       variants={fadeLeft}
@@ -175,7 +143,6 @@ export default function Message(props: any) {
             {messages?.map((c: message, index: number) => {
               if (c.state === 'unread' && c.sender !== idSender) {
                 axios.put(`/message/${c._id}`)
->>>>>>> 139ef0ad81464d6c07b6f765660087d7c1db9d27
               }
               return (
                 <div
