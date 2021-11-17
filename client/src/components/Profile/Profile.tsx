@@ -16,6 +16,12 @@ import EditProfile from '../editProfile/EditProfile';
 import axios from 'axios'
 import { useSelector, useDispatch } from 'react-redux';
 
+import { typeState } from '../../redux/reducers';
+import Swal from 'sweetalert2';
+
+
+
+
 interface User {
   name: string;
   lastname: string;
@@ -65,8 +71,42 @@ export default function Profile() {
   
 
   const handleClick = (id: string | undefined) => {
-    deletePostService(id);
-    setPosts(posts.filter(post => post._id !== id));
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success',
+        cancelButton: 'btn btn-danger'
+      },
+      buttonsStyling: false
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: '¿Seguro que quieres eliminar la publicacion?',
+      text: "No podras revertir esta accion",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, quiero eliminarla!',
+      cancelButtonText: 'No, cancelar!',
+      reverseButtons: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deletePostService(id);
+        setPosts(posts.filter(post => post._id !== id));
+        swalWithBootstrapButtons.fire(
+          'Eliminada!',
+          'Tu publicacion ha sido eliminada',
+          'success'
+        )
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelado',
+          'Tu publicacion NO se ha eliminado',
+          'error'
+        )
+      }
+    })
   };
 
   // let refresh = useSelector((state: typeState) => state.editPost);

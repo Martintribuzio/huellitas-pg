@@ -5,25 +5,26 @@ import signodeex  from "../assets/map/huellitasFounded.png";
 import useUser from '../hooks/useUser';
 import { useEffect } from 'react';
 import { useHistory } from 'react-router';
+import LocationMapShelter from './LocationMap/LocationMapShelter';
+import shelterImg from "../assets/shelter.png"
 
 export default function Home() {
 const [result] = useUser();
 const history = useHistory();
 
 useEffect(() => {
-    if(result === 'Unauthorized'){
-        history.push('/login');
-    }
+    // if(result === 'Unauthorized'){
+    //     history.push('/login');
+    // }
 },[result,history ])
 
   return (
     <div style={{ minHeight: '71vh', height: 'max-content' }}>
       <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '40px', justifyContent: 'center', marginTop: '30px'}}>
-        <label><img style={{width: "30px", height: '30px'}} src={huella} alt=""></img>Perdido</label>
-        <label><img style={{width: "30px", height: '30px'}} src={huellaAdopt} alt=""></img>En adopcion</label>
-        <label><img style={{width: "30px", height: '30px'}} src={signodeex} alt=""></img>Encontrado</label>
+        <label><img style={{width: "50px", height: '30px'}} src={shelterImg} alt=""></img>Refugios</label>
+        
       </div>
-      {/* <LocationMapShelter /> */}
+      <LocationMapShelter />
 
       <FeedShelter />
     </div>

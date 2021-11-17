@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { PostType } from '../redux/types/types';
 //import { deletePost } from '../redux/actions';
 
-export default async function editPost(_id: string | undefined, name: string | undefined, type: string, state: string, genre: string, description: string) {
+export default async function editPost(input: FormData) {
   try {
-    const post = await axios.put(`/post`, { _id,  name, type, state, genre, description} );
+    const post = await axios.put(`/post`, input, {headers: { 'Content-Type': 'multipart/form-data' }} );
     //console.log(post);
     return 'succes';
   } catch (error) {  

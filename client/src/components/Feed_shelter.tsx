@@ -78,6 +78,7 @@ export default function FeedShelter() {
 
   useEffect(() => {
     const getShelters = async () => {
+
       const res = await axios.get('user/shelters');
       setShelters(res.data);
     };
@@ -86,6 +87,7 @@ export default function FeedShelter() {
 
   if (shelters) {
     if (shelters.length) {
+      console.log('SHELTER',shelters);
       return (
         <Box
           sx={{

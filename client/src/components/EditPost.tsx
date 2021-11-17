@@ -1,27 +1,18 @@
-import { useSelector, useDispatch } from 'react-redux';
-
+import { useSelector } from 'react-redux';
 import { PostType, conversation } from '../redux/types/types';
-import { useEffect, useState, ChangeEvent, MouseEvent } from 'react';
-
+import {useState, ChangeEvent, MouseEvent } from 'react';
 import { typeState } from '../redux/reducers/index';
-import { getPosts } from '../redux/actions';
 import { useHistory, useParams } from 'react-router';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
-import capitalize from '@mui/utils/capitalize';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 import useUser from '../hooks/useUser';
-import { MenuItem, TextField } from '@mui/material';
-import { Select } from '@mui/material';
-import { AnyMessageParams } from 'yup/lib/types';
-// import { editPostReducer } from '../redux/actions';
-import getPostsUser from '../services/getPostsUser';
 import editPost from '../services/editPost';
 import style from '../CSS/EditAPet.module.css';
+import { Button } from '@mui/material';
 
 export default function EditPost() {
   type event =
@@ -33,7 +24,7 @@ export default function EditPost() {
 
   const { id } = useParams<{ id?: string }>();
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const history = useHistory();
   const [loading, result] = useUser();
   const idSender = localStorage.getItem('userId');
@@ -46,7 +37,8 @@ export default function EditPost() {
     description: detailpost?.description,
     genre: detailpost?.genre,
     date: detailpost?.date,
-    petImage: detailpost?.petImage,
+    petImage: "",
+    oldPetImage: detailpost?.petImage.url,
     type: detailpost?.type,
     state: detailpost?.state,
     latitude: detailpost?.latitude,
@@ -55,9 +47,11 @@ export default function EditPost() {
 
   const [input, setInput] = useState<any>(initialState);
 
-  useEffect(() => {
-    dispatch(getPosts());
-  }, [dispatch]);
+  console.log(input.oldPetImage)
+
+  // useEffect(() => {
+  //   dispatch(getPosts());
+  // }, [dispatch]);
 
   //funciones handle////////////////////////////////////////////////////////////
 
@@ -100,18 +94,24 @@ export default function EditPost() {
   }
 
   function handleSubmit(e: mouseEvent) {
-    editPost(
-      input._id,
-      input.name,
-      input.type,
-      input.state,
-      input.genre,
-      input.description
-    );
-    // history.push('/home/profile');
-    // dispatch(editPostReducer(true));
-  }
+    const fd = new FormData();
+    fd.append('state', input.state);
+    fd.append('description', input.description);
+    fd.append('type', input.type);
+    fd.append('genre', input.genre);
+    fd.append('_id', input._id);
+    input.name && fd.append('name', input.name);
+    input.petImage && fd.append('petImage', input.petImage);
+    
+    editPost(fd);
 
+    return Swal.fire({
+      title: 'Guardado!',
+      text: 'Publicacion editada con exito!',
+      icon: 'success',
+      confirmButtonText: 'Ok',
+    });
+  }
   //console.log(input)
   ///////////////////////////////////////////////////////////////////
   const contact = async () => {
@@ -163,15 +163,23 @@ export default function EditPost() {
               accept='.png, .jpg'
             />
           </label>
-          <CardMedia
+           
+        {input.petImage ? <CardMedia
             component='img'
             alt={detailpost.type}
             sx={{
               maxHeight: 300,
             }}
-            image={`${detailpost.petImage.url}`}
-          />
-
+            image = {URL.createObjectURL(input.petImage)}
+          />: input.oldPetImage ? <CardMedia
+          component='img'
+          alt={detailpost.type}
+          sx={{
+            maxHeight: 300,
+          }}
+          image = {input.oldPetImage}
+          /> :  null}
+          
           <CardContent>
             {detailpost.name ? (
               <Typography gutterBottom variant='h6' component='div'>
@@ -233,7 +241,9 @@ export default function EditPost() {
                 }></textarea>
             </Typography>
 
-            <button onClick={handleSubmit}>Guardar</button>
+            <Button variant='contained' onClick={handleSubmit}>
+              Guardar
+            </Button>
           </CardContent>
         </Card>
       </div>
