@@ -1,6 +1,6 @@
 const userNetwork = require('express').Router();
 
-const { confirmation, postsByUser, getUserById, mailCreation,getShelters} = require('./controller');
+const { confirmation, postsByUser, getUserById, mailCreation,getShelters, getShelterDet, editProfile} = require('./controller');
 const passport = require('passport');
 const User = require('../../models/User');
 const jwt = require('jsonwebtoken');
@@ -83,7 +83,7 @@ userNetwork.get('/posts', async (req, res) => {
 
 //Registro
 userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail   
-  console.log(req.body);
+  // console.log(req.body);
 
   User.register(
     new User({
@@ -115,7 +115,7 @@ userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail
           from: 'huellitas.dom@gmail.com',
           to: req.body.email,
           subject: 'Confirmación de registro',
-          html: `<a href= "https://huellitas-pg.herokuapp.com/user/confirmation?id=${user._id}"> Pulse aquí para confirmar su cuenta</a>`, //Guardar url como variable de entorno
+          html: `<a href= "${process.env.URL_HEROKU}/user/confirmation?id=${user._id}"> Pulse aquí para confirmar su cuenta</a>`, //Guardar url como variable de entorno
           // html: `<a href= "http://localhost:3001/user/confirmation?id=${user._id}"> Pulse aquí para confirmar su cuenta</a>`
         };
         transporter.sendMail(mailDetails, (error, info) => {
@@ -184,7 +184,7 @@ userNetwork.post('/signup/shelter',upload.single('profileImage') ,(req, res) => 
           from: 'huellitas.dom@gmail.com',
           to: req.body.email,
           subject: 'Confirmación de registro',
-          html: `<a href= "https://huellitas-pg.herokuapp.com/user/confirmation?id=${user._id}"> Pulse aquí para confirmar su cuenta</a>` //Guardar url como variable de entorno
+          html: `<a href= "${process.env.URL_HEROKU}/user/confirmation?id=${user._id}"> Pulse aquí para confirmar su cuenta</a>` //Guardar url como variable de entorno
           // html: `<a href= "http://localhost:3001/user/confirmation?id=${user._id}"> Pulse aquí para confirmar su cuenta</a>`
         };
         transporter.sendMail(mailDetails, (error, info) => {
@@ -370,6 +370,26 @@ userNetwork.get('/', async (req, res) => {
   }
 });
 
+userNetwork.put('/profile', async(req, res) => {
+  try{
+    let profile = await editProfile(req.body)
+    res.send(profile)
+  }catch(err){
+    res.status(400).send(err.message)
+  }
+})
+
+userNetwork.get('/shelter', async (req, res) => {
+  try{
+    console.log(req.query)
+    const shelter = await getShelterDet(req.query.id);
+    res.send(shelter);
+  }
+  catch(err){
+    res.status(400).send(err.message);
+  }
+});
+
 userNetwork.get('/shelters', async (req, res) => {
 try{
   const shelters = await getShelters();
@@ -379,4 +399,5 @@ catch(err){
   res.status(400).send(err.message);
 }
 });
+
 module.exports = userNetwork;

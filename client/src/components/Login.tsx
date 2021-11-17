@@ -1,46 +1,45 @@
-import { useEffect } from 'react';
-import { Link, useHistory, useLocation} from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { getPosts } from '../redux/actions';
-import Login from './Login/Login';
-import RegistersContainer from './Register/RegistersContainer';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import img1 from '../assets/home/pets2.png';
-import SwitchCustom from '../components/Login/Switch';
-import Typography from '@mui/material/Typography';
-import { IconButton } from '@mui/material';
-import PetsIcon from '@mui/icons-material/Pets';
-import React from 'react';
-import useUser from '../hooks/useUser';
-import background from '../assets/home/background.png';
-
+import { useEffect } from 'react'
+import { Link, useHistory, useLocation } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { getPosts } from '../redux/actions'
+import Login from './Login/Login'
+import RegistersContainer from './Register/RegistersContainer'
+import Box from '@mui/material/Box'
+import Container from '@mui/material/Container'
+import img1 from '../assets/home/pets2.png'
+import SwitchCustom from '../components/Login/Switch'
+import Typography from '@mui/material/Typography'
+import { IconButton } from '@mui/material'
+import PetsIcon from '@mui/icons-material/Pets'
+import React from 'react'
+import useUser from '../hooks/useUser'
+import background from '../assets/home/background.png'
 
 export default function LandingPage() {
-  const [auth, setAuth] = React.useState(false);
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const location = useLocation();
+  const [auth, setAuth] = React.useState(false)
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const location = useLocation()
 
   console.log(location)
 
-  const [result, loading] = useUser();
-  if (result === 'Success') history.push('/home/feed');
+  const [result, loading] = useUser()
+  if (result === 'Success') history.push('/home/feed')
 
   useEffect(() => {
-    dispatch(getPosts());
-  }, [dispatch]);
+    dispatch(getPosts())
+  }, [dispatch])
 
   useEffect(() => {
-    if(location.pathname === "/login"){
-      setAuth(false);
-    }else{
-      setAuth(true);
+    if (location.pathname === '/login') {
+      setAuth(false)
+    } else {
+      setAuth(true)
     }
-  }, []);
+  }, [])
 
   if (loading) {
-    return <div>Cargando...</div>;
+    return <div>Cargando...</div>
   } else {
     return (
       <Box>
@@ -70,21 +69,28 @@ export default function LandingPage() {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Typography
-                variant='h5'
-                noWrap
-                component='div'
-                color='white'
-                sx={{
-                  display: { overflow: 'inherit', xs: 'none', sm: 'block' },
-                }}>
                 <IconButton size='large' color='inherit' sx={{ ml: 2 }}>
-                  <Link to='/home' style={{ color: 'white' }}>
-                    <PetsIcon />
-                  </Link>
+                <Link
+                  to='/home'
+                  style={{
+                    color: 'white',
+                    textDecoration: 'none',
+                    display: 'flex',
+                    flexDirection: 'row',
+                  }}>
+                  <PetsIcon />
+                  <Typography
+                    variant='h5'
+                    noWrap
+                    component='div'
+                    color='white'
+                    sx={{
+                      display: { overflow: 'inherit', xs: 'none', sm: 'block' },
+                    }}>
+                    Huellitas
+                  </Typography>
+                </Link>
                 </IconButton>
-                Huellitas
-              </Typography>
               <Typography variant='h6' color='white'>
                 Marcando el camino a casa
               </Typography>
@@ -210,6 +216,6 @@ export default function LandingPage() {
           </Box>
         </Box>
       </Box>
-    );
+    )
   }
 }
