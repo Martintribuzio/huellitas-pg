@@ -1,15 +1,27 @@
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, MouseEvent } from "react";
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import {Shelter} from '../Profile/Profile'
 import {User} from '../Profile/Profile'
 import editProfile from '../../services/editProfile'
 import axios from 'axios'
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import Swal from 'sweetalert2';
+import style from '../../CSS/EditAPet.module.css';
 
 export default function EditProfile(props: {modal:Function,ownUser: any}){
+  type event =
+  | ChangeEvent<HTMLInputElement>
+  | ChangeEvent<HTMLTextAreaElement>
+  | ChangeEvent<HTMLSelectElement>;
+
+type mouseEvent = MouseEvent<HTMLButtonElement>;
+
     let initialState = {
+      id: props.ownUser._id,
       name: props.ownUser.name,
       lastname: props.ownUser.lastname,
       username: props.ownUser.username,
@@ -39,154 +51,171 @@ export default function EditProfile(props: {modal:Function,ownUser: any}){
     });
   }
 
-  async function handleSubmit(e: any) {
-    e.preventDefault()
-    // console.log("Cristian")
-    console.log("consologuealo te lo pido por favor ",input)
-    // let password = await axios.post('/user/login', {username:input.username, password:input.password})
-    // console.log(password.data)
-      if(input.address && input.phone && input.description){
-       await editProfile(
-        input.name,
-        input.username,
-        input.lastname,
-        input.address,
-        input.phone,
-        input.description,
-        input.imageFile,
-      )
-      }else{
-        await editProfile(
-          input.name,
-          input.username,
-          input.lastname,
-          input.imageFile,
-        )
-      }
-      await props.modal()
-      console.log("esta es la imagen ",input.image)
-    // console.log("despues ", props.modal())
+  function handleSubmit(e: mouseEvent) {
+    const fd = new FormData();
+    fd.append('name', input.name);
+    fd.append('lastname', input.lastname);
+    fd.append('address', input.address);
+    fd.append('phone', input.phone);
+    fd.append('description', input.description);
+    fd.append('type', input.type);
+    fd.append('_id', input.id);
+    input.name && fd.append('name', input.name);
+    input.image && fd.append('image', input.image);
+    
+    editProfile(fd);
+
+    return Swal.fire({
+      title: 'Guardado!',
+      text: 'Publicacion editada con exito!',
+      icon: 'success',
+      confirmButtonText: 'Ok',
+    });
   }
+
+  // async function handleSubmit(e: any) {
+  //   e.preventDefault()
+  //   // console.log("Cristian")
+  //   console.log("consologuealo te lo pido por favor ",input)
+  //   // let password = await axios.post('/user/login', {username:input.username, password:input.password})
+  //   // console.log(password.data)
+  //     if(input.address && input.phone && input.description){
+  //      await editProfile(
+  //       input.name,
+  //       input.username,
+  //       input.lastname,
+  //       input.address,
+  //       input.phone,
+  //       input.description,
+  //       input.imageFile,
+  //     )
+  //     }else{
+  //       await editProfile(
+  //         input.name,
+  //         input.username,
+  //         input.lastname,
+  //         input.imageFile,
+  //       )
+  //     }
+  //     await props.modal()
+  //     console.log("esta es la imagen ",input.image)
+  //   // console.log("despues ", props.modal())
+  // }
   
   if(input.type === 'shelter'){
-  return(
-    <Box sx={{ backgroundColor: '#F5F5F5' }}>
-      <Typography
-        variant='h4'
-        style={{ color: '#4A4A4A', marginBottom: '10px' }}>
-        Editar
-      </Typography>
-      
-      <form onSubmit={(e) => handleSubmit(e)}>
+      return (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Card
+            className={style.form}
+            elevation={5}
+            sx={{
+              borderRadius: '23px',
 
-      <label  style={{ marginBottom: '10px' }}>
-            editar foto
-            <input
-              style={{ display: 'none' }}
-              type='file'
-              onChange={e => handleChangeFoto(e)}
-          accept='.png, .jpg'
-        />
-      </label>
-
-      {input.image ? (
-                <img
-                  style={{
-                    width: '60px',
-                    height: '60px',
-                    borderRadius: '50%',
-                  }}
-                  alt='pet'
-                  src={URL.createObjectURL(input.image)}
-                />
-              ) : null}
-        <div>
-          <input name='name' type='text' defaultValue={props.ownUser.name} onChange={(e) => handleChange(e)}/>
-        </div>
-        <div>
-          <input name='password' type='password' placeholder="Contraseña actual" onChange={(e) => handleChange(e)}/>
-        </div>
-        {/* <div>
-          <input name='newPassword' type='password' placeholder="Nueva contraseña"/>
-        </div>
-        <div>
-          <input name='confirmPassword' type='password' placeholder="Confirmar contraseña"/>
-        </div> */}
-        <div>
-          <input name='phone' type='text' defaultValue={props.ownUser.phone} onChange={(e) => handleChange(e)}/>
-        </div>
-        <div>
-          <input name='address' type='text' defaultValue={props.ownUser.address} onChange={(e) => handleChange(e)}/>
-        </div>
-        <div>
-          <input name='description' type='text' defaultValue={props.ownUser.description} onChange={(e) => handleChange(e)}/>
-        </div>
-        <Button
-          style={{ marginTop: '20px', width: '300px', marginBottom: '20px' }}
-          variant='contained'
-          type='submit'
-          // onClick={() => props.modal()}
-        >
-          Confirmar
-        </Button>
-      </form>
-    </Box>
-  );
-  }else{
-    return(
-      <Box sx={{ backgroundColor: '#F5F5F5' }}>
-      <Typography
-        variant='h4'
-        style={{ color: '#4A4A4A', marginBottom: '10px' }}>
-        Editar
-      </Typography>
-
-      <form onSubmit={(e) => handleSubmit(e)}>
-
-      <label  style={{ marginBottom: '10px' }}>
-            editar foto
-            <input
-              style={{ display: 'none' }}
-              type='file'
-              onChange={e => handleChangeFoto(e)}
-          accept='.png, .jpg'
-        />
-      </label>
-
-      {input.imageFile ? <CardMedia
+              paddingLeft: '37%',
+              paddingRight: '37%',
+            }}>
+            <label className={style.file} style={{ marginBottom: '10px' }}>
+              editar foto
+              <input
+                style={{ display: 'none' }}
+                type='file'
+                onChange={e => handleChangeFoto(e)}
+                accept='.png, .jpg'
+              />
+            </label>
+            
+          {input.imageFile ? <CardMedia
+              component='img'
+              alt={"img"}
+              sx={{
+                maxHeight: 300,
+              }}
+              image = {URL.createObjectURL(input.imageFile)}
+            />: input.image ? <CardMedia
             component='img'
-            alt={''}
+            alt={"img"}
             sx={{
               maxHeight: 300,
             }}
-            image = {URL.createObjectURL(input.imageFile)}
-          /> : null
-        }
-        <div>
-          <input name='name' type='text' defaultValue={props.ownUser.name} onChange={(e) => handleChange(e)}/>
+            image = {input.image}
+            /> :  null}
+            
+            <CardContent>
+              {/* {detailpost.name ? ( */}
+                <Typography gutterBottom variant='h6' component='div'>
+                  {' '}
+                  Nombre:
+                  <input
+                    name='name'
+                    defaultValue={input.name}
+                    onChange={handleChange}></input>
+                </Typography>
+              {/* ) : null} */}
+
+              {/* <Typography
+                sx={{ display: 'flex', flexDirection: 'column' }}
+                gutterBottom
+                variant='h5'
+                component='div'>
+                Tipo:{' '}
+                <select onChange={handleChange}>
+                  <option hidden selected>
+                    {detailpost.type}
+                  </option>
+                  <option value='Perro'>perro</option>
+                  <option value='Gato'>gato</option>
+                  <option value='Otro'>otro</option>
+                </select>
+              </Typography>
+
+              <Typography gutterBottom variant='h6' component='div'>
+                Estado:{' '}
+                <select onChange={handleChange} name='state'>
+                  <option hidden selected>
+                    {detailpost.state}
+                  </option>
+                  <option value='Perdido'>Perdido</option>
+                  <option value='Encontrado'>Encontrado</option>
+                  <option value='Adopción'>En adopcion</option>
+                </select>
+              </Typography>
+
+              <Typography gutterBottom variant='h6' component='div'>
+                Género:{' '}
+                <select onChange={handleChange}>
+                  <option hidden selected>
+                    {detailpost.genre}
+                  </option>
+                  <option value='Macho'> Macho </option>
+                  <option value='Hembra'> Hembra </option>
+                </select>
+              </Typography>
+
+              <Typography gutterBottom variant='h6' component='div'>
+                {' '}
+                Descripcion:
+                <textarea
+                  defaultValue={"detailpost.description"}
+                  onChange={
+                    handleChange
+                  }></textarea>
+              </Typography> */}
+
+              <Button variant='contained' onClick={handleSubmit}>
+                Guardar
+              </Button>
+            </CardContent>
+          </Card>
         </div>
-        <div>
-          <input name='lastname' type='text' defaultValue={props.ownUser.lastname} onChange={(e) => handleChange(e)}/>
-        </div>
-        <div>
-          <input name='password' type='password' placeholder="Contraseña actual" onChange={(e) => handleChange(e)}/>
-        </div>
-        {/* <div>
-          <input name='newPassword' type='password' placeholder="Nueva contraseña"/>
-        </div>
-        <div>
-          <input name='confirmPassword' type='password' placeholder="Confirmar contraseña"/>
-        </div> */}
-        <Button
-          style={{ marginTop: '20px', width: '300px', marginBottom: '20px' }}
-          variant='contained'
-          type='submit'
-          // onClick={() => props.modal()}
-        >
-          Confirmar
-        </Button>
-      </form>
-    </Box>
+      );
+  }else{
+    return(
+      <div>hola</div>
    );
   }
 }

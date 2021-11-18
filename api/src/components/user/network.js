@@ -145,7 +145,7 @@ userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail
 });
 
 userNetwork.post('/signup/shelter',upload.single('profileImage') ,(req, res) => { //Aca podriamos enviar el mail   
-  // console.log(req.body);
+  console.log(req.body);
   User.register(
     new User({
       name: req.body.name,
