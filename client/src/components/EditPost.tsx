@@ -13,6 +13,7 @@ import useUser from '../hooks/useUser';
 import editPost from '../services/editPost';
 import style from '../CSS/EditAPet.module.css';
 import { Button } from '@mui/material';
+import { validation } from '../helpers/validationPost';
 
 export default function EditPost() {
   type event =
@@ -22,11 +23,21 @@ export default function EditPost() {
 
   type mouseEvent = MouseEvent<HTMLButtonElement>;
 
+  const initialError = {
+    description: '',
+    genre: '',
+    date: '',
+    petImage: '',
+    type: '',
+    state: '',
+  };
+
   const { id } = useParams<{ id?: string }>();
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
   // const dispatch = useDispatch();
   const history = useHistory();
   const [loading, result] = useUser();
+  const [error, setError] = useState(initialError);
   const idSender = localStorage.getItem('userId');
 
   let detailpost = allPosts.find((elem: PostType) => elem._id === id);
@@ -58,6 +69,14 @@ export default function EditPost() {
   function handleChangeFoto(e: Event | event) {
     const target = e.target as HTMLInputElement;
     const file: File = (target.files as FileList)[0];
+    const errorImage = validation(
+      {
+        ...input,
+        petImage: file,
+      },
+      'image'
+    );
+    setError({ ...error, petImage: errorImage.petImage });
     setInput({
       ...input,
       petImage: file,
@@ -94,22 +113,30 @@ export default function EditPost() {
   }
 
   function handleSubmit(e: mouseEvent) {
-    const fd = new FormData();
-    fd.append('state', input.state);
-    fd.append('description', input.description);
-    fd.append('type', input.type);
-    fd.append('genre', input.genre);
-    fd.append('_id', input._id);
-    input.name && fd.append('name', input.name);
-    input.petImage && fd.append('petImage', input.petImage);
-    
-    editPost(fd);
-
+    const errors = validation(input);
+    if (Object.values(errors).every(error => error === '')) {
+      const fd = new FormData();
+      fd.append('state', input.state);
+      fd.append('description', input.description);
+      fd.append('type', input.type);
+      fd.append('genre', input.genre);
+      fd.append('_id', input._id);
+      input.name && fd.append('name', input.name);
+      input.petImage && fd.append('petImage', input.petImage);
+      editPost(fd);
+      return Swal.fire({
+        title: 'Guardado!',
+        text: 'Publicacion editada con exito!',
+        icon: 'success',
+        confirmButtonText: 'Ok',
+      });
+    }
+    setError(errors);
     return Swal.fire({
-      title: 'Guardado!',
-      text: 'Publicacion editada con exito!',
-      icon: 'success',
-      confirmButtonText: 'Ok',
+      title: 'Error!',
+      text: 'La imagen ingresada no es valida',
+      icon: 'error',
+      confirmButtonText: 'Volver',
     });
   }
   //console.log(input)

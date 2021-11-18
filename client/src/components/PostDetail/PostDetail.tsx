@@ -19,7 +19,7 @@ import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import { Hidden, InputLabel } from '@mui/material'
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 export default function ImgMediaCard() {
   const { id } = useParams<{ id?: string }>()
@@ -145,6 +145,7 @@ export default function ImgMediaCard() {
             // marginTop: 45,
             // marginBottom: 54,
           }}>
+          
           <CardMedia
             ref={scrollRef}
             component='img'
