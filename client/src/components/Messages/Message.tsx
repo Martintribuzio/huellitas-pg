@@ -62,7 +62,6 @@ export default function Message(props: any) {
   const userImage = localStorage.getItem('image')
   const scrollRef = useRef<any>()
   const ConverseId = props.path
-  console.log('converseID', ConverseId)
   const convers: any = useSelector((state: typeState) =>
     Array.isArray(state.conversations)
       ? state.conversations.find((convers: any) => convers._id === ConverseId)
@@ -72,10 +71,13 @@ export default function Message(props: any) {
   useEffect(() => {
     socket.current = io(`${process.env.REACT_APP_SOCKET_URL}`)
     socket.current.on('getMessage', (data: any) => {
-      setArrivalMessage({
-        sender: data.senderId,
-        content: data.text,
-      })
+      console.log(data.senderId, idSender)
+      if (data.senderId !== idSender) {
+        setArrivalMessage({
+          sender: data.senderId,
+          content: data.text,
+        })
+      }
     })
   }, [])
 
@@ -151,8 +153,6 @@ export default function Message(props: any) {
     }
   }
   var days = ['Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vier', 'Sab']
-
-  console.log('CONVERS', convers)
 
   if (convers) {
     return (
