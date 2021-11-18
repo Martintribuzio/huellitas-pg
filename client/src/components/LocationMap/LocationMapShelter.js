@@ -65,7 +65,7 @@ export default function LocationMapShelter() {
   const icon = useMemo(()=>{
     return new Icon({
     iconUrl: shelterImg,
-    iconSize: [25, 25]
+    iconSize: [25, 30]
   });
   },[]);
 
