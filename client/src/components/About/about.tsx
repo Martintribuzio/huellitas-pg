@@ -2,7 +2,7 @@ import Juan from './fotos/Juan.png';
 import Cris from './fotos/Cris.jpg';
 import Guada from './fotos/Guada.jpg';
 import Justo from './fotos/Justo.jpg';
-import Lucho from './fotos/Lucho.jpg';
+import Lucho from './fotos/Lucho2.jpg';
 import Martin from './fotos/Martoo.jpg';
 import Benja from './fotos/Mono.jpg';
 import Santi from './fotos/Santi.jpg';

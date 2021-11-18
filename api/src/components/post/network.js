@@ -40,7 +40,7 @@ postNetwork.put('/', upload.single('petImage'), async (req, res) => {
   console.log(req.body)
   try {
     const { _id, name, type, state, genre, description } = req.body;
-    console.log(req.file)
+    console.log('imagen: ', req.file)
     editPost(_id, name, type, state, genre, description, req.file);
     return res.send('post editado');
   } catch (error) {

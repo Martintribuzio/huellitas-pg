@@ -9,6 +9,9 @@ const theme = createTheme({
     secondary: {
       main: "#E9E9E9",
     },
+    error:{
+      main: "#FF0000",
+    }
   },
   typography: {
     fontFamily: "poppins",

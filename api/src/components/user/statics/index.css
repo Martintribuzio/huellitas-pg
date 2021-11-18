@@ -1,0 +1,16 @@
+body{
+    background-color: rgb(115, 167 , 203);
+}
+.titulo{
+    display: flex;
+    justify-content: center;
+    font-family: 'Poppins';
+    margin-top: 100px;
+    color: white;
+}
+.link{
+    font-family: 'Poppins';
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 200px;
+}

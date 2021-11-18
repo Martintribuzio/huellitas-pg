@@ -47,7 +47,7 @@ export default function EditPost() {
 
   const [input, setInput] = useState<any>(initialState);
 
-  console.log(input.oldPetImage)
+  //console.log(input.oldPetImage)
 
   // useEffect(() => {
   //   dispatch(getPosts());
