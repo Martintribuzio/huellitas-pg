@@ -13,6 +13,7 @@ import huellaAdopt  from "../../assets/map/huellitaAdoption.png";
 import signodeex  from "../../assets/map/huellitasFounded.png";
 import {Icon} from "leaflet"
 import { typeState } from '../../redux/reducers/index';
+import { Link } from 'react-router-dom';
 
 let defaultCenter = [-34.6038, -58.3816];
 let defaultZoom = 13;
@@ -122,7 +123,7 @@ export default function LocationMap() {
             >
             <Popup> 
               <div style = {{width: '200px'}}>
-                {post.name? <h1>{`Nombre: ${post.name}`}</h1> : ""}
+                {post.name? <Link to = {`/home/detail/${post._id}`}><h1>{`Nombre: ${post.name}`}</h1></Link> : ""}
                 <img style = {{width: '200px'}} src = {post.petImage.url} alt=""></img>
                 <h3>{`Estado: ${post.state}`}</h3>
                 <h3>{`Tipo: ${post.type}`}</h3>

@@ -129,8 +129,6 @@ const editPostDB = async (_id, name, type, state, description, genre, date, petI
   } catch (error) {
     throw new Error(error);
   }
-
-
 };
 
 const deletePostDB = async id => {
