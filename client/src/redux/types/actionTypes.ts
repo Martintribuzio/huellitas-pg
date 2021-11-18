@@ -1,5 +1,5 @@
-import { get } from 'http';
-import editPost from '../../services/editPost';
+// import { get } from 'http';
+// import editPost from '../../services/editPost';
 import { conversation, PostType } from './types';
 
 export const FILTER_STATE = 'FILTER_STATE';
@@ -28,6 +28,7 @@ export interface getConversation {
   type: typeof GET_CONVERSATIONS;
   payload: Array<conversation>;
 }
+
 export interface getPosts {
   type: typeof GET_POSTS;
   payload: Array<PostType>;

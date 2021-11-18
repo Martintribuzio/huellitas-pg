@@ -10,7 +10,6 @@ import {
   GET_CONVERSATIONS,
   GET_COORDENADAS,
   GET_USER_ID,
-
   // EDIT_POST,
   DELETE_POST,
 } from '../types/actionTypes';

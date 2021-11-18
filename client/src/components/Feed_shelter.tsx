@@ -110,7 +110,7 @@ export default function FeedShelter() {
                   sx={{ minHeight: 200, minWidth: 200 }}>
                   <ImageSrc
                     style={{
-                      backgroundImage: `url(${item.profileImage.url})`,
+                      backgroundImage: `url(${item.profileImage?.url})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                     }}
