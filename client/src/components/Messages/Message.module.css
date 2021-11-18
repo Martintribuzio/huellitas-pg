@@ -85,6 +85,8 @@
 }
 
 .conv {
+  display: flex;
+  flex-direction: column;
   min-width: 25vw;
   width: max-content;
   height: 100%;

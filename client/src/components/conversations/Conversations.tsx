@@ -9,6 +9,7 @@ import style from '../Messages/Message.module.css'
 import { SpinnerCircular } from 'spinners-react'
 import { Variants } from 'framer-motion'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Link } from 'react-router-dom'
 
 const fadeRigth: Variants = {
   initial: {
@@ -82,11 +83,31 @@ export default function Conversations(props: any) {
         {props.title ? (
           <h2 style={{ color: 'gray', textAlign: 'center' }}>Mensajes</h2>
         ) : null}
-        {convers.length && Array.isArray(convers) && result !== 'Unauthorized'
-          ? convers.map((c: any, index: number) => (
-              <Conversation key={index} conversation={c} />
-            ))
-          : null}
+        {convers.length &&
+        Array.isArray(convers) &&
+        result !== 'Unauthorized' ? (
+          convers.map((c: any, index: number) => (
+            <Conversation key={index} conversation={c} />
+          ))
+        ) : (
+          <>
+            <h3
+              style={{
+                color: 'gray',
+                textAlign: 'center',
+              }}>
+              ¡No tienes conversaciones!
+            </h3>
+            <Link
+              to='/home/feed'
+              style={{
+                color: 'gray',
+                textAlign: 'center',
+              }}>
+              ¡Colabora con una publicacion!
+            </Link>
+          </>
+        )}
       </motion.div>
     </AnimatePresence>
   )
