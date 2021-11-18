@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { PostType, conversation } from '../../redux/types/types'
 import { useDispatch, useSelector } from 'react-redux'
 import { typeState } from '../../redux/reducers/index'
@@ -29,6 +29,7 @@ export default function ImgMediaCard() {
   const history = useHistory()
   const [result] = useUser()
   const idSender = localStorage.getItem('userId')
+  const scrollRef = useRef<any>()
   //console.log(allPosts)
   const [report, setReport] = useState<number>(0)
   let [isModal, setIsModal] = useState(false)
@@ -41,6 +42,9 @@ export default function ImgMediaCard() {
     dispatch(getPosts())
   }, [dispatch, isModal])
 
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView(false, { behavior: 'auto' })
+  },[]);
   const handleCounter = async function () {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -121,7 +125,9 @@ export default function ImgMediaCard() {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          maxHeight: '85vh',
+          maxHeight: 'max-content',
+          paddingTop: '50px',
+          paddingBottom: '50px',
         }}>
         {report ? (
           report > 0 ? (
@@ -133,10 +139,11 @@ export default function ImgMediaCard() {
           sx={{
             maxWidth: 345,
             minWidth: '20vw',
-            marginTop: 45,
-            marginBottom: 54,
+            // marginTop: 45,
+            // marginBottom: 54,
           }}>
           <CardMedia
+            ref={scrollRef}
             component='img'
             alt={detailpost.type}
             sx={{
