@@ -105,7 +105,7 @@ const displayMap = useMemo(() => {
             <Popup> 
               <div style = {{width: '200px'}}>
                 {shelter.name? <Link to = {`/home/shelter/details/${shelter._id}`}><h1>{`Nombre: ${shelter.name}`}</h1></Link> : ""}
-                <img style = {{width: '200px'}} src = {shelter.profileImage?.url} alt=""></img>
+                <Link><img style = {{width: '200px'}} src = {shelter.profileImage?.url} alt=""></img></Link>
               </div>
             </Popup>
           </Marker>
