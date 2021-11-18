@@ -79,6 +79,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
         window.localStorage.setItem('email', '');
         window.localStorage.setItem('token', '');
         window.localStorage.setItem('userId', '');
+        window.localStorage.setItem('image', '');
       }
       history.push('/');
     } catch (error) {
