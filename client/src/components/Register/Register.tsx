@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useState } from 'react';
 
 type Data = {
   name: string;
@@ -34,6 +35,7 @@ const schema = yup.object().shape({
 });
 
 function Register({ inicio }: any) {
+  const [loading, setLoading] = useState(false);
   const {
     handleSubmit,
     control,
@@ -41,9 +43,11 @@ function Register({ inicio }: any) {
   } = useForm<Data>({ resolver: yupResolver(schema) });
 
   const onSubmit = handleSubmit(data => {
+    setLoading(true);
     axios
       .post('/user/signup', {...data,type:'user'})
       .then(res => {
+        setLoading(false);
         Swal.fire({
           title: 'Exito!',
           text: 'Se ha enviado un mail de confirmacion a su correo electronico',
@@ -55,12 +59,13 @@ function Register({ inicio }: any) {
       //   inicio(false);
       // })
       .catch(error =>
+       { setLoading(false);
         Swal.fire({
           title: 'Error',
           text: 'El email ingresado ya pertenece a una cuenta',
           icon: 'error',
           confirmButtonText: 'Intentar de nuevo',
-        })
+        })}
       );
   });
 
@@ -172,6 +177,7 @@ function Register({ inicio }: any) {
         <Button
           style={{ marginTop: '20px', width: '300px' }}
           variant='contained'
+          disabled={loading}
           type='submit'>
           Registrar
         </Button>

@@ -163,8 +163,6 @@ userNetwork.post(
   '/signup/shelter',
   upload.single('profileImage'),
   (req, res) => {
-    //Aca podriamos enviar el mail
-    // console.log(req.body);
     User.register(
       new User({
         name: req.body.name,
@@ -175,8 +173,8 @@ userNetwork.post(
         confirmation: req.body.confirmation || false,
         website: req.body.website,
         phone: req.body.phone,
-        Facebook: req.body.Facebook,
-        Instagram: req.body.Instagram,
+        facebook: req.body.facebook,
+        instagram: req.body.instagram,
         address: req.body.address,
         latitude: req.body.latitude,
         longitude: req.body.longitude,

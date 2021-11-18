@@ -116,9 +116,6 @@ export default function ImgMediaCard() {
         }
       }
     }
-    else{
-      history.push('/login')
-    }
   }
 
   if (detailpost !== undefined) {
