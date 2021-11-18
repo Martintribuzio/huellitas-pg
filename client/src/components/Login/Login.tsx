@@ -22,12 +22,12 @@ type LogIn = {
 };
 
 const schema = yup.object().shape({
-  email: yup.string().email().required('Ingrese su email'),
+  email: yup.string().email().required('Ingrese su email.'),
   password: yup
     .string()
-    .min(8, 'Su contraseña debe tener al menos 8 caracteres')
-    .max(20, 'Su contraseña debe tener menos de 20 caracteres')
-    .required('Ingrese su contraseña'),
+    .min(8, 'Su contraseña debe tener al menos 8 caracteres.')
+    .max(20, 'Su contraseña debe tener menos de 20 caracteres.')
+    .required('Ingrese su contraseña.'),
 });
 
 function Ingresar() {
@@ -61,7 +61,7 @@ function Ingresar() {
         title: 'Error',
         text: 'La cuenta no ha sido confirmada, revise su correo',
         icon: 'error',
-        confirmButtonText: 'Intentar de nuevo',
+        confirmButtonText: 'Intenta de nuevo',
       });
     } else {
       history.push('/home/feed'); //aqui
@@ -81,7 +81,7 @@ function Ingresar() {
           title: 'Error',
           text: 'La cuenta no ha sido confirmada, revise su correo',
           icon: 'error',
-          confirmButtonText: 'Intentar de nuevo',
+          confirmButtonText: 'Intenta de nuevo',
         });
       } else if (respLogin.success) {
         history.push('/home/feed');

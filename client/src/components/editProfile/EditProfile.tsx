@@ -42,7 +42,7 @@ export default function EditProfile(props: {modal:Function,ownUser: any}){
   async function handleSubmit(e: any) {
     e.preventDefault()
     // console.log("Cristian")
-    console.log("consologuealo te lo pido por favor ",input)
+    // console.log("consologuealo te lo pido por favor ",input)
     // let password = await axios.post('/user/login', {username:input.username, password:input.password})
     // console.log(password.data)
       if(input.address && input.phone && input.description){
@@ -64,7 +64,7 @@ export default function EditProfile(props: {modal:Function,ownUser: any}){
         )
       }
       await props.modal()
-      console.log("esta es la imagen ",input.image)
+      // console.log("esta es la imagen ",input.image)
     // console.log("despues ", props.modal())
   }
   
@@ -80,7 +80,7 @@ export default function EditProfile(props: {modal:Function,ownUser: any}){
       <form onSubmit={(e) => handleSubmit(e)}>
 
       <label  style={{ marginBottom: '10px' }}>
-            editar foto
+            Editar foto
             <input
               style={{ display: 'none' }}
               type='file'
@@ -127,7 +127,7 @@ export default function EditProfile(props: {modal:Function,ownUser: any}){
           type='submit'
           // onClick={() => props.modal()}
         >
-          Confirmar
+          Confirmar.
         </Button>
       </form>
     </Box>
@@ -144,7 +144,7 @@ export default function EditProfile(props: {modal:Function,ownUser: any}){
       <form onSubmit={(e) => handleSubmit(e)}>
 
       <label  style={{ marginBottom: '10px' }}>
-            editar foto
+            Editar foto
             <input
               style={{ display: 'none' }}
               type='file'

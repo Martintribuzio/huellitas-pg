@@ -107,9 +107,9 @@ export default function EditPost() {
 
     return Swal.fire({
       title: 'Guardado!',
-      text: 'Publicacion editada con exito!',
+      text: 'Publicación editada con éxito!',
       icon: 'success',
-      confirmButtonText: 'Ok',
+      confirmButtonText: 'Ok.',
     });
   }
   //console.log(input)
@@ -233,7 +233,7 @@ export default function EditPost() {
 
             <Typography gutterBottom variant='h6' component='div'>
               {' '}
-              Descripcion:
+              Descripción:
               <textarea
                 defaultValue={detailpost.description}
                 onChange={e =>

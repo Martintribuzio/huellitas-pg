@@ -58,19 +58,19 @@ export default function ImgMediaCard() {
 
     swalWithBootstrapButtons
       .fire({
-        title: 'estas seguro?',
-        text: 'si denuncias esta publicacion probablemente sea borrada',
+        title: '¿Estas seguro?',
+        text: 'Si denuncias esta publicación probablemente sea borrada',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'si, reportarla!',
-        cancelButtonText: 'No, cambie de opinion!',
+        confirmButtonText: 'Sí, reportarla!',
+        cancelButtonText: 'No, cambie de opinión!',
         reverseButtons: true,
       })
       .then(result => {
         if (result.isConfirmed) {
           swalWithBootstrapButtons.fire(
-            'bien!',
-            'el post fue denunciado correctamente',
+            'Bien!',
+            'El post fue denunciado correctamente',
             'success'
           )
           report()
@@ -81,8 +81,8 @@ export default function ImgMediaCard() {
           result.dismiss === Swal.DismissReason.cancel
         ) {
           swalWithBootstrapButtons.fire(
-            'bien',
-            'esta publicacion seguira estando',
+            'Bien',
+            'Está publicación seguira estando',
             'error'
           )
         }
@@ -125,7 +125,8 @@ export default function ImgMediaCard() {
         }}>
         {report ? (
           report > 0 ? (
-            <span>Reportado CHAN CHAN CHAN</span>
+            <span>Reportado</span>
+            // <span>Reportado CHAN CHAN CHAN</span>
           ) : null
         ) : null}
         <Card
@@ -183,7 +184,7 @@ export default function ImgMediaCard() {
                 <Select label='Reportar' onChange={handleCounter}>
                   <MenuItem value='Spam'>Spam</MenuItem>
                   <MenuItem value='Contenido Inapropiado'>
-                    Contenido Inapropiado
+                    Contenido inapropiado
                   </MenuItem>
                 </Select>
               </FormControl>

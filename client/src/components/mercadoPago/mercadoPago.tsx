@@ -39,10 +39,10 @@ const openWindow = (url:string) => {
   return (
       <div className={sty.dive}>
           <Typography variant='h4'>
-              ¿Quieres ayudarnos?
+              ¿Quéres ayudarnos?
             </Typography>
             <Typography sx={{width:'80vw'}}>
-                El equipo de Huellitas creo este proyecto sin fines le lucro pero
+                El equipo de Huellitas creo este proyecto sin fines le lucro, pero
                 si te gusta la aplicación y quieres ayudar, puedes hacer una donación.
                 <br/>
                 Las donaciones se utilizan para mantener el servidor de Huellitas funcionando.
@@ -58,7 +58,7 @@ const openWindow = (url:string) => {
                 onChange={change}
                 startAdornment={<InputAdornment position="start">ARS $</InputAdornment>}
             />
-                {price[0] === '-' || price[0] === '0' ?<FormHelperText error={true} id="component-error-text">Error Monto invalido</FormHelperText>:null}
+                {price[0] === '-' || price[0] === '0' ?<FormHelperText error={true} id="component-error-text">Error monto inválido</FormHelperText>:null}
             </FormControl>
             <TextField
             id="standard-multiline-static"

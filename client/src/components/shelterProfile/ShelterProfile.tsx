@@ -82,7 +82,7 @@ export default function ShelterProfile() {
               );
             })
           ) : (
-            <Typography>No hay posts</Typography>
+            <Typography>No hay posts disponibles.</Typography>
           )}
     </div>
   );

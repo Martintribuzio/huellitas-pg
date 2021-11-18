@@ -38,18 +38,18 @@ type Data = {
 
 
 const schema = yup.object().shape({
-  name: yup.string().required('Ingresa tu nombre'),
-  description: yup.string().required('Ingresa una descripcion'),
-  email: yup.string().email().required('Ingresa tu email'),
+  name: yup.string().required('Ingresa tu nombre.'),
+  description: yup.string().required('Ingresa una descripción.'),
+  email: yup.string().email().required('Ingresa tu email.'),
   password: yup
     .string()
-    .min(8, 'Tu contraseña debe tener al menos 8 caracteres')
-    .max(20, 'Tu contraseña debe tener menos de 20 caracteres')
-    .required('Ingresa tu contraseña'),
+    .min(8, 'Tu contraseña debe tener al menos 8 caracteres.')
+    .max(20, 'Tu contraseña debe tener menos de 20 caracteres.')
+    .required('Ingresa tu contraseña.'),
   confirmPassword: yup
     .string()
-    .oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden')
-    .required('Ingresa nuevamente tu contraseña'),
+    .oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden.')
+    .required('Ingresa nuevamente tu contraseña.'),
 });
 
 
@@ -135,8 +135,8 @@ function RegisterShelter({ inicio }: any) {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
         Swal.fire({
-          title: 'Exito!',
-          text: 'Se ha enviado un mail de confirmacion a su correo electronico',
+          title: 'Éxito!',
+          text: 'Se ha enviado un mail de confirmación a su correo electrónico',
           icon: 'success',
           confirmButtonText: 'Ok',
       })}
@@ -148,7 +148,7 @@ function RegisterShelter({ inicio }: any) {
           title: 'Error',
           text: 'El email ingresado ya pertenece a una cuenta',
           icon: 'error',
-          confirmButtonText: 'Intentar de nuevo',
+          confirmButtonText: 'Intenta de nuevo',
         })
       }
     }

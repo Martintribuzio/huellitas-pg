@@ -3,7 +3,7 @@ import Conversations from '../conversations/Conversations'
 import { Redirect, useLocation } from 'react-router-dom'
 import Message from '../Messages/Message'
 import style from '../Messages/Message.module.css'
-import { useState } from 'react'
+// import { useState } from 'react'
 import useUser from '../../hooks/useUser'
 
 export const Messenger = () => {

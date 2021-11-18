@@ -10,7 +10,7 @@ function RegistersContainer() {
     <div>
       <label>
         <Switch checked={isShelter} onChange={() => setIsShelter(!isShelter)} />{' '}
-        soy un refugio
+        Soy un refugio
       </label>
       {isShelter ? <RegisterShelter /> : <Register />}
     </div>

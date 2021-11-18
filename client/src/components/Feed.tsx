@@ -148,7 +148,7 @@ export default function Feed(props: any) {
         </Box>
       );
     } else {
-      return <h1>No hay publicaciones</h1>;
+      return <h1>No hay publicaciones disponibles.</h1>;
     }
   } else {
     return (

@@ -78,11 +78,11 @@ export default function Profile() {
     })
     
     swalWithBootstrapButtons.fire({
-      title: '¿Seguro que quieres eliminar la publicacion?',
-      text: "No podras revertir esta accion",
+      title: '¿Seguro que quieres eliminar la publicación?',
+      text: "No podrás revertir esta acción",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonText: 'Si, quiero eliminarla!',
+      confirmButtonText: 'Sí, quiero eliminarla!',
       cancelButtonText: 'No, cancelar!',
       reverseButtons: false
     }).then((result) => {
@@ -91,7 +91,7 @@ export default function Profile() {
         setPosts(posts.filter(post => post._id !== id));
         swalWithBootstrapButtons.fire(
           'Eliminada!',
-          'Tu publicacion ha sido eliminada',
+          'Tu publicación ha sido eliminada',
           'success'
         )
       } else if (
@@ -100,7 +100,7 @@ export default function Profile() {
       ) {
         swalWithBootstrapButtons.fire(
           'Cancelado',
-          'Tu publicacion NO se ha eliminado',
+          'Tu publicación NO se ha eliminado',
           'error'
         )
       }
@@ -146,7 +146,7 @@ export default function Profile() {
         padding: '20px 0 ',
         minHeight: '71vh',
       }}>
-      <Button onClick={toggleModal}> Editar Perfil </Button>
+      <Button onClick={toggleModal}> Editar perfil </Button>
 
       <Modal isOpen={isModal} closeModal={toggleModal}>
         {ownUser !== undefined ? 
@@ -170,13 +170,13 @@ export default function Profile() {
                     variant='contained' 
                     onClick={() => handleClick(post._id)}>
                     {' '}
-                    eliminar
+                    Eliminar
                   </Button>
                 </div>
               );
             })
           ) : (
-            <Typography>No hay posts</Typography>
+            <Typography>No has realizado ninguna publicación</Typography>
           )}
         </>
       ) : (
@@ -196,7 +196,7 @@ export default function Profile() {
         padding: '20px 0 ',
         minHeight: '71vh',
       }}>
-      <Button onClick={toggleModal}> Editar Perfil </Button>
+      <Button onClick={toggleModal}> Editar perfil </Button>
 
       <Modal isOpen={isModal} closeModal={toggleModal}>
         {ownUser !== undefined ? 
@@ -234,7 +234,7 @@ export default function Profile() {
               );
             })
           ) : (
-            <Typography>No hay posts</Typography>
+            <Typography>No has realizado ninguna publicación</Typography>
           )}
         </>
       ) : (

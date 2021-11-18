@@ -193,6 +193,6 @@ export default function FeedShelter() {
       );
     }
   } else {
-    return <div>No refugios</div>;
+    return <div>No hay refugios disponibles.</div>;
   }
 }
