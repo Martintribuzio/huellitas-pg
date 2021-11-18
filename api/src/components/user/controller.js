@@ -90,6 +90,7 @@ const editProfile = async (body) => {
     profile.address = body.address
     profile.phone = body.phone
     profile.description = body.description
+    profile.picture = body.imageFile
     await profile.save();
     return profile
   }catch(e){
