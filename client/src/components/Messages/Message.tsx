@@ -32,14 +32,6 @@ const fadeLeft: Variants = {
       ease: 'easeInOut',
     },
   },
-  exit: {
-    x: '-100%',
-    opacity: 1,
-    transition: {
-      duration: 0.5,
-      ease: 'easeInOut',
-    },
-  },
 }
 interface User {
   name: string
@@ -103,7 +95,7 @@ export default function Message(props: any) {
   }, [idSender])
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView()
+    scrollRef.current?.scrollIntoView(false, { behavior: 'auto' })
   }, [messages])
 
   useEffect(() => {
@@ -159,9 +151,9 @@ export default function Message(props: any) {
 
   return (
     <motion.div
-      variants={props.mobile ? fadeLeft : undefined}
-      initial='initial'
-      animate='animate'
+      // variants={props.mobile ? fadeLeft : undefined}
+      // initial='initial'
+      // animate='animate'
       className={style.Chat}>
       {convers ? (
         <>
@@ -210,6 +202,9 @@ export default function Message(props: any) {
 
                       <p className={style.messageContent}>{c.content}</p>
                     </div>
+                    {index === messages.length - 1 && (
+                      <div ref={scrollRef}></div>
+                    )}
                   </>
                 )
               })
@@ -219,7 +214,6 @@ export default function Message(props: any) {
                 <h2>Envia el primer mensaje!</h2>
               </div>
             )}
-            <div ref={scrollRef}></div>
           </div>
           <div className={style.inputChat}>
             <Input

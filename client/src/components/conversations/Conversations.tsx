@@ -8,8 +8,7 @@ import { getConvers } from '../../redux/actions'
 import style from '../Messages/Message.module.css'
 import { SpinnerCircular } from 'spinners-react'
 import { Variants } from 'framer-motion'
-import { motion } from 'framer-motion'
-import { Http2ServerRequest } from 'http2'
+import { motion, AnimatePresence } from 'framer-motion'
 
 const fadeRigth: Variants = {
   initial: {
@@ -25,10 +24,10 @@ const fadeRigth: Variants = {
     },
   },
   exit: {
-    x: '100%',
+    x: '-100%',
     opacity: 1,
     transition: {
-      duration: 0.5,
+      duration: 3,
       ease: 'easeInOut',
     },
   },
@@ -54,35 +53,41 @@ export default function Conversations(props: any) {
 
   if (loading) {
     return (
-      <motion.div
-        variants={props.mobile ? fadeRigth : undefined}
-        initial='initial'
-        animate='animate'
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        className={style.conv}>
-        <SpinnerCircular color='#ffff' />
-      </motion.div>
+      <AnimatePresence>
+        <motion.div
+          variants={props.mobile ? fadeRigth : undefined}
+          initial='initial'
+          animate='animate'
+          exit={{ opacity: 0 }}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          className={style.conv}>
+          <SpinnerCircular color='#ffff' />
+        </motion.div>
+      </AnimatePresence>
     )
   }
 
   return (
-    <motion.div
-      variants={fadeRigth}
-      initial='initial'
-      animate='animate'
-      className={style.conv}>
-      {props.title ? (
-        <h2 style={{ color: 'gray', textAlign: 'center' }}>Mensajes</h2>
-      ) : null}
-      {convers.length && Array.isArray(convers) && result !== 'Unauthorized'
-        ? convers.map((c: any, index: number) => (
-            <Conversation key={index} conversation={c} />
-          ))
-        : null}
-    </motion.div>
+    <AnimatePresence>
+      <motion.div
+        variants={fadeRigth}
+        initial='initial'
+        animate='animate'
+        exit='exit'
+        className={style.conv}>
+        {props.title ? (
+          <h2 style={{ color: 'gray', textAlign: 'center' }}>Mensajes</h2>
+        ) : null}
+        {convers.length && Array.isArray(convers) && result !== 'Unauthorized'
+          ? convers.map((c: any, index: number) => (
+              <Conversation key={index} conversation={c} />
+            ))
+          : null}
+      </motion.div>
+    </AnimatePresence>
   )
 }
