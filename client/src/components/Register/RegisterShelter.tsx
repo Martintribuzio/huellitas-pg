@@ -31,8 +31,6 @@ type Data = {
   facebook: string | any
   website: string | any
   profileImage: string | any
-  latitude: string | any
-  longitude: string | any
 }
 
 const schema = yup.object().shape({
@@ -56,6 +54,7 @@ function RegisterShelter({ inicio }: any) {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
   const [input, setInput] = useState({ latitude: '', longitude: '' })
   const {
+    handleSubmit,
     control,
     formState: { errors },
   } = useForm<Data>({ resolver: yupResolver(schema) })
@@ -94,58 +93,40 @@ function RegisterShelter({ inicio }: any) {
     }
   }, [coordenadas])
 
-  async function handleSubmitForm(data: FormEvent<HTMLFormElement>) {
-    data.preventDefault()
-
-    const {
-      name,
-      email,
-      password,
-      confirmPassword,
-      phone,
-      address,
-      description,
-      instagram,
-      facebook,
-      website,
-    } = data.currentTarget.elements as unknown as Data
+  const onSubmit = handleSubmit(data => {
     const fd = new FormData()
-    fd.append('name', name.value)
-    fd.append('email', email.value)
-    fd.append('password', password.value)
-    fd.append('confirmPassword', confirmPassword.value)
-    fd.append('phone', phone.value)
-    fd.append('address', address.value)
-    fd.append('description', description.value)
-    fd.append('instagram', instagram.value)
-    fd.append('facebook', facebook.value)
-    fd.append('website', website.value)
+    fd.append('name', data.name)
+    fd.append('email', data.email)
+    fd.append('password', data.password)
+    fd.append('confirmPassword', data.confirmPassword)
+    fd.append('phone', data.phone.value)
+    fd.append('address', data.address.value)
+    fd.append('description', data.description.value)
+    fd.append('instagram', data.instagram.value)
+    fd.append('facebook', data.facebook.value)
+    fd.append('website', data.website.value)
     fd.append('latitude', input.latitude)
     fd.append('longitude', input.longitude)
     fd.append('profileImage', img)
     fd.append('type', 'shelter')
-    try {
-      await axios.post('/user/signup/shelter', fd, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
+    axios.post('/user/signup/shelter', fd, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }).then(res => {
       Swal.fire({
         title: 'Exito!',
         text: 'Se ha enviado un mail de confirmacion a su correo electronico',
         icon: 'success',
         confirmButtonText: 'Ok',
       })
-    } catch (error) {
-      // .then(() => {
-      //   inicio(false);
-      // })
+    }).catch(err => {
       Swal.fire({
         title: 'Error',
         text: 'El email ingresado ya pertenece a una cuenta',
         icon: 'error',
         confirmButtonText: 'Intentar de nuevo',
       })
-    }
-  }
+    })
+  })
   return (
     <Box sx={{ backgroundColor: '#F5F5F5' }}>
       <Typography
@@ -154,7 +135,7 @@ function RegisterShelter({ inicio }: any) {
         Regístrate
       </Typography>
 
-      <form onSubmit={data => handleSubmitForm(data)}>
+      <form onSubmit={onSubmit}>
         <div>
           <Controller
             name='name'
