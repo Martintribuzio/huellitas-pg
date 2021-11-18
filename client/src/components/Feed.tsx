@@ -90,7 +90,8 @@ export default function Feed(props: any) {
             justifyContent: 'center',
             minWidth: 300,
             width: '100%',
-          }}>
+          }}
+          > 
           {postsToShow.map(item => {
             return (
               <Link key={item._id} to={`/home/detail/${item._id}`}>
@@ -106,7 +107,7 @@ export default function Feed(props: any) {
                     style={{
                       backgroundImage: `url(${item.petImage?.url})`,
                       backgroundSize: 'cover',
-                      backgroundPosition: 'center',
+                      backgroundPosition: 'botton',
                     }}
                   />
                   <ImageBackdrop className='MuiImageBackdrop-root' />
