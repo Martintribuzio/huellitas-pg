@@ -100,7 +100,8 @@ export default function Message(props: any) {
 
   useEffect(() => {
     setUser(null)
-    const friendId = convers
+
+    const friendId = convers.length
       ? convers.members.find((id: string) => id !== idSender)
       : null
     const getUser = async (friendId: string) => {
