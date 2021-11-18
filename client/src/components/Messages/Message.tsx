@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import Avatar from '@mui/material/Avatar'
 import axios from 'axios'
 import style from './Message.module.css'
 import Input from '@mui/material/Input'
@@ -13,6 +14,9 @@ import { getConvers } from '../../redux/actions/index'
 import { useParams } from 'react-router-dom'
 import { Variants } from 'framer-motion'
 import { motion } from 'framer-motion'
+import mochi from '../../assets/mochi.gif'
+import phone from '../../assets/phone.gif'
+
 dotenv.config()
 
 const fadeLeft: Variants = {
@@ -37,6 +41,14 @@ const fadeLeft: Variants = {
     },
   },
 }
+interface User {
+  name: string
+  lastname: string
+  _id: string
+  posts: []
+  username: string
+  picture?: string
+}
 export interface message {
   content: string
   Converseid: string
@@ -51,12 +63,13 @@ export default function Message(props: any) {
   const [messages, setMessages] = useState<message[]>()
   const [newMessage, setnewMessage] = useState<string>('')
   const [arrivalMessage, setArrivalMessage] = useState<any>()
+  const [user, setUser] = useState<User | null>()
   const dispatch = useDispatch()
   const socket: any = useRef()
   const idSender = localStorage.getItem('userId')
+  const userImage = localStorage.getItem('image')
   const scrollRef = useRef<any>()
   const ConverseId = props.path
-
   const convers: any = useSelector((state: typeState) =>
     Array.isArray(state.conversations)
       ? state.conversations.find((convers: any) => convers._id === ConverseId)
@@ -90,7 +103,24 @@ export default function Message(props: any) {
   }, [idSender])
 
   useEffect(() => {
-    scrollRef.current?.scrollIntoView(false, { behavior: 'smooth' })
+    scrollRef.current?.scrollIntoView()
+  }, [messages])
+
+  useEffect(() => {
+    setUser(null)
+    const friendId = convers
+      ? convers.members.find((id: string) => id !== idSender)
+      : null
+    const getUser = async (friendId: string) => {
+      try {
+        const res = await axios.get(`/user?id=${friendId}`)
+        setUser(res.data)
+      } catch (err: any) {
+        return err.message
+      }
+    }
+    getUser(friendId)
+    // getMessage();
   }, [convers, idSender])
 
   const receiverId = convers?.members?.find(
@@ -125,10 +155,11 @@ export default function Message(props: any) {
       }
     }
   }
+  var days = ['Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vier', 'Sab']
 
   return (
     <motion.div
-      variants={fadeLeft}
+      variants={props.mobile ? fadeLeft : undefined}
       initial='initial'
       animate='animate'
       className={style.Chat}>
@@ -140,19 +171,55 @@ export default function Message(props: any) {
             </Link>
           </div>
           <div className={style.mensaje}>
-            {messages?.map((c: message, index: number) => {
-              if (c.state === 'unread' && c.sender !== idSender) {
-                axios.put(`/message/${c._id}`)
-              }
-              return (
-                <div
-                  key={index}
-                  ref={scrollRef}
-                  className={c.sender !== idSender ? style.other : style.own}>
-                  <p>{c.content}</p>
-                </div>
-              )
-            })}
+            {messages?.length ? (
+              messages?.map((c: message, index: number) => {
+                if (c.state === 'unread' && c.sender !== idSender) {
+                  axios.put(`/message/${c._id}`)
+                }
+                return (
+                  <>
+                    <div
+                      key={index}
+                      className={
+                        c.sender !== idSender ? style.other : style.own
+                      }>
+                      <div className={style.messageData}>
+                        {c.sender !== idSender && (
+                          <Avatar
+                            style={{ marginLeft: '5px' }}
+                            alt='Profile Picture'
+                            src={user ? user.picture : ''}
+                          />
+                        )}
+                        <small className={style.date}>
+                          {days[new Date().getDay()] +
+                            ' ' +
+                            new Date(c.createdAt)
+                              .toTimeString()
+                              .replace(/.*(\d{2}:\d{2}:\d{2}).*/, '$1')
+                              .slice(0, 5)}
+                        </small>
+                        {c.sender === idSender && (
+                          <Avatar
+                            style={{ marginLeft: '5px', marginRight: '5px' }}
+                            alt='Profile Picture'
+                            src={userImage ? userImage : ''}
+                          />
+                        )}
+                      </div>
+
+                      <p className={style.messageContent}>{c.content}</p>
+                    </div>
+                  </>
+                )
+              })
+            ) : (
+              <div className={style.empty}>
+                <img src={phone} alt='mochi' />
+                <h2>Envia el primer mensaje!</h2>
+              </div>
+            )}
+            <div ref={scrollRef}></div>
           </div>
           <div className={style.inputChat}>
             <Input
@@ -173,7 +240,10 @@ export default function Message(props: any) {
           </div>{' '}
         </>
       ) : (
-        <h1>No hay conversaciones seleccionadas</h1>
+        <div className={style.empty}>
+          <img src={mochi} alt='mochi' />
+          <h2>Selecciona un chat para mostrar los mensajes</h2>
+        </div>
       )}
     </motion.div>
   )

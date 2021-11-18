@@ -9,6 +9,7 @@ import style from '../Messages/Message.module.css'
 import { SpinnerCircular } from 'spinners-react'
 import { Variants } from 'framer-motion'
 import { motion } from 'framer-motion'
+import { Http2ServerRequest } from 'http2'
 
 const fadeRigth: Variants = {
   initial: {
@@ -54,7 +55,7 @@ export default function Conversations(props: any) {
   if (loading) {
     return (
       <motion.div
-        variants={fadeRigth}
+        variants={props.mobile ? fadeRigth : undefined}
         initial='initial'
         animate='animate'
         style={{
@@ -68,17 +69,15 @@ export default function Conversations(props: any) {
     )
   }
 
-  const display = props.mobile && visibility ? 'none' : 'block'
-
   return (
     <motion.div
       variants={fadeRigth}
       initial='initial'
       animate='animate'
-      style={{
-        display: display,
-      }}
       className={style.conv}>
+      {props.title ? (
+        <h2 style={{ color: 'gray', textAlign: 'center' }}>Mensajes</h2>
+      ) : null}
       {convers.length && Array.isArray(convers) && result !== 'Unauthorized'
         ? convers.map((c: any, index: number) => (
             <Conversation key={index} conversation={c} />
