@@ -333,6 +333,7 @@ function RegisterShelter({ inicio }: any) {
               <TextField
                 {...field}
                 label='Página web'
+                placeholder='https://www.huellitas.com.ar'
                 variant='outlined'
                 error={!!errors.website}
                 helperText={errors.website ? errors.website.message : ''}
