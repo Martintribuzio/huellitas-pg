@@ -49,10 +49,8 @@ const schema = yup.object().shape({
     .oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden')
     .required('Ingresa nuevamente tu contraseña'),
 })
-interface error {
-  img: string;
 
-}
+
 function RegisterShelter({ inicio }: any) {
   const coordenadas = useSelector((state: typeState) => state.coordenadas)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null)
@@ -64,14 +62,14 @@ function RegisterShelter({ inicio }: any) {
     formState: { errors },
   } = useForm<Data>({ resolver: yupResolver(schema) })
   const [img, setImg] = useState<string | any>(null)
-  const [error, seterror] = useState<error>({img:''})
+  const [error, seterror] = useState<string>('')
   const [loading, setLoading] = useState(false)
 
   function handleChangeImg(e: ChangeEvent<HTMLInputElement> | Event) {
     const target = e.target as HTMLInputElement
     const file: File = (target.files as FileList)[0]
-    seterror({ ...error, img: '' })
     setImg(file)
+    validateImage(file)
   }
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null)
@@ -92,13 +90,25 @@ function RegisterShelter({ inicio }: any) {
       </div>
     </Menu>
   )
-  const check = () => {
-    console.log(input,img)
-    if(!img){
-      seterror({ ...error, img: 'Selecciona una imagen' })
+  const validateImage = (file:any) => {
+    console.log(file)
+    if(file){
+      if (file.type.split('/')[0] !== 'image') {
+        seterror('La imagen debe ser de tipo imagen');
+      }
+      else if (file.size > 1024 * 1024 * 3) {
+        seterror('La imagen debe tener como tamaño maximo 3MB');
+      }
+      else if (
+        file.type.split('/')[1] !== 'jpeg' &&
+        file.type.split('/')[1] !== 'png' &&
+        file.type.split('/')[1] !== 'jpg'
+      ) {
+        seterror('La imagen debe ser de tipo jpg o png');
+      }
     }
     else{
-      seterror({ ...error, img: '' })
+      seterror('')
     }
   }
   useEffect(() => {
@@ -111,7 +121,7 @@ function RegisterShelter({ inicio }: any) {
   }, [coordenadas])
 
   const onSubmit = handleSubmit(data => {
-    if(input.latitude && input.longitude && img){
+    if(img && !error){
       setLoading(true);
     const fd = new FormData()
     fd.append('name', data.name)
@@ -148,6 +158,9 @@ function RegisterShelter({ inicio }: any) {
       })
     })
     
+  }
+  else{
+    seterror('Selecciona una imagen')
   }
   })
   return (
@@ -362,7 +375,7 @@ function RegisterShelter({ inicio }: any) {
               accept='.png, .jpg'
             />
           </label>
-          {img ? (
+          {img && !error ? (
             <img
               style={{ height: '50px', margin: '5px', borderRadius: '50%' }}
               src={URL.createObjectURL(img)}
@@ -370,7 +383,7 @@ function RegisterShelter({ inicio }: any) {
             />
           ) : null}
         </div>
-          {error.img ? <label style={{color:'red'}}>{error.img}</label> : null}
+          {error ? <label style={{color:'red'}}>{error}</label> : null}
         <div
           style={{
             display: 'flex',
@@ -384,7 +397,6 @@ function RegisterShelter({ inicio }: any) {
         </div>
         <Button
           style={{ marginTop: '20px', width: '300px', marginBottom: '20px' }}
-          onClick={check}
           disabled={loading}
           variant='contained'
           type='submit'>
