@@ -38,6 +38,7 @@ const schema = yup.object().shape({
   name: yup.string().required('Ingresa tu nombre'),
   description: yup.string().required('Ingresa una descripcion'),
   email: yup.string().email().required('Ingresa tu email'),
+  address: yup.string().required('Ingresa tu direccion'),
   password: yup
     .string()
     .min(8, 'Tu contraseña debe tener al menos 8 caracteres')
@@ -50,7 +51,7 @@ const schema = yup.object().shape({
 })
 interface error {
   img: string;
-  location: string;
+
 }
 function RegisterShelter({ inicio }: any) {
   const coordenadas = useSelector((state: typeState) => state.coordenadas)
@@ -63,7 +64,7 @@ function RegisterShelter({ inicio }: any) {
     formState: { errors },
   } = useForm<Data>({ resolver: yupResolver(schema) })
   const [img, setImg] = useState<string | any>(null)
-  const [error, seterror] = useState<error>({img:'',location:''})
+  const [error, seterror] = useState<error>({img:''})
 
   function handleChangeImg(e: ChangeEvent<HTMLInputElement> | Event) {
     const target = e.target as HTMLInputElement
@@ -92,11 +93,6 @@ function RegisterShelter({ inicio }: any) {
   )
   const check = () => {
     console.log(input,img)
-    if (input.latitude === '' || input.longitude === '') {
-      seterror({ ...error, location: 'Selecciona una ubicacion' })
-    } else {
-      seterror({ ...error, location: '' })
-    }
     if(!img){
       seterror({ ...error, img: 'Selecciona una imagen' })
     }
@@ -379,7 +375,6 @@ function RegisterShelter({ inicio }: any) {
           <label className={styles.loc}>
             <input style={{ display: 'none' }} onClick={handleMobileMenuOpen} />
           </label>
-          {error.location ? <label>{error.location}</label> : null}
         </div>
         <Button
           style={{ marginTop: '20px', width: '300px', marginBottom: '20px' }}
