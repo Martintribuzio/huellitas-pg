@@ -142,7 +142,7 @@ export default function LocationMap() {
             <Popup> 
               <div style = {{width: '200px'}}>
                 {post.name? <h1>{`Nombre: ${post.name}`}</h1> : ""}
-                <img style = {{width: '200px'}} src = {post.petImage.url} alt=""></img>
+                <Link to = {`/home/detail/${post._id}`}><img style = {{width: '200px'}} src = {post.petImage.url} alt=""></img></Link>
                 <h3>{`Estado: ${post.state}`}</h3>
                 <h3>{`Tipo: ${post.type}`}</h3>
                 <h3>{`Genero: ${post.genre}`}</h3> 
@@ -160,7 +160,7 @@ export default function LocationMap() {
             <Popup> 
               <div style = {{width: '200px'}}>
                 {post.name? <h1>{`Nombre: ${post.name}`}</h1> : ""}
-                <img style = {{width: '200px'}} src = {process.env.REACT_APP_API + "/" + post.petImage} alt=""></img>
+                <Link to = {`/home/detail/${post._id}`}><img style = {{width: '200px'}} src = {post.petImage.url} alt=""></img></Link>
                 <h3>{`Estado: ${post.state}`}</h3>
                 <h3>{`Tipo: ${post.type}`}</h3>
                 <h3>{`Genero: ${post.genre}`}</h3> 
