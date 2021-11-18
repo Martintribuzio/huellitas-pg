@@ -15,6 +15,8 @@ import About from './components/About/about';
 import HomeShelter from './components/home_shelter';
 import MercadoPago from './components/mercadoPago/mercadoPago';
 import ShelterProfile from './components/shelterProfile/ShelterProfile';
+import Success from './components/mercadoPago/Success';
+import Fail from './components/mercadoPago/Fail';
 
 function App() {
   return (
@@ -64,14 +66,27 @@ function App() {
 
         <Route path='/home/messenger/:ConversId' component={Messenger} />
 
-        <Route path='/home/donate' >
+        <Route exact path='/home/donate' >
           <MercadoPago />
           </Route>
+          
+        <Route path='/home/donate/success' >
+          <div style={{display:'flex',justifyContent:'center'}}>
+          <Success />
+          </div>
+        </Route>
+
+        <Route path='/home/donate/Fail' >
+          <div style={{display:'flex',justifyContent:'center'}}>
+          <Fail />
+          </div>
+        </Route>
+
 
         <Route exact path='/home/messenger'>
           <Messenger />
         </Route>
-
+        
 
         <Route path='/home' component={Footer} />
 
