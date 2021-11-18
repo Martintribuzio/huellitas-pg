@@ -18,7 +18,7 @@ const loginService = async (data: data) => {
     window.localStorage.setItem('email', response.data.user.username)
     window.localStorage.setItem('token', response.data.user.token)
     window.localStorage.setItem('userId', response.data.user._id)
-    window.localStorage.setItem('image', response.data.user.profileImage.url)
+    window.localStorage.setItem('image', response.data.user.picture !== ""? response.data.user.picture:response.data.user.profileImage)
 
     return response.data
   } catch (error: any) {

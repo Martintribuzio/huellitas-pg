@@ -246,8 +246,12 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
   try {
     const token = getToken({ _id: req.user._id })
     const refreshToken = getRefreshToken({ _id: req.user._id })
-    User.findById(req.user._id).then(
+    let url;
+    User.findById(req.user._id).populate("profileImage")
+    .then(
       user => {
+        url = user.profileImage?.url !== undefined? user.profileImage.url : null
+        // console.log("Usuario back", req.user)
         user.refreshToken.push({ refreshToken })
         user.save((err, user) => {
           if (err) {
@@ -262,6 +266,7 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
               username: req.user.username,
               postalCode: req.user.postalCode,
               picture: req.user.picture,
+              profileImage: url,
               token,
             }
             if (req.user.confirmation === true) {
@@ -385,9 +390,8 @@ userNetwork.get('/', async (req, res) => {
 
 userNetwork.put('/profile', upload.single('image'), async (req, res) => {
   try {
-    console.log('consologuealaa ', req.file)
-    console.log('Bodyy', req.body)
     let profile = await editProfile(req.body, req.file)
+    console.log("profile back", profile)
     res.send(profile)
   } catch (err) {
     res.status(400).send(err.message)

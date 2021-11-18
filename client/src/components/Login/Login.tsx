@@ -42,9 +42,7 @@ function Ingresar() {
   } = useForm<LogIn>({ resolver: yupResolver(schema) });
 
   const onSubmit = handleSubmit(async data => {
-    console.log(data);
     const response = await loginService(data);
-    console.log(response);
     if (response.error?.includes('401')) {
       setValue('email', '');
       setValue('password', '');
