@@ -60,11 +60,11 @@ type mouseEvent = MouseEvent<HTMLButtonElement>;
     fd.append('description', input.description);
     fd.append('type', input.type);
     fd.append('_id', input.id);
-    input.name && fd.append('name', input.name);
-    input.image && fd.append('image', input.image);
+    // input.name && fd.append('name', input.name);
+    input.imageFile && fd.append('image', input.imageFile);
     
     editProfile(fd);
-
+    console.log(input)
     return Swal.fire({
       title: 'Guardado!',
       text: 'Publicacion editada con exito!',

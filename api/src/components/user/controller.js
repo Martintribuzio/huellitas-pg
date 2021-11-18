@@ -87,7 +87,7 @@ const getShelterDet = async id => {
   }
 };
 
-const editProfile = async body => {
+const editProfile = async (body,file) => {
   try {
     let profile = await editProfileDB(body.username);
     profile.name = body.name;
@@ -95,7 +95,7 @@ const editProfile = async body => {
     profile.address = body.address;
     profile.phone = body.phone;
     profile.description = body.description;
-    profile.picture = body.imageFile;
+    profile.profileImage = file;
     await profile.save();
     return profile;
   } catch (e) {

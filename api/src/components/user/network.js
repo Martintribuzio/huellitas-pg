@@ -370,10 +370,10 @@ userNetwork.get('/', async (req, res) => {
   }
 });
 
-userNetwork.put('/profile', async(req, res) => {
+userNetwork.put('/profile',upload.single('image'), async(req, res) => {
   try{
-    console.log(req.body)
-    let profile = await editProfile(req.body)
+    console.log("consologuealaa ",req.file)
+    let profile = await editProfile(req.body, req.file)
     res.send(profile)
   }catch(err){
     res.status(400).send(err.message)

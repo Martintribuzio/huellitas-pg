@@ -3,6 +3,7 @@ import axios from 'axios';
 export default async function editProfile(input: FormData) {
   try {
     const profile = await axios.put(`/user/profile`, input, {headers: { 'Content-Type': 'multipart/form-data' }} );
+    console.log(profile.data)
     window.localStorage.setItem('name', profile.data.name);
     window.localStorage.setItem('lastname', profile.data.lastname ? profile.data.lastname : '')
     return 'succes';
