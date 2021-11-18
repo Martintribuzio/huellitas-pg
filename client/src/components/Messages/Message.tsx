@@ -71,10 +71,13 @@ export default function Message(props: any) {
   useEffect(() => {
     socket.current = io(`${process.env.REACT_APP_SOCKET_URL}`)
     socket.current.on('getMessage', (data: any) => {
-      setArrivalMessage({
-        sender: data.senderId,
-        content: data.text,
-      })
+      console.log(data.senderId, idSender)
+      if (data.senderId !== idSender) {
+        setArrivalMessage({
+          sender: data.senderId,
+          content: data.text,
+        })
+      }
     })
   }, [])
 
@@ -101,9 +104,10 @@ export default function Message(props: any) {
   useEffect(() => {
     setUser(null)
 
-    const friendId = convers.length
-      ? convers.members.find((id: string) => id !== idSender)
-      : null
+    const friendId =
+      convers && convers.length
+        ? convers.members.find((id: string) => id !== idSender)
+        : null
     const getUser = async (friendId: string) => {
       try {
         const res = await axios.get(`/user?id=${friendId}`)
@@ -114,7 +118,7 @@ export default function Message(props: any) {
     }
     getUser(friendId)
     // getMessage();
-  }, [convers, idSender])
+  }, [idSender])
 
   const receiverId = convers?.members?.find(
     (member: string) => member !== idSender
@@ -150,13 +154,9 @@ export default function Message(props: any) {
   }
   var days = ['Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vier', 'Sab']
 
-  return (
-    <motion.div
-      // variants={props.mobile ? fadeLeft : undefined}
-      // initial='initial'
-      // animate='animate'
-      className={style.Chat}>
-      {convers ? (
+  if (convers) {
+    return (
+      <motion.div className={style.Chat}>
         <>
           <div className={style.Chat__header}>
             <Link to={`/home/messenger`}>
@@ -234,12 +234,14 @@ export default function Message(props: any) {
             </button>
           </div>{' '}
         </>
-      ) : (
-        <div className={style.empty}>
-          <img src={mochi} alt='mochi' />
-          <h2>Selecciona un chat para mostrar los mensajes</h2>
-        </div>
-      )}
-    </motion.div>
-  )
+      </motion.div>
+    )
+  } else {
+    return (
+      <div className={style.empty}>
+        <img src={mochi} alt='mochi' />
+        <h2>Selecciona un chat para mostrar los mensajes</h2>
+      </div>
+    )
+  }
 }

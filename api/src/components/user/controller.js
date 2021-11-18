@@ -75,7 +75,7 @@ const mailCreation = async (id, Email) => {
   }
   transporter.sendMail(mailDetails, (error, info) => {
     if (error) {
-      return error.message
+      res.status(500).send(error.message)
     } else {
       return 'Email enviado'
     }

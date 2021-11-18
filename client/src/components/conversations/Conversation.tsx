@@ -39,21 +39,7 @@ export default function Conversation(params: any) {
         return err.message
       }
     }
-    // const getMessage = async () => {
-    //   try {
-    //     const res = (await axios.get(`/message/${params.conversation._id}`))
-    //       .data;
-    //     const noti = res.reduce(
-    //       (acc: number, m: message) =>
-    //         m.state === 'unread' && m.sender !== myId ? acc + 1 : acc,
-    //       0
-    //     );
-    //     setNotification(noti);
-    //     setMessage(res);
-    //   } catch (err: any) {
-    //     return err.message;
-    //   }
-    // };
+
     const noti = params.conversation.messages.reduce(
       (acc: number, m: message) =>
         m.state === 'unread' && m.sender !== myId ? acc + 1 : acc,
@@ -63,7 +49,7 @@ export default function Conversation(params: any) {
     getUser(friendId)
     // getMessage();
   }, [params, myId])
-  console.log('USER CONV', user)
+
   const bgColor =
     params.conversation._id === ConversId ? '#73A7CB' : 'transparent'
   const fontColor = params.conversation._id === ConversId ? '#fff' : '#000'

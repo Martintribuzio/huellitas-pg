@@ -48,9 +48,10 @@ const upload = multer({
   fileFilter,
 })
 
-userNetwork.use(express.static(__dirname + '/statics')) //Para aplicar css al index, Middleware necesario
+// userNetwork.use('/confirmation', express.static(__dirname + '/statics')) //Para aplicar css al index, Middleware necesario
 
 userNetwork.get('/', async (req, res) => {
+  console.log('GET /user/network')
   try {
     // console.log(req.query.id);
     const user = await getUserById(req.query.id)
@@ -70,7 +71,10 @@ userNetwork.get('/me', verifyUser, (req, res, next) => {
   res.send(req.user)
 })
 
+userNetwork.use(express.static(__dirname + '/statics'))
+
 userNetwork.get('/confirmation', async (req, res, next) => {
+  console.log('/confirmation')
   try {
     const { id } = req.query
     const user = await confirmation(id)
@@ -160,7 +164,7 @@ userNetwork.post(
   upload.single('profileImage'),
   (req, res) => {
     //Aca podriamos enviar el mail
-    console.log(req.body)
+    // console.log(req.body);
     User.register(
       new User({
         name: req.body.name,
@@ -246,44 +250,46 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
   try {
     const token = getToken({ _id: req.user._id })
     const refreshToken = getRefreshToken({ _id: req.user._id })
-    let url;
-    User.findById(req.user._id).populate("profileImage")
-    .then(
-      user => {
-        url = user.profileImage?.url !== undefined? user.profileImage.url : null
-        // console.log("Usuario back", req.user)
-        user.refreshToken.push({ refreshToken })
-        user.save((err, user) => {
-          if (err) {
-            res.statusCode = 500
-            res.send(err)
-          } else {
-            res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS)
-            const user = {
-              _id: req.user._id,
-              name: req.user.name,
-              lastname: req.user.lastname,
-              username: req.user.username,
-              postalCode: req.user.postalCode,
-              picture: req.user.picture,
-              profileImage: url,
-              token,
-            }
-            if (req.user.confirmation === true) {
-              res.send({ success: true, user })
+    let url
+    User.findById(req.user._id)
+      .populate('profileImage')
+      .then(
+        user => {
+          url =
+            user.profileImage?.url !== undefined ? user.profileImage.url : null
+          // console.log("Usuario back", req.user)
+          user.refreshToken.push({ refreshToken })
+          user.save((err, user) => {
+            if (err) {
+              res.statusCode = 500
+              res.send(err)
             } else {
-              mailCreation(user._id, user.username)
-              res
-                .status(404)
-                .send(
-                  'esta cuenta no esta confirmada, revise su correo electronico'
-                )
+              res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS)
+              const user = {
+                _id: req.user._id,
+                name: req.user.name,
+                lastname: req.user.lastname,
+                username: req.user.username,
+                postalCode: req.user.postalCode,
+                picture: req.user.picture,
+                profileImage: url,
+                token,
+              }
+              if (req.user.confirmation === true) {
+                res.send({ success: true, user })
+              } else {
+                mailCreation(user._id, user.username)
+                res
+                  .status(404)
+                  .send(
+                    'esta cuenta no esta confirmada, revise su correo electronico'
+                  )
+              }
             }
-          }
-        })
-      },
-      err => next(err)
-    )
+          })
+        },
+        err => next(err)
+      )
   } catch (err) {
     res.send(err)
   }
@@ -391,7 +397,7 @@ userNetwork.get('/', async (req, res) => {
 userNetwork.put('/profile', upload.single('image'), async (req, res) => {
   try {
     let profile = await editProfile(req.body, req.file)
-    console.log("profile back", profile)
+    console.log('profile back', profile)
     res.send(profile)
   } catch (err) {
     res.status(400).send(err.message)
