@@ -17,6 +17,7 @@ import { Menu } from '@mui/material'
 import LocationMapShelter from '../LocationMap/LocationMapShelter'
 import { useSelector } from 'react-redux'
 import { typeState } from '../../redux/reducers'
+import { errorMonitor } from 'events'
 
 type Data = {
   name: string | any
@@ -31,14 +32,13 @@ type Data = {
   facebook: string | any
   website: string | any
   profileImage: string | any
-  latitude: string | any
-  longitude: string | any
 }
 
 const schema = yup.object().shape({
   name: yup.string().required('Ingresa tu nombre'),
   description: yup.string().required('Ingresa una descripcion'),
   email: yup.string().email().required('Ingresa tu email'),
+  address: yup.string().required('Ingresa tu direccion'),
   password: yup
     .string()
     .min(8, 'Tu contraseña debe tener al menos 8 caracteres')
@@ -49,21 +49,27 @@ const schema = yup.object().shape({
     .oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden')
     .required('Ingresa nuevamente tu contraseña'),
 })
+interface error {
+  img: string;
 
+}
 function RegisterShelter({ inicio }: any) {
   const coordenadas = useSelector((state: typeState) => state.coordenadas)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null)
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl)
   const [input, setInput] = useState({ latitude: '', longitude: '' })
   const {
+    handleSubmit,
     control,
     formState: { errors },
   } = useForm<Data>({ resolver: yupResolver(schema) })
   const [img, setImg] = useState<string | any>(null)
+  const [error, seterror] = useState<error>({img:''})
 
   function handleChangeImg(e: ChangeEvent<HTMLInputElement> | Event) {
     const target = e.target as HTMLInputElement
     const file: File = (target.files as FileList)[0]
+    seterror({ ...error, img: '' })
     setImg(file)
   }
   const handleMobileMenuClose = () => {
@@ -85,6 +91,15 @@ function RegisterShelter({ inicio }: any) {
       </div>
     </Menu>
   )
+  const check = () => {
+    console.log(input,img)
+    if(!img){
+      seterror({ ...error, img: 'Selecciona una imagen' })
+    }
+    else{
+      seterror({ ...error, img: '' })
+    }
+  }
   useEffect(() => {
     if (coordenadas.lat && coordenadas.long) {
       setInput({
@@ -94,58 +109,42 @@ function RegisterShelter({ inicio }: any) {
     }
   }, [coordenadas])
 
-  async function handleSubmitForm(data: FormEvent<HTMLFormElement>) {
-    data.preventDefault()
-
-    const {
-      name,
-      email,
-      password,
-      confirmPassword,
-      phone,
-      address,
-      description,
-      instagram,
-      facebook,
-      website,
-    } = data.currentTarget.elements as unknown as Data
+  const onSubmit = handleSubmit(data => {
+    if(input.latitude && input.longitude && img){
     const fd = new FormData()
-    fd.append('name', name.value)
-    fd.append('email', email.value)
-    fd.append('password', password.value)
-    fd.append('confirmPassword', confirmPassword.value)
-    fd.append('phone', phone.value)
-    fd.append('address', address.value)
-    fd.append('description', description.value)
-    fd.append('instagram', instagram.value)
-    fd.append('facebook', facebook.value)
-    fd.append('website', website.value)
+    fd.append('name', data.name)
+    fd.append('email', data.email)
+    fd.append('password', data.password)
+    fd.append('confirmPassword', data.confirmPassword)
+    fd.append('phone', data.phone.value)
+    fd.append('address', data.address.value)
+    fd.append('description', data.description.value)
+    fd.append('instagram', data.instagram.value)
+    fd.append('facebook', data.facebook.value)
+    fd.append('website', data.website.value)
     fd.append('latitude', input.latitude)
     fd.append('longitude', input.longitude)
     fd.append('profileImage', img)
     fd.append('type', 'shelter')
-    try {
-      await axios.post('/user/signup/shelter', fd, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      })
+    axios.post('/user/signup/shelter', fd, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }).then(res => {
       Swal.fire({
         title: 'Exito!',
         text: 'Se ha enviado un mail de confirmacion a su correo electronico',
         icon: 'success',
         confirmButtonText: 'Ok',
       })
-    } catch (error) {
-      // .then(() => {
-      //   inicio(false);
-      // })
+    }).catch(err => {
       Swal.fire({
         title: 'Error',
         text: 'El email ingresado ya pertenece a una cuenta',
         icon: 'error',
         confirmButtonText: 'Intentar de nuevo',
       })
-    }
+    })
   }
+  })
   return (
     <Box sx={{ backgroundColor: '#F5F5F5' }}>
       <Typography
@@ -154,7 +153,7 @@ function RegisterShelter({ inicio }: any) {
         Regístrate
       </Typography>
 
-      <form onSubmit={data => handleSubmitForm(data)}>
+      <form onSubmit={onSubmit}>
         <div>
           <Controller
             name='name'
@@ -333,6 +332,7 @@ function RegisterShelter({ inicio }: any) {
               <TextField
                 {...field}
                 label='Página web'
+                placeholder='https://www.huellitas.com.ar'
                 variant='outlined'
                 error={!!errors.website}
                 helperText={errors.website ? errors.website.message : ''}
@@ -359,11 +359,12 @@ function RegisterShelter({ inicio }: any) {
           </label>
           {img ? (
             <img
-              style={{ height: '50px', margin: '5px' }}
-              src={img}
+              style={{ height: '50px', margin: '5px', borderRadius: '50%' }}
+              src={URL.createObjectURL(img)}
               alt='img'
             />
           ) : null}
+          {error.img ? <label>{error.img}</label> : null}
         </div>
         <div
           style={{
@@ -378,6 +379,7 @@ function RegisterShelter({ inicio }: any) {
         </div>
         <Button
           style={{ marginTop: '20px', width: '300px', marginBottom: '20px' }}
+          onClick={check}
           variant='contained'
           type='submit'>
           Registrar

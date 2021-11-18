@@ -182,6 +182,7 @@ userNetwork.post(
         longitude: req.body.longitude,
         description: req.body.description,
         type: req.body.type,
+        profileImage: null,
       }),
       req.body.password,
       async (err, user) => {
@@ -249,39 +250,46 @@ userNetwork.post('/login', passport.authenticate('local'), (req, res, next) => {
   try {
     const token = getToken({ _id: req.user._id })
     const refreshToken = getRefreshToken({ _id: req.user._id })
-    User.findById(req.user._id).then(
-      user => {
-        user.refreshToken.push({ refreshToken })
-        user.save((err, user) => {
-          if (err) {
-            res.statusCode = 500
-            res.send(err)
-          } else {
-            res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS)
-            const user = {
-              _id: req.user._id,
-              name: req.user.name,
-              lastname: req.user.lastname,
-              username: req.user.username,
-              postalCode: req.user.postalCode,
-              picture: req.user.picture,
-              token,
-            }
-            if (req.user.confirmation === true) {
-              res.send({ success: true, user })
+    let url
+    User.findById(req.user._id)
+      .populate('profileImage')
+      .then(
+        user => {
+          url =
+            user.profileImage?.url !== undefined ? user.profileImage.url : null
+          // console.log("Usuario back", req.user)
+          user.refreshToken.push({ refreshToken })
+          user.save((err, user) => {
+            if (err) {
+              res.statusCode = 500
+              res.send(err)
             } else {
-              mailCreation(user._id, user.username)
-              res
-                .status(404)
-                .send(
-                  'esta cuenta no esta confirmada, revise su correo electronico'
-                )
+              res.cookie('refreshToken', refreshToken, COOKIE_OPTIONS)
+              const user = {
+                _id: req.user._id,
+                name: req.user.name,
+                lastname: req.user.lastname,
+                username: req.user.username,
+                postalCode: req.user.postalCode,
+                picture: req.user.picture,
+                profileImage: url,
+                token,
+              }
+              if (req.user.confirmation === true) {
+                res.send({ success: true, user })
+              } else {
+                mailCreation(user._id, user.username)
+                res
+                  .status(404)
+                  .send(
+                    'esta cuenta no esta confirmada, revise su correo electronico'
+                  )
+              }
             }
-          }
-        })
-      },
-      err => next(err)
-    )
+          })
+        },
+        err => next(err)
+      )
   } catch (err) {
     res.send(err)
   }
@@ -386,10 +394,10 @@ userNetwork.get('/', async (req, res) => {
   }
 })
 
-userNetwork.put('/profile', async (req, res) => {
+userNetwork.put('/profile', upload.single('image'), async (req, res) => {
   try {
-    console.log(req.body)
-    let profile = await editProfile(req.body)
+    let profile = await editProfile(req.body, req.file)
+    console.log('profile back', profile)
     res.send(profile)
   } catch (err) {
     res.status(400).send(err.message)

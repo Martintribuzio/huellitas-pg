@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require('mongoose')
 
 const imageSchema = new Schema({
   name: {
@@ -8,6 +8,7 @@ const imageSchema = new Schema({
     type: String,
   },
   Post: { type: Schema.Types.ObjectId, ref: 'Post' },
-});
+  user: { type: Schema.Types.ObjectId, ref: 'User' },
+})
 
-module.exports = new model('Image', imageSchema);
+module.exports = new model('Image', imageSchema)

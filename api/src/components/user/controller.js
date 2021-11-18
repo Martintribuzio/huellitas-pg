@@ -8,6 +8,19 @@ const {
   editProfileDB,
 } = require('./store')
 const nodemailer = require('nodemailer')
+const Image = require('../../models/Images')
+const fs = require('fs')
+const firebase = require('../../firebase')
+const uniqid = require('uniqid')
+const path = require('path')
+const {
+  getStorage,
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+} = require('firebase/storage')
+const storage = getStorage(firebase)
 
 const createUser = async ({ name, email, password, postalCode }) => {
   try {
@@ -87,15 +100,31 @@ const getShelterDet = async id => {
   }
 }
 
-const editProfile = async body => {
+const editProfile = async (body, file) => {
   try {
+    console.log('FILE', file)
+    const fileName = uniqid() + path.extname(file.originalname)
+    const fileRef = ref(storage, fileName)
+
+    await uploadBytes(fileRef, file.buffer)
+
+    const url = await getDownloadURL(fileRef)
+    console.log('URL', url, fileName)
+    const image = new Image({
+      url,
+      name: fileName,
+    })
+
+    image.save()
+    console.log('IMAGE', image)
+
     let profile = await editProfileDB(body.username)
     profile.name = body.name
     profile.lastname = body.lastname
     profile.address = body.address
     profile.phone = body.phone
     profile.description = body.description
-    profile.picture = body.imageFile
+    profile.profileImage = image
     await profile.save()
     return profile
   } catch (e) {
