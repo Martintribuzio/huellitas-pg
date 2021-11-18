@@ -148,7 +148,7 @@ userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail
 });
 
 userNetwork.post('/signup/shelter',upload.single('profileImage') ,(req, res) => { //Aca podriamos enviar el mail   
-  // console.log(req.body);
+  console.log(req.body);
   User.register(
     new User({
       name: req.body.name,
@@ -373,10 +373,10 @@ userNetwork.get('/', async (req, res) => {
   }
 });
 
-userNetwork.put('/profile', async(req, res) => {
+userNetwork.put('/profile',upload.single('image'), async(req, res) => {
   try{
-    console.log(req.body)
-    let profile = await editProfile(req.body)
+    console.log("consologuealaa ",req.file)
+    let profile = await editProfile(req.body, req.file)
     res.send(profile)
   }catch(err){
     res.status(400).send(err.message)
