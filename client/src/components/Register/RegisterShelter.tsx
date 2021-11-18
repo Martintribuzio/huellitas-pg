@@ -17,6 +17,7 @@ import { Menu } from '@mui/material'
 import LocationMapShelter from '../LocationMap/LocationMapShelter'
 import { useSelector } from 'react-redux'
 import { typeState } from '../../redux/reducers'
+import { errorMonitor } from 'events'
 
 type Data = {
   name: string | any
@@ -47,7 +48,10 @@ const schema = yup.object().shape({
     .oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden')
     .required('Ingresa nuevamente tu contraseña'),
 })
-
+interface error {
+  img: string;
+  location: string;
+}
 function RegisterShelter({ inicio }: any) {
   const coordenadas = useSelector((state: typeState) => state.coordenadas)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null)
@@ -59,10 +63,12 @@ function RegisterShelter({ inicio }: any) {
     formState: { errors },
   } = useForm<Data>({ resolver: yupResolver(schema) })
   const [img, setImg] = useState<string | any>(null)
+  const [error, seterror] = useState<error>({img:'',location:''})
 
   function handleChangeImg(e: ChangeEvent<HTMLInputElement> | Event) {
     const target = e.target as HTMLInputElement
     const file: File = (target.files as FileList)[0]
+    seterror({ ...error, img: '' })
     setImg(file)
   }
   const handleMobileMenuClose = () => {
@@ -84,6 +90,20 @@ function RegisterShelter({ inicio }: any) {
       </div>
     </Menu>
   )
+  const check = () => {
+    console.log(input,img)
+    if (input.latitude === '' || input.longitude === '') {
+      seterror({ ...error, location: 'Selecciona una ubicacion' })
+    } else {
+      seterror({ ...error, location: '' })
+    }
+    if(!img){
+      seterror({ ...error, img: 'Selecciona una imagen' })
+    }
+    else{
+      seterror({ ...error, img: '' })
+    }
+  }
   useEffect(() => {
     if (coordenadas.lat && coordenadas.long) {
       setInput({
@@ -94,6 +114,7 @@ function RegisterShelter({ inicio }: any) {
   }, [coordenadas])
 
   const onSubmit = handleSubmit(data => {
+    if(input.latitude && input.longitude && img){
     const fd = new FormData()
     fd.append('name', data.name)
     fd.append('email', data.email)
@@ -126,6 +147,7 @@ function RegisterShelter({ inicio }: any) {
         confirmButtonText: 'Intentar de nuevo',
       })
     })
+  }
   })
   return (
     <Box sx={{ backgroundColor: '#F5F5F5' }}>
@@ -340,11 +362,12 @@ function RegisterShelter({ inicio }: any) {
           </label>
           {img ? (
             <img
-              style={{ height: '50px', margin: '5px' }}
-              src={img}
+              style={{ height: '50px', margin: '5px', borderRadius: '50%' }}
+              src={URL.createObjectURL(img)}
               alt='img'
             />
           ) : null}
+          {error.img ? <label>{error.img}</label> : null}
         </div>
         <div
           style={{
@@ -356,9 +379,11 @@ function RegisterShelter({ inicio }: any) {
           <label className={styles.loc}>
             <input style={{ display: 'none' }} onClick={handleMobileMenuOpen} />
           </label>
+          {error.location ? <label>{error.location}</label> : null}
         </div>
         <Button
           style={{ marginTop: '20px', width: '300px', marginBottom: '20px' }}
+          onClick={check}
           variant='contained'
           type='submit'>
           Registrar
