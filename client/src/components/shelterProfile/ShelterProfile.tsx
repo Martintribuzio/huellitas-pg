@@ -68,7 +68,7 @@ export default function ShelterProfile() {
   if(user){
   return (
     <div>
-      <img src={user.profileImage.url} />
+      <img src={user.profileImage?.url} />
       <h1>{user.name}</h1>
       <h2>{user.username}</h2>
       <h2>{user.address}</h2>

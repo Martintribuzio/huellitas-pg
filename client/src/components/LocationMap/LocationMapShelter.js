@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 import { getCoords } from '../../redux/actions';
 import shelterImg  from "../../assets/shelter.png";
+import { Link } from 'react-router-dom';
 
 import {Icon} from "leaflet"
  // import { popoverClasses } from '@mui/material';
@@ -103,7 +104,7 @@ const displayMap = useMemo(() => {
             >
             <Popup> 
               <div style = {{width: '200px'}}>
-                {shelter.name? <h1>{`Nombre: ${shelter.name}`}</h1> : ""}
+                {shelter.name? <Link to = {`/home/shelter/details/${shelter._id}`}><h1>{`Nombre: ${shelter.name}`}</h1></Link> : ""}
                 <img style = {{width: '200px'}} src = {shelter.profileImage?.url} alt=""></img>
               </div>
             </Popup>
