@@ -30,8 +30,9 @@ export default function EditProfile(props: { modal: Function; ownUser: any }) {
     phone: props.ownUser.phone ? props.ownUser.phone : null,
     description: props.ownUser?.description ? props.ownUser?.description : null,
     type: props.ownUser.type,
-    imageFile: '',
+    imageFile: "",
   }
+  console.log("OWNUSER", props.ownUser)
 
   const [input, setInput] = useState<any>(initialState)
 
@@ -62,7 +63,9 @@ export default function EditProfile(props: { modal: Function; ownUser: any }) {
     fd.append('_id', input.id)
     fd.append('username', input.username)
     // input.name && fd.append('name', input.name);
-    input.imageFile && fd.append('image', input.imageFile)
+    if (input.imageFile !== "" ){
+      fd.append('image', input.imageFile)
+    }
 
     editProfile(fd)
     console.log(input)
@@ -103,7 +106,89 @@ export default function EditProfile(props: { modal: Function; ownUser: any }) {
   //   // console.log("despues ", props.modal())
   // }
 
-  // if(input.type === 'shelter'){
+  if(input.type === 'shelter'){
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          
+        <Card
+          className={style.form}
+          elevation={5}
+          sx={{
+            borderRadius: '23px',
+  
+            paddingLeft: '37%',
+            paddingRight: '37%',
+          }}>
+          <label className={style.file} style={{ marginBottom: '10px' }}>
+            Editar foto
+            <input
+              style={{ display: 'none' }}
+              type='file'
+              onChange={e => handleChangeFoto(e)}
+              accept='.png, .jpg'
+            />
+          </label>
+  
+          {input.imageFile ? (
+            <CardMedia
+              component='img'
+              alt={'img'}
+              sx={{
+                maxHeight: 300,
+              }}
+              image={URL.createObjectURL(input.imageFile)}
+            />
+          ) : input.image ? (
+            <CardMedia
+              component='img'
+              alt={'img'}
+              sx={{
+                maxHeight: 300,
+              }}
+              image={input.image}
+            />
+          ) : null}
+  
+          <CardContent>
+            {/* {detailpost.name ? ( */}
+            <Typography gutterBottom variant='h6' component='div'>
+              {' '}
+              Nombre:
+              <input
+                name='name'
+                defaultValue={input.name}
+                onChange={handleChange}></input>
+            </Typography>
+            <Typography gutterBottom variant='h6' component='div'>
+              {' '}
+              Teléfono:
+              <input
+                name='phone'
+                defaultValue={input.phone}
+                onChange={handleChange}></input>
+            </Typography>
+            <Typography gutterBottom variant='h6' component='div'>
+              {' '}
+              Descripción:
+              <input
+                name='description'
+                defaultValue={input.description}
+                onChange={handleChange}></input>
+            </Typography>
+            <Button variant='contained' onClick={handleSubmit}>
+              Guardar
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    )
+  }
+  else {
   return (
     <div
       style={{
@@ -111,6 +196,7 @@ export default function EditProfile(props: { modal: Function; ownUser: any }) {
         justifyContent: 'center',
         alignItems: 'center',
       }}>
+        
       <Card
         className={style.form}
         elevation={5}
@@ -121,7 +207,7 @@ export default function EditProfile(props: { modal: Function; ownUser: any }) {
           paddingRight: '37%',
         }}>
         <label className={style.file} style={{ marginBottom: '10px' }}>
-          editar foto
+          Editar foto
           <input
             style={{ display: 'none' }}
             type='file'
@@ -158,6 +244,14 @@ export default function EditProfile(props: { modal: Function; ownUser: any }) {
             <input
               name='name'
               defaultValue={input.name}
+              onChange={handleChange}></input>
+          </Typography>
+          <Typography gutterBottom variant='h6' component='div'>
+            {' '}
+            Apellido:
+            <input
+              name='lastname'
+              defaultValue={input.lastname}
               onChange={handleChange}></input>
           </Typography>
           {/* ) : null} */}
@@ -218,9 +312,5 @@ export default function EditProfile(props: { modal: Function; ownUser: any }) {
       </Card>
     </div>
   )
-  // }else{
-  //   return(
-  //     <div>hola</div>
-  //  );
-  // }
+}
 }

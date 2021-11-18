@@ -397,7 +397,6 @@ userNetwork.get('/', async (req, res) => {
 userNetwork.put('/profile', upload.single('image'), async (req, res) => {
   try {
     let profile = await editProfile(req.body, req.file)
-    console.log('profile back', profile)
     res.send(profile)
   } catch (err) {
     res.status(400).send(err.message)
