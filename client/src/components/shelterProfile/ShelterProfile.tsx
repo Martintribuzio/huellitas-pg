@@ -27,6 +27,7 @@ export default function ShelterProfile() {
     posts: Array<PostType>
     facebook: string
     instagram: string
+    website: string
   }
 
   const { id } = useParams<{ id: string }>()
@@ -67,7 +68,6 @@ export default function ShelterProfile() {
   //   // deletePostService(id);
   //   // setUser(user.posts.filter(post => post.id !== id));
   // };
-
 
   if (user) {
     return (
@@ -126,11 +126,13 @@ export default function ShelterProfile() {
           <Typography variant='h4' fontWeight='7000'>
             contacto:
           </Typography>
-          <Typography variant='h6'>
+          <Typography sx={{ fontSize: '0.9rem' }}>
             telefono: {user.phone ? user.phone : 'no tiene numero de telefono'}
           </Typography>
-          <Typography variant='h6'>email: {user.username}</Typography>
-          <Typography variant='h6'>
+          <Typography sx={{ fontSize: '0.9rem' }}>
+            email: {user.username}
+          </Typography>
+          <Typography sx={{ fontSize: '0.9rem' }}>
             facebook:{' '}
             {user.facebook ? (
               <a href={user.facebook}>facebook</a>
@@ -138,12 +140,20 @@ export default function ShelterProfile() {
               'no se proporciono un facebook'
             )}
           </Typography>
-          <Typography variant='h6'>
+          <Typography sx={{ fontSize: '0.9rem' }}>
             instagram:{' '}
             {user.instagram ? (
               <a href={user.instagram}>instagram</a>
             ) : (
               'no se proporciono un instagram'
+            )}
+          </Typography>
+          <Typography sx={{ fontSize: '0.9rem' }}>
+            pagina web:{' '}
+            {user.website ? (
+              <a href={user.website}>pagina web</a>
+            ) : (
+              'no se proporciono una pagina web'
             )}
           </Typography>
         </Box>
