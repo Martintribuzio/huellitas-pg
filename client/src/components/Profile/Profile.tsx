@@ -166,14 +166,6 @@ export default function Profile() {
               return (
                 <div>
                   <Post post={post}></Post>
-                  {/* <button
-                    onClick= {toggleModal}>
-                    {' '}
-                    editar
-                  </button> */}
-                  {/* <Modal isOpen={isModal} closeModal={closeModal}>
-                    <PostAPet isOpen={isModal} closeModal={closeModal} />
-                  </Modal> */}
                   <Button
                     variant='contained' 
                     onClick={() => handleClick(post._id)}>
