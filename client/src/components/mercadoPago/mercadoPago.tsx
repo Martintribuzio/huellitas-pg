@@ -33,7 +33,7 @@ function MePa() {
 }
 
 const openWindow = (url:string) => {
-    window.open(url);
+    window.location.href = url;
 }
 
   return (

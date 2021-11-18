@@ -1,4 +1,5 @@
 const userNetwork = require('express').Router();
+const express = require("express")
 
 const { confirmation, postsByUser, getUserById, mailCreation,getShelters, getShelterDet, editProfile} = require('./controller');
 const passport = require('passport');
@@ -40,10 +41,11 @@ const upload = multer({
   fileFilter,
 });
 
+userNetwork.use(express.static(__dirname + "/statics")) //Para aplicar css al index, Middleware necesario
 
 userNetwork.get('/', async(req, res) => {
   try{
-    console.log(req.query.id);
+    // console.log(req.query.id);
     const user = await getUserById(req.query.id);
     if (user) {
       res.status(200).json(user);
@@ -65,7 +67,8 @@ userNetwork.get('/confirmation', async (req, res, next) => {
   try {
     const { id } = req.query;
     const user = await confirmation(id);
-    return res.send(user);
+    console.log(__dirname)
+    return res.sendFile(__dirname + "/statics/index.html"); //Para redirigir al index.html
   } catch (error) {
     return res.send(error);
   }
@@ -145,7 +148,7 @@ userNetwork.post('/signup', (req, res) => { //Aca podriamos enviar el mail
 });
 
 userNetwork.post('/signup/shelter',upload.single('profileImage') ,(req, res) => { //Aca podriamos enviar el mail   
-  console.log(req.body);
+  // console.log(req.body);
   User.register(
     new User({
       name: req.body.name,
@@ -372,6 +375,7 @@ userNetwork.get('/', async (req, res) => {
 
 userNetwork.put('/profile', async(req, res) => {
   try{
+    console.log(req.body)
     let profile = await editProfile(req.body)
     res.send(profile)
   }catch(err){

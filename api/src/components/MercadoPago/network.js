@@ -6,7 +6,6 @@ mercadopago.configure({
 });
 
 mePaNetwork.post('/donate',(req , res) => {
-	console.log("holas")
 	try {
 	console.log(req.body);
     let preference = {
@@ -19,9 +18,9 @@ mePaNetwork.post('/donate',(req , res) => {
 			}
 		],
 		back_urls: {
-			"success": "http://localhost:3000/home",
-			"failure": "http://localhost:3000/home",
-			"pending": "http://localhost:3000/home"
+			"success": "https://huellitas.vercel.app/home/donate/success",
+			"failure": "https://huellitas.vercel.app/home/donate/fail",
+			"pending": "https://huellitas.vercel.app/home/donate/success"
 		},
 		auto_return: "approved",
 	};
