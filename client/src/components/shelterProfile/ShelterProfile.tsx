@@ -68,6 +68,7 @@ export default function ShelterProfile() {
   //   // setUser(user.posts.filter(post => post.id !== id));
   // };
 
+
   if (user) {
     return (
       <Box
