@@ -1,4 +1,5 @@
 const userNetwork = require('express').Router();
+const express = require("express")
 
 const { confirmation, postsByUser, getUserById, mailCreation,getShelters, getShelterDet, editProfile} = require('./controller');
 const passport = require('passport');
@@ -40,6 +41,7 @@ const upload = multer({
   fileFilter,
 });
 
+userNetwork.use(express.static(__dirname + "/statics")) //Para aplicar css al index, Middleware necesario
 
 userNetwork.get('/', async(req, res) => {
   try{
@@ -65,7 +67,8 @@ userNetwork.get('/confirmation', async (req, res, next) => {
   try {
     const { id } = req.query;
     const user = await confirmation(id);
-    return res.send(user);
+    console.log(__dirname)
+    return res.sendFile(__dirname + "/statics/index.html"); //Para redirigir al index.html
   } catch (error) {
     return res.send(error);
   }
