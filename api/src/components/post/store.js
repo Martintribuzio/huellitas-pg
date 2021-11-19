@@ -101,15 +101,15 @@ const editPostDB = async (_id, name, type, state, description, genre, date, petI
     post.genre = genre;
     post.date = date;
     
-    //deleteo la imagen
-    const desertRef = ref(storage, post.petImage.name);
-    deleteObject(desertRef).then(() => {
-      console.log('imagen deleteada con exito')
-    }).catch((error) => {
-      console.log('ocurrio un error')
-    });
-
     if (petImage) {
+      //deleteo la imagen
+      const desertRef = ref(storage, post.petImage.name);
+      deleteObject(desertRef).then(() => {
+      console.log('imagen deleteada con exito')
+      }).catch((error) => {
+      console.log('ocurrio un error')
+      });
+      
       const fileName = uniqid() + path.extname(petImage.originalname); //sacarle la extension al archivo
       const fileRef = ref(storage, fileName);
       await uploadBytes(fileRef, petImage.buffer); //subir la imagen a firebase
