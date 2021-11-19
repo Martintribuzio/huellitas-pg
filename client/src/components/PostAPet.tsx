@@ -154,7 +154,7 @@ export default function PostAPet(props: any) {
     const errors = validation(input);
 
     if (Object.values(errors).every(error => error === '')) {
-      console.log('if');
+      //console.log('if');
       const id = window.localStorage.getItem('userId');
       const fd = new FormData();
       fd.append('latitude', input.latitude);

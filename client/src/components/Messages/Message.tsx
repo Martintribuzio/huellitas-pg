@@ -68,11 +68,11 @@ export default function Message(props: any) {
       ? state.conversations.find((convers: any) => convers._id === ConverseId)
       : []
   )
-  console.log('USER', user)
+  //console.log('USER', user)
   useEffect(() => {
     socket.current = io(`${process.env.REACT_APP_SOCKET_URL}`)
     socket.current.on('getMessage', (data: any) => {
-      console.log(data.senderId, idSender)
+      //console.log(data.senderId, idSender)
       if (data.senderId !== idSender) {
         setArrivalMessage({
           sender: data.senderId,
@@ -109,7 +109,7 @@ export default function Message(props: any) {
       convers && convers.members
         ? convers.members.find((id: string) => id !== idSender)
         : null
-    console.log('ID', friendId)
+    //console.log('ID', friendId)
     const getUser = async (friendId: string) => {
       try {
         const res = await axios.get(`/user?id=${friendId}`)
@@ -149,7 +149,7 @@ export default function Message(props: any) {
           params: { receiverId: receiverId },
         })
       } catch (err: any) {
-        console.log(err.message)
+       // console.log(err.message)
       }
     }
   }

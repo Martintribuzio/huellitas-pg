@@ -21,7 +21,7 @@ dotenv.config();
 export function getUser(id: string) {
   return async (dispatch: any) => {
     let data = (await axios.get('/user?id=' + id)).data;
-    console.log('data');
+    //console.log('data');
     return dispatch({
       type: GET_USER_ID,
       payload: data,
@@ -31,7 +31,7 @@ export function getUser(id: string) {
 
 export function deletePost(id: string | undefined) {
   return async (dispatch: any) => {
-    console.log(id);
+    //console.log(id);
     try {
       const res = await axios.delete(
         `${process.env.REACT_APP_API_URL}/posts/${id}`
@@ -62,7 +62,7 @@ export function getPostDetail(id: String) {
 export function getConvers(ida: string) {
   return async function (dispatch: any) {
     let data = (await axios.get(`/conversation?ida=${ida}`)).data;
-    console.log(data)
+    //console.log(data)
     return dispatch({ type: GET_CONVERSATIONS, payload: data });
   };
 }

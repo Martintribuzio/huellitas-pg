@@ -8,6 +8,7 @@ import { styled } from '@mui/material/styles';
 import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 import dotenv from 'dotenv';
+import gif from '../images/dog-cute.gif'
 dotenv.config();
 
 const ImageButton = styled(ButtonBase)(({ theme }) => ({
@@ -157,36 +158,17 @@ export default function Feed(props: any) {
         className='loading'
         style={{
           display: 'flex',
+          flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
         }}>
         <img
-          src='https://themebeyond.com/html/petco/img/preloader.gif'
+          src={gif}
           alt='cargando'
           draggable='false'
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '15vh',
-            width: '15vw',
-          }}
         />
         <br />
         <h2 style={{ color: '#8CCDFE', userSelect: 'none' }}>Cargando...</h2>
-        <br />
-        <img
-          src='https://themebeyond.com/html/petco/img/preloader.gif'
-          alt='Cargando...'
-          draggable='false'
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            height: '15vh',
-            width: '15vw',
-          }}
-        />
       </div>
     );
   }

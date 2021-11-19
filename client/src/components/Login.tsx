@@ -14,6 +14,7 @@ import PetsIcon from '@mui/icons-material/Pets'
 import React from 'react'
 import useUser from '../hooks/useUser'
 import background from '../assets/home/background.png'
+import gif from '../images/dog-cute.gif'
 
 export default function LandingPage() {
   const [auth, setAuth] = React.useState(false)
@@ -21,7 +22,7 @@ export default function LandingPage() {
   const history = useHistory()
   const location = useLocation()
 
-  console.log(location)
+ // console.log(location)
 
   const [result, loading] = useUser()
   if (result === 'Success') history.push('/home/feed')
@@ -39,7 +40,22 @@ export default function LandingPage() {
   }, [])
 
   if (loading) {
-    return <div>Cargando...</div>
+    return <div
+    className='loading'
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}>
+    <img
+      src={gif}
+      alt='cargando'
+      draggable='false'
+    />
+    <br />
+    <h2 style={{ color: '#8CCDFE', userSelect: 'none' }}>Cargando...</h2>
+  </div>
   } else {
     return (
       <Box>

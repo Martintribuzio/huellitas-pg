@@ -7,7 +7,7 @@ export async function postPet(input: FormData) {
     const response = await axios.post('/post', input, {
       headers: { 'Content-Type': 'multipart/form-data' },
     });
-    console.log(response);
+    //console.log(response);
     return 'success';
   } catch (e: any) {
     return { ERROR: e.message };
