@@ -14,6 +14,7 @@ import signodeex  from "../../assets/map/huellitasFounded.png";
 import {Icon} from "leaflet"
 import { typeState } from '../../redux/reducers/index';
 import { Link } from 'react-router-dom';
+import L from 'leaflet';
 
 let defaultCenter = [-34.6038, -58.3816];
 let defaultZoom = 13;
@@ -61,7 +62,7 @@ function DisplayPosition({ map }) {
   );
 }
 
-export default function LocationMap() {
+export default function LocationMap({originPost}) {
 
   const icon = useMemo(() => {
     return new Icon({
@@ -93,6 +94,8 @@ export default function LocationMap() {
   // const url = 'https://huellitaspg.herokuapp.com/post';
   // const { data, error } = useSwr(url, fetcher);
 
+  // var marker = L.marker(defaultCenter, { icon }).addTo(map);
+  // marker.fire('click');
 
   useEffect(() => {
     dispatch(getPosts())
@@ -112,7 +115,7 @@ export default function LocationMap() {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
-       
+        {/* <Marker position={} icon={icon}></Marker>   */}
         {posts.map(post => (
           post.state === 'Perdido' ? 
           <Marker 
@@ -169,7 +172,7 @@ export default function LocationMap() {
             </Popup>
           </Marker> : ""
         ))}
-        <LeafletControlGeocoder />
+        <LeafletControlGeocoder originPost={originPost}/>
       </MapContainer>
     );
   }, [allPosts, error, icon, icon2, icon3]);
