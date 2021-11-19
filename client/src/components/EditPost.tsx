@@ -14,6 +14,7 @@ import editPost from '../services/editPost';
 import style from '../CSS/EditAPet.module.css';
 import { Button } from '@mui/material';
 import { validation } from '../helpers/validationPost';
+import { SpinnerCircular } from 'spinners-react';
 
 export default function EditPost() {
   type event =
@@ -36,7 +37,8 @@ export default function EditPost() {
   let allPosts = useSelector((state: typeState) => state.filteredPosts);
   // const dispatch = useDispatch();
   const history = useHistory();
-  const [loading, result] = useUser();
+  const [loading_, result] = useUser();
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(initialError);
   const idSender = localStorage.getItem('userId');
 
@@ -112,9 +114,13 @@ export default function EditPost() {
     });
   }
 
-  function handleSubmit(e: mouseEvent) {
+  async function handleSubmit(e: mouseEvent) {
     const errors = validation(input);
+    if(!input.petImage){
+      errors.petImage = ""
+    }
     if (Object.values(errors).every(error => error === '')) {
+      setLoading(true);
       const fd = new FormData();
       fd.append('state', input.state);
       fd.append('description', input.description);
@@ -123,7 +129,8 @@ export default function EditPost() {
       fd.append('_id', input._id);
       input.name && fd.append('name', input.name);
       input.petImage && fd.append('petImage', input.petImage);
-      editPost(fd);
+      await editPost(fd);
+      setLoading(false);
       return Swal.fire({
         title: 'Guardado!',
         text: 'Su publicación fue editada con éxito!',
@@ -132,6 +139,7 @@ export default function EditPost() {
       });
     }
     setError(errors);
+    setLoading(false);
     return Swal.fire({
       title: 'Error!',
       text: 'La imagen ingresada no es válida',
@@ -268,9 +276,16 @@ export default function EditPost() {
                 }></textarea>
             </Typography>
 
-            <Button variant='contained' onClick={handleSubmit}>
-              Guardar
-            </Button>
+            <Button disabled={loading} className={style.submit} type='submit' onClick = {handleSubmit}> GUARDAR
+        {loading ? (
+          <SpinnerCircular
+            style={{ alignSelf: 'center' }}
+            size='40'
+            color='white'
+          />
+        ) : null
+        }
+      </Button>
           </CardContent>
         </Card>
       </div>
