@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { PostType } from '../../redux/types/types'
-import getPostsUser from '../../services/getPostsUser'
+
 import Typography from '@mui/material/Typography'
-import { useHistory, useParams } from 'react-router'
+import { useParams } from 'react-router'
 import Post from '../Post'
 import axios from 'axios'
 import { Box } from '@mui/system'
-import { Avatar } from '@mui/material'
+import { Avatar, IconButton } from '@mui/material'
+import InstagramIcon from '@mui/icons-material/Instagram'
+import FacebookIcon from '@mui/icons-material/Facebook'
+import LanguageIcon from '@mui/icons-material/Language'
 
 export default function ShelterProfile() {
   interface imagen {
@@ -28,12 +30,11 @@ export default function ShelterProfile() {
     facebook: string
     instagram: string
     website: string
+    _id: string
   }
 
   const { id } = useParams<{ id: string }>()
-  const history = useHistory()
   const [user, setUser] = useState<userario>()
-  const [posts, setPosts] = useState<PostType>()
 
   // useEffect(() => {
   //   if (id) {
@@ -60,7 +61,7 @@ export default function ShelterProfile() {
       const usuario = await axios.get(`/user/shelter?id=${id}`)
       setUser(usuario.data)
     }
-    console.log(user)
+
     getUser()
   }, [])
 
@@ -126,36 +127,49 @@ export default function ShelterProfile() {
           <Typography variant='h4' fontWeight='7000'>
             contacto:
           </Typography>
-          <Typography sx={{ fontSize: '0.9rem' }}>
-            telefono: {user.phone ? user.phone : 'no tiene numero de telefono'}
+          <Typography variant='h6'>
+            {' '}
+            numero de telefono: {user.phone}
           </Typography>
-          <Typography sx={{ fontSize: '0.9rem' }}>
-            email: {user.username}
-          </Typography>
-          <Typography sx={{ fontSize: '0.9rem' }}>
-            facebook:{' '}
-            {user.facebook ? (
-              <a href={user.facebook}>facebook</a>
-            ) : (
-              'no se proporciono un facebook'
-            )}
-          </Typography>
-          <Typography sx={{ fontSize: '0.9rem' }}>
-            instagram:{' '}
-            {user.instagram ? (
-              <a href={user.instagram}>instagram</a>
-            ) : (
-              'no se proporciono un instagram'
-            )}
-          </Typography>
-          <Typography sx={{ fontSize: '0.9rem' }}>
-            pagina web:{' '}
-            {user.website ? (
-              <a href={user.website}>pagina web</a>
-            ) : (
-              'no se proporciono una pagina web'
-            )}
-          </Typography>
+          {user.instagram ? (
+            <IconButton
+              size='small'
+              onClick={() => {
+                window.open(user.website, '_blank')
+              }}>
+              <InstagramIcon
+                onClick={() => {
+                  window.open(user.instagram, '_blank')
+                }}
+              />
+              <Typography variant='h6'>instagram</Typography>
+            </IconButton>
+          ) : null}
+          {user.facebook ? (
+            <IconButton
+              size='small'
+              onClick={() => {
+                window.open(user.website, '_blank')
+              }}>
+              <FacebookIcon
+                onClick={() => {
+                  window.open(user.facebook, '_blank')
+                }}
+              />
+              <Typography variant='h6'>facebook</Typography>
+            </IconButton>
+          ) : null}
+          {user.website ? (
+            <IconButton
+              size='small'
+              onClick={() => {
+                window.open(user.website, '_blank')
+              }}>
+              <LanguageIcon />
+
+              <Typography variant='h6'>website</Typography>
+            </IconButton>
+          ) : null}
         </Box>
       </Box>
     )
