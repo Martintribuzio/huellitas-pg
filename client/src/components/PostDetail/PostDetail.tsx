@@ -62,19 +62,19 @@ export default function ImgMediaCard() {
 
     swalWithBootstrapButtons
       .fire({
-        title: 'estas seguro?',
-        text: 'si denuncias esta publicacion probablemente sea borrada',
+        title: '¿Estas seguro?',
+        text: 'Si denuncias esta publicacion probablemente sea borrada',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'si, reportarla!',
-        cancelButtonText: 'No, cambie de opinion!',
+        confirmButtonText: '¡Si, reportarla!',
+        cancelButtonText: '¡No, cambié de opinion!',
         reverseButtons: true,
       })
       .then(result => {
         if (result.isConfirmed) {
           swalWithBootstrapButtons.fire(
-            'bien!',
-            'el post fue denunciado correctamente',
+            '¡Bien!',
+            'El post fue denunciado correctamente',
             'success'
           )
           report()
@@ -85,8 +85,8 @@ export default function ImgMediaCard() {
           result.dismiss === Swal.DismissReason.cancel
         ) {
           swalWithBootstrapButtons.fire(
-            'bien',
-            'esta publicacion seguira estando',
+            '¡Bien!',
+            'Esta publicación seguirá estando disponible',
             'error'
           )
         }

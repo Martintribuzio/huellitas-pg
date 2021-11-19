@@ -42,8 +42,8 @@ const openWindow = (url:string) => {
               ¿Quieres ayudarnos?
             </Typography>
             <Typography sx={{width:'80vw'}}>
-                El equipo de Huellitas creo este proyecto sin fines le lucro pero
-                si te gusta la aplicación y quieres ayudar, puedes hacer una donación.
+                El equipo de Huellitas creó este proyecto sin fines de lucro, pero
+                si te gusta la aplicación y quieres ayudar puedes hacer una donación.
                 <br/>
                 Las donaciones se utilizan para mantener el servidor de Huellitas funcionando.
 
