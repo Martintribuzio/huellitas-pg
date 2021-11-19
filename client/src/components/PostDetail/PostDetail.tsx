@@ -196,7 +196,7 @@ export default function ImgMediaCard() {
                   Contactar
                 </Button>
               </CardActions>
-              <FormControl sx={{ m: 1, minWidth: '12vw' }}>
+              {result !== 'Unauthorized' ?<FormControl sx={{ m: 1, minWidth: '12vw' }}>
                 <InputLabel>Reportar</InputLabel>
                 <Select label='Reportar' onChange={handleCounter}>
                   <MenuItem value='Spam'>Spam</MenuItem>
@@ -204,7 +204,7 @@ export default function ImgMediaCard() {
                     Contenido inapropiado
                   </MenuItem>
                 </Select>
-              </FormControl>
+              </FormControl>: null}
             </>
           ) : (
             <div>
