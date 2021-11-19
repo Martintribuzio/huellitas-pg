@@ -24,6 +24,12 @@ export interface User {
   lastname: string
   username: string
   image: string
+  instagram: string
+  facebook: string
+  website: string
+  address: string
+  phone: string
+  description: string
 }
 
 export interface Shelter {
@@ -62,7 +68,7 @@ export default function Profile() {
     const getUsuario = async () => {
       let usuario = await axios.get(`/user?id=${id}`)
       setownUser(usuario.data)
-      console.log("mono hombre ",usuario.data)
+      console.log('mono hombre ', usuario.data)
     }
     getUsuario()
   }, [])
@@ -119,6 +125,12 @@ export default function Profile() {
       let lastname = localStorage.getItem('lastname')
       let username = localStorage.getItem('email')
       let image = localStorage.getItem('image')
+      let instagram = localStorage.getItem('instagram')
+      let facebook = localStorage.getItem('facebook')
+      let website = localStorage.getItem('website')
+      let address = localStorage.getItem('address')
+      let phone = localStorage.getItem('phone')
+      let description = localStorage.getItem('description')
       // console.log("IMAGENNNN", image)
       // let type = localStorage.getItem('type')
 
@@ -127,6 +139,13 @@ export default function Profile() {
         lastname: lastname ? (lastname !== 'undefined' ? lastname : '') : '',
         username: username ? username : '',
         image: image ? image : profile,
+        instagram: instagram ? instagram : '',
+        facebook: facebook ? facebook : '',
+        website: website ? website : '',
+        address: address ? address : '',
+        phone: phone ? phone : '',
+        description: description ? description : '',
+
         // type: type ? 'user' : '',
       }
       setUser(user)
@@ -155,10 +174,22 @@ export default function Profile() {
           ) : null}
         </Modal>
         {user ? (
-          <Box>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}>
             <Avatar sx={{ width: '96px', height: '96px' }} src={user.image} />
             <Typography variant='h4'>{user.name}</Typography>
             <Typography variant='h6'>{user.username}</Typography>
+            <Typography variant='h6'>{user.lastname}</Typography>
+            <Typography variant='h6'>{user.phone}</Typography>
+            <Typography variant='h6'>{user.address}</Typography>
+            <Typography variant='h6'>{user.description}</Typography>
+            <Typography variant='h6'>{user.website}</Typography>
+            <Typography variant='h6'>{user.instagram}</Typography>
+            <Typography variant='h6'>{user.facebook}</Typography>
             <Typography>Mis posts!</Typography>
             {Array.isArray(posts) ? (
               posts.map(post => {
@@ -195,7 +226,9 @@ export default function Profile() {
           padding: '20px 0 ',
           minHeight: '71vh',
         }}>
-        {user?.image.includes("googleusercontent") ? null : <Button onClick={toggleModal}> Editar Perfil </Button>}
+        {user?.image.includes('googleusercontent') ? null : (
+          <Button onClick={toggleModal}> Editar Perfil </Button>
+        )}
 
         <Modal isOpen={isModal} closeModal={toggleModal}>
           {ownUser !== undefined ? (
