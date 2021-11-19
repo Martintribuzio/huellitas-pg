@@ -45,9 +45,9 @@ export default function Profile() {
   let [isModal, setIsModal] = useState(false)
 
   const toggleModal = function () {
-    console.log('antes ', isModal)
+    // console.log('antes ', isModal)
     setIsModal((isModal = !isModal))
-    console.log('despues ', isModal)
+    // console.log('despues ', isModal)
   }
 
   const [result] = useUser()
@@ -62,7 +62,7 @@ export default function Profile() {
     const getUsuario = async () => {
       let usuario = await axios.get(`/user?id=${id}`)
       setownUser(usuario.data)
-      console.log("mono hombre ",usuario.data)
+      // console.log("mono hombre ",usuario.data)
     }
     getUsuario()
   }, [])
@@ -78,11 +78,11 @@ export default function Profile() {
 
     swalWithBootstrapButtons
       .fire({
-        title: '¿Seguro que quieres eliminar la publicacion?',
-        text: 'No podras revertir esta accion',
+        title: '¿Seguro que quieres eliminar la publicación?',
+        text: 'No podrás revertir esta acción',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: 'Si, quiero eliminarla!',
+        confirmButtonText: 'Sí, quiero eliminarla!',
         cancelButtonText: 'No, cancelar!',
         reverseButtons: false,
       })
@@ -92,7 +92,7 @@ export default function Profile() {
           setPosts(posts.filter(post => post._id !== id))
           swalWithBootstrapButtons.fire(
             'Eliminada!',
-            'Tu publicacion ha sido eliminada',
+            'Tu publicación ha sido eliminada',
             'success'
           )
         } else if (
@@ -101,7 +101,7 @@ export default function Profile() {
         ) {
           swalWithBootstrapButtons.fire(
             'Cancelado',
-            'Tu publicacion NO se ha eliminado',
+            'Tu publicación NO se ha eliminado',
             'error'
           )
         }

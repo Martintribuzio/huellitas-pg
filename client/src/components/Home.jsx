@@ -16,7 +16,7 @@ export default function Home() {
       {/* navBar */}
       <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '40px', justifyContent: 'center', marginTop: '30px'}}>
         <label><img style={{width: "30px", height: '30px'}} src={huella} alt=""></img>Perdido</label>
-        <label><img style={{width: "30px", height: '30px'}} src={huellaAdopt} alt=""></img>En adopcion</label>
+        <label><img style={{width: "30px", height: '30px'}} src={huellaAdopt} alt=""></img>En adopción</label>
         <label><img style={{width: "30px", height: '30px'}} src={signodeex} alt=""></img>Encontrado</label>
       </div>
       <LocationMap/>
@@ -30,7 +30,7 @@ export default function Home() {
           cursor: 'pointer',
         }}
         onClick={openModal}>
-        CREAR PUBLICACION
+        CREAR PUBLICACIÓN
       </button>
 
       <Modal isOpen={isOpen} closeModal={closeModal}>

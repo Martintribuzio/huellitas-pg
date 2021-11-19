@@ -186,7 +186,7 @@ function Ingresar() {
       <GoogleLogin
         className='googleButton'
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID || ''}
-        buttonText='Sign up with Google'
+        buttonText='Ingresa con Google'
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
         cookiePolicy={'single_host_origin'}

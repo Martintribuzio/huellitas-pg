@@ -104,7 +104,7 @@ export default function Conversations(props: any) {
                 color: 'gray',
                 textAlign: 'center',
               }}>
-              ¡Colabora con una publicacion!
+              ¡Colaborá con una publicación!
             </Link>
           </>
         )}

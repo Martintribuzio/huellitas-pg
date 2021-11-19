@@ -126,7 +126,7 @@ export default function EditPost() {
       editPost(fd);
       return Swal.fire({
         title: 'Guardado!',
-        text: 'Publicacion editada con exito!',
+        text: 'Su publicación fue editada con éxito!',
         icon: 'success',
         confirmButtonText: 'Ok',
       });
@@ -134,7 +134,7 @@ export default function EditPost() {
     setError(errors);
     return Swal.fire({
       title: 'Error!',
-      text: 'La imagen ingresada no es valida',
+      text: 'La imagen ingresada no es válida',
       icon: 'error',
       confirmButtonText: 'Volver',
     });

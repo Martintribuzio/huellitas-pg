@@ -11,13 +11,13 @@ export default function Fail() {
   return (
     <Card className={sty.suc} elevation={0} sx={{background:'none',border:'none'}}>
         <CardHeader
-        title="Ocurrio un error con tu donación"
+        title="Ocurrió un error con tu donación"
         error={true}
       />
       <img src={foto} alt="Peligro" className={sty.img}/>
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-            Tu donacion no pudo ser procesada.
+            Tu donación no pudo ser procesada.
             <br/>
             Si de todas maneras quieres ayudar a las mascotas, por favor intenta de nuevo.
         </Typography>

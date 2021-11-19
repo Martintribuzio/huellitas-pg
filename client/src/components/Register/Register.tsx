@@ -20,18 +20,18 @@ type Data = {
 };
 
 const schema = yup.object().shape({
-  name: yup.string().required('Ingresa tu nombre'),
-  lastname: yup.string().required('Ingresa tu apellido'),
-  email: yup.string().email().required('Ingresa tu email'),
+  name: yup.string().required('Ingresá tu nombre'),
+  lastname: yup.string().required('Ingresá tu apellido'),
+  email: yup.string().email().required('Ingresá tu email'),
   password: yup
     .string()
     .min(8, 'Tu contraseña debe tener al menos 8 caracteres')
     .max(20, 'Tu contraseña debe tener menos de 20 caracteres')
-    .required('Ingresa tu contraseña'),
+    .required('Ingresá tu contraseña'),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden')
-    .required('Ingresa nuevamente tu contraseña'),
+    .required('Ingresá nuevamente tu contraseña'),
 });
 
 function Register({ inicio }: any) {
@@ -49,8 +49,8 @@ function Register({ inicio }: any) {
       .then(res => {
         setLoading(false);
         Swal.fire({
-          title: 'Exito!',
-          text: 'Se ha enviado un mail de confirmacion a su correo electronico',
+          title: 'Éxito!',
+          text: 'Se ha enviado un mail de confirmación a su correo electrónico',
           icon: 'success',
           confirmButtonText: 'Ok',
         });
