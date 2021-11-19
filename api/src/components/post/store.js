@@ -101,7 +101,7 @@ const editPostDB = async (_id, name, type, state, description, genre, date, petI
     post.genre = genre;
     post.date = date;
     
-    if (petImage) {
+    if (petImage !== "" && petImage) {
       //deleteo la imagen
       const desertRef = ref(storage, post.petImage.name);
       deleteObject(desertRef).then(() => {
