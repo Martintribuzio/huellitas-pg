@@ -183,7 +183,6 @@ export default function Profile() {
             <Avatar sx={{ width: '96px', height: '96px' }} src={user.image} />
             <Typography variant='h4'>{user.name}</Typography>
             <Typography variant='h6'>{user.username}</Typography>
-            <Typography variant='h6'>{user.lastname}</Typography>
             <Typography variant='h6'>{user.phone}</Typography>
             <Typography variant='h6'>{user.address}</Typography>
             <Typography variant='h6'>{user.description}</Typography>
