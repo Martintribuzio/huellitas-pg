@@ -125,6 +125,9 @@ const editProfile = async (body, file) => {
     profile.address = body.address
     profile.phone = body.phone
     profile.description = body.description
+    profile.facebook = body.facebook
+    profile.instagram = body.instagram
+    profile.website = body.website
 
     // console.log("Profile despues", profile)
     

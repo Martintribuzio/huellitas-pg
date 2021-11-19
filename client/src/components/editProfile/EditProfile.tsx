@@ -1,9 +1,11 @@
 import { useState, ChangeEvent, MouseEvent } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import { Shelter } from '../Profile/Profile'
 import { User } from '../Profile/Profile'
 import editProfile from '../../services/editProfile'
+import { TextField } from '@material-ui/core'
 import axios from 'axios'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
@@ -23,14 +25,17 @@ export default function EditProfile(props: { modal: Function; ownUser: any }) {
   let initialState = {
     id: props.ownUser._id,
     name: props.ownUser.name,
-    lastname: props.ownUser.lastname,
+    lastname: props.ownUser.lastname ? props.ownUser.lastname : null,
     username: props.ownUser.username,
     image: props.ownUser.image,
     address: props.ownUser.address ? props.ownUser.address : null,
     phone: props.ownUser.phone ? props.ownUser.phone : null,
-    description: props.ownUser?.description ? props.ownUser?.description : null,
+    description: props.ownUser.description ? props.ownUser.description : null,
     type: props.ownUser.type,
     imageFile: "",
+    instagram: props.ownUser.instagram ? props.ownUser.instagram : null,
+    facebook: props.ownUser.facebook ? props.ownUser.facebook : null,
+    website: props.ownUser.website ? props.ownUser.website : null,
   }
   console.log("OWNUSER", props.ownUser)
 
@@ -55,13 +60,16 @@ export default function EditProfile(props: { modal: Function; ownUser: any }) {
   function handleSubmit(e: mouseEvent) {
     const fd = new FormData()
     fd.append('name', input.name)
-    fd.append('lastname', input.lastname)
+    input.lastname && fd.append('lastname', input.lastname)
     fd.append('address', input.address)
     fd.append('phone', input.phone)
     fd.append('description', input.description)
     fd.append('type', input.type)
     fd.append('_id', input.id)
     fd.append('username', input.username)
+    input.instagram && fd.append('instagram', input.instagram)
+    input.facebook && fd.append('facebook', input.facebook)
+    input.website && fd.append('website', input.website)
     // input.name && fd.append('name', input.name);
     if (input.imageFile !== "" ){
       fd.append('image', input.imageFile)
@@ -180,12 +188,37 @@ export default function EditProfile(props: { modal: Function; ownUser: any }) {
                 defaultValue={input.description}
                 onChange={handleChange}></input>
             </Typography>
+            <Typography gutterBottom variant='h6' component='div'>
+              {' '}
+              instagram:
+              <input
+                name='instagram'
+                defaultValue={input.instagram}
+                onChange={handleChange}></input>
+            </Typography>
+            <Typography gutterBottom variant='h6' component='div'>
+              {' '}
+              facebook:
+              <input
+                name='facebook'
+                defaultValue={input.facebook}
+                onChange={handleChange}></input>
+            </Typography>
+            <Typography gutterBottom variant='h6' component='div'>
+              {' '}
+              website:
+              <input
+                name='website'
+                defaultValue={input.website}
+                onChange={handleChange}></input>
+            </Typography>
             <Button variant='contained' onClick={handleSubmit}>
               Guardar
             </Button>
           </CardContent>
         </Card>
-      </div>
+     
+    </div>
     )
   }
   else {

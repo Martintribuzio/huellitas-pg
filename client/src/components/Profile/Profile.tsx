@@ -62,7 +62,7 @@ export default function Profile() {
     const getUsuario = async () => {
       let usuario = await axios.get(`/user?id=${id}`)
       setownUser(usuario.data)
-      // console.log("mono hombre ",usuario.data)
+      console.log("mono hombre ",usuario.data)
     }
     getUsuario()
   }, [])
