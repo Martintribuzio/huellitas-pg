@@ -2,7 +2,7 @@ import Juan from './fotos/Juan.png';
 import Cris from './fotos/Cris.jpg';
 import Guada from './fotos/Guada.jpg';
 import Justo from './fotos/Justo.jpg';
-import Lucho from './fotos/Lucho2.jpg';
+import Lucho from './fotos/Lucho.jpg';
 import Martin from './fotos/Martoo.jpg';
 import Benja from './fotos/Mono.jpg';
 import Santi from './fotos/Santi.jpg';
@@ -57,13 +57,13 @@ export default function About() {
       </Typography>
       <Typography sx={{ textAlign: 'right' }}>
       <div className={style.icons} >
-        <IconButton className={style.button} href='https://github.com/cdwenz'>
+        <IconButton className={style.button} href='https://github.com/cdwenz'target="_blank">
           <Github />
         </IconButton>
-        <IconButton className={style.button} href='https://www.linkedin.com/in/cristian-wenz-dev?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BIRkFjvK5SMmwXWnch57FDw%3D%3D'>
+        <IconButton className={style.button} href='https://www.linkedin.com/in/cristian-wenz-dev?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BIRkFjvK5SMmwXWnch57FDw%3D%3D'target="_blank">
           <LinkedIn/>
           </IconButton>
-          <IconButton className={style.button} href='mailto:cdwenz@gmail.com'>
+          <IconButton className={style.button} href='mailto:cdwenz@gmail.com'target="_blank">
           <Email />
           </IconButton> 
           </div>
@@ -105,13 +105,13 @@ export default function About() {
       </Typography>
       <Typography sx={{ textAlign: 'right' }}>
       <div className={style.icons} >
-        <IconButton className={style.button} href='https://github.com/JustBecerra'>
+        <IconButton className={style.button} href='https://github.com/JustBecerra'target="_blank">
           <Github />
         </IconButton> 
-        <IconButton className={style.button} href='https://www.linkedin.com/in/justo-becerra-a8a8b817b/'>
+        <IconButton className={style.button} href='https://www.linkedin.com/in/justo-becerra-a8a8b817b/'target="_blank">
           <LinkedIn/>
         </IconButton>
-        <IconButton className={style.button} href='mailto:justj.becerra@gmail.com'>
+        <IconButton className={style.button} href='mailto:justj.becerra@gmail.com'target="_blank">
           <Email />
         </IconButton>
           </div>
@@ -151,13 +151,13 @@ export default function About() {
       </Typography>
       <Typography sx={{ textAlign: 'right' }}>
       <div className={style.icons} >
-        <IconButton className={style.button} href='https://github.com/luchobifa'>
+        <IconButton className={style.button} href='https://github.com/luchobifa'target="_blank">
           <Github />
         </IconButton> 
-        <IconButton className={style.button} href='https://www.linkedin.com/in/luciano-bifaretti/'> 
+        <IconButton className={style.button} href='https://www.linkedin.com/in/luciano-bifaretti/'target="_blank"> 
           <LinkedIn/>
         </IconButton>
-        <IconButton className={style.button} href='mailto:lucianobifa@gmail.com'>
+        <IconButton className={style.button} href='mailto:lucianobifa@gmail.com'target="_blank">
           <Email />
           </IconButton>  
           </div>
@@ -197,13 +197,13 @@ export default function About() {
       </Typography>
       <Typography sx={{ textAlign: 'right' }}>
       <div className={style.icons} >
-        <IconButton className={style.button} href='https://github.com/Martintribuzio'>
+        <IconButton className={style.button} href='https://github.com/Martintribuzio'target="_blank">
           <Github />
         </IconButton>
-        <IconButton className={style.button} href='https://www.linkedin.com/in/martintribuziodev?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B1B4eFPrLR%2BuKYZxBtQjeJA%3D%3D'>
+        <IconButton className={style.button} href='https://www.linkedin.com/in/martintribuziodev?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B1B4eFPrLR%2BuKYZxBtQjeJA%3D%3D'target="_blank">
           <LinkedIn/>
         </IconButton> 
-        <IconButton className={style.button} href='mailto:martinmozzt@pm.me'>
+        <IconButton className={style.button} href='mailto:martinmozzt@pm.me'target="_blank">
           <Email />
          </IconButton>
           </div>
@@ -245,13 +245,13 @@ export default function About() {
       </Typography>
       <Typography sx={{ textAlign: 'right' }}>
       <div className={style.icons} >
-        <IconButton className={style.button} href='https://github.com/benjaaracil'>
+        <IconButton className={style.button} href='https://github.com/benjaaracil'target="_blank">
           <Github />
           </IconButton> 
-          <IconButton className={style.button} href='https://www.linkedin.com/in/benjaminaracil?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B6rNLh4c4TBqiEAdH%2FfY0%2BA%3D%3D'>
+          <IconButton className={style.button} href='https://www.linkedin.com/in/benjaminaracil?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B6rNLh4c4TBqiEAdH%2FfY0%2BA%3D%3D'target="_blank">
           <LinkedIn/>
           </IconButton>
-          <IconButton className={style.button} href='mailto:benjaminaracil@gmail.com'>
+          <IconButton className={style.button} href='mailto:benjaminaracil@gmail.com'target="_blank">
           <Email />
           </IconButton>
           </div>
@@ -294,13 +294,13 @@ export default function About() {
       </Typography>
       <Typography sx={{ textAlign: 'right' }}>
       <div className={style.icons} >
-        <IconButton className={style.button} href='https://github.com/JuanDedossi'>
+        <IconButton className={style.button} href='https://github.com/JuanDedossi'target="_blank">
           <Github />
         </IconButton>
-        <IconButton className={style.button} href='https://www.linkedin.com/in/juan-guillermo-dedossi-fullstack/'>
+        <IconButton className={style.button} href='https://www.linkedin.com/in/juan-guillermo-dedossi-fullstack/'target="_blank">
           <LinkedIn/>
         </IconButton>
-        <IconButton className={style.button} href='mailto: juandedossi@yahoo.com'>
+        <IconButton className={style.button} href='mailto: juandedossi@yahoo.com'target="_blank">
           <Email />
         </IconButton>
         </div>
@@ -341,13 +341,13 @@ export default function About() {
       </Typography>
       <Typography sx={{ textAlign: 'right' }}>
       <div className={style.icons} >
-        <IconButton className={style.button} href='https://github.com/santipk'>
+        <IconButton className={style.button} href='https://github.com/santipk'target="_blank">
           <Github />
           </IconButton> 
-          <IconButton className={style.button} href='https://www.linkedin.com/in/santipk?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B8kqusPkgSkKzBA2jtJSAfA%3D%3D'>
+          <IconButton className={style.button} href='https://www.linkedin.com/in/santipk?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B8kqusPkgSkKzBA2jtJSAfA%3D%3D'target="_blank">
           <LinkedIn/>
           </IconButton>
-          <IconButton className={style.button} href='mailto:santieldk@gmail.com'>
+          <IconButton className={style.button} href='mailto:santieldk@gmail.com'target="_blank">
           <Email />
           </IconButton>
           </div>
@@ -386,13 +386,13 @@ export default function About() {
       </Typography>
       <Typography sx={{ textAlign: 'right' }}>
       <div className={style.icons} >
-        <IconButton className={style.button} href='https://github.com/maria-guadalupe-cervera'>
+        <IconButton className={style.button} href='https://github.com/maria-guadalupe-cervera'target="_blank">
           <Github />
           </IconButton>
-          <IconButton className={style.button} href='www.linkedin.com/in/maría-guadalupe-cervera-developer'>
+          <IconButton className={style.button} href='www.linkedin.com/in/maría-guadalupe-cervera-developer'target="_blank">
           <LinkedIn/>
           </IconButton>
-          <IconButton className={style.button} href='mailto: guadacervera8@gmail.com'>
+          <IconButton className={style.button} href='mailto: guadacervera8@gmail.com'target="_blank">
           <Email />
           </IconButton>
           </div>
