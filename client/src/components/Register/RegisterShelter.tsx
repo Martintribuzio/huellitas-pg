@@ -86,12 +86,11 @@ function RegisterShelter({ inicio }: any) {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}>
       <div style={{ width: '500px' }}>
-        <LocationMapShelter />
+        <LocationMapShelter originPost={true} />
       </div>
     </Menu>
   )
   const validateImage = (file:any) => {
-    console.log(file)
     if(file){
       if (file.type.split('/')[0] !== 'image') {
         seterror('La imagen debe ser de tipo imagen');
