@@ -14,6 +14,7 @@ interface User {
   posts: []
   username: string
   picture?: string
+  profileImage?: any
 }
 interface message {
   content: string
@@ -83,7 +84,18 @@ export default function Conversation(params: any) {
           <>
             <ListItemAvatar>
               <Badge badgeContent={notification} color='error'>
-                <Avatar alt='Profile Picture' src={user.picture} />
+                <Avatar
+                  alt='Profile Picture'
+                  src={
+                    user
+                      ? user.picture
+                        ? user.picture
+                        : user.profileImage
+                        ? user.profileImage.url
+                        : ''
+                      : ''
+                  }
+                />
               </Badge>
             </ListItemAvatar>
             <ListItemText

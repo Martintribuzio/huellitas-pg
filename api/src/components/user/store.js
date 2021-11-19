@@ -20,7 +20,7 @@ const searchUserDB = async email => {
 
 const searchUserByIdDB = async id => {
   try {
-    const user = await User.findById(id)
+    const user = await User.findById(id).populate('profileImage')
     return user
   } catch (error) {
     console.log('entro aca! ')

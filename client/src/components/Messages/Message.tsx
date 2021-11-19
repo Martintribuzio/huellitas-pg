@@ -40,6 +40,7 @@ interface User {
   posts: []
   username: string
   picture?: string
+  profileImage?: any
 }
 export interface message {
   content: string
@@ -67,7 +68,7 @@ export default function Message(props: any) {
       ? state.conversations.find((convers: any) => convers._id === ConverseId)
       : []
   )
-
+  console.log('USER', user)
   useEffect(() => {
     socket.current = io(`${process.env.REACT_APP_SOCKET_URL}`)
     socket.current.on('getMessage', (data: any) => {
@@ -105,9 +106,10 @@ export default function Message(props: any) {
     setUser(null)
 
     const friendId =
-      convers && convers.length
+      convers && convers.members
         ? convers.members.find((id: string) => id !== idSender)
         : null
+    console.log('ID', friendId)
     const getUser = async (friendId: string) => {
       try {
         const res = await axios.get(`/user?id=${friendId}`)
@@ -117,8 +119,7 @@ export default function Message(props: any) {
       }
     }
     getUser(friendId)
-    // getMessage();
-  }, [idSender])
+  }, [idSender, ConverseId])
 
   const receiverId = convers?.members?.find(
     (member: string) => member !== idSender
@@ -181,7 +182,15 @@ export default function Message(props: any) {
                           <Avatar
                             style={{ marginLeft: '5px' }}
                             alt='Profile Picture'
-                            src={user ? user.picture : ''}
+                            src={
+                              user
+                                ? user.picture
+                                  ? user.picture
+                                  : user.profileImage
+                                  ? user.profileImage.url
+                                  : ''
+                                : ''
+                            }
                           />
                         )}
                         <small className={style.date}>
