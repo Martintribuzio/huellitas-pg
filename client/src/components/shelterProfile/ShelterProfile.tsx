@@ -93,7 +93,7 @@ export default function ShelterProfile() {
           <Typography variant='h4'>{user.name}</Typography>
           <Typography variant='h6'>{user.address}</Typography>
           <Typography variant='h6'>{user.description}</Typography>
-          <Typography variant='h6'>posts del refugio:</Typography>
+          <Typography variant='h6'>Publicaciones del refugio:</Typography>
           <Box
             sx={{
               display: 'flex',
@@ -110,7 +110,7 @@ export default function ShelterProfile() {
                 )
               })
             ) : (
-              <Typography variant='h6'>No hay posts</Typography>
+              <Typography variant='h6'>No hay publicaciones disponibles</Typography>
             )}
           </Box>
         </Box>
@@ -129,7 +129,7 @@ export default function ShelterProfile() {
           </Typography>
           <Typography variant='h6'>
             {' '}
-            numero de telefono: {user.phone}
+            Número de teléfono: {user.phone}
           </Typography>
           {user.instagram ? (
             <IconButton
@@ -142,7 +142,7 @@ export default function ShelterProfile() {
                   window.open(user.instagram, '_blank')
                 }}
               />
-              <Typography variant='h6'>instagram</Typography>
+              <Typography variant='h6'>Instagram</Typography>
             </IconButton>
           ) : null}
           {user.facebook ? (
@@ -156,7 +156,7 @@ export default function ShelterProfile() {
                   window.open(user.facebook, '_blank')
                 }}
               />
-              <Typography variant='h6'>facebook</Typography>
+              <Typography variant='h6'>Facebook</Typography>
             </IconButton>
           ) : null}
           {user.website ? (
@@ -167,7 +167,7 @@ export default function ShelterProfile() {
               }}>
               <LanguageIcon />
 
-              <Typography variant='h6'>website</Typography>
+              <Typography variant='h6'>Website</Typography>
             </IconButton>
           ) : null}
         </Box>

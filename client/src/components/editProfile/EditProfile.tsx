@@ -37,7 +37,7 @@ export default function EditProfile(props: { modal: Function; ownUser: any }) {
     facebook: props.ownUser.facebook ? props.ownUser.facebook : null,
     website: props.ownUser.website ? props.ownUser.website : null,
   }
-  console.log("OWNUSER", props.ownUser)
+  // console.log("OWNUSER", props.ownUser)
 
   const [input, setInput] = useState<any>(initialState)
 
@@ -79,7 +79,7 @@ export default function EditProfile(props: { modal: Function; ownUser: any }) {
     console.log(input)
     return Swal.fire({
       title: 'Guardado!',
-      text: 'Publicacion editada con exito!',
+      text: 'Tu publicación fue editada con éxito!',
       icon: 'success',
       confirmButtonText: 'Ok',
     })
@@ -190,7 +190,7 @@ export default function EditProfile(props: { modal: Function; ownUser: any }) {
             </Typography>
             <Typography gutterBottom variant='h6' component='div'>
               {' '}
-              instagram:
+              Instagram:
               <input
                 name='instagram'
                 defaultValue={input.instagram}
@@ -198,7 +198,7 @@ export default function EditProfile(props: { modal: Function; ownUser: any }) {
             </Typography>
             <Typography gutterBottom variant='h6' component='div'>
               {' '}
-              facebook:
+              Facebook:
               <input
                 name='facebook'
                 defaultValue={input.facebook}
@@ -206,7 +206,7 @@ export default function EditProfile(props: { modal: Function; ownUser: any }) {
             </Typography>
             <Typography gutterBottom variant='h6' component='div'>
               {' '}
-              website:
+              Website:
               <input
                 name='website'
                 defaultValue={input.website}

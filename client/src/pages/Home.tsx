@@ -24,7 +24,7 @@ const data = [
   '¿Buscas a tu mascota perdida?',
   'Te encontraste la mascota de alguien más',
   '¿Tenés animales buscando un hogar?',
-  'Tu ayuda es importante',
+  'Tu ayuda es importante.',
 ];
 
 export const Home = () => {
@@ -52,10 +52,10 @@ export const Home = () => {
           {conexion === 'Unauthorized' ? 
           <div style = {{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center',gap: '30px', minWidth: "200px"}}>
          <Link style={{ textDecoration: 'none' }} to='/login'>
-            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Iniciar Sesion</Button>
+            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Iniciar Sesión</Button>
           </Link>
           <Link style={{ textDecoration: 'none' }} to='/register'>
-            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Registrate</Button>
+            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Regístrate</Button>
           </Link>
           </div> : null}
 
@@ -119,14 +119,14 @@ export const Home = () => {
               <CardChiquita
                 type='35+'
                 img={post4}
-                description={'En adopcion'}
+                description={'En adopción'}
               />
             </Fade>
             <Fade direction='up' triggerOnce className='Fade'>
               <CardChiquita
                 type='50+'
                 img={post6}
-                description={'En busqueda'}
+                description={'En búsqueda'}
               />
             </Fade>
             <Fade direction='up' triggerOnce className='Fade2'>
@@ -140,7 +140,7 @@ export const Home = () => {
           {conexion === 'Unauthorized' ? 
           <div className='Description2'>
             <Typography variant='h4'>
-              Si queres formar parte de esta comunidad, podes registrarte y
+              Si quéres formar parte de esta comunidad, podes registrarte y
               comenzar a publicar.
             </Typography>
             <Typography>
@@ -151,10 +151,10 @@ export const Home = () => {
             
           <div style = {{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center',gap: '30px', minWidth: "200px"}}>
          <Link style={{ textDecoration: 'none' }} to='/login'>
-            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Iniciar Sesion</Button>
+            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Iniciar Sesión</Button>
           </Link>
           <Link style={{ textDecoration: 'none' }} to='/register'>
-            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Registrate</Button>
+            <Button variant='contained' style = {{width: '6vw', minWidth: '200px'}}>Regístrate</Button>
           </Link>
           </div> 
           </div>: <div className='Description2'>

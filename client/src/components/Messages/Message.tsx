@@ -221,7 +221,7 @@ export default function Message(props: any) {
             ) : (
               <div className={style.empty}>
                 <img src={phone} alt='mochi' />
-                <h2>Envia el primer mensaje!</h2>
+                <h2>Envía el primer mensaje!</h2>
               </div>
             )}
           </div>

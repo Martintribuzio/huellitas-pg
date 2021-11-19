@@ -142,7 +142,7 @@ export default function PostAPet(props: any) {
     props.closeModal();
     return Swal.fire({
       title: 'Publicado!',
-      text: 'Publicacion realizada con exito!',
+      text: 'Publicación realizada con éxito!',
       icon: 'success',
       confirmButtonText: 'Ok',
     });
@@ -211,7 +211,7 @@ export default function PostAPet(props: any) {
                 </option>
                 <option value='Perdido'>Perdido</option>
                 <option value='Encontrado'>Encontrado</option>
-                <option value='Adopción'>En adopcion</option>
+                <option value='Adopción'>En adopción</option>
               </select>
               <small className={styles.error}>{error.state}</small>
             </label>
@@ -299,7 +299,7 @@ export default function PostAPet(props: any) {
                   {error.petImage
                     ? error.petImage
                     : input.petImage
-                    ? 'Archivo Seleccionado'
+                    ? 'Archivo seleccionado'
                     : ''}
                 </small>
               </div>
@@ -324,7 +324,7 @@ export default function PostAPet(props: any) {
                 rows={3}
                 cols={21}
                 maxLength={200}
-                placeholder='Ingrese descripcion de su publicación'
+                placeholder='Ingrese descripción de su publicación'
                 value={input.description}
                 name='description'
                 onChange={e => handlerdescritionchange(e.target.value)}

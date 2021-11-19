@@ -12,7 +12,7 @@ export default function Success() {
   return (
     <Card className={sty.suc} elevation={0} sx={{ maxWidth: 400 , background:'none',border:'none'}}>
         <CardHeader
-        title="Muchas gracias por la donacion!"
+        title="Muchas gracias por la donación!"
       />
       <CardMedia
         component="img"
@@ -24,7 +24,7 @@ export default function Success() {
         <Typography variant="body2" color="text.secondary">
             El equipo de Huellitas agradece tu apoyo.
             <br/>
-            Gracias a ti miles de mascotas podran encontrar su camino a casa.
+            Gracias a tí miles de mascotas podrán encontrar su camino a casa.
         </Typography>
       </CardContent>
     </Card>

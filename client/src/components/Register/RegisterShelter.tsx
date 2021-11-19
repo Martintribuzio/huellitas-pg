@@ -35,19 +35,19 @@ type Data = {
 }
 
 const schema = yup.object().shape({
-  name: yup.string().required('Ingresa tu nombre'),
-  description: yup.string().required('Ingresa una descripcion'),
-  email: yup.string().email().required('Ingresa tu email'),
-  address: yup.string().required('Ingresa tu direccion'),
+  name: yup.string().required('Ingresá tu nombre'),
+  description: yup.string().required('Ingresá una descripción'),
+  email: yup.string().email().required('Ingresá tu email'),
+  address: yup.string().required('Ingresá tu dirección'),
   password: yup
     .string()
     .min(8, 'Tu contraseña debe tener al menos 8 caracteres')
     .max(20, 'Tu contraseña debe tener menos de 20 caracteres')
-    .required('Ingresa tu contraseña'),
+    .required('Ingresá tu contraseña'),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden')
-    .required('Ingresa nuevamente tu contraseña'),
+    .required('Ingresá nuevamente tu contraseña'),
 })
 
 
@@ -97,7 +97,7 @@ function RegisterShelter({ inicio }: any) {
         seterror('La imagen debe ser de tipo imagen');
       }
       else if (file.size > 1024 * 1024 * 3) {
-        seterror('La imagen debe tener como tamaño maximo 3MB');
+        seterror('La imagen debe tener como tamaño máximo 3MB');
       }
       else if (
         file.type.split('/')[1] !== 'jpeg' &&
@@ -143,8 +143,8 @@ function RegisterShelter({ inicio }: any) {
     }).then(res => {
       setLoading(false);
       Swal.fire({
-        title: 'Exito!',
-        text: 'Se ha enviado un mail de confirmacion a su correo electronico',
+        title: 'Éxito!',
+        text: 'Se ha enviado un mail de confirmación a su correo electrónico',
         icon: 'success',
         confirmButtonText: 'Ok',
       })
@@ -255,7 +255,7 @@ function RegisterShelter({ inicio }: any) {
             render={({ field }) => (
               <TextField
                 {...field}
-                label='telefono'
+                label='Teléfono'
                 variant='outlined'
                 error={!!errors.phone}
                 helperText={errors.phone ? errors.phone.message : ''}
