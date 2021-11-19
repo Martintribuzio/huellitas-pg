@@ -67,7 +67,7 @@ export default function Message(props: any) {
       ? state.conversations.find((convers: any) => convers._id === ConverseId)
       : []
   )
-
+  console.log('USER', user)
   useEffect(() => {
     socket.current = io(`${process.env.REACT_APP_SOCKET_URL}`)
     socket.current.on('getMessage', (data: any) => {
@@ -104,10 +104,10 @@ export default function Message(props: any) {
   useEffect(() => {
     setUser(null)
 
-    const friendId =
-      convers && convers.length
-        ? convers.members.find((id: string) => id !== idSender)
-        : null
+    const friendId = convers
+      ? convers.members.find((id: string) => id !== idSender)
+      : null
+    console.log('ID', friendId)
     const getUser = async (friendId: string) => {
       try {
         const res = await axios.get(`/user?id=${friendId}`)
@@ -117,7 +117,6 @@ export default function Message(props: any) {
       }
     }
     getUser(friendId)
-    // getMessage();
   }, [idSender])
 
   const receiverId = convers?.members?.find(
