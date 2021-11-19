@@ -196,7 +196,7 @@ export default function PostAPet(props: any) {
           isOn={step}
           onColor='white'
           label1='Datos'
-          label2='Localizacion'
+          label2='Localización'
         />
         {!step ? (
           <div className={styles.inputsContainer}>
