@@ -18,6 +18,12 @@ const loginService = async (data: data) => {
     window.localStorage.setItem('email', response.data.user.username)
     window.localStorage.setItem('token', response.data.user.token)
     window.localStorage.setItem('userId', response.data.user._id)
+    window.localStorage.setItem('phone', response.data.user.phone)
+    window.localStorage.setItem('facebook', response.data.user.facebook)
+    window.localStorage.setItem('instagram', response.data.user.instagram)
+    window.localStorage.setItem('website', response.data.user.website)
+    window.localStorage.setItem('address', response.data.user.address)
+    window.localStorage.setItem('description', response.data.user.description)
     window.localStorage.setItem('image', response.data.user.picture !== ""? response.data.user.picture:response.data.user.profileImage)
 
     return response.data

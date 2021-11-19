@@ -62,7 +62,7 @@ export default function Profile() {
     const getUsuario = async () => {
       let usuario = await axios.get(`/user?id=${id}`)
       setownUser(usuario.data)
-      // console.log("mono hombre ",usuario.data)
+      console.log("mono hombre ",usuario.data)
     }
     getUsuario()
   }, [])
@@ -119,6 +119,7 @@ export default function Profile() {
       let lastname = localStorage.getItem('lastname')
       let username = localStorage.getItem('email')
       let image = localStorage.getItem('image')
+      // console.log("IMAGENNNN", image)
       // let type = localStorage.getItem('type')
 
       const user = {
@@ -130,6 +131,7 @@ export default function Profile() {
       }
       setUser(user)
       // console.log("despues ",isModal)
+      // console.log(user?.image.includes("googleusercontent"))
     }
   }, [id, isModal])
 
@@ -147,7 +149,6 @@ export default function Profile() {
           minHeight: '71vh',
         }}>
         <Button onClick={toggleModal}> Editar Perfil </Button>
-
         <Modal isOpen={isModal} closeModal={toggleModal}>
           {ownUser !== undefined ? (
             <EditProfile modal={toggleModal} ownUser={ownUser} />
@@ -194,7 +195,7 @@ export default function Profile() {
           padding: '20px 0 ',
           minHeight: '71vh',
         }}>
-        <Button onClick={toggleModal}> Editar Perfil </Button>
+        {user?.image.includes("googleusercontent") ? null : <Button onClick={toggleModal}> Editar Perfil </Button>}
 
         <Modal isOpen={isModal} closeModal={toggleModal}>
           {ownUser !== undefined ? (

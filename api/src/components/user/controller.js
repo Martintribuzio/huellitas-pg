@@ -102,29 +102,35 @@ const getShelterDet = async id => {
 
 const editProfile = async (body, file) => {
   try {
-    console.log('FILE', file)
-    const fileName = uniqid() + path.extname(file.originalname)
-    const fileRef = ref(storage, fileName)
-
-    await uploadBytes(fileRef, file.buffer)
-
-    const url = await getDownloadURL(fileRef)
-    console.log('URL', url, fileName)
-    const image = new Image({
-      url,
-      name: fileName,
-    })
-
-    image.save()
-    console.log('IMAGE', image)
-
     let profile = await editProfileDB(body.username)
+    // console.log("Imagen", file)
+    if (file !== undefined){
+      const fileName = uniqid() + path.extname(file.originalname)
+      const fileRef = ref(storage, fileName)
+  
+      await uploadBytes(fileRef, file.buffer)
+  
+      const url = await getDownloadURL(fileRef)
+      console.log('URL', url, fileName)
+      const image = new Image({
+        url,
+        name: fileName,
+      })
+  
+      image.save()
+      profile.profileImage = image
+    }
     profile.name = body.name
     profile.lastname = body.lastname
     profile.address = body.address
     profile.phone = body.phone
     profile.description = body.description
-    profile.profileImage = image
+    profile.facebook = body.facebook
+    profile.instagram = body.instagram
+    profile.website = body.website
+
+    // console.log("Profile despues", profile)
+    
     await profile.save()
     return profile
   } catch (e) {
