@@ -24,7 +24,7 @@ useEffect(() => {
         <label><img style={{width: "50px", height: '30px'}} src={shelterImg} alt=""></img>Refugios</label>
         
       </div>
-      <LocationMapShelter />
+      <LocationMapShelter originPost={false} />
 
       <FeedShelter />
     </div>
