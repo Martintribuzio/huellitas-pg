@@ -19,7 +19,7 @@ import Select from '@mui/material/Select'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import { Hidden, InputLabel } from '@mui/material'
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 
 export default function ImgMediaCard() {
   const { id } = useParams<{ id?: string }>()
@@ -44,7 +44,7 @@ export default function ImgMediaCard() {
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView(false, { behavior: 'auto' })
-  },[]);
+  }, [])
   const handleCounter = async function () {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -116,9 +116,6 @@ export default function ImgMediaCard() {
         }
       }
     }
-    else{
-      history.push('/login')
-    }
   }
 
   if (detailpost !== undefined) {
@@ -131,6 +128,7 @@ export default function ImgMediaCard() {
           maxHeight: 'max-content',
           paddingTop: '50px',
           paddingBottom: '50px',
+          minHeight: '71vh',
         }}>
         {report ? (
           report > 0 ? (
@@ -145,12 +143,14 @@ export default function ImgMediaCard() {
             // marginTop: 45,
             // marginBottom: 54,
           }}>
+          
           <CardMedia
             ref={scrollRef}
             component='img'
             alt={detailpost.type}
             sx={{
               maxHeight: 300,
+              minHeight: 250,
             }}
             image={`${detailpost.petImage.url}`}
           />
@@ -177,7 +177,15 @@ export default function ImgMediaCard() {
             {/* <Typography gutterBottom variant='h6' component='div'>
               Fecha de publicacion: {capitalize(detailpost.date)}
             </Typography> */}
-            <Typography variant='body1' color='text.secondary' sx={{width: "100", display: "flex", alignItems: "center", justifyContent: "center"}}>
+            <Typography
+              variant='body1'
+              color='text.secondary'
+              sx={{
+                width: '100',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
               {detailpost.description}
             </Typography>
           </CardContent>

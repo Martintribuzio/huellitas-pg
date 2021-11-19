@@ -20,18 +20,18 @@ import { typeState } from '../../redux/reducers'
 import { errorMonitor } from 'events'
 
 type Data = {
-  name: string | any
-  email: string | any
+  name: string
+  email: string
   /* username: string; */
-  password: string | any
-  confirmPassword: string | any
-  phone: string | any
-  address: string | any
-  description: string | any
-  instagram: string | any
-  facebook: string | any
-  website: string | any
-  profileImage: string | any
+  password: string
+  confirmPassword: string
+  phone: string
+  address: string
+  description: string
+  instagram: string
+  facebook: string
+  website: string
+  profileImage: string
 }
 
 const schema = yup.object().shape({
@@ -49,10 +49,8 @@ const schema = yup.object().shape({
     .oneOf([yup.ref('password'), null], 'Las contraseñas no coinciden')
     .required('Ingresa nuevamente tu contraseña'),
 })
-interface error {
-  img: string;
 
-}
+
 function RegisterShelter({ inicio }: any) {
   const coordenadas = useSelector((state: typeState) => state.coordenadas)
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null)
@@ -64,13 +62,14 @@ function RegisterShelter({ inicio }: any) {
     formState: { errors },
   } = useForm<Data>({ resolver: yupResolver(schema) })
   const [img, setImg] = useState<string | any>(null)
-  const [error, seterror] = useState<error>({img:''})
+  const [error, seterror] = useState<string>('')
+  const [loading, setLoading] = useState(false)
 
   function handleChangeImg(e: ChangeEvent<HTMLInputElement> | Event) {
     const target = e.target as HTMLInputElement
     const file: File = (target.files as FileList)[0]
-    seterror({ ...error, img: '' })
     setImg(file)
+    validateImage(file)
   }
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null)
@@ -91,13 +90,25 @@ function RegisterShelter({ inicio }: any) {
       </div>
     </Menu>
   )
-  const check = () => {
-    console.log(input,img)
-    if(!img){
-      seterror({ ...error, img: 'Selecciona una imagen' })
+  const validateImage = (file:any) => {
+    console.log(file)
+    if(file){
+      if (file.type.split('/')[0] !== 'image') {
+        seterror('La imagen debe ser de tipo imagen');
+      }
+      else if (file.size > 1024 * 1024 * 3) {
+        seterror('La imagen debe tener como tamaño maximo 3MB');
+      }
+      else if (
+        file.type.split('/')[1] !== 'jpeg' &&
+        file.type.split('/')[1] !== 'png' &&
+        file.type.split('/')[1] !== 'jpg'
+      ) {
+        seterror('La imagen debe ser de tipo jpg o png');
+      }
     }
     else{
-      seterror({ ...error, img: '' })
+      seterror('')
     }
   }
   useEffect(() => {
@@ -110,18 +121,19 @@ function RegisterShelter({ inicio }: any) {
   }, [coordenadas])
 
   const onSubmit = handleSubmit(data => {
-    if(input.latitude && input.longitude && img){
+    if(img && !error){
+      setLoading(true);
     const fd = new FormData()
     fd.append('name', data.name)
     fd.append('email', data.email)
     fd.append('password', data.password)
     fd.append('confirmPassword', data.confirmPassword)
-    fd.append('phone', data.phone.value)
-    fd.append('address', data.address.value)
-    fd.append('description', data.description.value)
-    fd.append('instagram', data.instagram.value)
-    fd.append('facebook', data.facebook.value)
-    fd.append('website', data.website.value)
+    fd.append('phone', data.phone)
+    fd.append('address', data.address)
+    fd.append('description', data.description)
+    fd.append('instagram', data.instagram)
+    fd.append('facebook', data.facebook)
+    fd.append('website', data.website)
     fd.append('latitude', input.latitude)
     fd.append('longitude', input.longitude)
     fd.append('profileImage', img)
@@ -129,6 +141,7 @@ function RegisterShelter({ inicio }: any) {
     axios.post('/user/signup/shelter', fd, {
       headers: { 'Content-Type': 'multipart/form-data' },
     }).then(res => {
+      setLoading(false);
       Swal.fire({
         title: 'Exito!',
         text: 'Se ha enviado un mail de confirmacion a su correo electronico',
@@ -136,6 +149,7 @@ function RegisterShelter({ inicio }: any) {
         confirmButtonText: 'Ok',
       })
     }).catch(err => {
+      setLoading(false);
       Swal.fire({
         title: 'Error',
         text: 'El email ingresado ya pertenece a una cuenta',
@@ -143,6 +157,10 @@ function RegisterShelter({ inicio }: any) {
         confirmButtonText: 'Intentar de nuevo',
       })
     })
+    
+  }
+  else{
+    seterror('Selecciona una imagen')
   }
   })
   return (
@@ -357,15 +375,15 @@ function RegisterShelter({ inicio }: any) {
               accept='.png, .jpg'
             />
           </label>
-          {img ? (
+          {img && !error ? (
             <img
               style={{ height: '50px', margin: '5px', borderRadius: '50%' }}
               src={URL.createObjectURL(img)}
               alt='img'
             />
           ) : null}
-          {error.img ? <label>{error.img}</label> : null}
         </div>
+          {error ? <label style={{color:'red'}}>{error}</label> : null}
         <div
           style={{
             display: 'flex',
@@ -379,7 +397,7 @@ function RegisterShelter({ inicio }: any) {
         </div>
         <Button
           style={{ marginTop: '20px', width: '300px', marginBottom: '20px' }}
-          onClick={check}
+          disabled={loading}
           variant='contained'
           type='submit'>
           Registrar

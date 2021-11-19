@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useMap } from 'react-leaflet';
 import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
 import 'leaflet-control-geocoder/dist/Control.Geocoder.js';
@@ -6,8 +6,10 @@ import L from 'leaflet';
 
 import icon from './constants';
 
-export default function LeafletControlGeocoder() {
+export default function LeafletControlGeocoder({ originPost }) {
   const map = useMap();
+
+  const [position, setPosition] = useState(map.getCenter());
 
   useEffect(() => {
     var geocoder = L.Control.Geocoder.nominatim();
@@ -39,33 +41,42 @@ export default function LeafletControlGeocoder() {
       .addTo(map);
   }, [map]);
 
+  map.locate({ setView: true, maxZoom: 16 });
 
- map.locate({setView: true, maxZoom: 16});
+  function onLocationFound(e) {
+    var radius = e.accuracy / 2;
 
-function onLocationFound(e) {
- var radius = e.accuracy / 2;
+    // L.marker(e.latlng).addTo(map)
+    //  .bindPopup("Tu estas aqui, con " + radius + " metros de aproximacion").openPopup();
 
-// L.marker(e.latlng).addTo(map)
-//  .bindPopup("Tu estas aqui, con " + radius + " metros de aproximacion").openPopup();
+    // L.circle(e.latlng, radius).addTo(map);
+  }
+  function onLocationError(e) {
+    alert(e.message);
+  }
+  map.on('locationfound', onLocationFound);
+  map.on('locationerror', onLocationError);
 
-// L.circle(e.latlng, radius).addTo(map);
- }
- function onLocationError(e) {
- alert(e.message);
-}
- map.on('locationfound', onLocationFound);
- map.on('locationerror', onLocationError);
+  map.once('focus', function () {
+    map.scrollWheelZoom.enable();
+  });
 
- map.once('focus', function() { map.scrollWheelZoom.enable(); });
-//  map.on('click', function() {
-//   if (map.scrollWheelZoom.enabled()) {
-//     map.scrollWheelZoom.disable();
-//     }
-//     else {
-//     map.scrollWheelZoom.enable();
-//     }
-//   });
+  if (originPost === true) {
+    var marker = L.marker(position, { icon }).addTo(map);
 
+    map.on('move', function () {
+      marker.setLatLng(map.getCenter());
+    });
+  }
+
+  //  map.on('click', function() {
+  //   if (map.scrollWheelZoom.enabled()) {
+  //     map.scrollWheelZoom.disable();
+  //     }
+  //     else {
+  //     map.scrollWheelZoom.enable();
+  //     }
+  //   });
 
   return null;
 }

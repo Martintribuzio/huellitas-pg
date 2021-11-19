@@ -22,11 +22,11 @@
 
 @media (max-width: 500px) {
   .button {
-    font-size: 10px !important;
+    font-size: 15px !important;
   }
 }
 @media (max-width: 400px) {
   .button {
-    font-size: 7px !important;
+    font-size: 10px !important;
   }
 }

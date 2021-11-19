@@ -334,7 +334,7 @@ export default function PostAPet(props: any) {
           </div>
         ) : (
           <>
-            <LocationMap />
+            <LocationMap originPost={true}/>
           </>
         )}
       </div>

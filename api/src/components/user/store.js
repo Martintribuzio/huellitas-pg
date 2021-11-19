@@ -20,7 +20,7 @@ const searchUserDB = async email => {
 
 const searchUserByIdDB = async id => {
   try {
-    const user = await User.findById(id)
+    const user = await User.findById(id).populate('profileImage')
     return user
   } catch (error) {
     console.log('entro aca! ')
@@ -30,8 +30,8 @@ const searchUserByIdDB = async id => {
 
 const editProfileDB = async username => {
   try {
-    const profile = await User.findOne({ username: username })
-    console.log('encontrame el perfil ', profile)
+    const profile = await User.findOne({ username: username }).populate("profileImage")
+    // console.log('encontrame el perfil ', profile)
     return profile
   } catch (err) {
     console.log(err.message)

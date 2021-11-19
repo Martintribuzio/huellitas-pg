@@ -68,6 +68,7 @@ export default function PrimarySearchAppBar(): JSX.Element {
   }, [result, convers, mobileMoreAnchorEl, anchorEl, anchorElProf, id])
   const logoutService = async () => {
     try {
+      handleMenuCloseProf()
       const response: any = await axios.get('/user/logout', {
         headers: {
           Authorization: `Bearer ${window.localStorage.getItem('token')}`,
@@ -154,23 +155,22 @@ export default function PrimarySearchAppBar(): JSX.Element {
       open={isMenuOpenProf}
       onClose={handleMenuCloseProf}>
       <Link
+        onClick={handleMenuCloseProf}
         to='/home/profile'
         style={{ textDecoration: 'none', color: 'black' }}>
         <MenuItem onClick={handleMenuClose}>Perfil</MenuItem>
       </Link>
 
-      {result === 'Unauthorized' ? null : (
-        <MenuItem onClick={logoutService}>
-          <IconButton
-            onClick={logoutService}
-            size='small'
-            aria-controls={menuId}
-            color='inherit'>
-            <LogoutIcon />
-          </IconButton>
-          Cerrar sesión
-        </MenuItem>
-      )}
+      <MenuItem onClick={logoutService}>
+        <IconButton
+          onClick={logoutService}
+          size='small'
+          aria-controls={menuId}
+          color='inherit'>
+          <LogoutIcon />
+        </IconButton>
+        Cerrar sesión
+      </MenuItem>
     </Menu>
   )
   const mobileMenuId = 'primary-search-account-menu-mobile'

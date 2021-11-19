@@ -5,13 +5,16 @@ export default async function editProfile(input: FormData) {
     const profile = await axios.put(`/user/profile`, input, {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
-    console.log('asdasdsadsa', profile.data)
+    console.log('EDITADO', profile.data)
     window.localStorage.setItem('name', profile.data.name)
-    window.localStorage.setItem(
-      'lastname',
-      profile.data.lastname ? profile.data.lastname : ''
-    )
+    window.localStorage.setItem('lastname', profile.data.lastname ? profile.data.lastname : '')
     window.localStorage.setItem('image', profile.data.profileImage.url)
+    window.localStorage.setItem('phone', profile.data.phone)
+    window.localStorage.setItem('facebook', profile.data.facebook)
+    window.localStorage.setItem('instagram', profile.data.instagram)
+    window.localStorage.setItem('website', profile.data.website)
+    window.localStorage.setItem('address', profile.data.address)
+    window.localStorage.setItem('description', profile.data.description)
     return 'succes'
   } catch (error: any) {
     //console.log(error);
