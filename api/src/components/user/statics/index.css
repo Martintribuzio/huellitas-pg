@@ -1,16 +1,26 @@
-body{
-    background-color: rgb(115, 167 , 203);
+body {
+  background-color: rgb(115, 167, 203);
+  font-family: 'Poppins';
 }
-.titulo{
-    display: flex;
-    justify-content: center;
-    font-family: 'Poppins';
-    margin-top: 100px;
-    color: white;
+.titulo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins';
+  margin-top: 100px;
+  color: white;
+  text-align: center;
 }
-.link{
-    font-family: 'Poppins';
-    display: flex;
-    justify-content: flex-end;
-    margin-right: 200px;
+
+.titulo h1 {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.titulo img {
+  width: 250px;
+}
+
+.link {
 }
