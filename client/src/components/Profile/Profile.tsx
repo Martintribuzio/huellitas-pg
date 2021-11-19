@@ -259,13 +259,13 @@ export default function Profile() {
                       variant='contained'
                       onClick={() => handleClick(post._id)}>
                       {' '}
-                      eliminar
+                      Eliminar
                     </Button>
                   </div>
                 )
               })
             ) : (
-              <Typography>No hay posts</Typography>
+              <Typography>No hay posts disponibles</Typography>
             )}
           </>
         ) : (
