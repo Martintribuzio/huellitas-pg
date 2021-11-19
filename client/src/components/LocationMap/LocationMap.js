@@ -112,6 +112,7 @@ export default function LocationMap() {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         />
+       
         {posts.map(post => (
           post.state === 'Perdido' ? 
           <Marker 
@@ -159,7 +160,7 @@ export default function LocationMap() {
             >
             <Popup> 
               <div style = {{width: '200px'}}>
-                {post.name? <h1>{`Nombre: ${post.name}`}</h1> : ""}
+                {post.name?<Link to = {`/home/detail/${post._id}`}> <h1>{`Nombre: ${post.name}`}</h1></Link> : ""}
                 <Link to = {`/home/detail/${post._id}`}><img style = {{width: '200px'}} src = {post.petImage.url} alt=""></img></Link>
                 <h3>{`Estado: ${post.state}`}</h3>
                 <h3>{`Tipo: ${post.type}`}</h3>
