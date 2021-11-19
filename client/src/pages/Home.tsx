@@ -21,7 +21,7 @@ const data = [
   /* 'Toda la informacion sobre los pets',
   'Encontra tu perro perdido',
   'Publica el gato que encontraste', */
-  '¿Buscas a tu mascota perdida?',
+  '¿Buscás a tu mascota perdida?',
   'Te encontraste la mascota de alguien más',
   '¿Tenés animales buscando un hogar?',
   'Tu ayuda es importante.',

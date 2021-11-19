@@ -66,7 +66,8 @@ export default function ButtonAppBar(props: any) {
               <IconButton
                 href='https://github.com/Martintribuzio/huellitas-pg'
                 size='large'
-                color='inherit'>
+                color='inherit'
+                target='_blank'>
                 <GitHubIcon />
               </IconButton>
             </StyledToolbar>

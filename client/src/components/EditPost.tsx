@@ -190,7 +190,7 @@ export default function EditPost() {
             paddingRight: '37%',
           }}>
           <label className={style.file} style={{ marginBottom: '10px' }}>
-            editar foto
+            Editar foto
             <input
               style={{ display: 'none' }}
               type='file'
@@ -237,9 +237,9 @@ export default function EditPost() {
                 <option hidden selected>
                   {detailpost.type}
                 </option>
-                <option value='Perro'>perro</option>
-                <option value='Gato'>gato</option>
-                <option value='Otro'>otro</option>
+                <option value='Perro'>Perro</option>
+                <option value='Gato'>Gato</option>
+                <option value='Otro'>Otro</option>
               </select>
             </Typography>
 

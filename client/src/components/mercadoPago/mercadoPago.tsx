@@ -39,7 +39,7 @@ const openWindow = (url:string) => {
   return (
       <div className={sty.dive}>
           <Typography variant='h4'>
-              ¿Quieres ayudarnos?
+              ¿Querés ayudarnos?
             </Typography>
             <Typography sx={{width:'80vw'}}>
                 El equipo de Huellitas creó este proyecto sin fines de lucro, pero

@@ -23,7 +23,7 @@ export const validation = (input: any, field: any = 'all') => {
       errors.petImage = 'La imagen es requerida';
     }
     if (input.petImage && input.petImage.size > 1024 * 1024 * 3) {
-      errors.petImage = 'La imagen debe tener como tamaño maximo 3MB';
+      errors.petImage = 'La imagen debe tener como tamaño máximo 3MB';
     }
     if (input.petImage && input.petImage.type.split('/')[0] !== 'image') {
       errors.petImage = 'La imagen debe ser de tipo imagen';

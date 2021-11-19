@@ -318,7 +318,7 @@ export default function PostAPet(props: any) {
             </label>
 
             <label>
-              Descripcion:
+              Descripción:
               <textarea
                 style={{ resize: 'none' }}
                 rows={3}
