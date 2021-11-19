@@ -34,16 +34,13 @@
 }
 @media (min-width: 350px) {
 
-    /* .icons{
-        display: flex;
-        flex-direction: column; */
-        /* justify-content: right ; */
-      
-        /* margin-top: -10vh;
+    /* .button{
+        margin-top: -10vh;
+        margin-left: -10vw;
         z-index: 1;
-        
-    } */
-    /* .cards{
+    }
+
+    .cards{
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -55,7 +52,10 @@
         
     }
     
-   
+   .icons{
+       position: relative;
+       right:-110px
+   }
 
     
 }
@@ -82,6 +82,7 @@
     
     
 }
+
 /* 
 .jurox{
 height: 450px;
