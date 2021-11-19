@@ -44,7 +44,7 @@ export default function ImgMediaCard() {
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView(false, { behavior: 'auto' })
-  },[]);
+  }, [])
   const handleCounter = async function () {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -128,6 +128,7 @@ export default function ImgMediaCard() {
           maxHeight: 'max-content',
           paddingTop: '50px',
           paddingBottom: '50px',
+          minHeight: '71vh',
         }}>
         {report ? (
           report > 0 ? (
@@ -148,6 +149,7 @@ export default function ImgMediaCard() {
             alt={detailpost.type}
             sx={{
               maxHeight: 300,
+              minHeight: 250,
             }}
             image={`${detailpost.petImage.url}`}
           />
@@ -174,7 +176,15 @@ export default function ImgMediaCard() {
             {/* <Typography gutterBottom variant='h6' component='div'>
               Fecha de publicacion: {capitalize(detailpost.date)}
             </Typography> */}
-            <Typography variant='body1' color='text.secondary' sx={{width: "100", display: "flex", alignItems: "center", justifyContent: "center"}}>
+            <Typography
+              variant='body1'
+              color='text.secondary'
+              sx={{
+                width: '100',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
               {detailpost.description}
             </Typography>
           </CardContent>
