@@ -4,7 +4,7 @@ import axios from 'axios';
 export default async function deletePostService(_id: string | undefined) {
   try {
     const post = await axios.delete(`/post`, { data: { _id } });
-    console.log(post);
+    //console.log(post);
     return 'succes';
   } catch (error) {
     console.log(error);

@@ -76,7 +76,6 @@ export default function EditProfile(props: { modal: Function; ownUser: any }) {
     }
 
     editProfile(fd)
-    console.log(input)
     return Swal.fire({
       title: 'Guardado!',
       text: 'Tu publicación fue editada con éxito!',

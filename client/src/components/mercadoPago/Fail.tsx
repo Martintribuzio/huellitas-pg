@@ -1,5 +1,5 @@
 import sty from './mercadoPago.module.css'
-import foto from '../../peligro.png'
+import foto from '../../images/peligro.png'
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';

@@ -5,6 +5,7 @@ import ButtonBase from '@mui/material/ButtonBase';
 import Typography from '@mui/material/Typography';
 import dotenv from 'dotenv';
 import axios from 'axios';
+import gif from '../images/dog-cute.gif'
 import { Link } from 'react-router-dom';
 
 dotenv.config();
@@ -87,7 +88,7 @@ export default function FeedShelter() {
 
   if (shelters) {
     if (shelters.length) {
-      console.log('SHELTER',shelters);
+      // console.log('SHELTER',shelters);
       return (
         <Box
           sx={{
@@ -156,40 +157,21 @@ export default function FeedShelter() {
     } else {
       return (
         <div
-          className='loading'
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <img
-            src='https://themebeyond.com/html/petco/img/preloader.gif'
-            alt='cargando'
-            draggable='false'
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '15vh',
-              width: '15vw',
-            }}
-          />
-          <br />
-          <h2 style={{ color: '#8CCDFE', userSelect: 'none' }}>Cargando...</h2>
-          <br />
-          <img
-            src='https://themebeyond.com/html/petco/img/preloader.gif'
-            alt='Cargando...'
-            draggable='false'
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '15vh',
-              width: '15vw',
-            }}
-          />
-        </div>
+        className='loading'
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <img
+          src={gif}
+          alt='cargando'
+          draggable='false'
+        />
+        <br />
+        <h2 style={{ color: '#8CCDFE', userSelect: 'none' }}>Cargando...</h2>
+      </div>
       );
     }
   } else {

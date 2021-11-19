@@ -11,3 +11,9 @@
   border: 1px solid black;
   background-color: white;
 }
+
+
+.button:hover {
+  color: black;
+  border: 1px solid black !important;
+}

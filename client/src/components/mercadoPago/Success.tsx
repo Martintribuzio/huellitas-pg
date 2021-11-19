@@ -1,6 +1,6 @@
 
 import sty from './mercadoPago.module.css'
-import foto from '../../corazon.png'
+import foto from '../../images/corazon.png'
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
