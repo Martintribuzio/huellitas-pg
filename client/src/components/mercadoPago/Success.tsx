@@ -24,7 +24,7 @@ export default function Success() {
         <Typography variant="body2" color="text.secondary">
             El equipo de Huellitas agradece tu apoyo.
             <br/>
-            Gracias a ti, miles de mascotas podrán encontrar su camino a casa.
+            Gracias a tí, miles de mascotas podrán encontrar su camino a casa.
         </Typography>
       </CardContent>
     </Card>

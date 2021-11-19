@@ -66,15 +66,15 @@ export default function ImgMediaCard() {
         text: 'Si denuncias esta publicacion probablemente sea borrada',
         icon: 'warning',
         showCancelButton: true,
-        confirmButtonText: '¡Si, reportarla!',
-        cancelButtonText: '¡No, cambié de opinion!',
+        confirmButtonText: '¡Sí, reportarla!',
+        cancelButtonText: '¡No, cambié de opinión!',
         reverseButtons: true,
       })
       .then(result => {
         if (result.isConfirmed) {
           swalWithBootstrapButtons.fire(
             '¡Bien!',
-            'El post fue denunciado correctamente',
+            'La publlicación fue denunciada correctamente',
             'success'
           )
           report()

@@ -378,7 +378,7 @@ function RegisterShelter({ inicio }: any) {
             <img
               style={{ height: '50px', margin: '5px', borderRadius: '50%' }}
               src={URL.createObjectURL(img)}
-              alt='img'
+              alt='Img'
             />
           ) : null}
         </div>

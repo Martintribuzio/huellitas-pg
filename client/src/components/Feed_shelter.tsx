@@ -166,7 +166,7 @@ export default function FeedShelter() {
         }}>
         <img
           src={gif}
-          alt='cargando'
+          alt='Cargando'
           draggable='false'
         />
         <br />
