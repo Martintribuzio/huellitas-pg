@@ -53,7 +53,7 @@ export default function ButtonAppBar(props: any) {
               </Typography>
                 <Box sx={{display:'flex',justifyContent:'center',alignItems:'center',marginTop:'3px'}}>
                   <Typography className={style.text} variant='body2' color='lightgray'>
-                      Nos ayudas a mantener la web en funcionamiento?
+                      ¿Nos ayudás a mantener la web en funcionamiento?
                   </Typography>
                   <IconButton
                       href='https://huellitas.vercel.app/home/donate'

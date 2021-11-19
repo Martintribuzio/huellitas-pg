@@ -58,7 +58,7 @@ const openWindow = (url:string) => {
                 onChange={change}
                 startAdornment={<InputAdornment position="start">ARS $</InputAdornment>}
             />
-                {price[0] === '-' || price[0] === '0' ?<FormHelperText error={true} id="component-error-text">Error Monto invalido</FormHelperText>:null}
+                {price[0] === '-' || price[0] === '0' ?<FormHelperText error={true} id="component-error-text">Error, monto inválido</FormHelperText>:null}
             </FormControl>
             <TextField
             id="standard-multiline-static"

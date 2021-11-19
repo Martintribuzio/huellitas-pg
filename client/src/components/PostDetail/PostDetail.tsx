@@ -132,7 +132,7 @@ export default function ImgMediaCard() {
         }}>
         {report ? (
           report > 0 ? (
-            <span>Reportado CHAN CHAN CHAN</span>
+            <span>Reportado</span>
           ) : null
         ) : null}
         <Card
@@ -201,7 +201,7 @@ export default function ImgMediaCard() {
                 <Select label='Reportar' onChange={handleCounter}>
                   <MenuItem value='Spam'>Spam</MenuItem>
                   <MenuItem value='Contenido Inapropiado'>
-                    Contenido Inapropiado
+                    Contenido inapropiado
                   </MenuItem>
                 </Select>
               </FormControl>
@@ -212,7 +212,7 @@ export default function ImgMediaCard() {
                 sx={{ marginBottom: '10px' }}
                 variant='contained'
                 onClick={toggleModal}>
-                editar
+                Editar
               </Button>
               <Modal isOpen={isModal} closeModal={toggleModal}>
                 <EditPost />

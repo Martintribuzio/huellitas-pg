@@ -129,8 +129,8 @@ export default function LandingPage() {
               onColor='#F5F5F5'
               isOn={auth}
               handleToggle={() => setAuth(!auth)}
-              label1='Iniciar Sesion'
-              label2='Registrarse'
+              label1='Iniciar Sesión'
+              label2='Regístrarse'
             />
             {/* <Switch checked={auth} onChange={handleChange} /> */}
             {/* <label style={{ marginBottom: '10px' }}>
@@ -204,8 +204,8 @@ export default function LandingPage() {
                 onColor='#F5F5F5'
                 isOn={auth}
                 handleToggle={() => setAuth(!auth)}
-                label1='Iniciar Sesion'
-                label2='Registrarse'
+                label1='Iniciar Sesión'
+                label2='Regístrarse'
               />
               {/* <Switch checked={auth} onChange={handleChange} />{' '}
               <label style={{ marginBottom: '10px' }}>

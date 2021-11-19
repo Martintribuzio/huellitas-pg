@@ -91,9 +91,13 @@ export default function ShelterProfile() {
             src={user.profileImage.url}
           />
           <Typography variant='h4'>{user.name}</Typography>
+          {user.address?(
           <Typography variant='h6'>{user.address}</Typography>
+          ):(
+            <Typography variant='h6'>Dirección no disponible</Typography>
+          )}
           <Typography variant='h6'>{user.description}</Typography>
-          <Typography variant='h6'>posts del refugio:</Typography>
+          <Typography variant='h6'>Publicaciones del refugio:</Typography>
           <Box
             sx={{
               display: 'flex',
@@ -110,7 +114,7 @@ export default function ShelterProfile() {
                 )
               })
             ) : (
-              <Typography variant='h6'>No hay posts</Typography>
+              <Typography variant='h6'>No hay publicaciones disponibles</Typography>
             )}
           </Box>
         </Box>
@@ -125,12 +129,20 @@ export default function ShelterProfile() {
             marginLeft: '20px',
           }}>
           <Typography variant='h4' fontWeight='7000'>
-            contacto:
+            Contacto:
           </Typography>
+          {user.phone?(
           <Typography variant='h6'>
             {' '}
-            numero de telefono: {user.phone}
+            Número de teléfono: {user.phone}
           </Typography>
+          ):(
+            <Typography variant='h6'>
+              {' '}
+              Número de teléfono: No disponible
+            </Typography>
+          )}
+        
           {user.instagram ? (
             <IconButton
               size='small'
@@ -142,7 +154,7 @@ export default function ShelterProfile() {
                   window.open(user.instagram, '_blank')
                 }}
               />
-              <Typography variant='h6'>instagram</Typography>
+              <Typography variant='h6'>Instagram</Typography>
             </IconButton>
           ) : null}
           {user.facebook ? (
@@ -156,7 +168,7 @@ export default function ShelterProfile() {
                   window.open(user.facebook, '_blank')
                 }}
               />
-              <Typography variant='h6'>facebook</Typography>
+              <Typography variant='h6'>Facebook</Typography>
             </IconButton>
           ) : null}
           {user.website ? (
@@ -167,7 +179,7 @@ export default function ShelterProfile() {
               }}>
               <LanguageIcon />
 
-              <Typography variant='h6'>website</Typography>
+              <Typography variant='h6'>Website</Typography>
             </IconButton>
           ) : null}
         </Box>
