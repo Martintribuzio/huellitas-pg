@@ -40,6 +40,7 @@ interface User {
   posts: []
   username: string
   picture?: string
+  profileImage?: any
 }
 export interface message {
   content: string
@@ -104,9 +105,10 @@ export default function Message(props: any) {
   useEffect(() => {
     setUser(null)
 
-    const friendId = convers
-      ? convers.members.find((id: string) => id !== idSender)
-      : null
+    const friendId =
+      convers && convers.members
+        ? convers.members.find((id: string) => id !== idSender)
+        : null
     console.log('ID', friendId)
     const getUser = async (friendId: string) => {
       try {
@@ -117,7 +119,7 @@ export default function Message(props: any) {
       }
     }
     getUser(friendId)
-  }, [idSender])
+  }, [idSender, ConverseId])
 
   const receiverId = convers?.members?.find(
     (member: string) => member !== idSender
@@ -180,7 +182,15 @@ export default function Message(props: any) {
                           <Avatar
                             style={{ marginLeft: '5px' }}
                             alt='Profile Picture'
-                            src={user ? user.picture : ''}
+                            src={
+                              user
+                                ? user.picture
+                                  ? user.picture
+                                  : user.profileImage
+                                  ? user.profileImage.url
+                                  : ''
+                                : ''
+                            }
                           />
                         )}
                         <small className={style.date}>
