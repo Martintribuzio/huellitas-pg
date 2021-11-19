@@ -61,7 +61,7 @@ function DisplayPosition({ map }) {
   );
 }
 
-export default function LocationMapShelter() {
+export default function LocationMapShelter({originPost}) {
     
   const icon = useMemo(()=>{
     return new Icon({
@@ -110,7 +110,7 @@ const displayMap = useMemo(() => {
             </Popup>
           </Marker>
         ))}
-        <LeafletControlGeocoder />
+        <LeafletControlGeocoder originPost={originPost} />
       </MapContainer>
     );
   }, [data, error, icon]);
